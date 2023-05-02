@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://portfolio.cnnw9ccj3lgu.ap-northeast-2.rds.amazonaws.com:3306/health_management
+    username: admin
+    password: 1q2w3e4r
+    
+mybatis:
+  mapper-locations:
+    - /mappers/*.xml
+    
+jwt:
+  secretKey: n9GeQdOVaqlkAH3kMmKcCSpp2KDvk697oUXqFRXjCiFPCoou5UgrxV9vX70vTekO
