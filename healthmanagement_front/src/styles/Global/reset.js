@@ -110,19 +110,6 @@ export const Reset = css`
     body {
         line-height: 1;
     }
-
-    #root {
-        position: relative;
-        margin: 10px auto;
-        padding: 10px;
-        border: 3px solid #dbdbdb;
-        border-radius: 10px;
-        width: 750px;
-        height: 900px;
-        line-height: 1;
-        overflow: hidden;
-    }
-
     ol,
     ul {
         list-style: none;
