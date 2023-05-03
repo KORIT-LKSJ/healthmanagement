@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.portfolio.healthmanagement.repository.UserRepositiory">
+	
+	<resultMap type="com.portfolio.healthmanagement.entity.User" id="userMap">
+		<id property="userId" column="user_id"/>
+		<result property="username" column="username"/>
+		<result property="password" column="password"/>
+		<result property="name" column="name"/>
+		<result property="phone" column="phone"/>
+		<result property="email" column="email"/>
+		<result property="weight" column="weight"/>
+		<result property="height" column="height"/>
+		<result property="birthdate" column="birthdate" />
+		<result property="businessOwner" column="business_owner"/>
+		<collection property="authorities" javaType="list" resultMap="authorityMap" />
+	</resultMap>
+	
+	<resultMap type="com.portfolio.healthmanagement.entity.Authority" id="authorityMap">
+		<id property="authorityId" column="authority_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="roleId" column="role_id"/>	
+		<association property="role" resultMap="roleMap"/>
+	</resultMap>
+	
+	<resultMap type="com.portfolio.healthmanagement.entity.Role" id="roleMap">
+		<id property="roleId" column="role_id"/>
+		<result property="roleName" column="role_name"/>
+	</resultMap>
+	
+	<select id="findUserByUsername" resultMap="userMap">
+		select
+			ut.user_id,
+			ut.username,
+			ut.password,
+			ut.name,
+			
+			at.authority_id,
+			at.user_id,
+			at.role_id,
+			
+			rt.role_id,
+			rt.role_name
+		from
+			user_tb ut
+			left outer join authority_tb at on(at.user_id = ut.user_id)
+			left outer join role_tb rt on(rt.role_id = at.role_id)
+		where
+			ut.username = #{username}
+	</select>
+	
+	<insert id="saveUser" parameterType="com.portfolio.healthmanagement.entity.User" useGeneratedKeys="true"
+	keyProperty="userId">
+		insert into user_tb
+		values(0,#{username},#{password},#{name},#{email},#{phone},#{weight},#{height},#{birthdate},#{businessOwner})
+	</insert>
+	
+	<insert id="saveAuthority" parameterType="com.portfolio.healthmanagement.entity.Authority">
+		insert into authority_tb
+		values(0,#{user_id},#{role_id})
+	</insert>
+
+</mapper>
