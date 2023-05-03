@@ -75,6 +75,13 @@ const registerButton = css`
     cursor: pointer;
 `;
 
+const radioCheck = css`
+    display: flex;
+    justify-content: space-between;
+    width: 130px;
+    margin-top: 10px;
+`;
+
 const footer = css`
     position: fixed;
     bottom: 0;
@@ -130,6 +137,16 @@ const Register = () => {
                     <div css={registerDetail}>
                         <label css={registerLabel}>몸무게</label>
                         <input css={registerInput} type="number" placeholder="몸무게를 입력해 주세요." />
+                    </div>
+                </div>
+                <div css={radioCheck}>
+                    <div>
+                        <input type="radio" id="user" name="userType" />
+                        <label for="user">user</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="owner" name="userType" />
+                        <label for="owner">owner</label>
                     </div>
                 </div>
                 <div css={register}>
