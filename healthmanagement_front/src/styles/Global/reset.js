@@ -90,6 +90,7 @@ export const Reset = css`
         padding: 0;
         border: 0;
         font-size: 100%;
+        height: 100%;
         font: inherit;
         vertical-align: baseline;
     }
@@ -109,6 +110,8 @@ export const Reset = css`
     }
     body {
         line-height: 1;
+        background-color: gray;
+        height: 100%;
     }
     ol,
     ul {
