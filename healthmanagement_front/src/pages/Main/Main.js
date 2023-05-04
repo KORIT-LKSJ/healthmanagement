@@ -1,21 +1,20 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React, { useState } from "react";
-import { BiListUl, BiSearch, BiUser } from 'react-icons/bi';
+import { BiListUl, BiSearch, BiUser } from "react-icons/bi";
 import GymList from "./GymList";
-import { HiHome } from 'react-icons/hi';
-import { BiShoppingBag } from 'react-icons/bi';
-import { HiMap } from 'react-icons/hi';
-import { BiLike } from 'react-icons/bi';
+import { HiHome } from "react-icons/hi";
+import { BiShoppingBag } from "react-icons/bi";
+import { HiMap } from "react-icons/hi";
+import { BiLike } from "react-icons/bi";
 import Sidebar from "../../SideBar/SideBar";
 import { useQueryClient } from "react-query";
-
+import SearchBar from "../../SearchBar/SearchBar";
 
 const container = css`
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
 `;
 
 const header = css`
@@ -30,7 +29,7 @@ const header = css`
 
 const mainLogo = css`
     height: 60px;
-`
+`;
 
 const listIcon = css`
     font-size: 22px;
@@ -49,11 +48,19 @@ const main = css`
     flex-direction: column;
     align-items: center;
     width: 750px;
+    height: 100%;
+    background-color: white;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    ::-webkit-scrollbar {
+        display: none;
+    }
 `;
 
 const mainImgContainer = css`
     margin-bottom: 30px;
-`
+`;
 
 const mainImg = css`
     display: flex;
@@ -64,7 +71,7 @@ const mainImg = css`
 
 const mentCss = css`
     width: 750px;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Courier New", Courier, monospace;
     font-size: 20px;
     font-style: italic;
     color: gray;
@@ -75,7 +82,7 @@ const gymListContainer = css`
     display: flex;
     flex-wrap: wrap;
     width: 750px;
-`
+`;
 const footer = css`
     display: flex;
     justify-content: space-between;
@@ -85,12 +92,12 @@ const footer = css`
     bottom: 0;
     background-color: white;
     position: fixed;
-`
+`;
 const homeIcon = css`
     background-color: white;
     color: #dbdbdb;
     font-size: 20px;
-    margin-left:330px;
+    margin-left: 330px;
     cursor: pointer;
 `;
 
@@ -98,21 +105,21 @@ const userIcon = css`
     background-color: white;
     color: #dbdbdb;
     font-size: 20px;
-    margin-right:330px;
+    margin-right: 330px;
     cursor: pointer;
-`
+`;
 const likeIcon = css`
     background-color: white;
     color: #dbdbdb;
     font-size: 20px;
     cursor: pointer;
-`
+`;
 const mapIcon = css`
     background-color: white;
     color: #dbdbdb;
     font-size: 20px;
     cursor: pointer;
-`
+`;
 
 const footerName = css`
     display: flex;
@@ -124,7 +131,7 @@ const footerName = css`
     background-color: white;
     position: fixed;
     font-size: 10px;
-`
+`;
 
 const homeLabel = css`
     margin-left: 27px;
@@ -133,44 +140,61 @@ const homeLabel = css`
 const thisLabel = css`
     margin-right: 8px;
 `;
-const aroundLabel = css`
-    
-`;
+const aroundLabel = css``;
 const shoppingLabel = css`
     margin-left: 5px;
     margin-right: 10px;
 `;
 
+const bottom = css`
+    margin-top: 60px;
+`
 const Main = () => {
     const [isOpen, setIsOpen] = useState();
 
     const sideBarClickHandle = () => {
-        if(!isOpen){
+        if (!isOpen) {
             setIsOpen(true);
         }
-    }
+    };
     return (
         <div css={container}>
             <header css={header}>
-                <div css={listIcon} onClick={sideBarClickHandle}> <BiUser/> </div>
-                <img css={mainLogo} src="image/gymLogo.png" alt=""/>     
-                <div css={searchIcon}><BiSearch /></div>
+                <div css={listIcon} onClick={sideBarClickHandle}>
+                    {" "}
+                    <BiUser />{" "}
+                </div>
+                <img css={mainLogo} src="image/gymLogo.png" alt="" />
+                <div css={searchIcon}>
+                    <BiSearch /> <SearchBar/>
+                </div>
             </header>
-            <Sidebar isOpen={isOpen} setIsOpen={setIsOpen}/>
+            <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
             <main css={main}>
                 <div css={mainImgContainer}>
-                    <img css={mainImg} src="https://www.da-gym.co.kr/_next/image?url=https%3A%2F%2Fs3.ap-northeast-2.amazonaws.com%2Fstone-i-dagym-centers%2Fimages%2Fevents%2F2305_dagym_mobile.png&w=1920&q=75"/>
+                    <img
+                        css={mainImg}
+                        src="https://www.da-gym.co.kr/_next/image?url=https%3A%2F%2Fs3.ap-northeast-2.amazonaws.com%2Fstone-i-dagym-centers%2Fimages%2Fevents%2F2305_dagym_mobile.png&w=1920&q=75"
+                    />
+                </div>
+                <div css={mentCss}> 여긴 어때요?</div>
+                <div css={gymListContainer}>
+                    <GymList />
                 </div>
             </main>
-            <div css={mentCss}> 여긴 어때요?</div>
-            <div css= {gymListContainer}>
-                <GymList/>
-            </div>
             <footer css={footer}>
-                <div css={homeIcon}><HiHome/></div>
-                <div css={likeIcon}><BiLike/></div>
-                <div css={mapIcon}><HiMap/></div>
-                <div css={userIcon}><BiShoppingBag/></div>
+                <div css={homeIcon}>
+                    <HiHome />
+                </div>
+                <div css={likeIcon}>
+                    <BiLike />
+                </div>
+                <div css={mapIcon}>
+                    <HiMap />
+                </div>
+                <div css={userIcon}>
+                    <BiShoppingBag />
+                </div>
             </footer>
             <div css={footerName}>
                 <div css={homeLabel}>홈</div>
