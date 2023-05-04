@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const container = css`
     display: flex;
@@ -133,6 +134,20 @@ const footer = css`
 `;
 
 const Login = () => {
+    const navigate = useNavigate();
+
+    const findIdClickHandle = () => {
+        navigate("/find/id");
+    };
+
+    const findPasswordClickHandle = () => {
+        navigate("/find/password");
+    };
+
+    const signUpClickHandle = () => {
+        navigate("/register");
+    };
+
     return (
         <div css={container}>
             <header css={header}></header>
@@ -155,8 +170,12 @@ const Login = () => {
                     </div>
                 </div>
                 <div css={find}>
-                    <div css={findUsernamePassword}>아이디찾기</div>
-                    <div css={findUsernamePassword}>비밀번호찾기</div>
+                    <div css={findUsernamePassword} onClick={findIdClickHandle}>
+                        아이디찾기
+                    </div>
+                    <div css={findUsernamePassword} onClick={findPasswordClickHandle}>
+                        비밀번호찾기
+                    </div>
                 </div>
 
                 <div css={moreLogin}>
@@ -165,7 +184,9 @@ const Login = () => {
                     <img css={loginImg} src="images/googleLogin.png" alt="" />
                 </div>
                 <div css={signUpContainer}>
-                    <div css={signUp}>회원가입</div>
+                    <div css={signUp} onClick={signUpClickHandle}>
+                        회원가입
+                    </div>
                 </div>
                 <div css={login}>
                     <button css={loginButton}>로그인</button>
