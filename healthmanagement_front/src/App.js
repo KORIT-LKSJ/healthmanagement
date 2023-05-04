@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { Global } from "@emotion/react";
 import { Reset } from "./styles/Global/reset";
 import Main from "./pages/Main/Main";
+import MyPage from "./pages/MyPage/MyPage";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import FindId from "./pages/Find/Id/FindId";
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/find/id" element={<FindId />}></Route>
                 <Route path="/find/password" element={<FindPassword />}></Route>
                 <Route path="/" element={<Main />}></Route>
+                <Route path="/MyPage" element={<MyPage/>}/>
             </Routes>
         </>
     );
