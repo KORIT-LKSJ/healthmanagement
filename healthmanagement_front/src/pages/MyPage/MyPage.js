@@ -3,6 +3,7 @@ import { css } from "@emotion/react";
 import React from "react";
 import { BiUserCircle } from "react-icons/bi";
 import { FaRegStar } from "react-icons/fa";
+import { AiOutlineDoubleRight } from "react-icons/ai";
 
 const container = css`
   display: flex;
@@ -86,12 +87,12 @@ const imgbox = css`
   right: 270px;
   bottom: 30px;
   border: 1px solid black;
+  border: 3px solid gray;
   margin: 8px;
   width: 80px;
   height: 80px;
   border-radius: 50%;
   background-color: white;
-  box-shadow: 2px 3px 2px 2px #eea46050;
   overflow: hidden;
   cursor: pointer;
 `;
@@ -131,6 +132,7 @@ const point = css`
 
 const accountSetting = css`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   border: 1px solid black;
   width: 100%;
@@ -142,7 +144,6 @@ const accountSetting = css`
 const accountTitle = css`
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
 `;
 
@@ -166,6 +167,7 @@ const userIcon = css`
 const bookMark = css`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   border: 1px solid black;
   width: 100%;
   height: 200px;
@@ -193,6 +195,13 @@ const bookMarkicon = css`
   justify-content: center;
   align-items: center;
   width: 150px;
+  font-size: 30px;
+`;
+
+const nowButton = css`
+  display: flex;
+  width: 100px;
+  justify-content: space-between;
   font-size: 30px;
 `;
 
@@ -235,13 +244,14 @@ const MyPage = () => {
               <BiUserCircle css={userIcon} />
               <div css={personalName}>정보수정</div>
             </div>
-            <div></div>
+            <AiOutlineDoubleRight css={nowButton} />
           </div>
           <div css={bookMark}>
             <div css={bookTitle}>
               <FaRegStar css={bookMarkicon} />
               <div css={bookMarkName}>즐겨찾기</div>
             </div>
+            <AiOutlineDoubleRight css={nowButton} />
           </div>
         </div>
       </main>
