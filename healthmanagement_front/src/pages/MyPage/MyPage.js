@@ -31,17 +31,21 @@ const main = css`
   overflow: hidden;
 `;
 const titleText = css`
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-  background: linear-gradient(#191654 20%, #000046 80%);
-  font-size: 35px;
-  font-weight: 600;
   width: 100%;
   height: 70px;
-  color: white;
+  margin-top: 20px;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  // justify-content: center;
+
+  border-radius: 5px;
+  //background: linear-gradient(#f55c09 20%, #EEA460 80%);
+
+  font-size: 35px;
+  font-weight: 600;
+  color: #eea460;
+  text-shadow: 2px 2px 2px #eea46050;
 `;
 
 const mypagecontainer = css`
@@ -62,16 +66,18 @@ const userInfo = css`
   height: 150px;
   background-color: whitesmoke;
 `;
-
-const username = css`
-  display: flex;
-  align-items: center;
-  height: 50px;
-`;
 const usernameAndGrade = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const username = css`
+  display: flex;
+  flex-direction: column;
+  padding: 40px 0px 0px 0px;
+  align-items: center;
+  height: 30px;
 `;
 
 // 사용자의 사진을 가져와야함, 밑에 alt잡아주어야함
@@ -85,7 +91,7 @@ const imgbox = css`
   height: 80px;
   border-radius: 50%;
   background-color: white;
-  box-shadow: 1px 1px 2px 1px gray;
+  box-shadow: 2px 3px 2px 2px #eea46050;
   overflow: hidden;
   cursor: pointer;
 `;
@@ -100,24 +106,30 @@ const select = css`
   height: 180px;
 `;
 const rating = css`
+  display: flex;
   width: 33.3%;
+  justify-content: center;
   border: 1px solid black;
   cursor: pointer;
 `;
 
 const coupon = css`
+  display: flex;
   width: 33.3%;
+  justify-content: center;
   border: 1px solid black;
   cursor: pointer;
 `;
 
 const point = css`
+  display: flex;
   width: 33.3%;
+  justify-content: center;
   border: 1px solid black;
   cursor: pointer;
 `;
 
-const AccountSetting = css`
+const accountSetting = css`
   display: flex;
   align-items: center;
   border: 1px solid black;
@@ -127,13 +139,28 @@ const AccountSetting = css`
   cursor: pointer;
 `;
 
-const personalName = css``;
-
-const userIcon = css`
+const accountTitle = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+`;
+
+const personalName = css`
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 14px;
+`;
+
+const userIcon = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 30px;
+  width: 150px;
 `;
 
 const bookMark = css`
@@ -146,10 +173,26 @@ const bookMark = css`
   cursor: pointer;
 `;
 
-const bookMarkicon = css`
+const bookMarkName = css`
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 14px;
+`;
+
+const bookTitle = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+`;
+const bookMarkicon = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
   font-size: 30px;
 `;
 
@@ -174,7 +217,7 @@ const MyPage = () => {
           <div css={userInfo}>
             <div css={user}>
               <div css={imgbox}>
-                <div css={img} src="images/cat.png" alt="/" />
+                <img css={img} src="images/cat.png" alt="" />
               </div>
               <div css={usernameAndGrade}>
                 <h2 css={username}>UserName:</h2>
@@ -187,14 +230,18 @@ const MyPage = () => {
             <div css={coupon}>Coupon</div>
             <div css={point}>Point</div>
           </div>
-          <div css={AccountSetting}>
-            <div css={personalName}></div>
-            <BiUserCircle css={userIcon} />
-            <div>AccountInformation</div>
+          <div css={accountSetting}>
+            <div css={accountTitle}>
+              <BiUserCircle css={userIcon} />
+              <div css={personalName}>정보수정</div>
+            </div>
+            <div></div>
           </div>
           <div css={bookMark}>
-            <FaRegStar css={bookMarkicon} />
-            BookMark
+            <div css={bookTitle}>
+              <FaRegStar css={bookMarkicon} />
+              <div css={bookMarkName}>즐겨찾기</div>
+            </div>
           </div>
         </div>
       </main>
