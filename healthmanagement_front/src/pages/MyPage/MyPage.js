@@ -49,6 +49,11 @@ const mypagecontainer = css`
   display: flex;
   border: none;
 `;
+
+const user = css`
+  display: flex;
+  align-items: center;
+`;
 const userInfo = css`
   display: flex;
   border: 1px solid black;
@@ -57,6 +62,18 @@ const userInfo = css`
   height: 150px;
   background-color: whitesmoke;
 `;
+
+const username = css`
+  display: flex;
+  align-items: center;
+  height: 50px;
+`;
+const usernameAndGrade = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 // 사용자의 사진을 가져와야함, 밑에 alt잡아주어야함
 const imgbox = css`
   display: flex;
@@ -101,26 +118,27 @@ const point = css`
 `;
 
 const AccountSetting = css`
-  flex-direction: column;
   display: flex;
+  align-items: center;
   border: 1px solid black;
   width: 100%;
   height: 200px;
   background-color: whitesmoke;
   cursor: pointer;
 `;
+
+const personalName = css``;
 
 const userIcon = css`
   display: flex;
+  flex-direction: column;
+  align-items: center;
   font-size: 30px;
-  &:hover {
-    box-shadow: 5px 5px 10px whitesmoke;
-  }
 `;
 
-const like = css`
-  flex-direction: column;
+const bookMark = css`
   display: flex;
+  align-items: center;
   border: 1px solid black;
   width: 100%;
   height: 200px;
@@ -128,11 +146,11 @@ const like = css`
   cursor: pointer;
 `;
 
-const likeicon = css`
-  flex-direction: column;
+const bookMarkicon = css`
   display: flex;
+  flex-direction: column;
+  align-items: center;
   font-size: 30px;
-  margin-bottom: auto;
 `;
 
 const footer = css`
@@ -154,11 +172,14 @@ const MyPage = () => {
         <h1 css={titleText}>MyPage</h1>
         <div css={mypagecontainer}>
           <div css={userInfo}>
-            <div>
+            <div css={user}>
               <div css={imgbox}>
                 <div css={img} src="images/cat.png" alt="/" />
               </div>
-              <h2>이름</h2>
+              <div css={usernameAndGrade}>
+                <h2 css={username}>UserName:</h2>
+                <div css={username}>Grade:</div>
+              </div>
             </div>
           </div>
           <div css={select}>
@@ -167,11 +188,13 @@ const MyPage = () => {
             <div css={point}>Point</div>
           </div>
           <div css={AccountSetting}>
-            AccountInformation
+            <div css={personalName}></div>
             <BiUserCircle css={userIcon} />
+            <div>AccountInformation</div>
           </div>
-          <div css={like}>
-            Like<FaRegStar css={likeicon} />
+          <div css={bookMark}>
+            <FaRegStar css={bookMarkicon} />
+            BookMark
           </div>
         </div>
       </main>
