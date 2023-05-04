@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.portfolio.healthmanagement.aop.annotation.ValidAspect;
 import com.portfolio.healthmanagement.dto.auth.LoginReqDto;
-import com.portfolio.healthmanagement.dto.auth.SingupReqDto;
+import com.portfolio.healthmanagement.dto.auth.registerReqDto;
 import com.portfolio.healthmanagement.service.AuthenticationService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,10 +23,10 @@ public class AuthenticationController {
 	
 	@ValidAspect
 	@PostMapping("/auth/singup")
-	public ResponseEntity<?> singup(@Valid @RequestBody  SingupReqDto signupReqDto, BindingResult bindingResult){
+	public ResponseEntity<?> singup(@Valid @RequestBody  registerReqDto registerReqDto, BindingResult bindingResult){
 		
-		authenticationService.checkDuplicatedUsername(signupReqDto.getUsername());
-		authenticationService.singup(signupReqDto);
+		authenticationService.checkDuplicatedUsername(registerReqDto.getUsername());
+		authenticationService.register(registerReqDto);
 		
 		return ResponseEntity.ok().body(true);
 	}
@@ -34,6 +34,8 @@ public class AuthenticationController {
 	@ValidAspect
 	@PostMapping("/auth/login")
 	public ResponseEntity<?> login(@Valid @RequestBody LoginReqDto loginReqDto, BindingResult bindingResult){
-		return ResponseEntity.ok().body(null);
+		System.out.println(loginReqDto);
+		return ResponseEntity.ok().body(authenticationService.login(loginReqDto));
 	}
 }
+

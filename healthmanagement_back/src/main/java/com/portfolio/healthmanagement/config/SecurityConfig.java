@@ -7,6 +7,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.portfolio.healthmanagement.security.JwtAuthenticationEntryPoint;
+import com.portfolio.healthmanagement.security.JwtAuthenticationFilter;
+import com.portfolio.healthmanagement.security.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,6 +20,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	 private final JwtTokenProvider jwtTokenProvider;
+	 private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -29,12 +37,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); 
 		
 		http.authorizeRequests()
-			.antMatchers("/auth/**") 
-			.permitAll()
-			.anyRequest()
-			.authenticated()
-			.and()
-			.exceptionHandling()
-			.authenticationEntryPoint(null);
+		.antMatchers("/auth/**") 
+		.permitAll()
+		.anyRequest()
+		.authenticated()
+		.and()
+		.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class) //필터에서 UsernamePasswordAuthenticationFilter 검사함
+		.exceptionHandling()
+		.authenticationEntryPoint(jwtAuthenticationEntryPoint);
 	}
 }

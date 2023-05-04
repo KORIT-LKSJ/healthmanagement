@@ -13,7 +13,7 @@ import com.portfolio.healthmanagement.entity.User;
 import lombok.Data;
 
 @Data
-public class SingupReqDto {
+public class registerReqDto {
 	
 	@Pattern(regexp = "^[a-zA-Z0-9_-]{3,16}$",
 			message = "아이디는 소문자,대문자,숫자,밑줄 및 하이픈을 포함 할 수 있고 3 ~ 16자로 작성")
@@ -54,7 +54,6 @@ public class SingupReqDto {
 				.email(email)
 				.name(name)
 				.phone(phone)
-				.businessOwner(businessOwner)
 				.birthdate(birthdate)
 				.weight(weight)
 				.height(height)
