@@ -57,6 +57,13 @@ const loginInput = css`
     padding: 12px;
 `;
 
+const logo = css`
+    display: flex;
+    padding: 5px;
+    width: 214px;
+    height: 90px;
+`;
+
 const find = css`
     display: flex;
     justify-content: flex-end;
@@ -131,7 +138,7 @@ const Login = () => {
             <header css={header}></header>
             <main css={main}>
                 <div css={loginInfo}>
-                    <div>
+                    <div css={logo}>
                         <img src="images/logo.png" alt="로고" />
                     </div>
                     <div css={loginDetail}>

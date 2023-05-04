@@ -37,6 +37,13 @@ const registerInfo = css`
     gap: 24px;
 `;
 
+const logo = css`
+    display: flex;
+    padding: 5px;
+    width: 214px;
+    height: 90px;
+`;
+
 const registerDetail = css`
     display: flex;
     flex-direction: column;
@@ -99,7 +106,7 @@ const Register = () => {
             <header css={header}></header>
             <main css={main}>
                 <div css={registerInfo}>
-                    <div>
+                    <div css={logo}>
                         <img src="images/logo.png" alt="로고" />
                     </div>
                     <div css={registerDetail}>
@@ -124,11 +131,11 @@ const Register = () => {
                     </div>
                     <div css={registerDetail}>
                         <label css={registerLabel}>생년월일</label>
-                        <input css={registerInput} type="number" placeholder="생년월일을 입력해 주세요." />
+                        <input css={registerInput} type="text" placeholder="생년월일을 입력해 주세요." />
                     </div>
                     <div css={registerDetail}>
                         <label css={registerLabel}>전화번호</label>
-                        <input css={registerInput} type="tel" placeholder="전화번호을 입력해 주세요." />
+                        <input css={registerInput} type="tel" placeholder="전화번호를 입력해 주세요." />
                     </div>
                     <div css={registerDetail}>
                         <label css={registerLabel}>키</label>

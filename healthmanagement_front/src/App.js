@@ -5,6 +5,7 @@ import { Reset } from "./styles/Global/reset";
 import Main from "./pages/Main/Main";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+import FindId from "./pages/Find/Id/FindId";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
             <Routes>
                 <Route path="/login" element={<Login />}></Route>
                 <Route path="/register" element={<Register />}></Route>
+                <Route path="/find/id" element={<FindId />}></Route>
                 <Route path="/" element={<Main />}></Route>
             </Routes>
         </>
