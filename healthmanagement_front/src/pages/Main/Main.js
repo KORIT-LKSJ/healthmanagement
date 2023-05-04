@@ -1,13 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
-import { BiListUl } from 'react-icons/bi';
-import { BiSearch } from 'react-icons/bi';
+import React, { useState } from "react";
+import { BiListUl, BiSearch, BiUser } from 'react-icons/bi';
 import GymList from "./GymList";
 import { HiHome } from 'react-icons/hi';
 import { BiShoppingBag } from 'react-icons/bi';
 import { HiMap } from 'react-icons/hi';
 import { BiLike } from 'react-icons/bi';
+import Sidebar from "../../SideBar/SideBar";
+import { useQueryClient } from "react-query";
 
 
 const container = css`
@@ -139,14 +140,23 @@ const shoppingLabel = css`
     margin-left: 5px;
     margin-right: 10px;
 `;
+
 const Main = () => {
+    const [isOpen, setIsOpen] = useState();
+
+    const sideBarClickHandle = () => {
+        if(!isOpen){
+            setIsOpen(true);
+        }
+    }
     return (
         <div css={container}>
             <header css={header}>
-                <div css={listIcon}> <BiListUl/> </div>
+                <div css={listIcon} onClick={sideBarClickHandle}> <BiUser/> </div>
                 <img css={mainLogo} src="image/gymLogo.png" alt=""/>     
                 <div css={searchIcon}><BiSearch /></div>
             </header>
+            <Sidebar isOpen={isOpen} setIsOpen={setIsOpen}/>
             <main css={main}>
                 <div css={mainImgContainer}>
                     <img css={mainImg} src="https://www.da-gym.co.kr/_next/image?url=https%3A%2F%2Fs3.ap-northeast-2.amazonaws.com%2Fstone-i-dagym-centers%2Fimages%2Fevents%2F2305_dagym_mobile.png&w=1920&q=75"/>
