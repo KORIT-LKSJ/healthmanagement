@@ -4,6 +4,8 @@ import React from "react";
 import { BiUserCircle } from "react-icons/bi";
 import { FaRegStar } from "react-icons/fa";
 import { AiOutlineDoubleRight } from "react-icons/ai";
+import { AiFillQuestionCircle } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 const container = css`
   display: flex;
@@ -28,7 +30,7 @@ const main = css`
   padding: 20px 22px 75px 22px;
   width: 750px;
   height: 100%;
-  background-color: white;
+  background-color: whitesmoke;
   overflow: hidden;
 `;
 const titleText = css`
@@ -37,6 +39,7 @@ const titleText = css`
   margin-top: 20px;
   padding-left: 10px;
   display: flex;
+  font-style: italic;
   align-items: center;
   // justify-content: center;
 
@@ -53,6 +56,7 @@ const mypagecontainer = css`
   flex-direction: column;
   display: flex;
   border: none;
+  padding-top: 20px;
 `;
 
 const user = css`
@@ -64,24 +68,21 @@ const userInfo = css`
   border: 1px solid black;
   align-items: center;
   width: 100%;
-  height: 150px;
-  background-color: whitesmoke;
-`;
-const usernameAndGrade = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: 200px;
+  background-color: white;
 `;
 
 const username = css`
   display: flex;
   flex-direction: column;
-  padding: 40px 0px 0px 0px;
+  padding: 7px;
   align-items: center;
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 600;
   height: 30px;
 `;
 
-// 사용자의 사진을 가져와야함, 밑에 alt잡아주어야함
 const imgbox = css`
   display: flex;
   right: 270px;
@@ -95,9 +96,18 @@ const imgbox = css`
   background-color: white;
   overflow: hidden;
   cursor: pointer;
+
+  &:hover {
+    box-shadow: 1px 1px 25px #dbdbdb;
+  }
 `;
+
 const img = css`
   overflow: hidden;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const select = css`
@@ -111,7 +121,10 @@ const rating = css`
   width: 33.3%;
   justify-content: center;
   border: 1px solid black;
-  cursor: pointer;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 17px;
+  background-color: white;
 `;
 
 const coupon = css`
@@ -119,7 +132,10 @@ const coupon = css`
   width: 33.3%;
   justify-content: center;
   border: 1px solid black;
-  cursor: pointer;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 17px;
+  background-color: white;
 `;
 
 const point = css`
@@ -127,7 +143,17 @@ const point = css`
   width: 33.3%;
   justify-content: center;
   border: 1px solid black;
-  cursor: pointer;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 17px;
+  background-color: white;
+`;
+
+const sideContainer = css`
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+  gap: 40px;
 `;
 
 const accountSetting = css`
@@ -136,9 +162,12 @@ const accountSetting = css`
   align-items: center;
   border: 1px solid black;
   width: 100%;
-  height: 200px;
-  background-color: whitesmoke;
+  height: 100px;
+  background-color: white;
   cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const accountTitle = css`
@@ -154,13 +183,14 @@ const personalName = css`
   justify-content: center;
   flex-direction: column;
   font-size: 14px;
+  font-weight: 600;
 `;
 
 const userIcon = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 30px;
+  font-size: 27px;
   width: 150px;
 `;
 
@@ -170,9 +200,12 @@ const bookMark = css`
   justify-content: space-between;
   border: 1px solid black;
   width: 100%;
-  height: 200px;
-  background-color: whitesmoke;
+  height: 100px;
+  background-color: white;
   cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
 `;
 
 const bookMarkName = css`
@@ -182,6 +215,7 @@ const bookMarkName = css`
   justify-content: center;
   flex-direction: column;
   font-size: 14px;
+  font-weight: 600;
 `;
 
 const bookTitle = css`
@@ -190,12 +224,51 @@ const bookTitle = css`
   align-items: center;
   justify-content: center;
 `;
-const bookMarkicon = css`
+const bookMarkIcon = css`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 150px;
-  font-size: 30px;
+  font-size: 27px;
+`;
+
+const qAndA = css`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid black;
+  width: 100%;
+  height: 100px;
+  background-color: white;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
+`;
+
+const qAndATitle = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const qAndAName = css`
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: 600;
+`;
+
+const qAndAIcon = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  font-size: 27px;
 `;
 
 const nowButton = css`
@@ -217,6 +290,20 @@ const footer = css`
 `;
 
 const MyPage = () => {
+  const navigate = useNavigate();
+
+  const modifyClickHandle = () => {
+    navigate("/modify");
+  };
+
+  const bookMarkClickHandle = () => {
+    navigate("/bookmark");
+  };
+
+  const qAndAClickHandle = () => {
+    navigate("/qAnda");
+  };
+
   return (
     <div css={container}>
       <header css={header}></header>
@@ -228,10 +315,7 @@ const MyPage = () => {
               <div css={imgbox}>
                 <img css={img} src="images/cat.png" alt="" />
               </div>
-              <div css={usernameAndGrade}>
-                <h2 css={username}>UserName:</h2>
-                <div css={username}>Grade:</div>
-              </div>
+              <h2 css={username}>UserName:</h2>
             </div>
           </div>
           <div css={select}>
@@ -239,19 +323,29 @@ const MyPage = () => {
             <div css={coupon}>Coupon</div>
             <div css={point}>Point</div>
           </div>
-          <div css={accountSetting}>
-            <div css={accountTitle}>
-              <BiUserCircle css={userIcon} />
-              <div css={personalName}>정보수정</div>
+          <div css={sideContainer}>
+            <div css={accountSetting} onClick={modifyClickHandle}>
+              <div css={accountTitle}>
+                <BiUserCircle css={userIcon} />
+                <div css={personalName}>Modify</div>
+              </div>
+              <AiOutlineDoubleRight css={nowButton} />
             </div>
-            <AiOutlineDoubleRight css={nowButton} />
-          </div>
-          <div css={bookMark}>
-            <div css={bookTitle}>
-              <FaRegStar css={bookMarkicon} />
-              <div css={bookMarkName}>즐겨찾기</div>
+            <div css={bookMark} onClick={bookMarkClickHandle}>
+              <div css={bookTitle}>
+                <FaRegStar css={bookMarkIcon} />
+                <div css={bookMarkName}>BookMark</div>
+              </div>
+              <AiOutlineDoubleRight css={nowButton} />
             </div>
-            <AiOutlineDoubleRight css={nowButton} />
+
+            <div css={qAndA} onClick={qAndAClickHandle}>
+              <div css={qAndATitle}>
+                <AiFillQuestionCircle css={qAndAIcon} />
+                <div css={qAndAName}>Q&A</div>
+              </div>
+              <AiOutlineDoubleRight css={nowButton} />
+            </div>
           </div>
         </div>
       </main>
