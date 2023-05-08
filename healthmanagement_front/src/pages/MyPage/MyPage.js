@@ -6,6 +6,8 @@ import { FaRegStar } from "react-icons/fa";
 import { AiOutlineDoubleRight } from "react-icons/ai";
 import { AiFillQuestionCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { useQuery, useQueryClient } from "react-query";
+import axios from "axios";
 
 const container = css`
   display: flex;
@@ -289,14 +291,7 @@ const footer = css`
 
 const MyPage = () => {
   const navigate = useNavigate();
-
-  // 유저 프로필 사진을 바꾸는 로직 구현중
-  const changeClickHandle = localStorage.getItem("/images");
-  if (img == null) {
-    img.src = "./images/noimage.jpg";
-  } else {
-    img.src = changeClickHandle;
-  }
+  const queryClient = useQueryClient();
 
   const modifyClickHandle = () => {
     navigate("/modify");
@@ -310,6 +305,29 @@ const MyPage = () => {
     navigate("/qAnda");
   };
 
+
+    // 유저 프로필 사진을 바꾸는 로직 구현중
+    const changeClickHandle = localStorage.getItem("profileimage");
+
+    // 유저 이름 들고오는 로직 구현중
+    const principalData = queryClient.getQueryData("principal").data;
+    const roles = principalData.authorities.split(",");
+
+    console.log(principalData);
+  const username = useQuery(["getusername"], async()=>{
+    const option ={
+      params:{
+        userId: queryClient.getQueryData("principal").data.userId
+      },
+      headers:{
+        Authorization:localStorage.getItem("accessToken")
+
+      }
+    }
+    const response = await axios.get(``, option);
+    return response;
+  });
+
   return (
     <div css={container}>
       <header css={header}></header>
@@ -321,12 +339,14 @@ const MyPage = () => {
               <div css={imgbox}>
                 <img
                   css={img}
-                  src="images/cat.png"
+                  src={changeClickHandle || "./images/noimage.jpg"}
                   alt=""
-                  onChange={changeClickHandle}
+                  onLoad={() => console.log("image loaded")}
                 />
               </div>
-              <h2 css={username}>UserName:</h2>
+              <h2 css={username}>
+                UserName:{queryClient.getQueryData("principal").data.name}
+              </h2>
             </div>
           </div>
           <div css={select}>

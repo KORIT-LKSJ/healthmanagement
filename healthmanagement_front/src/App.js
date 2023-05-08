@@ -8,6 +8,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import FindId from "./pages/Find/Id/FindId";
 import FindPassword from "./pages/Find/Password/FindPassword";
+import AuthRouteReactQuery from "./components/Routes/AuthRoute/AuthRouteReactQuery";
 
 function App() {
     return (
@@ -19,7 +20,7 @@ function App() {
                 <Route path="/find/id" element={<FindId />}></Route>
                 <Route path="/find/password" element={<FindPassword />}></Route>
                 <Route path="/" element={<Main />}></Route>
-                <Route path="/MyPage" element={<MyPage/>}/>
+                <Route path="/MyPage" element={ <AuthRouteReactQuery path="/MyPage" element={<MyPage/>} /> } />
             </Routes>
         </>
     );
