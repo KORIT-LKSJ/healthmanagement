@@ -5,8 +5,6 @@ import { GrFormClose } from 'react-icons/gr';
 import ListButton from './ListButton/ListButton';
 import { BiUser, BiLike, BiLogOut} from 'react-icons/bi';
 import { FaRegistered } from 'react-icons/fa';
-import axios from 'axios';
-import { useQuery, useQueryClient } from 'react-query';
 
 const sidebar = (isOpen) => css`
     position: absolute;

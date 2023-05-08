@@ -1,15 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useState } from "react";
-import { BiListUl, BiSearch, BiUser } from "react-icons/bi";
+import React, { useEffect, useRef, useState } from "react";
+import { BiSearch, BiUser } from "react-icons/bi";
 import GymList from "./GymList";
 import { HiHome } from "react-icons/hi";
 import { BiShoppingBag } from "react-icons/bi";
 import { HiMap } from "react-icons/hi";
 import { BiLike } from "react-icons/bi";
 import Sidebar from "../../SideBar/SideBar";
-import { useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import SearchBar from "../../SearchBar/SearchBar";
+import QueryString from "qs";
+import axios from "axios";
 
 const container = css`
     display: flex;
@@ -150,13 +152,77 @@ const bottom = css`
     margin-top: 60px;
 `
 const Main = () => {
+    const [ searchParam, setSearchParam ] =useState({page: 1, searchValue: ""})
+    const [ refresh, setRefresh ] = useState(false);
+    const [ gyms, setGyms ] = useState([]);
+    const [ lastPage, setLastPage ] = useState(1);
+    const lastGymRef = useRef();
     const [isOpen, setIsOpen] = useState();
+    const [isOpen2, setIsOpen2] = useState();
+
+    useEffect(()=> {
+        const observerService = (entries, observer) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting){
+                    setRefresh(true);
+                }
+            });
+        }
+        const observer = new IntersectionObserver(observerService, {threshold:1});
+        observer.observe(lastGymRef.current);
+    }, []);
+
+    const option = {
+        params: searchParam,
+        headers: {
+            Authorization: localStorage.getItem("accessToken")
+        },
+        paramsSerializer: params=> QueryString.stringify(params, {arrayFormat:'repeat'})
+    }
+
+    const searchGyms = useQuery(["searchGyms"], async () => {
+        const response = await axios.get("http://localhost:8080/gyms", option);
+        return response;
+    }, {
+        onSuccess: (response) => {
+            if(refresh) {
+                setRefresh(false);
+            }
+            const totalCount = response.data.totalCount;
+            setLastPage(totalCount % 20 === 0 ? totalCount / 20 : Math.ceil(totalCount / 20));
+            setGyms([...gyms, ...response.data.gymList]);
+            setSearchParam({...searchParam, page: searchParam.page + 1});
+        },
+        enabled: refresh && (searchParam.page < lastPage + 1 || lastPage === 0)
+    });
 
     const sideBarClickHandle = () => {
         if (!isOpen) {
             setIsOpen(true);
         }
     };
+
+    const searchBarClickHandle = () => {
+        if (!isOpen2) {
+            setIsOpen2(true);
+        }
+        else{
+            setIsOpen2(false);
+        }
+    }
+
+    const searchInputHandle = (e) => {
+        setSearchParam({...searchParam, page:1, searchValue: e.target.value});
+    }
+    
+    const searchSubmitHandle = (e) => {
+        if(e.keyCode === 13) {
+            setSearchParam({...searchParam, page:1});
+            setGyms([]);
+            setRefresh(true);
+        }
+    }
+
     return (
         <div css={container}>
             <header css={header}>
@@ -165,11 +231,12 @@ const Main = () => {
                     <BiUser />{" "}
                 </div>
                 <img css={mainLogo} src="image/gymLogo.png" alt="" />
-                <div css={searchIcon}>
-                    <BiSearch /> <SearchBar/>
+                <div css={searchIcon} onClick={searchBarClickHandle}>
+                    <BiSearch /> 
                 </div>
+                    <SearchBar isOpen2={isOpen2} searchInputHandle={searchInputHandle} searchSubmitHandle={searchSubmitHandle}/>
             </header>
-            <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+                <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
             <main css={main}>
                 <div css={mainImgContainer}>
                     <img
@@ -179,7 +246,8 @@ const Main = () => {
                 </div>
                 <div css={mentCss}> 여긴 어때요?</div>
                 <div css={gymListContainer}>
-                    <GymList />
+                    {gyms.length > 0 ? gyms.map(gym=> (<GymList key={gym.gymId} gym={gym}></GymList>)) : ""}
+                    <div ref={lastGymRef}></div>
                 </div>
             </main>
             <footer css={footer}>

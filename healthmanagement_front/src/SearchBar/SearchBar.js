@@ -2,13 +2,14 @@
 import { css } from '@emotion/react';
 import React from 'react';
 import { BiSearch } from 'react-icons/bi';
-const searchBar = (isOpen) => css`
+const searchBar = (isOpen2) => css`
+
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
-    margin-top: 35px;
-    left: ${isOpen ? `750px` : `750px`};
+    margin-top: 160px;
+    left: ${isOpen2 ? `750px` : `1400px`};
     border: 1px solid #dbdbdb;
     border-radius: 10px;
     width: 400px;
@@ -17,7 +18,7 @@ const searchBar = (isOpen) => css`
     transition: left 1s ease;
     background-color: white;
 
-    ${isOpen ? "" : `
+    ${isOpen2 ? "" : `
         cursor: pointer;
     `}
 `;
@@ -34,10 +35,11 @@ const searchIcon = css`
     font-size: 30px;
 `
 
-const SearchBar = ({isOpen, setIsOpen}) => {
+const SearchBar = ({isOpen2, searchInputHandle, searchSubmitHandle}) => {
+
     return (
-        <div css={searchBar}>
-           <input css={searchInput} type="search"/> <BiSearch css={searchIcon}/>
+        <div css={searchBar(isOpen2)}>
+           <input css={searchInput} type="search" onKeyUp={searchSubmitHandle} onChange={searchInputHandle}/> <BiSearch css={searchIcon}/>
         </div>
     );
 };
