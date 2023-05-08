@@ -49,7 +49,6 @@ public class JwtTokenProvider {
 		stringBuilder.delete(stringBuilder.length() -1, stringBuilder.length());
 		
 		String authorities  = stringBuilder.toString();
-		
 		Date tokenExpiresDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24)); // 토큰 만료시간 설정
 		
 		System.out.println(authentication.getName());
