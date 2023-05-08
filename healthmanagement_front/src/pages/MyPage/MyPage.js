@@ -41,10 +41,8 @@ const titleText = css`
   display: flex;
   font-style: italic;
   align-items: center;
-  // justify-content: center;
 
   border-radius: 5px;
-  //background: linear-gradient(#f55c09 20%, #EEA460 80%);
 
   font-size: 35px;
   font-weight: 600;
@@ -292,6 +290,14 @@ const footer = css`
 const MyPage = () => {
   const navigate = useNavigate();
 
+  // 유저 프로필 사진을 바꾸는 로직 구현중
+  const changeClickHandle = localStorage.getItem("/images");
+  if (img == null) {
+    img.src = "./images/noimage.jpg";
+  } else {
+    img.src = changeClickHandle;
+  }
+
   const modifyClickHandle = () => {
     navigate("/modify");
   };
@@ -313,7 +319,12 @@ const MyPage = () => {
           <div css={userInfo}>
             <div css={user}>
               <div css={imgbox}>
-                <img css={img} src="images/cat.png" alt="" />
+                <img
+                  css={img}
+                  src="images/cat.png"
+                  alt=""
+                  onChange={changeClickHandle}
+                />
               </div>
               <h2 css={username}>UserName:</h2>
             </div>
