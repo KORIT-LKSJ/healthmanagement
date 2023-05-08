@@ -47,6 +47,28 @@ const titleText = css`
   text-shadow: 2px 2px 2px #eea46050;
 `;
 
+const modifycontainer = css`
+  flex-direction: column;
+  display: flex;
+  border: none;
+  padding-top: 20px;
+`;
+const personalmodify = css`
+  border: 1px solid black; // 없앨것
+  display: flex;
+  gap: 20px;
+`;
+
+const username = css``;
+const id = css``;
+const password = css``;
+const passwordCheck = css``;
+const telephone = css``;
+const phone = css``;
+const email = css``;
+const adress = css``;
+const deliveryadress = css``;
+
 const footer = css`
   position: fixed;
   bottom: 0;
@@ -64,6 +86,18 @@ const ModifyPage = () => {
       <header css={header}></header>
       <main css={main}>
         <h1 css={titleText}>ModifyPage</h1>
+        <div css={modifycontainer}>
+          <div css={personalmodify}>username:</div>
+          <div css={username}></div>
+          <div css={id}></div>
+          <div css={password}></div>
+          <div css={passwordCheck}></div>
+          <div css={telephone}></div>
+          <div css={phone}></div>
+          <div css={email}></div>
+          <div css={adress}></div>
+          <div css={deliveryadress}></div>
+        </div>
       </main>
       <footer css={footer}></footer>
     </div>
