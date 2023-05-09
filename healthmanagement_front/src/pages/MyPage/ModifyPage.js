@@ -4,7 +4,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BiExit } from "react-icons/bi";
 import { GiSaveArrow } from "react-icons/gi";
-import { useMutation } from "react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "react-query";
 import axios from "axios";
 
 const container = css`
@@ -78,7 +83,7 @@ const modifycontainer = css`
   display: flex;
   border: none;
   padding-top: 20px;
-  gap: 30px;
+  gap: 20px;
 `;
 
 const usernameText = css`
@@ -198,6 +203,7 @@ const deliveryaddressText = css`
 
 const ModifyPage = () => {
   const navigate = useNavigate();
+
   const [changeuser, setChangeUser] = useState({
     password: "",
     passwordCheck: "",
@@ -396,7 +402,7 @@ const ModifyPage = () => {
               <input
                 css={informationinput}
                 type="text"
-                placeholder="전화번호를 기입해주세요"
+                placeholder="ex.055-xxx-xxxx"
                 onChange={onchangeHandle}
                 name="telephone"
               ></input>
@@ -406,7 +412,7 @@ const ModifyPage = () => {
               <input
                 css={informationinput}
                 type="text"
-                placeholder="휴대전화를 기입해주세요"
+                placeholder="ex.010-xxxx-xxxx"
                 onChange={onchangeHandle}
                 name="phone"
               ></input>
@@ -426,7 +432,7 @@ const ModifyPage = () => {
               <input
                 css={informationinput}
                 type="text"
-                placeholder="주소를 기입해주세요"
+                placeholder="도로지번으로 입력하여주세요"
                 onChange={onchangeHandle}
                 name="address"
               ></input>
@@ -436,7 +442,7 @@ const ModifyPage = () => {
               <input
                 css={informationinput}
                 type="text"
-                placeholder="배송지를 기입해주세요"
+                placeholder="도로지번으로 입력하여주세요"
                 onChange={onchangeHandle}
                 name="deliveryaddress"
               ></input>

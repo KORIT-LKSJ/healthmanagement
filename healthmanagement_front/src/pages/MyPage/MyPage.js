@@ -291,7 +291,18 @@ const footer = css`
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
+
+  const principal = useQuery(["principal"], async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    const response = await axios.get("http://localhost:8080/auth/principal", {
+      params: { accessToken },
+    });
+    return response;
+  });
+
+  if (principal.isLoading) {
+    return <div></div>;
+  }
 
   const modifyClickHandle = () => {
     navigate("/modify");
@@ -305,42 +316,26 @@ const MyPage = () => {
     navigate("/qAnda");
   };
 
-  //유저이미지 들고오는 로직 구현중
-  const [selectedFile, setSelectedFile] = useState(
-    localStorage.getItem("profileimage") || "./images/noimage.jpg"
-  );
+  // //유저이미지 들고오는 로직 구현중
+  // const [selectedFile, setSelectedFile] = useState(
+  //   localStorage.getItem("profileimage") || "./images/noimage.jpg"
+  // );
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setSelectedFile(reader.result);
-      localStorage.setItem("profileimage", reader.result);
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  };
+  // const handleFileChange = (event) => {
+  //   const file = event.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     setSelectedFile(reader.result);
+  //     localStorage.setItem("profileimage", reader.result);
+  //   };
+  //   if (file) {
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   //유저 이름 들고오는 로직 구현중
-  const principalData = queryClient.getQueryData("principal").data;
+  const principalData = principal.data.data;
   const roles = principalData.authorities.split(",");
-
-  console.log(principalData);
-  const username = useQuery(["getusername"], async () => {
-    const option = {
-      params: {
-        userId: queryClient.getQueryData("principal").data.userId,
-      },
-      headers: {
-        Authorization: localStorage.getItem("accessToken"),
-      },
-    };
-    const response = await axios.get(``, option);
-    return response;
-
-    // 사진을변경 구현을 해야하고 유저정보(유저이름)들고오는 구현을 해야함 
-  });
 
   return (
     <div css={container}>
@@ -354,7 +349,7 @@ const MyPage = () => {
                 <label htmlFor="profile-image"></label>
                 <img
                   css={img}
-                  src={selectedFile}
+                  // src={selectedFile}
                   alt=""
                   onLoad={() => console.log("image loaded")}
                 />
@@ -364,13 +359,11 @@ const MyPage = () => {
                     id="profile-image"
                     accept="image/*"
                     style={{ display: "none" }}
-                    onChange={handleFileChange}
+                    // onChange={handleFileChange}
                   ></input>
                 </label>
               </div>
-              <h2 css={username}>
-                UserName:{queryClient.getQueryData("principal").data.name}
-              </h2>
+              <h2 css={username}>UserName:{principalData.username}</h2>
             </div>
           </div>
           <div css={select}>
