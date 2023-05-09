@@ -31,6 +31,7 @@ const main = css`
     height: 100%;
     background-color: white;
     overflow: hidden;
+    
 `;
 
 const loginInfo = css`
