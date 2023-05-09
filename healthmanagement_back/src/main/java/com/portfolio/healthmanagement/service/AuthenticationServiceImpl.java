@@ -45,14 +45,16 @@ public class AuthenticationServiceImpl implements AuthenticationService, UserDet
 		User userEntity = registerReqDto.toEntity();
 		userRepositiory.saveUser(userEntity);
 		
-		List<Authority> authorities  = new ArrayList<>();
+		Authority authority = null;
 		
-		if(registerReqDto.getBusinessOwner() == 1) {
-			authorities .add(Authority.builder().userId(userEntity.getUserId()).roleId(2).build());
+		if(registerReqDto.getUserType() == 1) {
+			authority = Authority.builder().userId(userEntity.getUserId()).roleId(2).build();
 		}
 		else {
-			authorities .add(Authority.builder().userId(userEntity.getUserId()).roleId(3).build());
+			authority = Authority.builder().userId(userEntity.getUserId()).roleId(3).build();
 		}
+		
+		userRepositiory.saveAuthority(authority);
 	}
 
 	public JwtRespDto login(LoginReqDto loginReqDto) {

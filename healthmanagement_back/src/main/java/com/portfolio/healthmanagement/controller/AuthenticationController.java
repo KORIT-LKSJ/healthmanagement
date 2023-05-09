@@ -22,9 +22,8 @@ public class AuthenticationController {
 	private final AuthenticationService authenticationService;
 	
 	@ValidAspect
-	@PostMapping("/auth/singup")
-	public ResponseEntity<?> singup(@Valid @RequestBody  registerReqDto registerReqDto, BindingResult bindingResult){
-		
+	@PostMapping("/auth/signup")
+	public ResponseEntity<?> singup(@Valid @RequestBody registerReqDto registerReqDto, BindingResult bindingResult){
 		authenticationService.checkDuplicatedUsername(registerReqDto.getUsername());
 		authenticationService.register(registerReqDto);
 		

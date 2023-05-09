@@ -1,6 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
 
 const container = css`
     display: flex;
@@ -34,7 +37,6 @@ const registerInfo = css`
     display: flex;
     flex-direction: column;
     color: #58595b;
-    gap: 24px;
 `;
 
 const logo = css`
@@ -47,6 +49,7 @@ const logo = css`
 const registerDetail = css`
     display: flex;
     flex-direction: column;
+    padding-top: 15px;
     font-size: 15px;
     font-weight: 400;
     gap: 5px;
@@ -57,11 +60,18 @@ const registerLabel = css`
 `;
 
 const registerInput = css`
-    width: 100%;
-    background-color: white;
+    margin-bottom: 3px;
     border: 1px solid #dbdbdb;
     border-radius: 10px;
     padding: 12px;
+    width: 100%;
+    background-color: white;
+`;
+
+const errorMsg = css`
+    margin-left: 5px;
+    font-size: 12px;
+    color: red;
 `;
 
 const register = css`
@@ -101,68 +111,192 @@ const footer = css`
 `;
 
 const Register = () => {
-    return (
-        <div css={container}>
-            <header css={header}></header>
-            <main css={main}>
-                <div css={registerInfo}>
-                    <div css={logo}>
-                        <img src="images/logo.png" alt="로고" />
+    const navigate = useNavigate();
+    const [registerUser, setRegisterUser] = useState({
+        username: "",
+        password: "",
+        name: "",
+        email: "",
+        phone: "",
+        birthdate: "",
+        height: "",
+        weight: "",
+        userType: "",
+    });
+
+    const [errorMessage, setErrorMessage] = useState({
+        username: "",
+        password: "",
+        name: "",
+        email: "",
+        phone: "",
+    });
+
+    const successRegister = () => {
+        setErrorMessage({
+            username: "",
+            password: "",
+            name: "",
+            email: "",
+            phone: "",
+        });
+        alert("회원가입 성공!");
+        navigate("/login");
+    };
+
+    const errorRegister = (error) => {
+        setErrorMessage({
+            username: "",
+            password: "",
+            name: "",
+            email: "",
+            phone: "",
+            ...error.response.data.errorData,
+        });
+    };
+
+    const registerSubmit = useMutation(async () => {
+        const option = {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        };
+        try {
+            await axios.post("http://localhost:8080/auth/signup", JSON.stringify({ ...registerUser }), option);
+            successRegister();
+        } catch (error) {
+            errorRegister(error);
+        }
+    });
+
+    const onchangeHandle = (e) => {
+        const { name, value } = e.target;
+        setRegisterUser({ ...registerUser, [name]: value });
+    };
+
+    const userTypeClickHandle = (e) => {
+        setRegisterUser({ ...registerUser, [e.target.name]: e.target.value });
+    };
+
+    if (!registerSubmit.isLoading)
+        return (
+            <div css={container}>
+                <header css={header}></header>
+                <main css={main}>
+                    <div css={registerInfo}>
+                        <div css={logo}>
+                            <img src="images/logo.png" alt="로고" />
+                        </div>
+                        <div css={registerDetail}>
+                            <label css={registerLabel}>아이디</label>
+                            <input
+                                css={registerInput}
+                                type="text"
+                                placeholder="아이디를 입력해 주세요."
+                                name="username"
+                                onChange={onchangeHandle}
+                            />
+                        </div>
+                        <div css={errorMsg}>{errorMessage.username}</div>
+                        <div css={registerDetail}>
+                            <label css={registerLabel}>비밀번호</label>
+                            <input
+                                css={registerInput}
+                                type="password"
+                                placeholder="영문, 숫자, 특수문자 포함 8~16자를 입력해 주세요."
+                                name="password"
+                                onChange={onchangeHandle}
+                            />
+                        </div>
+                        <div css={errorMsg}>{errorMessage.password}</div>
+                        <div css={registerDetail}>
+                            <label css={registerLabel}>이름</label>
+                            <input
+                                css={registerInput}
+                                type="text"
+                                placeholder="이름을 입력해 주세요."
+                                name="name"
+                                onChange={onchangeHandle}
+                            />
+                        </div>
+                        <div css={errorMsg}>{errorMessage.name}</div>
+                        <div css={registerDetail}>
+                            <label css={registerLabel}>이메일</label>
+                            <input
+                                css={registerInput}
+                                type="email"
+                                placeholder="이메일을 입력해 주세요."
+                                name="email"
+                                onChange={onchangeHandle}
+                            />
+                        </div>
+                        <div css={errorMsg}>{errorMessage.email}</div>
+                        <div css={registerDetail}>
+                            <label css={registerLabel}>생년월일</label>
+                            <input
+                                css={registerInput}
+                                type="text"
+                                placeholder="생년월일을 입력해 주세요."
+                                name="birthdate"
+                                onChange={onchangeHandle}
+                            />
+                        </div>
+                        <div css={registerDetail}>
+                            <label css={registerLabel}>전화번호</label>
+                            <input
+                                css={registerInput}
+                                type="tel"
+                                placeholder="전화번호를 입력해 주세요."
+                                name="phone"
+                                onChange={onchangeHandle}
+                            />
+                        </div>
+                        <div css={errorMsg}>{errorMessage.phone}</div>
+                        <div css={registerDetail}>
+                            <label css={registerLabel}>키</label>
+                            <input
+                                css={registerInput}
+                                type="number"
+                                placeholder="키를 입력해 주세요."
+                                name="height"
+                                onChange={onchangeHandle}
+                            />
+                        </div>
+                        <div css={registerDetail}>
+                            <label css={registerLabel}>몸무게</label>
+                            <input
+                                css={registerInput}
+                                type="number"
+                                placeholder="몸무게를 입력해 주세요."
+                                name="weight"
+                                onChange={onchangeHandle}
+                            />
+                        </div>
                     </div>
-                    <div css={registerDetail}>
-                        <label css={registerLabel}>아이디</label>
-                        <input css={registerInput} type="text" placeholder="아이디를 입력해 주세요." />
+                    <div css={radioCheck}>
+                        <div>
+                            <input type="radio" id="user" name="userType" value={0} onClick={userTypeClickHandle} />
+                            <label htmlFor="user">user</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="owner" name="userType" value={1} onClick={userTypeClickHandle} />
+                            <label htmlFor="owner">owner</label>
+                        </div>
                     </div>
-                    <div css={registerDetail}>
-                        <label css={registerLabel}>비밀번호</label>
-                        <input
-                            css={registerInput}
-                            type="password"
-                            placeholder="영문, 숫자, 특수문자 포함 8~16자를 입력해 주세요."
-                        />
+                    <div css={register}>
+                        <button
+                            css={registerButton}
+                            onClick={() => {
+                                registerSubmit.mutate();
+                            }}
+                        >
+                            회원가입
+                        </button>
                     </div>
-                    <div css={registerDetail}>
-                        <label css={registerLabel}>이름</label>
-                        <input css={registerInput} type="text" placeholder="이름을 입력해 주세요." />
-                    </div>
-                    <div css={registerDetail}>
-                        <label css={registerLabel}>이메일</label>
-                        <input css={registerInput} type="email" placeholder="이메일을 입력해 주세요." />
-                    </div>
-                    <div css={registerDetail}>
-                        <label css={registerLabel}>생년월일</label>
-                        <input css={registerInput} type="text" placeholder="생년월일을 입력해 주세요." />
-                    </div>
-                    <div css={registerDetail}>
-                        <label css={registerLabel}>전화번호</label>
-                        <input css={registerInput} type="tel" placeholder="전화번호를 입력해 주세요." />
-                    </div>
-                    <div css={registerDetail}>
-                        <label css={registerLabel}>키</label>
-                        <input css={registerInput} type="number" placeholder="키를 입력해 주세요." />
-                    </div>
-                    <div css={registerDetail}>
-                        <label css={registerLabel}>몸무게</label>
-                        <input css={registerInput} type="number" placeholder="몸무게를 입력해 주세요." />
-                    </div>
-                </div>
-                <div css={radioCheck}>
-                    <div>
-                        <input type="radio" id="user" name="userType" />
-                        <label for="user">user</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="owner" name="userType" />
-                        <label for="owner">owner</label>
-                    </div>
-                </div>
-                <div css={register}>
-                    <button css={registerButton}>회원가입</button>
-                </div>
-            </main>
-            <footer css={footer}></footer>
-        </div>
-    );
+                </main>
+                <footer css={footer}></footer>
+            </div>
+        );
 };
 
 export default Register;

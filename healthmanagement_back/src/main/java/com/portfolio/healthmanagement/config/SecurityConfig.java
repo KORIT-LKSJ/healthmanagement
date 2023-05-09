@@ -40,10 +40,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/auth/**") 
 		.permitAll()
 		.anyRequest()
-		.authenticated()
-		.and()
-		.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class) //필터에서 UsernamePasswordAuthenticationFilter 검사함
-		.exceptionHandling()
-		.authenticationEntryPoint(jwtAuthenticationEntryPoint);
+		.permitAll();
+//		.authenticated()
+//		.and()
+//		.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class) //필터에서 UsernamePasswordAuthenticationFilter 검사함
+//		.exceptionHandling()
+//		.authenticationEntryPoint(jwtAuthenticationEntryPoint);
 	}
 }
