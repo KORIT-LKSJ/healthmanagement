@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
+import React, { useState } from "react";
 import { BiUserCircle } from "react-icons/bi";
 import { FaRegStar } from "react-icons/fa";
 import { AiOutlineDoubleRight } from "react-icons/ai";
@@ -305,25 +305,37 @@ const MyPage = () => {
     navigate("/qAnda");
   };
 
+  //유저이미지 들고오는 로직 구현중
+  const [selectedFile, setSelectedFile] = useState(
+    localStorage.getItem("profileimage") || "./images/noimage.jpg"
+  );
 
-    // 유저 프로필 사진을 바꾸는 로직 구현중
-    const changeClickHandle = localStorage.getItem("profileimage");
-
-    // 유저 이름 들고오는 로직 구현중
-    const principalData = queryClient.getQueryData("principal").data;
-    const roles = principalData.authorities.split(",");
-
-    console.log(principalData);
-  const username = useQuery(["getusername"], async()=>{
-    const option ={
-      params:{
-        userId: queryClient.getQueryData("principal").data.userId
-      },
-      headers:{
-        Authorization:localStorage.getItem("accessToken")
-
-      }
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setSelectedFile(reader.result);
+      localStorage.setItem("profileimage", reader.result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
     }
+  };
+
+  // 유저 이름 들고오는 로직 구현중
+  const principalData = queryClient.getQueryData("principal").data;
+  const roles = principalData.authorities.split(",");
+
+  console.log(principalData);
+  const username = useQuery(["getusername"], async () => {
+    const option = {
+      params: {
+        userId: queryClient.getQueryData("principal").data.userId,
+      },
+      headers: {
+        Authorization: localStorage.getItem("accessToken"),
+      },
+    };
     const response = await axios.get(``, option);
     return response;
   });
@@ -337,12 +349,22 @@ const MyPage = () => {
           <div css={userInfo}>
             <div css={user}>
               <div css={imgbox}>
+                <label htmlFor="profile-image"></label>
                 <img
                   css={img}
-                  src={changeClickHandle || "./images/noimage.jpg"}
+                  src={selectedFile}
                   alt=""
                   onLoad={() => console.log("image loaded")}
                 />
+                <label>
+                  <input
+                    type="file"
+                    id="profile-image"
+                    accept="image/*"
+                    style={{ display: "none" }}
+                    onChange={handleFileChange}
+                  ></input>
+                </label>
               </div>
               <h2 css={username}>
                 UserName:{queryClient.getQueryData("principal").data.name}
