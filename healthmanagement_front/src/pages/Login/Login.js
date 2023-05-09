@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 const container = css`
@@ -56,6 +58,12 @@ const loginInput = css`
     border: 1px solid #dbdbdb;
     border-radius: 10px;
     padding: 12px;
+`;
+
+const errorMsg = css`
+    margin-left: 5px;
+    font-size: 12px;
+    color: red;
 `;
 
 const logo = css`
@@ -135,6 +143,15 @@ const footer = css`
 
 const Login = () => {
     const navigate = useNavigate();
+    const [loginUser, setLoginUser] = useState({
+        username: "",
+        password: "",
+    });
+
+    const [errorMessage, setErrorMessage] = useState({
+        username: "",
+        password: "",
+    });
 
     const findIdClickHandle = () => {
         navigate("/find/id");
@@ -148,53 +165,113 @@ const Login = () => {
         navigate("/register");
     };
 
-    return (
-        <div css={container}>
-            <header css={header}></header>
-            <main css={main}>
-                <div css={loginInfo}>
-                    <div css={logo}>
-                        <img src="images/logo.png" alt="로고" />
-                    </div>
-                    <div css={loginDetail}>
-                        <label css={loginLabel}>아이디</label>
-                        <input css={loginInput} type="text" placeholder="아이디를 입력해 주세요." />
-                    </div>
-                    <div css={loginDetail}>
-                        <label css={loginLabel}>비밀번호</label>
-                        <input
-                            css={loginInput}
-                            type="password"
-                            placeholder="영문, 숫자, 특수문자 포함 8~16자를 입력해 주세요."
-                        />
-                    </div>
-                </div>
-                <div css={find}>
-                    <div css={findUsernamePassword} onClick={findIdClickHandle}>
-                        아이디찾기
-                    </div>
-                    <div css={findUsernamePassword} onClick={findPasswordClickHandle}>
-                        비밀번호찾기
-                    </div>
-                </div>
+    const successLogin = () => {
+        setErrorMessage({
+            username: "",
+            password: "",
+        });
+        alert("로그인 성공!");
+        navigate("/");
+    };
 
-                <div css={moreLogin}>
-                    <img css={loginImg} src="images/naverLogin.png" alt="" />
-                    <img css={loginImg} src="images/kakaoLogin.png" alt="" />
-                    <img css={loginImg} src="images/googleLogin.png" alt="" />
-                </div>
-                <div css={signUpContainer}>
-                    <div css={signUp} onClick={signUpClickHandle}>
-                        회원가입
+    const errorLogin = (error) => {
+        console.log(error);
+        setErrorMessage({
+            username: "",
+            password: "",
+            ...error.response.data.errorData,
+        });
+    };
+
+    const loginSubmit = useMutation(async () => {
+        const option = {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        };
+        try {
+            const response = await axios.post(
+                "http://localhost:8080/auth/login",
+                JSON.stringify({ ...loginUser }),
+                option
+            );
+            const accessToken = response.data.granType + " " + response.data.accessToken;
+            localStorage.setItem("accessToken", accessToken);
+            successLogin();
+        } catch (error) {
+            errorLogin(error);
+        }
+    });
+
+    const onchangeHandle = (e) => {
+        const { name, value } = e.target;
+        setLoginUser({ ...loginUser, [name]: value });
+    };
+    if (!loginSubmit.isLoading)
+        return (
+            <div css={container}>
+                <header css={header}></header>
+                <main css={main}>
+                    <div css={loginInfo}>
+                        <div css={logo}>
+                            <img src="images/logo.png" alt="로고" />
+                        </div>
+                        <div css={loginDetail}>
+                            <label css={loginLabel}>아이디</label>
+                            <input
+                                css={loginInput}
+                                type="text"
+                                placeholder="아이디를 입력해 주세요."
+                                onChange={onchangeHandle}
+                                name="username"
+                            />
+                            <div css={errorMsg}>{errorMessage.username}</div>
+                        </div>
+                        <div css={loginDetail}>
+                            <label css={loginLabel}>비밀번호</label>
+                            <input
+                                css={loginInput}
+                                type="password"
+                                placeholder="영문, 숫자, 특수문자 포함 8~16자를 입력해 주세요."
+                                onChange={onchangeHandle}
+                                name="password"
+                            />
+                            <div css={errorMsg}>{errorMessage.password}</div>
+                        </div>
                     </div>
-                </div>
-                <div css={login}>
-                    <button css={loginButton}>로그인</button>
-                </div>
-            </main>
-            <footer css={footer}></footer>
-        </div>
-    );
+                    <div css={find}>
+                        <div css={findUsernamePassword} onClick={findIdClickHandle}>
+                            아이디찾기
+                        </div>
+                        <div css={findUsernamePassword} onClick={findPasswordClickHandle}>
+                            비밀번호찾기
+                        </div>
+                    </div>
+
+                    <div css={moreLogin}>
+                        <img css={loginImg} src="images/naverLogin.png" alt="" />
+                        <img css={loginImg} src="images/kakaoLogin.png" alt="" />
+                        <img css={loginImg} src="images/googleLogin.png" alt="" />
+                    </div>
+                    <div css={signUpContainer}>
+                        <div css={signUp} onClick={signUpClickHandle}>
+                            회원가입
+                        </div>
+                    </div>
+                    <div css={login}>
+                        <button
+                            css={loginButton}
+                            onClick={() => {
+                                loginSubmit.mutate();
+                            }}
+                        >
+                            로그인
+                        </button>
+                    </div>
+                </main>
+                <footer css={footer}></footer>
+            </div>
+        );
 };
 
 export default Login;

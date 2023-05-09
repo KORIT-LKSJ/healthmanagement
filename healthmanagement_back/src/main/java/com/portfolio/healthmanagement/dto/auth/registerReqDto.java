@@ -45,7 +45,7 @@ public class registerReqDto {
 
 	private Date birthdate;
 	
-	private int businessOwner;
+	private int userType;
 
 	public User toEntity() {
 		return User.builder()
