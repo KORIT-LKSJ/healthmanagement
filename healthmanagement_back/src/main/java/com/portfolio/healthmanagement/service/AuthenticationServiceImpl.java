@@ -20,6 +20,7 @@ import com.portfolio.healthmanagement.dto.response.PrincipalRespDto;
 import com.portfolio.healthmanagement.entity.Authority;
 import com.portfolio.healthmanagement.entity.User;
 import com.portfolio.healthmanagement.exception.CustomException;
+import com.portfolio.healthmanagement.exception.ErrorMap;
 import com.portfolio.healthmanagement.repository.UserRepositiory;
 import com.portfolio.healthmanagement.security.JwtTokenProvider;
 
@@ -36,7 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService, UserDet
 	
 	public void checkDuplicatedUsername(String username) {
 		if(userRepositiory.findUserByUsername(username) != null) {
-			throw new CustomException("가입 된 아이디 입니다.");
+			throw new CustomException("Duplicated Email", ErrorMap.builder().put("username","가입 된 아이디 입니다." ).build());
 		}
 	}
 	
@@ -72,16 +73,17 @@ public class AuthenticationServiceImpl implements AuthenticationService, UserDet
 		User userEntity = userRepositiory.findUserByUsername(username);
 		
 		if(userEntity == null) {
-			throw new CustomException("로그인 실패");
+			throw new CustomException("로그인 실패", ErrorMap.builder().put("username","사용자정보를 확인하세요").build());
 		}
 		
 		return userEntity.toPrincipal();
 	}
 	
+	@Override
 	public boolean authenticated(String accessToken) {
 		return jwtTokenProvider.vaildateToken(jwtTokenProvider.getToken(accessToken));
 	}
-	
+	@Override
 	public PrincipalRespDto getPrincipal(String accessToken) {
 		
 		Claims claims = jwtTokenProvider.getClaims(jwtTokenProvider.getToken(accessToken)); 
