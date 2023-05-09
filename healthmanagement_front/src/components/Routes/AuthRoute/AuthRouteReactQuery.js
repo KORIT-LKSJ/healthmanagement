@@ -31,7 +31,7 @@ const AuthRouteReactQuery = ({ path, element }) => {
       "/find/id",
       "/find/password",
       "/mypage",
-      "/modifypage",
+      "/ModifyPage",
     ];
     if (!authenticated.data.data) {
       if (permitAll.includes(path)) {

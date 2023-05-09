@@ -105,16 +105,14 @@ const namebox = css`
   margin-right: 20px;
 `;
 
-const idText = css`
+const getname = css`
   display: flex;
-  border: 1px solid #dbdbdb;
-  border-radius: 10px;
   align-items: center;
-  height: 600px;
-  width: 100%;
-  font-size: 18px;
-  font-weight: 600;
+  width: 200px;
+  margin-left: 20px;
+  margin-right: 20px;
 `;
+
 
 const passwordText = css`
   display: flex;
@@ -203,6 +201,8 @@ const deliveryaddressText = css`
 
 const ModifyPage = () => {
   const navigate = useNavigate();
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const [changeuser, setChangeUser] = useState({
     password: "",
@@ -219,6 +219,40 @@ const ModifyPage = () => {
     passwordCheck: "",
   });
 
+  const modifySubmit = useMutation(async () => {
+    const option = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/auth/ModifyPage",
+        JSON.stringify({ ...changeuser }),
+        option
+      );
+      const accessToken =
+        response.data.granType + " " + response.data.accessToken;
+      localStorage.setItem("accessToken", accessToken);
+      successModify();
+      setIsSuccess(true); // 제출이 성공하면 isSuccess를 true로 변경
+    } catch (error) {
+      errorModify(error);
+      setIsError(true); //제출이 실패하면 isError를 true로 변경
+    }
+  });
+  const principal = useQuery(["principal"], async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    const response = await axios.get("http://localhost:8080/auth/principal", {
+      params: { accessToken },
+    });
+    return response;
+  });
+
+  if (principal.isLoading) {
+    return <div></div>;
+  }
+
   const onclickExitHandle = () => {
     navigate("/mypage");
   };
@@ -227,6 +261,8 @@ const ModifyPage = () => {
     navigate("/mypage");
   };
 
+  const principalData = principal.data.data;
+  const roles = principalData.authorities.split(",");
   const onchangeHandle = (e) => {
     const { name, value } = e.target;
     setChangeUser({ ...changeuser, [name]: value });
@@ -249,7 +285,7 @@ const ModifyPage = () => {
     }
   };
 
-  // 유저정보 들고오는 것과 회원정보 수정시 저장되는 것을 구현을 해야함, 마이페이지 디자인 수정 필요(밑에가 잘림)
+  // 회원정보 수정시 저장되는 것을 구현을 해야함, 마이페이지 디자인 수정 필요(밑에가 잘림)
 
   const successModify = () => {
     setErrorMessage({
@@ -281,55 +317,7 @@ const ModifyPage = () => {
     });
   };
 
-  // 유저정보를 들고오는? 로직구현중
-  const modifyUser = async () => {
-    const option = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/auth/modifypage",
-        JSON.stringify({ ...changeuser }),
-        option
-      );
-      const accessToken =
-        response.data.granType + " " + response.data.accessToken;
-      localStorage.setItem("accessToken", accessToken);
-      successModify();
-    } catch (error) {
-      errorModify(error);
-    }
-  };
-
   // 유저 정보를 저장하는 로직 구현중
-
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isError, setIsError] = useState(false);
-
-  const modifySubmit = useMutation(async () => {
-    const option = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/auth/modifypage",
-        JSON.stringify({ ...changeuser }),
-        option
-      );
-      const accessToken =
-        response.data.granType + " " + response.data.accessToken;
-      localStorage.setItem("accessToken", accessToken);
-      successModify();
-      setIsSuccess(true); // 제출이 성공하면 isSuccess를 true로 변경
-    } catch (error) {
-      errorModify(error);
-      setIsError(true); //제출이 실패하면 isError를 true로 변경
-    }
-  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -364,12 +352,8 @@ const ModifyPage = () => {
           </div>
           <div css={modifycontainer}>
             <div css={usernameText}>
-              {" "}
               <h2 css={namebox}>username</h2>
-            </div>
-            <div css={idText}>
-              {" "}
-              <h2 css={namebox}> ID </h2>
+              <div css={getname}>{principalData.username}</div>
             </div>
             <div css={passwordText}>
               <h2 css={namebox}> Password </h2>

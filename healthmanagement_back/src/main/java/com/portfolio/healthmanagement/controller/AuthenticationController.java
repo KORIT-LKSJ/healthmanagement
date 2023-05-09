@@ -50,5 +50,7 @@ public class AuthenticationController {
 	public ResponseEntity<?>principal( @RequestParam String accessToken){
 		return ResponseEntity.ok().body(authenticationService.getPrincipal(accessToken));
 	}
+	
+	
 }
 

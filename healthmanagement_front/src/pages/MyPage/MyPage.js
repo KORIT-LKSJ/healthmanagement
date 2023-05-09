@@ -305,7 +305,7 @@ const MyPage = () => {
   }
 
   const modifyClickHandle = () => {
-    navigate("/modify");
+    navigate("/ModifyPage");
   };
 
   const bookMarkClickHandle = () => {
