@@ -113,7 +113,6 @@ const getname = css`
   margin-right: 20px;
 `;
 
-
 const passwordText = css`
   display: flex;
   border: 1px solid #dbdbdb;
@@ -258,7 +257,7 @@ const ModifyPage = () => {
   };
 
   const onsuccessClickHandle = () => {
-    navigate("/mypage");
+    navigate("/modifypage");
   };
 
   const principalData = principal.data.data;
@@ -359,7 +358,7 @@ const ModifyPage = () => {
               <h2 css={namebox}> Password </h2>
               <input
                 css={informationinput}
-                type="text"
+                type="password"
                 placeholder="비밀번호를 입력해주세요"
                 onChange={onchangeHandle}
                 name="password"
@@ -372,7 +371,7 @@ const ModifyPage = () => {
               <h2 css={namebox}> PasswordCheck </h2>
               <input
                 css={informationinput}
-                type="text"
+                type="password"
                 placeholder="비밀번호를 확인해주세요"
                 onChange={onchangeHandle}
                 name="passwordCheck"
