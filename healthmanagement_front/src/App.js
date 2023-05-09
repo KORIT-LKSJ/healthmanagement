@@ -8,6 +8,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import FindId from "./pages/Find/Id/FindId";
 import FindPassword from "./pages/Find/Password/FindPassword";
+import FacilityReq from "./pages/MyPage/FacilityReq/FacilityReq";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/find/password" element={<FindPassword />}></Route>
                 <Route path="/" element={<Main />}></Route>
                 <Route path="/MyPage" element={<MyPage/>}/>
+                <Route path="/facility" element={<FacilityReq/>}/>
             </Routes>
         </>
     );
