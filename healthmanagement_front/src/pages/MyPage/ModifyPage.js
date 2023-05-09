@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BiExit } from "react-icons/bi";
 import { GiSaveArrow } from "react-icons/gi";
+import { useMutation } from "react-query";
+import axios from "axios";
 
 const container = css`
   display: flex;
@@ -202,8 +204,8 @@ const ModifyPage = () => {
     telephone: "",
     phone: "",
     email: "",
-    adress: "",
-    deliveryadress: "",
+    address: "",
+    deliveryaddress: "",
   });
 
   const [errorMessage, setErrorMessage] = useState({
@@ -220,9 +222,28 @@ const ModifyPage = () => {
   };
 
   const onchangeHandle = (e) => {
-    const { value } = e.target;
-    setChangeUser({ ...changeuser, value });
+    const { name, value } = e.target;
+    setChangeUser({ ...changeuser, [name]: value });
+
+    // 비밀번호와 비밀번호의 확인이 같은지 확인하는 로직 구현중
+    if (name === "password" || name === "passwordCheck") {
+      if (changeuser.password !== changeuser.passwordCheck) {
+        setErrorMessage({
+          ...errorMessage,
+          passwordCheck: "비밀번호가 일치하지 않습니다",
+        });
+      } else if (name === "password" || value !== changeuser.passwordCheck) {
+        setErrorMessage({
+          ...errorMessage,
+          passwordCheck: "비밀번호가 일치하지 않습니다",
+        });
+      } else {
+        setErrorMessage({ ...errorMessage, passwordCheck: "" });
+      }
+    }
   };
+
+  // 유저정보 들고오는 것과 회원정보 수정시 저장되는 것을 구현을 해야함
 
   const successModify = () => {
     setErrorMessage({
@@ -231,8 +252,8 @@ const ModifyPage = () => {
       telephone: "",
       phone: "",
       email: "",
-      adress: "",
-      deliveryadress: "",
+      address: "",
+      deliveryaddress: "",
     });
     alert("회원정보 수정 완료");
     navigate("/");
@@ -246,109 +267,138 @@ const ModifyPage = () => {
       telephone: "",
       phone: "",
       email: "",
-      adress: "",
-      deliveryadress: "",
-      ...error.response.data.errorData,
+      address: "",
+      deliveryaddress: "",
+      ...error.response.data,
     });
   };
-  return (
-    <div css={container}>
-      <header css={header}></header>
-      <main css={main}>
-        <div css={title}>
-          <h1 css={titleText}>ModifyPage</h1>
-          <div css={box}>
-            <div css={button} onClick={onclickExitHandle}>
-              <BiExit css={icon} />
+
+  // 유저정보를 들고오는? 저장하는? 로직구현중
+  const modifySubmit = useMutation(async () => {
+    const option = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/auth/modifypage",
+        JSON.stringify({ ...changeuser }),
+        option
+      );
+      const accessToken =
+        response.data.granType + " " + response.data.accessToken;
+      localStorage.setItem("accessToken", accessToken);
+      successModify();
+    } catch (error) {
+      errorModify(error);
+    }
+  });
+  if (!modifySubmit.isLoading)
+    return (
+      <div css={container}>
+        <header css={header}></header>
+        <main css={main}>
+          <div css={title}>
+            <h1 css={titleText}>ModifyPage</h1>
+            <div css={box}>
+              <div css={button} onClick={onclickExitHandle}>
+                <BiExit css={icon} />
+              </div>
+              <div css={button} onClick={onsuccessClickHandle}>
+                <GiSaveArrow css={icon} />
+              </div>
             </div>
-            <div css={button} onClick={onsuccessClickHandle}>
-              <GiSaveArrow css={icon} />
+          </div>
+          <div css={modifycontainer}>
+            <div css={usernameText}>
+              {" "}
+              <h2 css={namebox}>username</h2>
+            </div>
+            <div css={idText}>
+              {" "}
+              <h2 css={namebox}> ID </h2>
+            </div>
+            <div css={passwordText}>
+              <h2 css={namebox}> Password </h2>
+              <input
+                css={informationinput}
+                type="text"
+                placeholder="비밀번호를 입력해주세요"
+                onChange={onchangeHandle}
+                name="password"
+              ></input>
+              {errorMessage.passwordCheck && (
+                <div css={errorMessage}>{errorMessage.passwordCheck}</div>
+              )}
+            </div>
+            <div css={passwordCheckText}>
+              <h2 css={namebox}> PasswordCheck </h2>
+              <input
+                css={informationinput}
+                type="text"
+                placeholder="비밀번호를 확인해주세요"
+                onChange={onchangeHandle}
+                name="passwordCheck"
+              ></input>
+              {errorMessage.passwordCheck && (
+                <div css={errorMessage}>{errorMessage.passwordCheck}</div>
+              )}
+            </div>
+            <div css={telephoneText}>
+              <h2 css={namebox}> Telephone </h2>
+              <input
+                css={informationinput}
+                type="text"
+                placeholder="전화번호를 기입해주세요"
+                onChange={onchangeHandle}
+                name="telephone"
+              ></input>
+            </div>
+            <div css={phoneText}>
+              <h2 css={namebox}> Phone </h2>
+              <input
+                css={informationinput}
+                type="text"
+                placeholder="휴대전화를 기입해주세요"
+                onChange={onchangeHandle}
+                name="phone"
+              ></input>
+            </div>
+            <div css={emailText}>
+              <h2 css={namebox}> Email</h2>
+              <input
+                css={informationinput}
+                type="text"
+                placeholder="이메일을 기입해주세요"
+                onChange={onchangeHandle}
+                name="email"
+              ></input>
+            </div>
+            <div css={addressText}>
+              <h2 css={namebox}> Address</h2>
+              <input
+                css={informationinput}
+                type="text"
+                placeholder="주소를 기입해주세요"
+                onChange={onchangeHandle}
+                name="address"
+              ></input>
+            </div>
+            <div css={deliveryaddressText}>
+              <h2 css={namebox}> DeliveryAddress</h2>
+              <input
+                css={informationinput}
+                type="text"
+                placeholder="배송지를 기입해주세요"
+                onChange={onchangeHandle}
+                name="deliveryaddress"
+              ></input>
             </div>
           </div>
-        </div>
-        <div css={modifycontainer}>
-          <div css={usernameText}>
-            {" "}
-            <h2 css={namebox}>username</h2>
-          </div>
-          <div css={idText}>
-            {" "}
-            <h2 css={namebox}> ID </h2>
-          </div>
-          <div css={passwordText}>
-            <h2 css={namebox}> Password </h2>
-            <input
-              css={informationinput}
-              type="text"
-              placeholder="비밀번호를 입력해주세요"
-              onChange={onchangeHandle}
-              name="password"
-            ></input>
-          </div>
-          <div css={passwordCheckText}>
-            <h2 css={namebox}> PasswordCheck </h2>
-            <input
-              css={informationinput}
-              type="text"
-              placeholder="비밀번호를 확인해주세요"
-              onChange={onchangeHandle}
-              name="passwordCheck"
-            ></input>
-          </div>
-          <div css={telephoneText}>
-            <h2 css={namebox}> Telephone </h2>
-            <input
-              css={informationinput}
-              type="text"
-              placeholder="전화번호를 기입해주세요"
-              onChange={onchangeHandle}
-              name="telephone"
-            ></input>
-          </div>
-          <div css={phoneText}>
-            <h2 css={namebox}> Phone </h2>
-            <input
-              css={informationinput}
-              type="text"
-              placeholder="휴대전화를 기입해주세요"
-              onChange={onchangeHandle}
-              name="phone"
-            ></input>
-          </div>
-          <div css={emailText}>
-            <h2 css={namebox}> Email</h2>
-            <input
-              css={informationinput}
-              type="text"
-              placeholder="이메일을 기입해주세요"
-              onChange={onchangeHandle}
-              name="email"
-            ></input>
-          </div>
-          <div css={addressText}>
-            <h2 css={namebox}> Address</h2>
-            <input
-              css={informationinput}
-              type="text"
-              placeholder="주소를 입력해주세요"
-              onChange={onchangeHandle}
-              name="address"
-            ></input>
-          </div>
-          <div css={deliveryaddressText}>
-            <h2 css={namebox}> DeliveryAddress</h2>
-            <input
-              css={informationinput}
-              type="text"
-              placeholder="배송지를 입력해주세요"
-              onChange={onchangeHandle}
-              name="deliveryaddress"
-            ></input>
-          </div>
-        </div>
-      </main>
-    </div>
-  );
+        </main>
+      </div>
+    );
 };
 
 export default ModifyPage;

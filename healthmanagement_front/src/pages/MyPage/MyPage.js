@@ -338,6 +338,8 @@ const MyPage = () => {
     };
     const response = await axios.get(``, option);
     return response;
+
+    // 사진을변경 구현을 해야하고 유저정보(유저이름)들고오는 구현을 해야함 
   });
 
   return (
