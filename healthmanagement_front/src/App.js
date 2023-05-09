@@ -9,7 +9,9 @@ import Register from "./pages/Register/Register";
 import FindId from "./pages/Find/Id/FindId";
 import FindPassword from "./pages/Find/Password/FindPassword";
 import AuthRouteReactQuery from "./components/Routes/AuthRoute/AuthRouteReactQuery";
-import ModifyPage from "./pages/MyPage/ModifyPage";
+import ModifyPage from "./pages/MyPage/ModifyPage";\
+import FacilityReq from "./pages/MyPage/FacilityReq/FacilityReq";
+import Map from "./pages/Map/Map";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
           element={<AuthRouteReactQuery path="/MyPage" element={<MyPage />} />}
         />
         <Route path="/ModifyPage" element={<ModifyPage />}></Route>
+        <Route path="/facility" element={<FacilityReq/>}/>
+        <Route path="/map" element={<Map ncpClientId="mnqlapx88m" />}></Route>
       </Routes>
     </>
   );

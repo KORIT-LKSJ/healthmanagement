@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 const cardContainer = css`
     display: flex;
     flex-direction: column;
@@ -50,7 +51,7 @@ const imgBox = css`
     overflow: hidden;
 `;
 const img = css`
-    height: 100%;
+    width: 300px;
 `;
 
 const footer = css`
@@ -81,69 +82,22 @@ const likeIcon = css`
 `
 
 
-const GymList = () => {
+const GymList = ({ gym }) => {
+
     return (
         <>
         <div css={cardContainer}>
         <header css={header}>
-            <h1 css={titleText}>헬스보이짐</h1>
+            <h1 css={titleText}>{gym.gymName}</h1>
         </header>
         <main css={main}>
             <div css={imgBox}>
-                <img css={img} src="https://s3.ap-northeast-2.amazonaws.com/stone-i-dagym-centers/images/gyms/17d9d9dd931434a275/4K7y1fTVp4P6W56Znqp1CqNuV1ex3C4413m1gaVtE51h.jpg"/>
+                <img css={img} src={gym.gymImgUrl}/>
             </div>
         </main>
         <footer css={footer}>
-            <h2>위치: 서면 </h2>
-            <h2>가격: (월) 100000&#8361;</h2>
-            <div css={like}><div css={likeIcon}></div>추천: 1</div>
-        </footer>
-        </div>
-
-        <div css={cardContainer}>
-        <header css={header}>
-            <h1 css={titleText}>헬스보이짐</h1>
-        </header>
-        <main css={main}>
-            <div css={imgBox}>
-                <img css={img} src="https://s3.ap-northeast-2.amazonaws.com/stone-i-dagym-centers/images/gyms/17d9d9dd931434a275/4K7y1fTVp4P6W56Znqp1CqNuV1ex3C4413m1gaVtE51h.jpg"/>
-            </div>
-        </main>
-        <footer css={footer}>
-            <h2>위치: 서면 </h2>
-            <h2>가격: (월) 100000&#8361;</h2>
-            <div css={like}><div css={likeIcon}></div>추천: 1</div>
-        </footer>
-        </div>
-
-        <div css={cardContainer}>
-        <header css={header}>
-            <h1 css={titleText}>헬스보이짐</h1>
-        </header>
-        <main css={main}>
-            <div css={imgBox}>
-                <img css={img} src="https://s3.ap-northeast-2.amazonaws.com/stone-i-dagym-centers/images/gyms/17d9d9dd931434a275/4K7y1fTVp4P6W56Znqp1CqNuV1ex3C4413m1gaVtE51h.jpg"/>
-            </div>
-        </main>
-        <footer css={footer}>
-            <h2>위치: 서면 </h2>
-            <h2>가격: (월) 100000&#8361;</h2>
-            <div css={like}><div css={likeIcon}></div>추천: 1</div>
-        </footer>
-        </div>
-
-        <div css={cardContainer}>
-        <header css={header}>
-            <h1 css={titleText}>헬스보이짐</h1>
-        </header>
-        <main css={main}>
-            <div css={imgBox}>
-                <img css={img} src="https://s3.ap-northeast-2.amazonaws.com/stone-i-dagym-centers/images/gyms/17d9d9dd931434a275/4K7y1fTVp4P6W56Znqp1CqNuV1ex3C4413m1gaVtE51h.jpg"/>
-            </div>
-        </main>
-        <footer css={footer}>
-            <h2>위치: 서면 </h2>
-            <h2>가격: 100000&#8361; (월)</h2>
+            <h2>위치: {gym.gymAddress} </h2>
+            <h2>가격: (월) {gym.gymPrice}&#8361;</h2>
             <div css={like}><div css={likeIcon}></div>추천: 1</div>
         </footer>
         </div>

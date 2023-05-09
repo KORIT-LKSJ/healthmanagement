@@ -5,8 +5,6 @@ import { GrFormClose } from 'react-icons/gr';
 import ListButton from './ListButton/ListButton';
 import { BiUser, BiLike, BiLogOut} from 'react-icons/bi';
 import { FaRegistered } from 'react-icons/fa';
-import axios from 'axios';
-import { useQuery, useQueryClient } from 'react-query';
 
 const sidebar = (isOpen) => css`
     position: absolute;
@@ -17,6 +15,7 @@ const sidebar = (isOpen) => css`
     border: 1px solid #dbdbdb;
     border-radius: 10px;
     width: 250px;
+    height: 50%;
     box-shadow: -1px 0px 5px #dbdbdb;
     transition: left 1s ease;
     background-color: white;
@@ -85,7 +84,10 @@ const closeButton = css`
 `;
 
 const main = css`
+    display: flex;
+    flex-direction:column;
     padding: 10px;
+    height: 100%;
     border-bottom: 1px solid #dbdbdb;
 `;
 
