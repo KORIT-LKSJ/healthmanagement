@@ -54,7 +54,7 @@ public class registerReqDto {
 				.email(email)
 				.name(name)
 				.phone(phone)
-				.birthdate(birthdate)
+				.birthDate(birthdate)
 				.weight(weight)
 				.height(height)
 				.build();

@@ -25,7 +25,7 @@ public class User {
 	private String email;
 	private int weight;
 	private int height;
-	private Date birthdate;
+	private Date birthDate;
 	
 	private List<Authority> authorities;
 	
