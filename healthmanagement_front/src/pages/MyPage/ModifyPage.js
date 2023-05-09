@@ -243,7 +243,7 @@ const ModifyPage = () => {
     }
   };
 
-  // 유저정보 들고오는 것과 회원정보 수정시 저장되는 것을 구현을 해야함
+  // 유저정보 들고오는 것과 회원정보 수정시 저장되는 것을 구현을 해야함, 마이페이지 디자인 수정 필요(밑에가 잘림)
 
   const successModify = () => {
     setErrorMessage({
@@ -255,12 +255,14 @@ const ModifyPage = () => {
       address: "",
       deliveryaddress: "",
     });
-    alert("회원정보 수정 완료");
-    navigate("/");
+    setIsSuccess(true);
+    setIsError(false);
   };
 
   const errorModify = (error) => {
     console.log(error);
+    setIsSuccess(true);
+    setIsError(false);
     setErrorMessage({
       password: "",
       passwordCheck: "",
@@ -273,8 +275,8 @@ const ModifyPage = () => {
     });
   };
 
-  // 유저정보를 들고오는? 저장하는? 로직구현중
-  const modifySubmit = useMutation(async () => {
+  // 유저정보를 들고오는? 로직구현중
+  const modifyUser = async () => {
     const option = {
       headers: {
         "Content-Type": "application/json",
@@ -293,7 +295,51 @@ const ModifyPage = () => {
     } catch (error) {
       errorModify(error);
     }
+  };
+
+  // 유저 정보를 저장하는 로직 구현중
+
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  const modifySubmit = useMutation(async () => {
+    const option = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/auth/modifypage",
+        JSON.stringify({ ...changeuser }),
+        option
+      );
+      const accessToken =
+        response.data.granType + " " + response.data.accessToken;
+      localStorage.setItem("accessToken", accessToken);
+      successModify();
+      setIsSuccess(true); // 제출이 성공하면 isSuccess를 true로 변경
+    } catch (error) {
+      errorModify(error);
+      setIsError(true); //제출이 실패하면 isError를 true로 변경
+    }
   });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    modifySubmit.mutate();
+  };
+
+  if (modifySubmit.isLoading) {
+    return <div>저장중...</div>;
+  }
+  if (isSuccess) {
+    return <div>저장되었습니다</div>;
+  }
+  if (isError) {
+    return <div>저장 중 오류가 발생하였습니다</div>;
+  }
+
   if (!modifySubmit.isLoading)
     return (
       <div css={container}>
