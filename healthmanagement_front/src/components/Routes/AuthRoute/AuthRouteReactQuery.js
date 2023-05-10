@@ -16,14 +16,6 @@ const AuthRouteReactQuery = ({ path, element }) => {
     return <div>로딩중...</div>;
   }
 
-  // if ([principal !== undefined]) {
-  //   const roles = principal.data.data.authorities.split(",");
-  //   if (path.startWith("/admin") && !roles.includes("ROLE_ADMIN")) {
-  //     alert("점근권한이 없습니다");
-  //     return <Navigate to="" />;
-  //   }
-  // }
-
   if (!authenticated.isLoading) {
     const permitAll = [
       "/login",
