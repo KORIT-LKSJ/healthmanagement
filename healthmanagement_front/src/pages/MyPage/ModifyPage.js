@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BiExit } from "react-icons/bi";
 import { GiSaveArrow } from "react-icons/gi";
-import { useMutation, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import axios from "axios";
 
 const container = css`
@@ -218,7 +218,7 @@ const ModifyPage = () => {
   const [istelephone, setIsTelePhone] = useState(false);
   const [isphone, setIsPhone] = useState(false);
 
-  const { isLoading, data } = useQuery(["principal"], async () => {
+  const { isLoading, data, error } = useQuery(["principal"], async () => {
     const accessToken = localStorage.getItem("accessToken");
     const response = await axios.get("http://localhost:8080/auth/principal", {
       params: { accessToken },
@@ -226,8 +226,13 @@ const ModifyPage = () => {
     return response.data;
   });
 
-  if (isLoading || !data) {
+  if (isLoading) {
     return <div>Loading...</div>;
+  }
+  if (error) {
+  }
+  if (!data?.data) {
+    return <div>no data available</div>;
   }
 
   const onclickExitHandle = () => {

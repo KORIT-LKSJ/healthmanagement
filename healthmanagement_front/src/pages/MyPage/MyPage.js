@@ -290,6 +290,9 @@ const footer = css`
 `;
 
 const MyPage = () => {
+  const [selectedFile, setSelectedFile] = useState(
+    localStorage.getItem("profileimage") || "./images/noimage.jpg"
+  );
   const navigate = useNavigate();
 
   const principal = useQuery(["principal"], async () => {
@@ -316,22 +319,23 @@ const MyPage = () => {
     navigate("/qAnda");
   };
 
-  // //유저이미지 들고오는 로직 구현중
-  // const [selectedFile, setSelectedFile] = useState(
-  //   localStorage.getItem("profileimage") || "./images/noimage.jpg"
-  // );
+  //유저이미지 들고오는 로직 구현중
 
-  // const handleFileChange = (event) => {
-  //   const file = event.target.files[0];
-  //   const reader = new FileReader();
-  //   reader.onloadend = () => {
-  //     setSelectedFile(reader.result);
-  //     localStorage.setItem("profileimage", reader.result);
-  //   };
-  //   if (file) {
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
+  const handleImageClick = () => {
+    const input = document.getElementById("profile-image");
+    input.click();
+  };
+  const handleFileSelect = (event) => {
+    const reader = new FileReader();
+    const file = event.target.files[0];
+    reader.onloadend = function () {
+      setSelectedFile(reader.result);
+      localStorage.setItem("profileimage", reader.result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
 
   //유저 이름 들고오는 로직 구현중
   const principalData = principal.data.data;
@@ -349,8 +353,9 @@ const MyPage = () => {
                 <label htmlFor="profile-image"></label>
                 <img
                   css={img}
-                  // src={selectedFile}
+                  src={selectedFile}
                   alt=""
+                  onClick={handleImageClick}
                   onLoad={() => console.log("image loaded")}
                 />
                 <label>
@@ -359,7 +364,7 @@ const MyPage = () => {
                     id="profile-image"
                     accept="image/*"
                     style={{ display: "none" }}
-                    // onChange={handleFileChange}
+                    onChange={handleFileSelect}
                   ></input>
                 </label>
               </div>
