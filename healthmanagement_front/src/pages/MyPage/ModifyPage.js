@@ -249,7 +249,7 @@ const ModifyPage = () => {
     try {
       const accessToken = localStorage.getItem("accessToken");
       const response = await axios.post(
-        "http://localhost:8080/register",
+        "http://localhost:8080/modifypage",
         changeuser,
         {
           headers: {
@@ -273,7 +273,7 @@ const ModifyPage = () => {
       /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
     if (!passwordRegExp.test(currentPassword)) {
       setPasswordMessage(
-        "숫자+ 영문자 +특수문자 조합으로 8자리이상 입력해주세요"
+        "숫자+ 영문자 + 특수문자 조합으로 8자리이상 입력해주세요"
       );
       setIsPassword(false);
     } else {
