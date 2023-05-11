@@ -54,8 +54,9 @@ Geocode.setApiKey("AIzaSyBNF8zr18aoubHxQN_0X2jjICBMkL_VGDI");
 Geocode.setLocationType("ROOFTOP");
 
 const Map = () => {
+    const [nearlatlngs, setNearlatlngs] = useState([{ lat: "", lng: "" }]);
+    const [addressList, setAddressList] = useState([]);
     const navermaps = useNavermaps();
-
     const myLocation = useQuery(["myLocation"], async () => {
         const response = await Geocode.fromAddress(
             "부산광역시 부산진구 중앙대로 668 포라이프 리서치 코리아 부산 픽업센터 4층"
@@ -64,24 +65,59 @@ const Map = () => {
         return { lat, lng };
     });
 
-    if (!myLocation.isLoading)
-        return (
-            <div css={container}>
-                <header css={header}></header>
-                <main css={main}>
-                    <MapDiv css={mapStyle}>
-                        <NaverMap
-                            defaultCenter={new navermaps.LatLng(myLocation.data.lat, myLocation.data.lng)}
-                            defaultZoom={16}
-                            minZoom={15}
-                        >
-                            <Marker position={new navermaps.LatLng(35.1524206, 129.0596165)} />
-                        </NaverMap>
-                    </MapDiv>
-                </main>
-                <footer css={footer}></footer>
-            </div>
-        );
+    const NearbyGymAddress = useQuery(
+        ["searchNearbyAddress"],
+        async () => {
+            const option = {
+                headers: {
+                    Authorization: localStorage.getItem("accessToken"),
+                },
+                params: {
+                    myAddress: "부산진구",
+                },
+            };
+            return await axios.get("http://localhost:8080/search/gym/address", option);
+        },
+        {
+            onSuccess: (response) => {
+                const addresses = response.data.addresses;
+                setAddressList([...addresses]);
+            },
+        }
+    );
+
+    if (myLocation.isLoading && NearbyGymAddress.isLoading) {
+        return <></>;
+    }
+
+    addressList.forEach(async (address) => {
+        const response = await Geocode.fromAddress(address);
+        console.log(response);
+        const { lat, lng } = response.results.forEach((result) => {
+            const { lat, lng } = result.geometry.location;
+            setNearlatlngs([...nearlatlngs, { lat: lat, lng: lng }]);
+        });
+    });
+
+    return (
+        <div css={container}>
+            <header css={header}></header>
+            <main css={main}>
+                <MapDiv css={mapStyle}>
+                    <NaverMap
+                        defaultCenter={new navermaps.LatLng(myLocation.data.lat, myLocation.data.lng)}
+                        defaultZoom={16}
+                        minZoom={15}
+                    >
+                        {nearlatlngs.map((nearlatlng) => {
+                            return <Marker position={new navermaps.LatLng(nearlatlng.lat, nearlatlng.lng)} />;
+                        })}
+                    </NaverMap>
+                </MapDiv>
+            </main>
+            <footer css={footer}></footer>
+        </div>
+    );
 };
 
 export default Map;

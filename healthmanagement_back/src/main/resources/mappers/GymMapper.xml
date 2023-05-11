@@ -143,6 +143,15 @@
 			values(0, #{gymId}, now())
 		</insert>
 		
+		<select id="NearbyGymAddresses" parameterType="hashMap" resultType="String">
+			select
+				gym_address
+			from
+				gym_tb
+			where
+				gym_address like concat("%",#{myAddress},"%")
+		</select>
+		
 </mapper>
 
 	

@@ -44,4 +44,20 @@ public class GymService {
 		
 		return responseMap;
 	}
+	
+	public Map<String, Object> NearbyGymAddresses(String myAddress) {
+		List<String> addresses = new ArrayList<>();
+		Map<String, Object> map = new HashMap<>();
+		map.put("myAddress", myAddress);
+		
+		gymRepository.NearbyGymAddresses(map).forEach(address -> {
+			addresses.add(address);
+		});
+		
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("addresses",addresses);
+		
+		return responseMap;
+		
+	}
 }
