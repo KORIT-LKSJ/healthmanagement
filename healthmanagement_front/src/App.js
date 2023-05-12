@@ -11,8 +11,7 @@ import FindPassword from "./pages/Find/Password/FindPassword";
 import AuthRouteReactQuery from "./components/Routes/AuthRoute/AuthRouteReactQuery";
 import ModifyPage from "./pages/MyPage/ModifyPage";
 import FacilityReq from "./pages/MyPage/FacilityReq/FacilityReq";
-import Map from "./pages/Map/Map";
-import { NavermapsProvider } from "react-naver-maps";
+import KaKaoMap from "./pages/Map/KakaoMap";
 
 function App() {
     return (
@@ -27,14 +26,7 @@ function App() {
                 <Route path="/MyPage" element={<AuthRouteReactQuery path="/MyPage" element={<MyPage />} />} />
                 <Route path="/ModifyPage" element={<ModifyPage />}></Route>
                 <Route path="/facility" element={<FacilityReq />} />
-                <Route
-                    path="/map"
-                    element={
-                        <NavermapsProvider ncpClientId="mnqlapx88m" submodules={["geocoder"]}>
-                            <Map />
-                        </NavermapsProvider>
-                    }
-                ></Route>
+                <Route path="/map" element={<KaKaoMap />}></Route>
             </Routes>
         </>
     );
