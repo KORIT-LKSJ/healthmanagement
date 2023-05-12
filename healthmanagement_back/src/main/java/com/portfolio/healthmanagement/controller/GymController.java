@@ -28,8 +28,8 @@ public class GymController {
 	}
 	
 	@GetMapping("/search/gym/address")
-	public ResponseEntity<?> NearbyGymAddresses(String myAddress) {
-		return ResponseEntity.ok().body(gymService.NearbyGymAddresses(myAddress));
+	public ResponseEntity<?> NearbyGymAddressesAndGymName(String myAddress) {
+		return ResponseEntity.ok().body(gymService.NearbyGymAddressesAndGymName(myAddress));
 	}
 	
 }

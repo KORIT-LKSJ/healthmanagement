@@ -143,9 +143,10 @@
 			values(0, #{gymId}, now())
 		</insert>
 		
-		<select id="NearbyGymAddresses" parameterType="hashMap" resultType="String">
+		<select id="NearbyGymAddressesAndGymName" parameterType="hashMap" resultMap="GymMap">
 			select
-				gym_address
+				gym_address,
+				gym_name
 			from
 				gym_tb
 			where

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.portfolio.healthmanagement.dto.gym.GetGymAddressAndGymNameRespDto;
 import com.portfolio.healthmanagement.dto.gym.GetGymRespDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymReqDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymRespDto;
@@ -45,17 +46,17 @@ public class GymService {
 		return responseMap;
 	}
 	
-	public Map<String, Object> NearbyGymAddresses(String myAddress) {
-		List<String> addresses = new ArrayList<>();
+	public Map<String, Object> NearbyGymAddressesAndGymName(String myAddress) {
+		List<GetGymAddressAndGymNameRespDto> list = new ArrayList<>();
 		Map<String, Object> map = new HashMap<>();
 		map.put("myAddress", myAddress);
 		
-		gymRepository.NearbyGymAddresses(map).forEach(address -> {
-			addresses.add(address);
+		gymRepository.NearbyGymAddressesAndGymName(map).forEach(gym -> {
+			list.add(gym.toGymAddressAndNameDto());
 		});
 		
 		Map<String, Object> responseMap = new HashMap<>();
-		responseMap.put("addresses",addresses);
+		responseMap.put("gymData",list);
 		
 		return responseMap;
 		
