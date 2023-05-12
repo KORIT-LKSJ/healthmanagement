@@ -325,7 +325,7 @@ const MyPage = () => {
   //유저 이름 들고오는 로직 구현중
   const principalData = queryClient.getQueryData("principal").data;
   const roles = principalData.authorities.split(",");
-
+  
   console.log(principalData);
   const username = useQuery(["getusername"], async () => {
     const option = {

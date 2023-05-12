@@ -5,14 +5,12 @@
 	<resultMap type="com.portfolio.healthmanagement.entity.Gym" id="GymMap">
 		<id property="gymId" column="gym_id"/>
 		<result property="gymName" column="gym_name"/>
-		<result property="userId" column="user_id"/>
 		<result property="gymAddress" column="gym_address"/>
 		<result property="gymTel" column="gym_tel"/>
 		<result property="businessnNumber" column="businessnumber"/>
 		<result property="gymPrice" column="gym_price"/>
 		<result property="gymImgUrl" column="gym_img_url"/>
-		
-		<association property="user" resultMap="UserMap"></association>
+		<result property="likeCount" column="like_count"/>
 	</resultMap>
 	
 	<resultMap type="com.portfolio.healthmanagement.entity.User" id="UserMap">
@@ -29,32 +27,33 @@
 		
 	</resultMap>
 	
+	<resultMap type="com.portfolio.healthmanagement.entity.GymOwner" id="GymOwnerMap">
+		<id property="gymOwnerId" column="gym_owner_id"/>
+		<result property="gymId" column="gym_id"/>
+		<result property="userId" column="user_id"/>
+		
+		<association property="user" resultMap="UserMap"></association>
+		<association property="gym" resultMap="GymMap"></association>
+	</resultMap>
+	
 	<select id="searchGyms" parameterType="hashmap" resultMap="GymMap">
 		select
 			gt.gym_id,
-			gt.gym_name,
-			gt.gym_address,
-			gt.gym_tel,
-			gt.businessnumber,
-			gt.gym_price,
-			gt.gym_img_url,
-			
-			lc.like_count,
-			
-			ut.user_id,
-			ut.username,
-			ut.password,
-			ut.name,
-			ut.phone,
-			ut.email,
-			ut.weight,
-			ut.height,
-			ut.birthdate
-			
+		    gt.gym_name,
+		    gt.gym_address,
+		    gt.gym_tel,
+		    gt.businessnumber,
+		    gt.gym_price,
+		    gt.gym_img_url,
+		    
+		    lc.like_count,
+		    
+		    got.gym_owner_id
+		    
 		from
 			gym_tb gt
-			left outer join user_tb ut on  (ut.user_id = gt.user_id)
-			left outer join (select gym_id, count(*) as like_count from gym_like_tb group by gym_id) lc on(lc.gym_id = gt.gym_id)
+		    left outer join gym_owner_tb got on(got.gym_id = gt.gym_id)
+		    left outer join (select gym_id, count(*) as like_count from gym_like_tb group by gym_id) lc on(lc.gym_id = gt.gym_id)
 		where
 			1=1
 			<if test='searchValue !=""'>
@@ -76,18 +75,11 @@
 				gt.gym_price,
 				gt.gym_img_url,
 				
-				ut.user_id,
-				ut.username,
-				ut.password,
-				ut.name,
-				ut.phone,
-				ut.email,
-				ut.weight,
-				ut.height,
-				ut.birthdate
+				got.gym_owner_id
+			
 			from
 				gym_tb gt
-				left outer join user_tb ut on  (ut.user_id = gt.user_id)
+			    left outer join gym_owner_tb got on(got.gym_id = gt.gym_id)
 			where
 				gt.gym_id = #{gymId}
 		</select>
@@ -97,7 +89,8 @@
 		   		count(*)
 			from
 				gym_tb gt
-		    	left outer join user_tb ut on(ut.user_id = gt.user_id)
+		    	 left outer join gym_owner_tb got on(got.gym_id = gt.gym_id)
+			    left outer join user_tb ut on(got.user_id = ut.user_id)
 			where
 				1=1
 				<if test='searchValue != ""'>
@@ -142,6 +135,24 @@
 			insert into gym_list_tb
 			values(0, #{gymId}, now())
 		</insert>
+		
+		<select id="likeGyms" parameterType="hashmap"  resultType="com.portfolio.healthmanagement.entity.LikeList">
+			select
+			    gt.gym_id as gymId,
+			    gt.gym_name as gymName,
+			    gt.gym_address as gymAddress,
+			    gt.gym_tel as gymTel,
+			    gt.gym_price as gymPrice,
+			    gt.gym_img_url as gymImgUrl,
+			    
+			    ut.user_id as userId
+			from
+				gym_like_tb glt 
+			    left outer join gym_tb gt on (gt.gym_id = glt.gym_id)
+			    left outer join user_tb ut on (ut.user_id = glt.user_id)
+			where
+				ut.user_id = #{userId}
+		</select>
 		
 </mapper>
 
