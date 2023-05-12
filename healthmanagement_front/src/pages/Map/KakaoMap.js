@@ -82,15 +82,15 @@ const KaKaoMap = () => {
             try {
                 const response = await axios.get("http://localhost:8080/search/gym/address", option);
 
-                const nearLatLngsList = [];
-                response.data.addresses.forEach((address, index) => {
+                // const nearLatLngsList = [];
+                response.data.addresses.forEach((address) => {
                     geocoder.addressSearch(address, (result, status) => {
                         // 정상적으로 검색이 완료됐으면
                         if (status === kakao.maps.services.Status.OK) {
                             const { Ma, La } = new kakao.maps.LatLng(result[0].y, result[0].x);
                             // 결과값으로 받은 위치를 상태에 저장합니다
-                            nearLatLngsList.push({ lat: Ma, lng: La });
-                            setNearLatLngs([...nearLatLngsList]);
+                            // nearLatLngsList.push({ lat: Ma, lng: La });
+                            setNearLatLngs((prevState) => [...prevState, { lat: Ma, lng: La }]);
                         }
                     });
                 });
