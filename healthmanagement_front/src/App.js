@@ -9,7 +9,7 @@ import Register from "./pages/Register/Register";
 import FindId from "./pages/Find/Id/FindId";
 import FindPassword from "./pages/Find/Password/FindPassword";
 import AuthRouteReactQuery from "./components/Routes/AuthRoute/AuthRouteReactQuery";
-import ModifyPage from "./pages/MyPage/ModifyPage";\
+import ModifyPage from "./pages/MyPage/ModifyPage";
 import FacilityReq from "./pages/MyPage/FacilityReq/FacilityReq";
 import Map from "./pages/Map/Map";
 

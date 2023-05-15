@@ -1,11 +1,13 @@
 package com.portfolio.healthmanagement.entity;
 
 import com.portfolio.healthmanagement.dto.gym.GetGymRespDto;
+import com.portfolio.healthmanagement.dto.gym.RegisterGymReqDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymRespDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Builder
@@ -16,11 +18,10 @@ public class Gym {
 	
 	private int gymId;
 	private String gymName;
-	private int userId;
 	private String gymAddress;
 	private String gymTel;
-	private String businessnNumber;
-	private int gymPrice;
+	private String businessNumber;
+	private String gymPrice;
 	private String gymImgUrl;
 	
 	private User user;
@@ -29,11 +30,10 @@ public class Gym {
 		return SearchGymRespDto.builder()
 				.gymId(gymId)
 				.gymName(gymName)
-				.userId(userId)
 				.userName(user.getUsername())
 				.gymAddress(gymAddress)
 				.gymTel(gymTel)
-				.businessNumber(businessnNumber)
+				.businessNumber(businessNumber)
 				.gymPrice(gymPrice)
 				.gymImgUrl(gymImgUrl)
 				.build();
@@ -47,9 +47,14 @@ public class Gym {
 				.userName(user.getUsername())
 				.gymAddress(gymAddress)
 				.gymTel(gymTel)
-				.businessNumber(businessnNumber)
+				.businessNumber(businessNumber)
 				.gymPrice(gymPrice)
 				.gymImgUrl(gymImgUrl)
 				.build();
+		
+		
 	}
+	
+
+	
 }

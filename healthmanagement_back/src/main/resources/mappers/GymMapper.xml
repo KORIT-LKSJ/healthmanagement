@@ -2,20 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.portfolio.healthmanagement.repository.GymRepository">
 	
-	<resultMap type="com.portfolio.healthmanagement.entity.Gym" id="GymMap">
+	<resultMap type="com.portfolio.healthmanagement.entity.Gym" id="gymMap">
 		<id property="gymId" column="gym_id"/>
 		<result property="gymName" column="gym_name"/>
-		<result property="userId" column="user_id"/>
 		<result property="gymAddress" column="gym_address"/>
 		<result property="gymTel" column="gym_tel"/>
-		<result property="businessnNumber" column="businessnumber"/>
+		<result property="businessNumber" column="businessnumber"/>
 		<result property="gymPrice" column="gym_price"/>
 		<result property="gymImgUrl" column="gym_img_url"/>
 		
-		<association property="user" resultMap="UserMap"></association>
+		<association property="user" resultMap="userMap"></association>
 	</resultMap>
 	
-	<resultMap type="com.portfolio.healthmanagement.entity.User" id="UserMap">
+	<resultMap type="com.portfolio.healthmanagement.entity.User" id="userMap">
 		<id property="userId" column="user_id"/>
 		<result property="username" column="username"/>
 		<result property="password" column="password"/>
@@ -29,7 +28,7 @@
 		
 	</resultMap>
 	
-	<select id="searchGyms" parameterType="hashmap" resultMap="GymMap">
+	<select id="searchGyms" parameterType="hashmap" resultMap="gymMap">
 		select
 			gt.gym_id,
 			gt.gym_name,
@@ -66,7 +65,7 @@
 		limit #{index},20;
 		</select>
 		
-		<select id="getGym" parameterType="Integer" resultMap="GymMap">
+		<select id="getGym" parameterType="Integer" resultMap="gymMap">
 			select
 				gt.gym_id,
 				gt.gym_name,
@@ -142,6 +141,27 @@
 			insert into gym_list_tb
 			values(0, #{gymId}, now())
 		</insert>
+		
+		<select id="findByBusinessnNumber" parameterType="String" resultMap="gymMap">
+			select
+				gt.gym_id,
+				gt.gym_name,
+				gt.gym_address,
+				gt.gym_tel,
+				gt.businessnumber,
+				gt.gym_price,
+				gt.gym_img_url
+			from
+				gym_tb gt
+			where
+				gt.businessnumber = #{businessNumber}
+		</select>
+		
+		<insert id="saveGym" parameterType="com.portfolio.healthmanagement.entity.Gym">
+			insert into gym_tb
+			values (0,#{gymName},#{gymAddress},#{gymTel},#{businessNumber},#{gymPrice},#{gymImgUrl})		
+		</insert>
+		
 		
 </mapper>
 
