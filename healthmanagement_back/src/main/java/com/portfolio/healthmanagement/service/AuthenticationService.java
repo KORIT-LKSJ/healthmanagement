@@ -14,4 +14,6 @@ public interface AuthenticationService {
 	public boolean authenticated(String accessToken);
 	public PrincipalRespDto getPrincipal(String accessToken);
 	public JwtRespDto login(LoginReqDto loginReqDto);
+
 }
+

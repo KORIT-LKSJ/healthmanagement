@@ -7,10 +7,18 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.portfolio.healthmanagement.dto.gym.GetGymAddressAndGymNameRespDto;
 import com.portfolio.healthmanagement.dto.gym.GetGymRespDto;
+import com.portfolio.healthmanagement.dto.gym.LikeListRespDto;
+import com.portfolio.healthmanagement.dto.gym.RegisterGymReqDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymReqDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymRespDto;
+import com.portfolio.healthmanagement.entity.Gym;
+import com.portfolio.healthmanagement.entity.User;
+import com.portfolio.healthmanagement.exception.CustomException;
+import com.portfolio.healthmanagement.exception.ErrorMap;
 import com.portfolio.healthmanagement.repository.GymRepository;
+import com.portfolio.healthmanagement.repository.UserRepositiory;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GymService {
 	private final GymRepository gymRepository;
+	private final UserRepositiory userRepositiory;
 	
 	public GetGymRespDto getGym(int gymId) {
 		return gymRepository.getGym(gymId).toGetGymDto();
@@ -35,12 +44,73 @@ public class GymService {
 			list.add(gym.toDto());
 		});
 		
-		int totalCount  = gymRepository.getTotalCount(map);
+		int totalCount = gymRepository.getTotalCount(map);
 		
 		Map<String, Object> responseMap = new HashMap<>();
 		
 		responseMap.put("totalCount", totalCount);
 		responseMap.put("gymList", list);
+		
+		return responseMap;
+	}
+	
+	public int getLikeCount(int gymId) {
+		return gymRepository.getLikeCount(gymId);
+	}
+	
+	public int getLikeStatus(int gymId, int userId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("gymId", gymId);
+		map.put("userId", userId);
+		
+		return gymRepository.getLikeStatus(map);
+	}
+	
+	public int setLike(int gymId, int userId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("gymId", gymId);
+		map.put("userId", userId);
+		
+		return gymRepository.setLike(map);
+	}
+	
+	public int disLike(int gymId, int userId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("gymId", gymId);
+		map.put("userId", userId);
+		
+		return gymRepository.disLike(map);
+	}
+	
+	public List<LikeListRespDto> likeGyms(int userId) {
+		List<LikeListRespDto> list = new ArrayList<>();
+		gymRepository.likeGyms(userId).forEach(likeData -> {
+			list.add(likeData.toDto());
+		});
+		
+		return list;
+	}
+	
+	public int addGym(RegisterGymReqDto registerGymReqDto) {
+	
+		if(gymRepository.findByBusinessnNumber(registerGymReqDto.getBusinessNumber()) != null) {
+			throw new CustomException("BusinessnNumber",ErrorMap.builder().put("BusinessnNumber","다시 한번 확인해보세요").build() );
+		}
+	  
+	  return gymRepository.saveGym(registerGymReqDto.toEntity());
+  }
+  
+	public Map<String, Object> NearbyGymAddressesAndGymName(String myAddress) {
+		List<GetGymAddressAndGymNameRespDto> list = new ArrayList<>();
+		Map<String, Object> map = new HashMap<>();
+		map.put("myAddress", myAddress);
+		
+		gymRepository.NearbyGymAddressesAndGymName(map).forEach(gym -> {
+			list.add(gym.toGymAddressAndNameDto());
+		});
+		
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("gymData",list);
 		
 		return responseMap;
 	}
