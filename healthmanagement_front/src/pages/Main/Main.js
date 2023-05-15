@@ -20,30 +20,32 @@ const container = css`
 `;
 
 const header = css`
+    position: fixed;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
     height: 60px;
     background-color: white;
-    position: fixed;
 `;
+const headerLine = css`
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 13px;
+    width: 100%;
+    max-width: 768px;
+    `;
 
-const mainLogo = css`
+const headerIcon = css`
+    vertical-align: baseline;   
+    margin-top: 20px;
     height: 60px;
-`;
-
-const listIcon = css`
-    font-size: 22px;
-    margin-left: 270px;
+    font-size: 40px;
+    color: #58595B;
     cursor: pointer;
 `;
 
-const searchIcon = css`
-    font-size: 22px;
-    margin-right: 270px;
-    cursor: pointer;
-`;
 
 const main = css`
     display: flex;
@@ -76,7 +78,6 @@ const mentCss = css`
     font-family: "Courier New", Courier, monospace;
     font-size: 20px;
     font-style: italic;
-    color: gray;
     margin-bottom: 15px;
 `;
 
@@ -86,71 +87,51 @@ const gymListContainer = css`
     width: 750px;
 `;
 const footer = css`
+    position: fixed;
     display: flex;
-    justify-content: space-between;
+    justify-content:center;
     align-items: center;
     width: 100%;
     height: 60px;
     bottom: 0;
     background-color: white;
-    position: fixed;
 `;
-const homeIcon = css`
-    background-color: white;
-    color: #dbdbdb;
-    font-size: 20px;
-    margin-left: 330px;
-    cursor: pointer;
+const footerContainer = css`
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 750px;
 `;
 
-const userIcon = css`
-    background-color: white;
-    color: #dbdbdb;
-    font-size: 20px;
-    margin-right: 330px;
-    cursor: pointer;
-`;
-const likeIcon = css`
-    background-color: white;
-    color: #dbdbdb;
-    font-size: 20px;
-    cursor: pointer;
-`;
-const mapIcon = css`
-    background-color: white;
-    color: #dbdbdb;
-    font-size: 20px;
-    cursor: pointer;
-`;
+const iconsContainer = css`
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+    width: 192px;
+    height: 63.8px;
 
-const footerName = css`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 650px;
-    height: 20px;
-    bottom: 0;
-    background-color: white;
-    position: fixed;
-    font-size: 10px;
-`;
-
-const homeLabel = css`
-    margin-left: 27px;
-    margin-right: 33px;
-`;
-const thisLabel = css`
-    margin-right: 8px;
-`;
-const aroundLabel = css``;
-const shoppingLabel = css`
-    margin-left: 5px;
-    margin-right: 10px;
-`;
-
-const bottom = css`
-    margin-top: 60px;
 `
+
+const icons = css`
+    margin-bottom: 10px;
+    width: 172px;
+    height: 20px;
+    background-color: white;
+    color: #58595B;
+    font-size: 25px;
+    cursor: pointer;
+`;
+
+const text = css`
+    font-size: 12;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #58595B;
+`;
+
+
 const Main = () => {
     const [ searchParam, setSearchParam ] =useState({page: 1, searchValue: ""})
     const [ refresh, setRefresh ] = useState(false);
@@ -231,15 +212,12 @@ const Main = () => {
     return (
         <div css={container}>
             <header css={header}>
-                <div css={listIcon} onClick={sideBarClickHandle}>
-                    {" "}
-                    <BiUser />{" "}
+                <div css={headerLine} >
+                    <div css={headerIcon} onClick={sideBarClickHandle}><BiUser /></div>
+                    <img src="image/gymLogo.png" alt="" />
+                    <div css={headerIcon} onClick={searchBarClickHandle}><BiSearch /></div>
+                        <SearchBar isOpen2={isOpen2} searchInputHandle={searchInputHandle} searchSubmitHandle={searchSubmitHandle}/>
                 </div>
-                <img css={mainLogo} src="image/gymLogo.png" alt="" />
-                <div css={searchIcon} onClick={searchBarClickHandle}>
-                    <BiSearch /> 
-                </div>
-                    <SearchBar isOpen2={isOpen2} searchInputHandle={searchInputHandle} searchSubmitHandle={searchSubmitHandle}/>
             </header>
                 <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
             <main css={main}>
@@ -256,25 +234,25 @@ const Main = () => {
                 </div>
             </main>
             <footer css={footer}>
-                <div css={homeIcon}>
-                    <HiHome />
-                </div>
-                <div css={likeIcon}>
-                    <BiLike />
-                </div>
-                <div css={mapIcon}>
-                    <HiMap />
-                </div>
-                <div css={userIcon}>
-                    <BiShoppingBag />
+                <div css={footerContainer} >
+                    <div css={iconsContainer}>
+                        <div css={icons}><HiHome /></div>
+                        <div css={text} >홈</div>
+                    </div>
+                    <div css={iconsContainer}>
+                        <div css={icons}><BiLike /></div>
+                        <div css={text} >여기어때?</div>
+                    </div>
+                    <div css={iconsContainer}>
+                        <div css={icons}><HiMap /></div>
+                        <div css={text} >내 주변 헬스장</div>
+                    </div>
+                    <div css={iconsContainer}>
+                        <div css={icons}><BiShoppingBag /></div>
+                        <div css={text} >쇼핑하기</div>
+                    </div>
                 </div>
             </footer>
-            <div css={footerName}>
-                <div css={homeLabel}>홈</div>
-                <div css={thisLabel}>여기어때?</div>
-                <div css={aroundLabel}>내 주변 헬스장</div>
-                <div css={shoppingLabel}>쇼핑하기</div>
-            </div>
         </div>
     );
 };
