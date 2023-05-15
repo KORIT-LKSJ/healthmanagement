@@ -14,12 +14,13 @@ public interface GymRepository {
 	public Gym getGym(int gymId);
 	public List<Gym> searchGyms(Map<String, Object> map);
 	public int getTotalCount(Map<String, Object> map);
-	
 	public int getLikeCount(int bookId);
 	public int getLikeStatus(Map<String, Object> map);
-	
+
 	public int setLike(Map<String,Object> map);
 	public int disLike(Map<String, Object>map);
 	
 	public List<LikeList> likeGyms(int userId);
+
+	public List<Gym> NearbyGymAddressesAndGymName(Map<String, Object> map);
 }

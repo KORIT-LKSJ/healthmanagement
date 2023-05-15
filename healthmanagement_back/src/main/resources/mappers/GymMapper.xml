@@ -152,6 +152,16 @@
 			    left outer join user_tb ut on (ut.user_id = glt.user_id)
 			where
 				ut.user_id = #{userId}
+    </select>
+
+		<select id="NearbyGymAddressesAndGymName" parameterType="hashMap" resultMap="GymMap">
+			select
+				gym_address,
+				gym_name
+			from
+				gym_tb
+			where
+				gym_address like concat("%",#{myAddress},"%")
 		</select>
 		
 </mapper>
