@@ -29,7 +29,11 @@ public class GymController {
 	public ResponseEntity<?> searchGyms (SearchGymReqDto searchGymReqDto){
 		System.out.println(gymService.searchGyms(searchGymReqDto));
 		return ResponseEntity.ok().body(gymService.searchGyms(searchGymReqDto));
+	}
 	
+	@GetMapping("/search/gym/address")
+	public ResponseEntity<?> NearbyGymAddressesAndGymName(String myAddress) {
+		return ResponseEntity.ok().body(gymService.NearbyGymAddressesAndGymName(myAddress));
 	}
 	
 	@PostMapping("/faclilty")

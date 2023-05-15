@@ -14,4 +14,5 @@ public interface GymRepository {
 	public List<Gym> searchGyms(Map<String, Object> map);
 	public int getTotalCount(Map<String, Object> map);
 	public int saveGym(Gym gym);
+	public List<Gym> NearbyGymAddressesAndGymName(Map<String, Object> map);
 }

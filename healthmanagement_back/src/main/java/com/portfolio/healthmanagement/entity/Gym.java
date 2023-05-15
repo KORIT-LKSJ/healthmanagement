@@ -1,5 +1,6 @@
 package com.portfolio.healthmanagement.entity;
 
+import com.portfolio.healthmanagement.dto.gym.GetGymAddressAndGymNameRespDto;
 import com.portfolio.healthmanagement.dto.gym.GetGymRespDto;
 import com.portfolio.healthmanagement.dto.gym.RegisterGymReqDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymRespDto;
@@ -55,6 +56,10 @@ public class Gym {
 		
 	}
 	
-
-	
+	public GetGymAddressAndGymNameRespDto toGymAddressAndNameDto() {
+		return GetGymAddressAndGymNameRespDto.builder()
+				.GymAddress(gymAddress)
+				.GymName(gymName)
+				.build();
+	}
 }

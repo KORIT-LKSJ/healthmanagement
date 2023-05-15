@@ -162,6 +162,15 @@
 			values (0,#{gymName},#{gymAddress},#{gymTel},#{businessNumber},#{gymPrice},#{gymImgUrl})		
 		</insert>
 		
+		<select id="NearbyGymAddressesAndGymName" parameterType="hashMap" resultMap="GymMap">
+			select
+				gym_address,
+				gym_name
+			from
+				gym_tb
+			where
+				gym_address like concat("%",#{myAddress},"%")
+		</select>
 		
 </mapper>
 
