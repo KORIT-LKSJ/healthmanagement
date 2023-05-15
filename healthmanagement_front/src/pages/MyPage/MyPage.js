@@ -319,7 +319,7 @@ const MyPage = () => {
     navigate("/qAnda");
   };
 
-  //유저이미지 들고오는 로직 구현중
+  //유저이미지 들고옴
 
   const handleImageClick = () => {
     const input = document.getElementById("profile-image");
@@ -337,7 +337,7 @@ const MyPage = () => {
     }
   };
 
-  //유저 이름 들고오는 로직 구현중
+  //유저 이름 들고옴
   const principalData = principal.data.data;
   const roles = principalData.authorities.split(",");
 

@@ -37,7 +37,7 @@
 		<association property="gym" resultMap="GymMap"></association>
 	</resultMap>
 	
-	<select id="searchGyms" parameterType="hashmap" resultMap="GymMap">
+	<select id="searchGyms" parameterType="hashmap" resultMap="gymMap">
 		select
 			gt.gym_id,
 		    gt.gym_name,
@@ -175,7 +175,7 @@
 				ut.user_id = #{userId}
     </select>
 
-		<select id="NearbyGymAddressesAndGymName" parameterType="hashMap" resultMap="GymMap">
+		<select id="NearbyGymAddressesAndGymName" parameterType="hashMap" resultMap="gymMap">
 			select
 				gym_address,
 				gym_name

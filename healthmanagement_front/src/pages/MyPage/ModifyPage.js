@@ -218,21 +218,40 @@ const ModifyPage = () => {
   const [istelephone, setIsTelePhone] = useState(false);
   const [isphone, setIsPhone] = useState(false);
 
-  const { isLoading, data, error } = useQuery(["principal"], async () => {
+  const principal = useQuery(["Principal"], async () => {
     const accessToken = localStorage.getItem("accessToken");
-    const response = await axios.get("http://localhost:8080/auth/principal", {
-      params: { accessToken },
-    });
-    return response.data;
+    const response = await axios.get(
+      "http://localhost:8080/account/principal",
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response;
   });
 
-  if (isLoading) {
+  const userInfo = useQuery(
+    ["UserInfo"],
+    async () => {
+      const accessToken = localStorage.getItem("accessToken");
+      const response = await axios.get(
+        `http://localhost:8080/account/user/${principal.data.data.userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      return response;
+    },
+    {
+      enabled: !!principal.data,
+    }
+  );
+
+  if (principal.isLoading || userInfo.isLoading) {
     return <div>Loading...</div>;
-  }
-  if (error) {
-  }
-  if (!data?.data) {
-    return <div>no data available</div>;
   }
 
   const onclickExitHandle = () => {
@@ -243,8 +262,7 @@ const ModifyPage = () => {
   //const principalData = data.data;
   // const roles = principalData.authorities.split(",");
 
-  const principalData = data.data;
-  const roles = principalData.authorities.split(",");
+  const roles = principal.data.data.authorities.split(",");
 
   const onchangeHandle = (e) => {
     const { name, value } = e.target;
@@ -363,7 +381,7 @@ const ModifyPage = () => {
         <div css={modifycontainer}>
           <div css={usernameText}>
             <h2 css={namebox}>username</h2>
-            <div css={getname}>{principalData.username}</div>
+            <div css={getname}>{principal.data.data.username}</div>
           </div>
           <div css={passwordText}>
             <h2 css={namebox}> Password </h2>
@@ -403,6 +421,7 @@ const ModifyPage = () => {
               placeholder="ex.010-xxxx-xxxx"
               onChange={onchangePhone}
               name="phone"
+              value={userInfo.data.data.phone}
             ></input>
           </div>
           <div css={emailText}>
@@ -413,6 +432,7 @@ const ModifyPage = () => {
               placeholder="이메일을 기입해주세요"
               onChange={onchangeEmail}
               name="email"
+              value={userInfo.data.data.email}
             ></input>
           </div>
           <div css={addressText}>

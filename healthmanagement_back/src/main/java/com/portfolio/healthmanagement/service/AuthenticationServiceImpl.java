@@ -83,18 +83,7 @@ public class AuthenticationServiceImpl implements AuthenticationService, UserDet
 	public boolean authenticated(String accessToken) {
 		return jwtTokenProvider.vaildateToken(jwtTokenProvider.getToken(accessToken));
 	}
-	@Override
-	public PrincipalRespDto getPrincipal(String accessToken) {
-		
-		Claims claims = jwtTokenProvider.getClaims(jwtTokenProvider.getToken(accessToken)); 
-		User userEntity = userRepositiory.findUserByUsername(claims.getSubject());
-		
-		return PrincipalRespDto.builder()
-				.userId(userEntity.getUserId())
-				.username(userEntity.getUsername())
-				.name(userEntity.getName())
-				.authorities((String)claims.get("auth"))
-				.build();
-	}
+	
+	
 	
 }
