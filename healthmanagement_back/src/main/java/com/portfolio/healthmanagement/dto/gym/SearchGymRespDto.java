@@ -11,7 +11,7 @@ public class SearchGymRespDto {
 	private String gymAddress;
 	private String gymTel;
 	private String businessNumber;
-	private int gymPrice;
+	private String gymPrice;
 	private String gymImgUrl;
 	private int gymOwnerId;
 	private int likeCount;

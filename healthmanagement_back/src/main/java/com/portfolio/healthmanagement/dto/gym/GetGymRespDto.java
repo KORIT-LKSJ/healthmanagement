@@ -13,7 +13,7 @@ public class GetGymRespDto {
 	private String gymAddress;
 	private String gymTel;
 	private String businessNumber;
-	private int gymPrice;
+	private String gymPrice;
 	private String gymImgUrl;
 	private int gymOwnerId;
 	

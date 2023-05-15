@@ -2,6 +2,7 @@ package com.portfolio.healthmanagement.entity;
 
 import com.portfolio.healthmanagement.dto.gym.GetGymAddressAndGymNameRespDto;
 import com.portfolio.healthmanagement.dto.gym.GetGymRespDto;
+import com.portfolio.healthmanagement.dto.gym.RegisterGymReqDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymRespDto;
 
 import lombok.AllArgsConstructor;
@@ -20,8 +21,8 @@ public class Gym {
 	private String gymName;
 	private String gymAddress;
 	private String gymTel;
-	private String businessnNumber;
-	private int gymPrice;
+	private String businessNumber;
+	private String gymPrice;
 	private String gymImgUrl;
 	private int likeCount;
 	
@@ -32,7 +33,7 @@ public class Gym {
 				.gymName(gymName)
 				.gymAddress(gymAddress)
 				.gymTel(gymTel)
-				.businessNumber(businessnNumber)
+				.businessNumber(businessNumber)
 				.gymPrice(gymPrice)
 				.gymImgUrl(gymImgUrl)
 				.likeCount(likeCount)
@@ -46,10 +47,12 @@ public class Gym {
 				.gymName(gymName)
 				.gymAddress(gymAddress)
 				.gymTel(gymTel)
-				.businessNumber(businessnNumber)
+				.businessNumber(businessNumber)
 				.gymPrice(gymPrice)
 				.gymImgUrl(gymImgUrl)
 				.build();
+		
+		
 	}
 	
 	public GetGymAddressAndGymNameRespDto toGymAddressAndNameDto() {

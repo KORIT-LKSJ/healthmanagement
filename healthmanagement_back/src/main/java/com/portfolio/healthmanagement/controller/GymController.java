@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.portfolio.healthmanagement.dto.gym.RegisterGymReqDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymReqDto;
 import com.portfolio.healthmanagement.service.GymService;
 
 import lombok.RequiredArgsConstructor;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -63,5 +65,11 @@ public class GymController {
 	public ResponseEntity<?> likeGyms(@PathVariable int userId){
 		System.out.println(userId);
 		return ResponseEntity.ok().body(gymService.likeGyms(userId));
+	}
+	
+	@PostMapping("/faclilty")
+	public ResponseEntity<?> createGym(@RequestBody RegisterGymReqDto registerGymReqDto){
+		System.out.println(registerGymReqDto);
+		return ResponseEntity.ok().body(gymService.addGym(registerGymReqDto));
 	}
 }
