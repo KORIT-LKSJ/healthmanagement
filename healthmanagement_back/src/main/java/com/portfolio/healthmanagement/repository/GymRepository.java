@@ -12,4 +12,5 @@ public interface GymRepository {
 	public Gym getGym(int gymId);
 	public List<Gym> searchGyms(Map<String, Object> map);
 	public int getTotalCount(Map<String, Object> map);
+	public List<Gym> NearbyGymAddressesAndGymName(Map<String, Object> map);
 }
