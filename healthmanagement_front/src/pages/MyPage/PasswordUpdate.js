@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
-import { BiExit } from "react-icons/bi";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
+import { BiExit } from "react-icons/bi";
+import { GiSaveArrow } from "react-icons/gi";
 import axios from "axios";
 
 const container = css`
@@ -203,6 +204,7 @@ const PasswordUpdate = () => {
       setPasswordMessage("안전한 비밀번호입니다");
       setIsPassword(true);
     }
+    setPassword({ ...password, [password]: currentPassword });
   };
 
   const onchangePasswordConfirm = (e) => {
@@ -226,28 +228,31 @@ const PasswordUpdate = () => {
           <div css={box}>
             <div css={button} onClick={onclickExitHandle}>
               <BiExit css={icon} />
-              <div css={passwordText}>
-                <h2 css={namebox}>passoword</h2>
-                <input
-                  css={informationinput}
-                  type="password"
-                  placeholder="비밀번호를 입력해주세요"
-                  onChange={onchangePassword}
-                  name="password"
-                  value={password}
-                ></input>
-              </div>
-              <div css={passwordCheckText}>
-                <h2 css={namebox}>passwordConfirm</h2>
-                <input
-                  css={informationinput}
-                  type="password"
-                  placeholder="비밀번호를 확인해주세요"
-                  onChange={onchangePasswordConfirm}
-                  name="passwordConfirm"
-                  value={password}
-                ></input>
-              </div>
+            </div>
+            <div css={button} onClick={onsuccessClickHandle}>
+              <GiSaveArrow css={icon} />
+            </div>
+            <div css={passwordText}>
+              <h2 css={namebox}>passoword</h2>
+              <input
+                css={informationinput}
+                type="password"
+                placeholder="비밀번호를 입력해주세요"
+                onChange={onchangePassword}
+                name="password"
+                value={password}
+              ></input>
+            </div>
+            <div css={passwordCheckText}>
+              <h2 css={namebox}>passwordConfirm</h2>
+              <input
+                css={informationinput}
+                type="password"
+                placeholder="비밀번호를 확인해주세요"
+                onChange={onchangePasswordConfirm}
+                name="passwordConfirm"
+                value={password}
+              ></input>
             </div>
           </div>
         </div>

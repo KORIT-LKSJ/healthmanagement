@@ -263,6 +263,7 @@ const ModifyPage = () => {
       setPhoneMessage("사용가능한 번호입니다");
       setIsPhone(true);
     }
+    setChangeUser({ ...changeuser, [phone]: currentPhone });
   };
 
   // 이메일 정보수정
@@ -279,6 +280,7 @@ const ModifyPage = () => {
       setEmailMessage("사용가능한 이메일 입니다");
       setIsEmail(true);
     }
+    setChangeUser({ ...changeuser, [email]: currentEmail });
   };
 
   // 회원정보 수정시 저장되는 것을 구현을 해야함, 마이페이지 디자인 수정 필요(밑에가 잘림)
