@@ -39,8 +39,9 @@ public class AuthenticationController {
 		System.out.println(loginReqDto);
 		return ResponseEntity.ok().body(authenticationService.login(loginReqDto));
 	}
+	
 	@GetMapping("/auth/authenticated")
-	public ResponseEntity<?> authenticated(@RequestParam String accessToken){
+	public ResponseEntity<?> authenticated(String accessToken){
 		return ResponseEntity.ok().body(authenticationService.authenticated(accessToken));
 		
 	}
@@ -49,5 +50,7 @@ public class AuthenticationController {
 	public ResponseEntity<?>principal( @RequestParam String accessToken){
 		return ResponseEntity.ok().body(authenticationService.getPrincipal(accessToken));
 	}
+	
+	
 }
 

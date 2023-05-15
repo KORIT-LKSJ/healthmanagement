@@ -31,6 +31,7 @@ const main = css`
     height: 100%;
     background-color: white;
     overflow: hidden;
+    
 `;
 
 const loginInfo = css`
@@ -249,9 +250,9 @@ const Login = () => {
                     </div>
 
                     <div css={moreLogin}>
-                        <img css={loginImg} src="images/naverLogin.png" alt="" />
-                        <img css={loginImg} src="images/kakaoLogin.png" alt="" />
-                        <img css={loginImg} src="images/googleLogin.png" alt="" />
+                        <img css={loginImg} src="images/naverLogin.png" alt="naver" />
+                        <img css={loginImg} src="images/kakaoLogin.png" alt="kakao" />
+                        <img css={loginImg} src="images/googleLogin.png" alt="google" />
                     </div>
                     <div css={signUpContainer}>
                         <div css={signUp} onClick={signUpClickHandle}>

@@ -5,6 +5,9 @@ import { GrFormClose } from 'react-icons/gr';
 import ListButton from './ListButton/ListButton';
 import { BiUser, BiLike, BiLogOut} from 'react-icons/bi';
 import { FaRegistered } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { QueryClient, useQuery, useQueryClient } from 'react-query';
+import axios from 'axios';
 
 const sidebar = (isOpen) => css`
     position: absolute;
@@ -96,12 +99,30 @@ const footer = css`
 `;
 
 const Sidebar = ({isOpen, setIsOpen}) => {
-
+    const navigate = useNavigate();
+    
     const sidebarCloseClickHandle = () => {
         setIsOpen(false);
     }
 
+    const likeListClickHandle = () => {
+        navigate("/gym/"+userId+"/like/list")
+    }
 
+    const principal = useQuery(["principal"], async () => {
+        const accessToken = localStorage.getItem("accessToken");
+        const response = await axios.get("http://localhost:8080/auth/principal", {
+          params: { accessToken },
+        });
+        return response;
+      });
+
+      if(principal.isLoading){
+        return <div>로딩중...</div>
+      }
+      console.log(principal)
+      const userId = principal.data.data.userId;
+      
     return (
         <div css={sidebar(isOpen)}>
             <header css={header}>
@@ -109,7 +130,7 @@ const Sidebar = ({isOpen, setIsOpen}) => {
                     d
                 </div>
                 <div css={userInfo}>
-                    <h1 css={userName}>김동민</h1>
+                    <h1 css={userName}></h1>
                     <p css={userEmail}>1803kcal</p>
                     <p css={userEmail}>탄:250g 단:150g 지:60g</p>
                 </div>
@@ -117,7 +138,7 @@ const Sidebar = ({isOpen, setIsOpen}) => {
             </header>
             <main css={main}>
                 <ListButton title="내 정보 수정"> <BiUser/> </ListButton>
-                <ListButton title="관심목록"> <BiLike/></ListButton>
+                <ListButton title="관심목록"  onClick={likeListClickHandle}> <BiLike/></ListButton>
                 <ListButton title="우리 업체 등록"> <FaRegistered/></ListButton>
                 {/* {roles.includes("ROLE_OWNER") ? (<ListButton title="우리 업체 등록"> <FaRegistered/></ListButton>) : ""} */}
             </main>

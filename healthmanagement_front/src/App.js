@@ -12,6 +12,9 @@ import AuthRouteReactQuery from "./components/Routes/AuthRoute/AuthRouteReactQue
 import ModifyPage from "./pages/MyPage/ModifyPage";
 import FacilityReq from "./pages/MyPage/FacilityReq/FacilityReq";
 import Map from "./pages/Map/Map";
+import GymDetail from "./pages/GymDetail/GymDetail";
+import LikeList from "./pages/LikeList/LikeList";
+import KaKaoMap from "./pages/Map/KakaoMap";
 
 function App() {
   return (
@@ -23,13 +26,12 @@ function App() {
         <Route path="/find/id" element={<FindId />}></Route>
         <Route path="/find/password" element={<FindPassword />}></Route>
         <Route path="/" element={<Main />}></Route>
-        <Route
-          path="/MyPage"
-          element={<AuthRouteReactQuery path="/MyPage" element={<MyPage />} />}
-        />
+        <Route path="/MyPage" element={<AuthRouteReactQuery path="/MyPage" element={<MyPage />} />} />
         <Route path="/ModifyPage" element={<ModifyPage />}></Route>
+        <Route path="/gym/:gymId" element={<AuthRouteReactQuery path="/gym" element={<GymDetail/>} />} />
         <Route path="/facility" element={<FacilityReq/>}/>
-        <Route path="/map" element={<Map ncpClientId="mnqlapx88m" />}></Route>
+        <Route path="/gym/:userId/like/list" element={<LikeList/>}/>
+        <Route path="/map" element={<KaKaoMap />}></Route>
       </Routes>
     </>
   );

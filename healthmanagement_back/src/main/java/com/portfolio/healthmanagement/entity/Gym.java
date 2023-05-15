@@ -1,5 +1,6 @@
 package com.portfolio.healthmanagement.entity;
 
+import com.portfolio.healthmanagement.dto.gym.GetGymAddressAndGymNameRespDto;
 import com.portfolio.healthmanagement.dto.gym.GetGymRespDto;
 import com.portfolio.healthmanagement.dto.gym.RegisterGymReqDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymRespDto;
@@ -23,19 +24,19 @@ public class Gym {
 	private String businessNumber;
 	private String gymPrice;
 	private String gymImgUrl;
+	private int likeCount;
 	
-	private User user;
 	
 	public SearchGymRespDto toDto() {
 		return SearchGymRespDto.builder()
 				.gymId(gymId)
 				.gymName(gymName)
-				.userName(user.getUsername())
 				.gymAddress(gymAddress)
 				.gymTel(gymTel)
 				.businessNumber(businessNumber)
 				.gymPrice(gymPrice)
 				.gymImgUrl(gymImgUrl)
+				.likeCount(likeCount)
 				.build();
 				
 	}
@@ -44,7 +45,6 @@ public class Gym {
 		return GetGymRespDto.builder()
 				.gymId(gymId)
 				.gymName(gymName)
-				.userName(user.getUsername())
 				.gymAddress(gymAddress)
 				.gymTel(gymTel)
 				.businessNumber(businessNumber)
@@ -55,6 +55,10 @@ public class Gym {
 		
 	}
 	
-
-	
+	public GetGymAddressAndGymNameRespDto toGymAddressAndNameDto() {
+		return GetGymAddressAndGymNameRespDto.builder()
+				.GymAddress(gymAddress)
+				.GymName(gymName)
+				.build();
+	}
 }

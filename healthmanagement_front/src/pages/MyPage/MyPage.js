@@ -290,11 +290,25 @@ const footer = css`
 `;
 
 const MyPage = () => {
+  const [selectedFile, setSelectedFile] = useState(
+    localStorage.getItem("profileimage") || "./images/noimage.jpg"
+  );
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
+
+  const principal = useQuery(["principal"], async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    const response = await axios.get("http://localhost:8080/auth/principal", {
+      params: { accessToken },
+    });
+    return response;
+  });
+
+  if (principal.isLoading) {
+    return <div></div>;
+  }
 
   const modifyClickHandle = () => {
-    navigate("/modify");
+    navigate("/ModifyPage");
   };
 
   const bookMarkClickHandle = () => {
@@ -306,14 +320,15 @@ const MyPage = () => {
   };
 
   //유저이미지 들고오는 로직 구현중
-  const [selectedFile, setSelectedFile] = useState(
-    localStorage.getItem("profileimage") || "./images/noimage.jpg"
-  );
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
+  const handleImageClick = () => {
+    const input = document.getElementById("profile-image");
+    input.click();
+  };
+  const handleFileSelect = (event) => {
     const reader = new FileReader();
-    reader.onloadend = () => {
+    const file = event.target.files[0];
+    reader.onloadend = function () {
       setSelectedFile(reader.result);
       localStorage.setItem("profileimage", reader.result);
     };
@@ -323,22 +338,8 @@ const MyPage = () => {
   };
 
   //유저 이름 들고오는 로직 구현중
-  const principalData = queryClient.getQueryData("principal").data;
+  const principalData = principal.data.data;
   const roles = principalData.authorities.split(",");
-
-  console.log(principalData);
-  const username = useQuery(["getusername"], async () => {
-    const option = {
-      params: {
-        userId: queryClient.getQueryData("principal").data.userId,
-      },
-      headers: {
-        Authorization: localStorage.getItem("accessToken"),
-      },
-    };
-    const response = await axios.get(``, option);
-    return response;
-  });
 
   return (
     <div css={container}>
@@ -354,6 +355,7 @@ const MyPage = () => {
                   css={img}
                   src={selectedFile}
                   alt=""
+                  onClick={handleImageClick}
                   onLoad={() => console.log("image loaded")}
                 />
                 <label>
@@ -362,13 +364,11 @@ const MyPage = () => {
                     id="profile-image"
                     accept="image/*"
                     style={{ display: "none" }}
-                    onChange={handleFileChange}
+                    onChange={handleFileSelect}
                   ></input>
                 </label>
               </div>
-              <h2 css={username}>
-                UserName:{queryClient.getQueryData("principal").data.name}
-              </h2>
+              <h2 css={username}>UserName:{principalData.username}</h2>
             </div>
           </div>
           <div css={select}>
