@@ -155,6 +155,7 @@ const Main = () => {
     const [ searchParam, setSearchParam ] =useState({page: 1, searchValue: ""})
     const [ refresh, setRefresh ] = useState(false);
     const [ gyms, setGyms ] = useState([]);
+    const [ likeGyms, setLikeGyms ] = useState([]);
     const [ lastPage, setLastPage ] = useState(1);
     const lastGymRef = useRef();
     const [isOpen, setIsOpen] = useState();
@@ -183,12 +184,16 @@ const Main = () => {
     const searchGyms = useQuery(["searchGyms"], async () => {
         const response = await axios.get("http://localhost:8080/gyms", option);
         return response;
+        console.log(response)
     }, {
         onSuccess: (response) => {
             if(refresh) {
                 setRefresh(false);
             }
+            console.log(response)
             const totalCount = response.data.totalCount;
+            console.log(totalCount)
+            
             setLastPage(totalCount % 20 === 0 ? totalCount / 20 : Math.ceil(totalCount / 20));
             setGyms([...gyms, ...response.data.gymList]);
             setSearchParam({...searchParam, page: searchParam.page + 1});

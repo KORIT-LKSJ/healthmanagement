@@ -1,20 +1,16 @@
-package com.portfolio.healthmanagement.dto.gym;
-
+package com.portfolio.healthmanagement.dto.response;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Builder
 @Data
-public class GetGymRespDto {
-	
+public class LikeListRespDto {
+	private int userId;
 	private int gymId;
 	private String gymName;
 	private String gymAddress;
-	private String gymTel;
-	private String businessNumber;
 	private int gymPrice;
 	private String gymImgUrl;
-	private int gymOwnerId;
-	
+	private boolean likeStatus; 
 }
