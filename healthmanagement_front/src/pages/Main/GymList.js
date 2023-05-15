@@ -83,10 +83,15 @@ const likeIcon = css`
 
 
 const GymList = ({ gym }) => {
+    const navigate = useNavigate();
 
+    const clickHandle = () => {
+        navigate("/gym/" + gym.gymId);
+      }
+      
     return (
         <>
-        <div css={cardContainer}>
+        <div css={cardContainer} onClick={clickHandle}>
         <header css={header}>
             <h1 css={titleText}>{gym.gymName}</h1>
         </header>
@@ -98,7 +103,7 @@ const GymList = ({ gym }) => {
         <footer css={footer}>
             <h2>위치: {gym.gymAddress} </h2>
             <h2>가격: (월) {gym.gymPrice}&#8361;</h2>
-            <div css={like}><div css={likeIcon}></div>추천: 1</div>
+            <div css={like}><div css={likeIcon}></div>추천: {gym.likeCount}</div>
         </footer>
         </div>
     </>    

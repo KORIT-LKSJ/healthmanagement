@@ -24,19 +24,19 @@ public class Gym {
 	private String businessNumber;
 	private String gymPrice;
 	private String gymImgUrl;
+	private int likeCount;
 	
-	private User user;
 	
 	public SearchGymRespDto toDto() {
 		return SearchGymRespDto.builder()
 				.gymId(gymId)
 				.gymName(gymName)
-				.userName(user.getUsername())
 				.gymAddress(gymAddress)
 				.gymTel(gymTel)
 				.businessNumber(businessNumber)
 				.gymPrice(gymPrice)
 				.gymImgUrl(gymImgUrl)
+				.likeCount(likeCount)
 				.build();
 				
 	}
@@ -45,7 +45,6 @@ public class Gym {
 		return GetGymRespDto.builder()
 				.gymId(gymId)
 				.gymName(gymName)
-				.userName(user.getUsername())
 				.gymAddress(gymAddress)
 				.gymTel(gymTel)
 				.businessNumber(businessNumber)

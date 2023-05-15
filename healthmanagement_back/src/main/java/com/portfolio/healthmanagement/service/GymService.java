@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.portfolio.healthmanagement.dto.gym.GetGymAddressAndGymNameRespDto;
 import com.portfolio.healthmanagement.dto.gym.GetGymRespDto;
+import com.portfolio.healthmanagement.dto.gym.LikeListRespDto;
 import com.portfolio.healthmanagement.dto.gym.RegisterGymReqDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymReqDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymRespDto;
@@ -51,6 +52,43 @@ public class GymService {
 		responseMap.put("gymList", list);
 		
 		return responseMap;
+	}
+	
+	public int getLikeCount(int gymId) {
+		return gymRepository.getLikeCount(gymId);
+	}
+	
+	public int getLikeStatus(int gymId, int userId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("gymId", gymId);
+		map.put("userId", userId);
+		
+		return gymRepository.getLikeStatus(map);
+	}
+	
+	public int setLike(int gymId, int userId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("gymId", gymId);
+		map.put("userId", userId);
+		
+		return gymRepository.setLike(map);
+	}
+	
+	public int disLike(int gymId, int userId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("gymId", gymId);
+		map.put("userId", userId);
+		
+		return gymRepository.disLike(map);
+	}
+	
+	public List<LikeListRespDto> likeGyms(int userId) {
+		List<LikeListRespDto> list = new ArrayList<>();
+		gymRepository.likeGyms(userId).forEach(likeData -> {
+			list.add(likeData.toDto());
+		});
+		
+		return list;
 	}
 	
 	public int addGym(RegisterGymReqDto registerGymReqDto) {
