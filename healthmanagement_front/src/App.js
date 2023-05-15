@@ -10,6 +10,7 @@ import FindId from "./pages/Find/Id/FindId";
 import FindPassword from "./pages/Find/Password/FindPassword";
 import AuthRouteReactQuery from "./components/Routes/AuthRoute/AuthRouteReactQuery";
 import ModifyPage from "./pages/MyPage/ModifyPage";
+import PasswordUpdate from "./pages/MyPage/PasswordUpdate";
 import FacilityReq from "./pages/MyPage/FacilityReq/FacilityReq";
 import GymDetail from "./pages/GymDetail/GymDetail";
 import LikeList from "./pages/LikeList/LikeList";
@@ -30,6 +31,7 @@ function App() {
           element={<AuthRouteReactQuery path="/mypage" element={<MyPage />} />}
         />
         <Route path="/modifypage" element={<ModifyPage />}></Route>
+        <Route path="/passwordupdate" element={<PasswordUpdate />}></Route>
         <Route
           path="/gym/:gymId"
           element={<AuthRouteReactQuery path="/gym" element={<GymDetail />} />}

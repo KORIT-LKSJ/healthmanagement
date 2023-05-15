@@ -108,17 +108,6 @@ const getname = css`
   margin-right: 20px;
 `;
 
-const passwordText = css`
-  display: flex;
-  border: 1px solid #dbdbdb;
-  border-radius: 10px;
-  height: 600px;
-  width: 100%;
-  align-items: center;
-  font-size: 18px;
-  font-weight: 600;
-`;
-
 const informationinput = css`
   display: flex;
   flex-direction: column;
@@ -127,16 +116,6 @@ const informationinput = css`
   padding: 10px;
   justify-content: center;
   background-color: whitesmoke;
-`;
-const passwordCheckText = css`
-  display: flex;
-  border: 1px solid #dbdbdb;
-  border-radius: 10px;
-  height: 600px;
-  width: 100%;
-  align-items: center;
-  font-size: 18px;
-  font-weight: 600;
 `;
 
 const phoneText = css`
@@ -189,19 +168,17 @@ const ModifyPage = () => {
   const [password, setPassword] = useState("");
 
   //초깃값
-  const [passwordconfirm, setPasswordConfirm] = useState("");
+
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
   // 오류메세지 저장
-  const [passwordmessage, setPasswordMessage] = useState("");
-  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
+
   const [emailmessage, setEmailMessage] = useState("");
   const [phoneMessage, setPhoneMessage] = useState("");
 
   //유효성 검사
-  const [ispassword, setIsPassword] = useState(false);
-  const [ispasswordconfirm, setIsPasswordConfirm] = useState(false);
+
   const [isemail, setIsEmail] = useState(false);
   const [isphone, setIsPhone] = useState(false);
 
@@ -274,36 +251,6 @@ const ModifyPage = () => {
     }
   };
 
-  // 비밀번호와 비밀번호 확인하는 정규식 구현중
-
-  const onchangePassword = (e) => {
-    const currentPassword = e.target.value;
-    setPassword(currentPassword);
-    const passwordRegExp =
-      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    if (!passwordRegExp.test(currentPassword)) {
-      setPasswordMessage(
-        "숫자+ 영문자 + 특수문자 조합으로 8자리이상 입력해주세요"
-      );
-      setIsPassword(false);
-    } else {
-      setPasswordMessage("안전한 비밀번호입니다");
-      setIsPassword(true);
-    }
-  };
-
-  const onchangePasswordConfirm = (e) => {
-    const currentPasswordConfirm = e.target.value;
-    setPasswordConfirm(currentPasswordConfirm);
-    if (password !== currentPasswordConfirm) {
-      setPasswordConfirmMessage("비밀번호가 같지않습니다");
-      setIsPasswordConfirm(false);
-    } else {
-      setPasswordConfirmMessage("비밀번호를 올바르게 입력하였습니다");
-      setIsPasswordConfirm(true);
-    }
-  };
-
   // 휴대전화 수정
   const onchangePhone = (e) => {
     const currentPhone = e.target.value;
@@ -355,26 +302,7 @@ const ModifyPage = () => {
             <h2 css={namebox}>username</h2>
             <div css={getname}>{principal.data.data.username}</div>
           </div>
-          <div css={passwordText}>
-            <h2 css={namebox}> Password </h2>
-            <input
-              css={informationinput}
-              type="password"
-              placeholder="비밀번호를 입력해주세요"
-              onChange={onchangePassword}
-              name="password"
-            ></input>
-          </div>
-          <div css={passwordCheckText}>
-            <h2 css={namebox}> PasswordConfirm </h2>
-            <input
-              css={informationinput}
-              type="password"
-              placeholder="비밀번호를 확인해주세요"
-              onChange={onchangePasswordConfirm}
-              name="passwordConfirm"
-            ></input>
-          </div>
+
           <div css={phoneText}>
             <h2 css={namebox}> Phone </h2>
             <input
