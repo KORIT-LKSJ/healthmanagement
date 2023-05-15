@@ -26,10 +26,10 @@ function App() {
         <Route path="/find/password" element={<FindPassword />}></Route>
         <Route path="/" element={<Main />}></Route>
         <Route
-          path="/MyPage"
-          element={<AuthRouteReactQuery path="/MyPage" element={<MyPage />} />}
+          path="/mypage"
+          element={<AuthRouteReactQuery path="/mypage" element={<MyPage />} />}
         />
-        <Route path="/ModifyPage" element={<ModifyPage />}></Route>
+        <Route path="/modifypage" element={<ModifyPage />}></Route>
         <Route
           path="/gym/:gymId"
           element={<AuthRouteReactQuery path="/gym" element={<GymDetail />} />}

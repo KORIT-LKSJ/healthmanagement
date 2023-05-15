@@ -139,16 +139,6 @@ const passwordCheckText = css`
   font-weight: 600;
 `;
 
-const telephoneText = css`
-  display: flex;
-  border: 1px solid #dbdbdb;
-  border-radius: 10px;
-  align-items: center;
-  height: 600px;
-  width: 100%;
-  font-size: 18px;
-  font-weight: 600;
-`;
 const phoneText = css`
   display: flex;
   border: 1px solid #dbdbdb;
@@ -201,21 +191,18 @@ const ModifyPage = () => {
   //초깃값
   const [passwordconfirm, setPasswordConfirm] = useState("");
   const [email, setEmail] = useState("");
-  const [telephone, setTelePhone] = useState("");
   const [phone, setPhone] = useState("");
 
   // 오류메세지 저장
   const [passwordmessage, setPasswordMessage] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
   const [emailmessage, setEmailMessage] = useState("");
-  const [telephoneMessage, setTelePhoneMessage] = useState("");
   const [phoneMessage, setPhoneMessage] = useState("");
 
   //유효성 검사
   const [ispassword, setIsPassword] = useState(false);
   const [ispasswordconfirm, setIsPasswordConfirm] = useState(false);
   const [isemail, setIsEmail] = useState(false);
-  const [istelephone, setIsTelePhone] = useState(false);
   const [isphone, setIsPhone] = useState(false);
 
   const principal = useQuery(["Principal"], async () => {
@@ -317,21 +304,6 @@ const ModifyPage = () => {
     }
   };
 
-  //전화번호 수정
-
-  const onchangeTelePhone = (e) => {
-    const currentTelePhone = e.target.value;
-    setTelePhone(currentTelePhone);
-    const telephoneRegExp = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
-    if (!telephoneRegExp.test(currentTelePhone)) {
-      setTelePhoneMessage("올바른 형식이 아닙니다");
-      setIsTelePhone(false);
-    } else {
-      setTelePhoneMessage("사용가능한 번호입니다");
-      setIsTelePhone(true);
-    }
-  };
-
   // 휴대전화 수정
   const onchangePhone = (e) => {
     const currentPhone = e.target.value;
@@ -401,16 +373,6 @@ const ModifyPage = () => {
               placeholder="비밀번호를 확인해주세요"
               onChange={onchangePasswordConfirm}
               name="passwordConfirm"
-            ></input>
-          </div>
-          <div css={telephoneText}>
-            <h2 css={namebox}> Telephone </h2>
-            <input
-              css={informationinput}
-              type="text"
-              placeholder="ex.055-xxx-xxxx"
-              onChange={onchangeTelePhone}
-              name="telephone"
             ></input>
           </div>
           <div css={phoneText}>
