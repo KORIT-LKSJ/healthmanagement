@@ -69,9 +69,9 @@ public class AuthenticationServiceImpl implements AuthenticationService, UserDet
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+		System.out.println(username);
 		User userEntity = userRepositiory.findUserByUsername(username);
-		
+		System.out.println(userEntity);
 		if(userEntity == null) {
 			throw new CustomException("로그인 실패", ErrorMap.builder().put("username","사용자정보를 확인하세요").build());
 		}

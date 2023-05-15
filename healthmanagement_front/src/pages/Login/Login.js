@@ -31,7 +31,6 @@ const main = css`
     height: 100%;
     background-color: white;
     overflow: hidden;
-    
 `;
 
 const loginInfo = css`
@@ -208,6 +207,8 @@ const Login = () => {
         const { name, value } = e.target;
         setLoginUser({ ...loginUser, [name]: value });
     };
+
+    console.log(loginUser);
     if (!loginSubmit.isLoading)
         return (
             <div css={container}>
