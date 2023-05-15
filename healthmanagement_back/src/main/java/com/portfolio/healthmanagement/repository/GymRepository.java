@@ -12,9 +12,9 @@ import com.portfolio.healthmanagement.entity.LikeList;
 @Mapper
 public interface GymRepository {
 	public Gym getGym(int gymId);
+	public Gym findByBusinessnNumber(String businessnNumber);
 	public List<Gym> searchGyms(Map<String, Object> map);
 	public int getTotalCount(Map<String, Object> map);
-	
 	public int getLikeCount(int bookId);
 	public int getLikeStatus(Map<String, Object> map);
 	
@@ -22,4 +22,6 @@ public interface GymRepository {
 	public int disLike(Map<String, Object>map);
 	
 	public List<LikeList> likeGyms(int userId);
+	public int saveGym(Gym gym);
+	public List<Gym> NearbyGymAddressesAndGymName(Map<String, Object> map);
 }
