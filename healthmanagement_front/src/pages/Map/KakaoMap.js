@@ -38,6 +38,11 @@ const mapStyle = css`
     height: 100%;
 `;
 
+const myLocationCircle = css`
+    width: 20px;
+    height: 20px;
+`;
+
 const OverLay = css`
     position: relative;
     text-align: center;
@@ -195,7 +200,32 @@ const KaKaoMap = () => {
             <header css={header}></header>
             <main css={main}>
                 <Map css={mapStyle} center={state.center} level={3} maxLevel={5}>
-                    <MapMarker position={state.center}></MapMarker>
+                    {/* <MapMarker position={state.center}></MapMarker> */}
+                    <CustomOverlayMap position={state.center}>
+                        <div css={myLocationCircle}>
+                            <svg
+                                width="30"
+                                height="30"
+                                viewBox="0 0 30 30"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <circle cx="15" cy="15" r="15" fill="#F83838">
+                                    <animate
+                                        attributeName="opacity"
+                                        from="0.2"
+                                        to="0.5"
+                                        dur="1s"
+                                        repeatCount="indefinite"
+                                    />
+                                </circle>
+                                <g fill="white" stroke-width="1.5">
+                                    <circle cx="15" cy="15" r="4.75" stroke-width="1.5" fill="white" />
+                                    <circle cx="15" cy="15" r="4" fill="#F83838" />
+                                </g>
+                            </svg>
+                        </div>
+                    </CustomOverlayMap>
                     {nearLatLngNames.map((nearLatLngName, index) => (
                         <>
                             <MapMarker
@@ -208,8 +238,8 @@ const KaKaoMap = () => {
                                         height: 35,
                                     },
                                 }}
-                            ></MapMarker>
-                            <CustomOverlayMap position={nearLatLngName} yAnchor={1}>
+                            />
+                            <CustomOverlayMap position={nearLatLngName}>
                                 <div css={OverLay}>
                                     <div css={mapMarkerOverLay}>
                                         {state.errMsg ? state.errMsg : nearLatLngName.gymName}
