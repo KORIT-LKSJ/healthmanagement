@@ -4,6 +4,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
+import Header from "../../components/Main/Header/Header";
+import Footer from "../../components/Main/Footer/Footer";
 
 const container = css`
     display: flex;
@@ -24,13 +26,14 @@ const header = css`
 `;
 
 const main = css`
+    position: relative;
+    top: 5%;
     display: flex;
     flex-direction: column;
-    padding: 20px 22px 75px 22px;
-    width: 750px;
-    height: 100%;
+    align-items: center;
+    width: 40%;
+    height: 90%;
     background-color: white;
-    overflow: hidden;
 `;
 
 const mapStyle = css`
@@ -74,17 +77,6 @@ const mapMarkerOverLay = css`
         transform: translateX(50%);
         border-color: #58595b transparent transparent;
     }
-`;
-
-const footer = css`
-    position: fixed;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 40px;
-    background-color: white;
 `;
 
 const KaKaoMap = () => {
@@ -198,7 +190,7 @@ const KaKaoMap = () => {
     console.log(nearLatLngNames);
     return (
         <div css={container}>
-            <header css={header}></header>
+            <Header search={false} />
             <main css={main}>
                 <Map css={mapStyle} center={state.center} level={3} maxLevel={5}>
                     <CustomOverlayMap position={state.center}>
@@ -250,7 +242,7 @@ const KaKaoMap = () => {
                     ))}
                 </Map>
             </main>
-            <footer css={footer}></footer>
+            <Footer />
         </div>
     );
 };

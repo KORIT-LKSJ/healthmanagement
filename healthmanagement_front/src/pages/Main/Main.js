@@ -1,11 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React, { useEffect, useRef, useState } from "react";
-import GymList from "./GymList";
-import Sidebar from "../../SideBar/SideBar";
-import { useQuery } from "react-query";
-import QueryString from "qs";
-import axios from "axios";
+import GymList from "../../components/Gym/GymList/GymList";
 import Header from "../../components/Main/Header/Header";
 import Footer from "../../components/Main/Footer/Footer";
 
@@ -89,7 +85,7 @@ const Main = () => {
 
     return (
         <div css={container}>
-            <Header refresh={refresh} setRefresh={setRefresh} gyms={gyms} setGyms={setGyms} />
+            <Header refresh={refresh} setRefresh={setRefresh} gyms={gyms} setGyms={setGyms} search={true} />
             <main css={main}>
                 <div css={mainImgContainer}>
                     <img
