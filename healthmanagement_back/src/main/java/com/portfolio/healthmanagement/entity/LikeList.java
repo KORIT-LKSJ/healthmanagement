@@ -16,7 +16,7 @@ public class LikeList {
 	private int gymId;
 	private String gymName;
 	private String gymAddress;
-	private int gymPrice;
+	private String gymPrice;
 	
 	public LikeListRespDto toDto(){
 		return LikeListRespDto.builder()
