@@ -126,6 +126,16 @@ const errorMsg = css`
   font-size: 14px;
   color: red;
 `;
+const footer = css`
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  background-color: white;
+`;
 
 const PasswordUpdate = () => {
   const navigate = useNavigate();
@@ -281,6 +291,7 @@ const PasswordUpdate = () => {
           <div css={errorMsg}>{passwordConfirmMessage}</div>
         </div>
       </main>
+      <footer css={footer}></footer>
     </div>
   );
 };
