@@ -1,52 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React, { useEffect, useRef, useState } from "react";
-import { BiSearch, BiUser } from "react-icons/bi";
 import GymList from "./GymList";
-import { HiHome } from "react-icons/hi";
-import { BiShoppingBag } from "react-icons/bi";
-import { HiMap } from "react-icons/hi";
-import { BiLike } from "react-icons/bi";
 import Sidebar from "../../SideBar/SideBar";
 import { useQuery } from "react-query";
-import SearchBar from "../../SearchBar/SearchBar";
 import QueryString from "qs";
 import axios from "axios";
+import Header from "../../components/Main/Header/Header";
+import Footer from "../../components/Main/Footer/Footer";
 
 const container = css`
     display: flex;
     flex-direction: column;
     align-items: center;
-`;
-
-const header = css`
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 5%;
-    background-color: white;
-`;
-
-const headerButton = css`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 2%;
-    width: 40%;
-`;
-
-const mainLogo = css`
-    height: 100%;
-`;
-
-const headerIcon = css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 22px;
-    cursor: pointer;
 `;
 
 const main = css`
@@ -84,6 +50,7 @@ const mentCss = css`
     max-height: 20px;
     font-family: "Courier New", Courier, monospace;
     font-size: 20px;
+    font-weight: 600;
     font-style: italic;
     color: gray;
     margin-left: 5%;
@@ -92,61 +59,19 @@ const mentCss = css`
 
 const gymListContainer = css`
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 100%;
-    height: 55%;
-`;
-const footer = css`
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 5%;
-    bottom: 0;
-    background-color: white;
-`;
-
-const pageButton = css`
-    display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 0 2%;
-    width: 40%;
-    height: 100%;
-`;
-
-const pageLocation = css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 1%;
-    gap: 5px;
-    height: 100%;
-    background-color: white;
-    color: #dbdbdb;
-    cursor: pointer;
-`;
-const pageLocationIcon = css`
-    font-size: 22px;
-    height: 100%;
-`;
-
-const pageLocationName = css`
-    font-size: 14px;
-    height: 100%;
+    flex-wrap: wrap;
+    padding: 0 5%;
+    width: 100%;
+    height: 400px;
 `;
 
 const Main = () => {
-    const [searchParam, setSearchParam] = useState({ page: 1, searchValue: "" });
     const [refresh, setRefresh] = useState(false);
     const [gyms, setGyms] = useState([]);
     const [likeGyms, setLikeGyms] = useState([]);
-    const [lastPage, setLastPage] = useState(1);
+
     const lastGymRef = useRef();
-    const [isOpen, setIsOpen] = useState();
-    const [isOpen2, setIsOpen2] = useState();
 
     useEffect(() => {
         const observerService = (entries, observer) => {
@@ -162,81 +87,9 @@ const Main = () => {
         observer.observe(lastGymRef.current);
     }, []);
 
-    const searchGyms = useQuery(
-        ["searchGyms"],
-        async () => {
-            const option = {
-                params: searchParam,
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                },
-                paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" }),
-            };
-            const response = await axios.get("http://localhost:8080/gyms", option);
-            return response;
-        },
-        {
-            onSuccess: (response) => {
-                if (refresh) {
-                    setRefresh(false);
-                }
-                console.log(response);
-                const totalCount = response.data.totalCount;
-                console.log(totalCount);
-
-                setLastPage(totalCount % 20 === 0 ? totalCount / 20 : Math.ceil(totalCount / 20));
-                setGyms([...gyms, ...response.data.gymList]);
-                setSearchParam({ ...searchParam, page: searchParam.page + 1 });
-            },
-            enabled: refresh && (searchParam.page < lastPage + 1 || lastPage === 0),
-        }
-    );
-
-    const sideBarClickHandle = () => {
-        if (!isOpen) {
-            setIsOpen(true);
-        }
-    };
-
-    const searchBarClickHandle = () => {
-        if (!isOpen2) {
-            setIsOpen2(true);
-        } else {
-            setIsOpen2(false);
-        }
-    };
-
-    const searchInputHandle = (e) => {
-        setSearchParam({ ...searchParam, page: 1, searchValue: e.target.value });
-    };
-
-    const searchSubmitHandle = (e) => {
-        if (e.keyCode === 13) {
-            setSearchParam({ ...searchParam, page: 1 });
-            setGyms([]);
-            setRefresh(true);
-        }
-    };
-
     return (
         <div css={container}>
-            <header css={header}>
-                <div css={headerButton}>
-                    <div css={headerIcon} onClick={sideBarClickHandle}>
-                        <BiUser />
-                    </div>
-                    <img css={mainLogo} src="image/gymLogo.png" alt="" />
-                    <div css={headerIcon} onClick={searchBarClickHandle}>
-                        <BiSearch />
-                    </div>
-                </div>
-                <SearchBar
-                    isOpen2={isOpen2}
-                    searchInputHandle={searchInputHandle}
-                    searchSubmitHandle={searchSubmitHandle}
-                />
-            </header>
-            <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+            <Header refresh={refresh} setRefresh={setRefresh} gyms={gyms} setGyms={setGyms} />
             <main css={main}>
                 <div css={mainImgContainer}>
                     <img
@@ -250,26 +103,7 @@ const Main = () => {
                     <div ref={lastGymRef}></div>
                 </div>
             </main>
-            <footer css={footer}>
-                <div css={pageButton}>
-                    <div css={pageLocation}>
-                        <HiHome css={pageLocationIcon} />
-                        <div css={pageLocationName}>홈</div>
-                    </div>
-                    <div css={pageLocation}>
-                        <BiLike css={pageLocationIcon} />
-                        <div css={pageLocationName}>여기어때?</div>
-                    </div>
-                    <div css={pageLocation}>
-                        <HiMap css={pageLocationIcon} />
-                        <div css={pageLocationName}>내 주변 헬스장</div>
-                    </div>
-                    <div css={pageLocation}>
-                        <BiShoppingBag css={pageLocationIcon} />
-                        <div css={pageLocationName}>쇼핑하기</div>
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 };

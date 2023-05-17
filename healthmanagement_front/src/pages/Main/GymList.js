@@ -12,7 +12,7 @@ const cardContainer = css`
     border-radius: 7px;
     box-shadow: 0px 0px 5px #dbdbdb;
     width: 45%;
-    max-height: 75%;
+    height: 100%;
     cursor: pointer;
     &:hover {
         box-shadow: 0px 0px 10px #dbdbdb;
