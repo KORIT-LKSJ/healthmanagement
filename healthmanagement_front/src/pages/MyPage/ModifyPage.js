@@ -183,12 +183,11 @@ const ModifyPage = () => {
   const [isphone, setIsPhone] = useState(false);
 
   const principal = useQuery(["Principal"], async () => {
-    const accessToken = localStorage.getItem("accessToken");
     const response = await axios.get(
       "http://localhost:8080/account/principal",
       {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       }
     );
@@ -198,12 +197,11 @@ const ModifyPage = () => {
   const userInfo = useQuery(
     ["UserInfo"],
     async () => {
-      const accessToken = localStorage.getItem("accessToken");
       const response = await axios.get(
         `http://localhost:8080/account/user/${principal.data.data.userId}`,
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         }
       );
@@ -218,13 +216,14 @@ const ModifyPage = () => {
     async (userId) => {
       const option = {
         headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("accessToken"),
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       };
       return await axios.post(
         `http://localhost:8080/modifypage/${userId}`,
-        JSON.stringify({}),
+        {
+          
+        },
         option
       );
     },
