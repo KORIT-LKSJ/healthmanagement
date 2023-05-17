@@ -8,22 +8,14 @@ import { FaRegStar } from "react-icons/fa";
 import { TbPassword } from "react-icons/tb";
 import { AiOutlineDoubleRight } from "react-icons/ai";
 import axios from "axios";
+import Footer from "../../components/Main/Footer/Footer";
+import Header from "../../components/Main/Header/Header";
 
 const container = css`
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
-`;
-
-const header = css`
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 40px;
-  background-color: white;
 `;
 
 const main = css`
@@ -278,17 +270,6 @@ const nowButton = css`
   font-size: 30px;
 `;
 
-const footer = css`
-  position: fixed;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 40px;
-  background-color: white;
-`;
-
 const MyPage = () => {
   const [selectedFile, setSelectedFile] = useState(
     localStorage.getItem("profileimage") || "./images/noimage.jpg"
@@ -367,7 +348,7 @@ const MyPage = () => {
 
   return (
     <div css={container}>
-      <header css={header}></header>
+      <Header />
       <main css={main}>
         <h1 css={titleText}>MyPage</h1>
         <div css={mypagecontainer}>
@@ -425,7 +406,7 @@ const MyPage = () => {
           </div>
         </div>
       </main>
-      <footer css={footer}></footer>
+      <Footer />
     </div>
   );
 };

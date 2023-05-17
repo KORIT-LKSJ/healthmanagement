@@ -6,23 +6,16 @@ import { BiExit } from "react-icons/bi";
 import { GiSaveArrow } from "react-icons/gi";
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";
+import Header from "../../components/Main/Header/Header";
 import Footer from "../../components/Main/Footer/Footer";
 
 const container = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 800px;
+  height: 809px;
 `;
-const header = css`
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 40px;
-  background-color: white;
-`;
+
 const main = css`
   display: flex;
   flex-direction: column;
@@ -304,7 +297,7 @@ const ModifyPage = () => {
   // 회원정보 수정시 저장되는 것을 구현을 해야함, namebox디자인 수정 필요(높이 수정)
   return (
     <div css={container}>
-      <header css={header}></header>
+      <Header />
       <main css={main}>
         <div css={title}>
           <h1 css={titleText}>ModifyPage</h1>
