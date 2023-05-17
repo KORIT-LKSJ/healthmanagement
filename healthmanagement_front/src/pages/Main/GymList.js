@@ -7,7 +7,7 @@ const cardContainer = css`
     flex-direction: column;
     align-items: center;
     margin: 1%;
-    margin-bottom: 40px;
+    margin-bottom: 6%;
     border: 1px solid #dbdbdb;
     border-radius: 7px;
     box-shadow: 0px 0px 5px #dbdbdb;
@@ -35,7 +35,7 @@ const titleText = css`
 `;
 const main = css`
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
     margin-bottom: 4%;
     width: 100%;
@@ -55,7 +55,8 @@ const imgBox = css`
     overflow: hidden;
 `;
 const img = css`
-    width: 300px;
+    width: 100%;
+    height: 100%;
 `;
 
 const footer = css`
@@ -65,8 +66,14 @@ const footer = css`
     font-weight: 600;
     font-size: 14px;
     width: 90%;
-    height: 20%;
+    height: 30%;
     padding-bottom: 5%;
+`;
+
+const infoDetail = css`
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `;
 
 const like = css`
@@ -80,10 +87,6 @@ const like = css`
     background-color: white;
     font-weight: 600;
     box-shadow: 0px 5px 5px #dbdbdb;
-`;
-
-const likeIcon = css`
-    padding-right: 5px;
 `;
 
 const GymList = ({ gym }) => {
@@ -105,11 +108,9 @@ const GymList = ({ gym }) => {
                     </div>
                 </main>
                 <footer css={footer}>
-                    <h2>위치: {gym.gymAddress} </h2>
-                    <h2>가격: (월) {gym.gymPrice}&#8361;</h2>
-                    <div css={like}>
-                        <div css={likeIcon}></div>추천: {gym.likeCount}
-                    </div>
+                    <h2 css={infoDetail}>위치: {gym.gymAddress} </h2>
+                    <h2 css={infoDetail}>가격: (월) {gym.gymPrice}&#8361;</h2>
+                    <div css={like}>추천: {gym.likeCount}</div>
                 </footer>
             </div>
         </>

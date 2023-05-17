@@ -22,26 +22,30 @@ const container = css`
 const header = css`
     position: fixed;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
     height: 5%;
     background-color: white;
 `;
 
+const headerButton = css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2%;
+    width: 40%;
+`;
+
 const mainLogo = css`
     height: 100%;
 `;
 
-const listIcon = css`
+const headerIcon = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 22px;
-    margin-left: 270px;
-    cursor: pointer;
-`;
-
-const searchIcon = css`
-    font-size: 22px;
-    margin-right: 270px;
     cursor: pointer;
 `;
 
@@ -110,23 +114,28 @@ const pageButton = css`
     align-items: center;
     padding: 0 2%;
     width: 40%;
+    height: 100%;
 `;
 
 const pageLocation = css`
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 1%;
     gap: 5px;
+    height: 100%;
     background-color: white;
     color: #dbdbdb;
     cursor: pointer;
 `;
 const pageLocationIcon = css`
-    font-size: 20p;
+    font-size: 22px;
+    height: 100%;
 `;
 
 const pageLocationName = css`
-    font-size: 16px;
+    font-size: 14px;
+    height: 100%;
 `;
 
 const Main = () => {
@@ -212,13 +221,14 @@ const Main = () => {
     return (
         <div css={container}>
             <header css={header}>
-                <div css={listIcon} onClick={sideBarClickHandle}>
-                    {" "}
-                    <BiUser />{" "}
-                </div>
-                <img css={mainLogo} src="image/gymLogo.png" alt="" />
-                <div css={searchIcon} onClick={searchBarClickHandle}>
-                    <BiSearch />
+                <div css={headerButton}>
+                    <div css={headerIcon} onClick={sideBarClickHandle}>
+                        <BiUser />
+                    </div>
+                    <img css={mainLogo} src="image/gymLogo.png" alt="" />
+                    <div css={headerIcon} onClick={searchBarClickHandle}>
+                        <BiSearch />
+                    </div>
                 </div>
                 <SearchBar
                     isOpen2={isOpen2}
@@ -247,15 +257,15 @@ const Main = () => {
                         <div css={pageLocationName}>홈</div>
                     </div>
                     <div css={pageLocation}>
-                        <BiLike />
+                        <BiLike css={pageLocationIcon} />
                         <div css={pageLocationName}>여기어때?</div>
                     </div>
                     <div css={pageLocation}>
-                        <HiMap />
+                        <HiMap css={pageLocationIcon} />
                         <div css={pageLocationName}>내 주변 헬스장</div>
                     </div>
                     <div css={pageLocation}>
-                        <BiShoppingBag />
+                        <BiShoppingBag css={pageLocationIcon} />
                         <div css={pageLocationName}>쇼핑하기</div>
                     </div>
                 </div>
