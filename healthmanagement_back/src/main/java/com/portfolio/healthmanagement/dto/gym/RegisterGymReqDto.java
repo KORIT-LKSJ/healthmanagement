@@ -1,5 +1,7 @@
 package com.portfolio.healthmanagement.dto.gym;
 
+import java.time.LocalDate;
+
 import com.portfolio.healthmanagement.entity.Gym;
 
 import lombok.Builder;
@@ -13,7 +15,9 @@ public class RegisterGymReqDto {
 	private String gymTel;
 	private String businessNumber;
 	private String gymPrice;
-	private String gymImgUrl;
+	private LocalDate registDate;
+	private LocalDate removeDate;
+	
 	
 	public Gym toEntity() {
 		return Gym.builder()
@@ -22,7 +26,8 @@ public class RegisterGymReqDto {
 				.gymTel(gymTel)
 				.businessNumber(businessNumber)
 				.gymPrice(gymPrice)
-				.gymImgUrl(gymImgUrl)
+				.registDate(registDate)
+				.removeDate(removeDate)
 				.build();
 	}
 }

@@ -24,13 +24,13 @@ const header = css`
 `;
 
 const main = css`
-  display: flex;
-  flex-direction: column;
-  padding: 20px 22px 75px 22px;
-  width: 750px;
-  height: 100%;
-  background-color: white;
-  overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 22px 75px 22px;
+    width: 750px;
+    height: 100%;
+    background-color: white;
+    overflow: hidden;
 `;
 
 const loginInfo = css`
@@ -189,6 +189,7 @@ const Login = () => {
         "Content-Type": "application/json",
       },
     };
+
     try {
       const response = await axios.post(
         "http://localhost:8080/auth/login",
