@@ -323,11 +323,29 @@ const MyPage = () => {
     navigate("/mypage/passwordupdate");
   };
 
-  //유저이미지 들고옴
+  //유저이미지를 파일에서 들고와서 변환하게 하는것 구현
 
+  // const handleImageClick = () => {
+  //   const input = document.getElementById("profile-image");
+  //   input.click();
+  // };
+  // const handleFileSelect = (event) => {
+  //   const reader = new FileReader();
+  //   const file = event.target.files[0];
+  //   reader.onloadend = function () {
+  //     setSelectedFile(reader.result);
+  //     localStorage.setItem("profileimage", reader.result);
+  //   };
+  //   if (file) {
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+
+  // 유저이미지를 특정이미지로 고정되도록 구현중
   const handleImageClick = () => {
-    const input = document.getElementById("profile-image");
-    input.click();
+    const imageUrl = "https://example.com/path/to/image.jpg";
+    setSelectedFile(imageUrl);
+    localStorage.setItem("profileimage", imageUrl);
   };
   const handleFileSelect = (event) => {
     const reader = new FileReader();
@@ -337,7 +355,7 @@ const MyPage = () => {
       localStorage.setItem("profileimage", reader.result);
     };
     if (file) {
-      reader.readAsDataURL(file);
+      reader.readeAsDataURL(file);
     }
   };
 
@@ -359,7 +377,7 @@ const MyPage = () => {
                 <label htmlFor="profile-image"></label>
                 <img
                   css={img}
-                  src={selectedFile}
+                  src="https://img.freepik.com/free-photo/adorable-domestic-kitty-with-copy-space_23-2149167112.jpg?size=626&ext=jpg"
                   alt=""
                   onClick={handleImageClick}
                   onLoad={() => console.log("image loaded")}

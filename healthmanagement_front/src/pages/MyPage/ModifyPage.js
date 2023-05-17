@@ -162,6 +162,11 @@ const deliveryaddressText = css`
   font-weight: 600;
 `;
 
+const errorMsg = css`
+  font-size: 14px;
+  color: red;
+`;
+
 const ModifyPage = () => {
   const navigate = useNavigate();
   const [changeuser, setChangeUser] = useState({});
@@ -173,13 +178,13 @@ const ModifyPage = () => {
 
   // 오류메세지 저장
 
-  const [emailmessage, setEmailMessage] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
   const [phoneMessage, setPhoneMessage] = useState("");
 
   //유효성 검사
 
-  const [isemail, setIsEmail] = useState(false);
-  const [isphone, setIsPhone] = useState(false);
+  const [isemail, setIsEmail] = useState(true);
+  const [isphone, setIsPhone] = useState(true);
 
   const principal = useQuery(["Principal"], async () => {
     const response = await axios.get(
@@ -210,7 +215,7 @@ const ModifyPage = () => {
       enabled: !!principal.data,
     }
   );
-  //회원정보가 저장되는 것 구현중
+  //회원정보가 저장되는 것 구현중, 주소는 아직 구현하지 않았음
   const saveinfo = useMutation(
     async (userId) => {
       const option = {
@@ -222,6 +227,8 @@ const ModifyPage = () => {
         `http://localhost:8080/modifypage/${userId}`,
         {
           userId: principal.data.data.userId,
+          phone,
+          email,
         },
         option
       );
@@ -320,6 +327,7 @@ const ModifyPage = () => {
               name="phone"
               value={userInfo.data.data.phone}
             ></input>
+            <div css={errorMsg}>{phoneMessage}</div>
           </div>
           <div css={emailText}>
             <h2 css={namebox}> Email</h2>
@@ -331,6 +339,7 @@ const ModifyPage = () => {
               name="email"
               value={userInfo.data.data.email}
             ></input>
+            <div css={errorMsg}>{emailMessage}</div>
           </div>
           <div css={addressText}>
             <h2 css={namebox}> Address</h2>
