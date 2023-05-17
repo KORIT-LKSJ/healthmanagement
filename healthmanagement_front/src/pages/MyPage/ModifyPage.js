@@ -165,7 +165,6 @@ const deliveryaddressText = css`
 const ModifyPage = () => {
   const navigate = useNavigate();
   const [changeuser, setChangeUser] = useState({});
-  const [password, setPassword] = useState("");
 
   //초깃값
 
@@ -183,12 +182,11 @@ const ModifyPage = () => {
   const [isphone, setIsPhone] = useState(false);
 
   const principal = useQuery(["Principal"], async () => {
-    const accessToken = localStorage.getItem("accessToken");
     const response = await axios.get(
       "http://localhost:8080/account/principal",
       {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       }
     );
@@ -198,12 +196,11 @@ const ModifyPage = () => {
   const userInfo = useQuery(
     ["UserInfo"],
     async () => {
-      const accessToken = localStorage.getItem("accessToken");
       const response = await axios.get(
         `http://localhost:8080/account/user/${principal.data.data.userId}`,
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         }
       );
@@ -218,18 +215,21 @@ const ModifyPage = () => {
     async (userId) => {
       const option = {
         headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("accessToken"),
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       };
       return await axios.post(
         `http://localhost:8080/modifypage/${userId}`,
-        JSON.stringify({}),
+        {
+          userId: principal.data.data.userId,
+        },
         option
       );
     },
     {
-      onSuccess: () => {},
+      onSuccess: () => {
+        alert("회원정보 변경완료");
+      },
     }
   );
 
@@ -284,22 +284,7 @@ const ModifyPage = () => {
     setChangeUser({ ...changeuser, [email]: currentEmail });
   };
   const onsuccessClickHandle = async () => {
-    try {
-      const accessToken = localStorage.getItem("accessToken");
-      const response = await axios.post(
-        "http://localhost:8080/modifypage",
-        changeuser,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log(response.data); //수정된 회원정보 확인
-      navigate("/mypage");
-    } catch (error) {
-      console.error(error);
-    }
+    saveinfo.mutate();
   };
 
   // 회원정보 수정시 저장되는 것을 구현을 해야함, namebox디자인 수정 필요(높이 수정)
