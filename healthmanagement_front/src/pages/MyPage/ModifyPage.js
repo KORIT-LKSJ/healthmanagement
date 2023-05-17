@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BiExit } from "react-icons/bi";
 import { GiSaveArrow } from "react-icons/gi";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 
 const container = css`
@@ -213,6 +213,25 @@ const ModifyPage = () => {
       enabled: !!principal.data,
     }
   );
+  //회원정보가 저장되는 것 구현중
+  const saveinfo = useMutation(
+    async (userId) => {
+      const option = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("accessToken"),
+        },
+      };
+      return await axios.post(
+        `http://localhost:8080/modifypage/${userId}`,
+        JSON.stringify({}),
+        option
+      );
+    },
+    {
+      onSuccess: () => {},
+    }
+  );
 
   if (principal.isLoading || userInfo.isLoading) {
     return <div>Loading...</div>;
@@ -231,24 +250,6 @@ const ModifyPage = () => {
   const onchangeHandle = (e) => {
     const { name, value } = e.target;
     setChangeUser({ ...changeuser, [name]: value });
-  };
-  const onsuccessClickHandle = async () => {
-    try {
-      const accessToken = localStorage.getItem("accessToken");
-      const response = await axios.post(
-        "http://localhost:8080/modifypage",
-        changeuser,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log(response.data); //수정된 회원정보 확인
-      navigate("/mypage");
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   // 휴대전화 수정
@@ -282,8 +283,26 @@ const ModifyPage = () => {
     }
     setChangeUser({ ...changeuser, [email]: currentEmail });
   };
+  const onsuccessClickHandle = async () => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      const response = await axios.post(
+        "http://localhost:8080/modifypage",
+        changeuser,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      console.log(response.data); //수정된 회원정보 확인
+      navigate("/mypage");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  // 회원정보 수정시 저장되는 것을 구현을 해야함, 마이페이지 디자인 수정 필요(밑에가 잘림)
+  // 회원정보 수정시 저장되는 것을 구현을 해야함, namebox디자인 수정 필요(높이 수정)
   return (
     <div css={container}>
       <header css={header}></header>
@@ -291,6 +310,7 @@ const ModifyPage = () => {
         <div css={title}>
           <h1 css={titleText}>ModifyPage</h1>
           <div css={box}>
+            {" "}
             <div css={button} onClick={onclickExitHandle}>
               <BiExit css={icon} />
             </div>

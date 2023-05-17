@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.portfolio.healthmanagement.dto.response.PrincipalRespDto;
 import com.portfolio.healthmanagement.entity.User;
 import com.portfolio.healthmanagement.repository.AccountRepository;
-import com.portfolio.healthmanagement.repository.UserRepositiory;
+import com.portfolio.healthmanagement.repository.UserRepository;
 
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class AccountServiceImpl implements AccountService {
 
 	private final AccountRepository accountRepository;
-	private final UserRepositiory userRepositiory;
+	private final UserRepository userRepositiory;
 	
 	@Override
 	public PrincipalRespDto getPrincipal(Authentication authentication) {

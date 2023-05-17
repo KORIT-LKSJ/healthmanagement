@@ -154,15 +154,15 @@ const Login = () => {
   });
 
   const findIdClickHandle = () => {
-    navigate("/find/id");
+    navigate("/auth/find/id");
   };
 
   const findPasswordClickHandle = () => {
-    navigate("/find/password");
+    navigate("/auth/find/password");
   };
 
   const signUpClickHandle = () => {
-    navigate("/register");
+    navigate("/auth/register");
   };
 
   const successLogin = () => {
@@ -195,7 +195,7 @@ const Login = () => {
         JSON.stringify({ ...loginUser }),
         option
       );
-      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("accessToken", response.data);
       successLogin();
     } catch (error) {
       errorLogin(error);
@@ -206,6 +206,7 @@ const Login = () => {
     const { name, value } = e.target;
     setLoginUser({ ...loginUser, [name]: value });
   };
+
   if (!loginSubmit.isLoading)
     return (
       <div css={container}>
@@ -213,7 +214,7 @@ const Login = () => {
         <main css={main}>
           <div css={loginInfo}>
             <div css={logo}>
-              <img src="images/logo.png" alt="로고" />
+              <img src="../../images/logo.png" alt="로고" />
             </div>
             <div css={loginDetail}>
               <label css={loginLabel}>아이디</label>
@@ -248,9 +249,13 @@ const Login = () => {
           </div>
 
           <div css={moreLogin}>
-            <img css={loginImg} src="images/naverLogin.png" alt="naver" />
-            <img css={loginImg} src="images/kakaoLogin.png" alt="kakao" />
-            <img css={loginImg} src="images/googleLogin.png" alt="google" />
+            <img css={loginImg} src="../../images/naverLogin.png" alt="naver" />
+            <img css={loginImg} src="../../images/kakaoLogin.png" alt="kakao" />
+            <img
+              css={loginImg}
+              src="../../images/googleLogin.png"
+              alt="google"
+            />
           </div>
           <div css={signUpContainer}>
             <div css={signUp} onClick={signUpClickHandle}>

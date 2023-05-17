@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React, { useState } from "react";
+import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import { BiUserCircle } from "react-icons/bi";
 import { FaRegStar } from "react-icons/fa";
+import { TbPassword } from "react-icons/tb";
 import { AiOutlineDoubleRight } from "react-icons/ai";
-import { AiFillQuestionCircle } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
-import { useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 
 const container = css`
@@ -232,7 +232,7 @@ const bookMarkIcon = css`
   font-size: 27px;
 `;
 
-const qAndA = css`
+const passwordul = css`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -246,14 +246,14 @@ const qAndA = css`
   }
 `;
 
-const qAndATitle = css`
+const passwordulTitle = css`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 
-const qAndAName = css`
+const passwordulName = css`
   height: 30px;
   display: flex;
   align-items: center;
@@ -263,7 +263,7 @@ const qAndAName = css`
   font-weight: 600;
 `;
 
-const qAndAIcon = css`
+const passwordulIcon = css`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -296,10 +296,14 @@ const MyPage = () => {
   const navigate = useNavigate();
 
   const principal = useQuery(["principal"], async () => {
-    const accessToken = localStorage.getItem("accessToken");
-    const response = await axios.get("http://localhost:8080/auth/principal", {
-      params: { accessToken },
-    });
+    const response = await axios.get(
+      "http://localhost:8080/account/principal",
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    );
     return response;
   });
 
@@ -308,15 +312,15 @@ const MyPage = () => {
   }
 
   const modifyClickHandle = () => {
-    navigate("/ModifyPage");
+    navigate("/mypage/modifypage");
   };
 
   const bookMarkClickHandle = () => {
-    navigate("/bookmark");
+    navigate("/mypage/bookmark");
   };
 
-  const qAndAClickHandle = () => {
-    navigate("/qAnda");
+  const passwordulHandle = () => {
+    navigate("/mypage/passwordupdate");
   };
 
   //유저이미지 들고옴
@@ -338,7 +342,9 @@ const MyPage = () => {
   };
 
   //유저 이름 들고옴
+  console.log(principal);
   const principalData = principal.data.data;
+
   const roles = principalData.authorities.split(",");
 
   return (
@@ -384,18 +390,17 @@ const MyPage = () => {
               </div>
               <AiOutlineDoubleRight css={nowButton} />
             </div>
+            <div css={passwordul} onClick={passwordulHandle}>
+              <div css={passwordulTitle}>
+                <TbPassword css={passwordulIcon} />
+                <div css={passwordulName}>PasswordFrom</div>
+              </div>
+              <AiOutlineDoubleRight css={nowButton} />
+            </div>
             <div css={bookMark} onClick={bookMarkClickHandle}>
               <div css={bookTitle}>
                 <FaRegStar css={bookMarkIcon} />
                 <div css={bookMarkName}>BookMark</div>
-              </div>
-              <AiOutlineDoubleRight css={nowButton} />
-            </div>
-
-            <div css={qAndA} onClick={qAndAClickHandle}>
-              <div css={qAndATitle}>
-                <AiFillQuestionCircle css={qAndAIcon} />
-                <div css={qAndAName}>Q&A</div>
               </div>
               <AiOutlineDoubleRight css={nowButton} />
             </div>

@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { BiExit } from "react-icons/bi";
 import { GiSaveArrow } from "react-icons/gi";
 import axios from "axios";
@@ -156,36 +156,34 @@ const PasswordUpdate = () => {
     }
   );
 
+  // 비밀번호가 저장되는 것 구현중
+  const saveinfo = useMutation(
+    async (userId) => {
+      const option = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("accessToken"),
+        },
+      };
+      return await axios.post(
+        `http://localhost:8080/modifypage/${password}`,
+        JSON.stringify({}),
+        option
+      );
+    },
+    {
+      onSuccess: () => {
+        
+      },
+    }
+  );
+
   if (principal.isLoading || userInfo.isLoading) {
     return <div>Loading...</div>;
   }
 
   const onclickExitHandle = () => {
     navigate("/mypage");
-  };
-  const roles = principal.data.data.authorities.split(",");
-
-  const onchangeHandle = (e) => {
-    const { name, value } = e.target;
-    setPassword({ ...password, [name]: value });
-  };
-  const onsuccessClickHandle = async () => {
-    try {
-      const accessToken = localStorage.getItem("accessToken");
-      const response = await axios.post(
-        "http://localhost:8080/modifypage",
-        password,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log(response.data); //수정된 회원정보 확인
-      navigate("/mypage");
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   // 비밀번호와 비밀번호 확인하는 정규식 구현중
@@ -204,7 +202,6 @@ const PasswordUpdate = () => {
       setPasswordMessage("안전한 비밀번호입니다");
       setIsPassword(true);
     }
-    setPassword({ ...password, [password]: currentPassword });
   };
 
   const onchangePasswordConfirm = (e) => {
@@ -216,6 +213,24 @@ const PasswordUpdate = () => {
     } else {
       setPasswordConfirmMessage("비밀번호를 올바르게 입력하였습니다");
       setIsPasswordConfirm(true);
+    }
+  };
+  const onsuccessClickHandle = async () => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      const response = await axios.post(
+        "http://localhost:8080/modifypage",
+        { password },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      console.log(response.data); //수정된 회원정보 확인
+      navigate("/mypage");
+    } catch (error) {
+      console.error(error);
     }
   };
 
