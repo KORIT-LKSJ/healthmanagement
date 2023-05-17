@@ -1,6 +1,8 @@
 package com.portfolio.healthmanagement.dto.gym;
 
 
+import java.time.LocalDate;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,7 +16,8 @@ public class GetGymRespDto {
 	private String gymTel;
 	private String businessNumber;
 	private String gymPrice;
-	private String gymImgUrl;
 	private int gymOwnerId;
+	private LocalDate registDate;
+	private LocalDate removeDate;
 	
 }
