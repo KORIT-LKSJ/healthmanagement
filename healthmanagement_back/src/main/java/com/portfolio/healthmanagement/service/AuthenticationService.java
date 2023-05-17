@@ -11,9 +11,7 @@ public interface AuthenticationService {
 	
 	public void checkDuplicatedUsername(String username);
 	public void register(registerReqDto registerReqDto);
-	public boolean authenticated(String accessToken);
-	public PrincipalRespDto getPrincipal(String accessToken);
-	public JwtRespDto login(LoginReqDto loginReqDto);
+	public String login(LoginReqDto loginReqDto);
 
 }
 

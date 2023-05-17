@@ -18,7 +18,7 @@ import com.portfolio.healthmanagement.entity.User;
 import com.portfolio.healthmanagement.exception.CustomException;
 import com.portfolio.healthmanagement.exception.ErrorMap;
 import com.portfolio.healthmanagement.repository.GymRepository;
-import com.portfolio.healthmanagement.repository.UserRepositiory;
+import com.portfolio.healthmanagement.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GymService {
 	private final GymRepository gymRepository;
-	private final UserRepositiory userRepositiory;
+	private final UserRepository userRepositiory;
 	
 	public GetGymRespDto getGym(int gymId) {
 		return gymRepository.getGym(gymId).toGetGymDto();
