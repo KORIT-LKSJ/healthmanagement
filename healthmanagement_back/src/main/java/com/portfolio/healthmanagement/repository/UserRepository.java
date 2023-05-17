@@ -6,7 +6,7 @@ import com.portfolio.healthmanagement.entity.Authority;
 import com.portfolio.healthmanagement.entity.User;
 
 @Mapper
-public interface UserRepositiory {
+public interface UserRepository {
 	public User findByUserId(int userId);
 	public User findUserByUsername(String username); // userId 중복 확인
 	public int saveUser(User user);

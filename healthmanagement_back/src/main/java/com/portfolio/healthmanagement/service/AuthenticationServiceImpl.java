@@ -21,7 +21,7 @@ import com.portfolio.healthmanagement.entity.Authority;
 import com.portfolio.healthmanagement.entity.User;
 import com.portfolio.healthmanagement.exception.CustomException;
 import com.portfolio.healthmanagement.exception.ErrorMap;
-import com.portfolio.healthmanagement.repository.UserRepositiory;
+import com.portfolio.healthmanagement.repository.UserRepository;
 import com.portfolio.healthmanagement.security.JwtTokenProvider;
 
 import io.jsonwebtoken.Claims;
@@ -31,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService, UserDetailsService{
 	
-	private final UserRepositiory userRepositiory;
+	private final UserRepository userRepositiory;
 	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 	private final JwtTokenProvider jwtTokenProvider;
 	
@@ -58,43 +58,26 @@ public class AuthenticationServiceImpl implements AuthenticationService, UserDet
 		userRepositiory.saveAuthority(authority);
 	}
 
-	public JwtRespDto login(LoginReqDto loginReqDto) {
+	public String login(LoginReqDto loginReqDto) {
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
 				new UsernamePasswordAuthenticationToken(loginReqDto.getUsername(),loginReqDto.getPassword());
 		System.out.println(usernamePasswordAuthenticationToken);
 		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(usernamePasswordAuthenticationToken);
 		
-		return jwtTokenProvider.createToken(authentication);
+		return jwtTokenProvider.generateAccessToken(authentication);
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		System.out.println(username);
 		User userEntity = userRepositiory.findUserByUsername(username);
-		System.out.println(userEntity);
+		System.out.println("호출?");
+
 		if(userEntity == null) {
-			throw new CustomException("로그인 실패", ErrorMap.builder().put("username","사용자정보를 확인하세요").build());
+			return null;
 		}
 		
 		return userEntity.toPrincipal();
-	}
-	
-	@Override
-	public boolean authenticated(String accessToken) {
-		return jwtTokenProvider.vaildateToken(jwtTokenProvider.getToken(accessToken));
-	}
-	@Override
-	public PrincipalRespDto getPrincipal(String accessToken) {
-		
-		Claims claims = jwtTokenProvider.getClaims(jwtTokenProvider.getToken(accessToken)); 
-		User userEntity = userRepositiory.findUserByUsername(claims.getSubject());
-		
-		return PrincipalRespDto.builder()
-				.userId(userEntity.getUserId())
-				.username(userEntity.getUsername())
-				.name(userEntity.getName())
-				.authorities((String)claims.get("auth"))
-				.build();
 	}
 	
 }

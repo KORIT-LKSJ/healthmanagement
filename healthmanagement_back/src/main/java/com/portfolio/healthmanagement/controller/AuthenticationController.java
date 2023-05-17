@@ -7,25 +7,28 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.portfolio.healthmanagement.aop.annotation.ValidAspect;
 import com.portfolio.healthmanagement.dto.auth.LoginReqDto;
 import com.portfolio.healthmanagement.dto.auth.registerReqDto;
+import com.portfolio.healthmanagement.security.JwtTokenProvider;
 import com.portfolio.healthmanagement.service.AuthenticationService;
-
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/auth")
 public class AuthenticationController {
 	
+	private final JwtTokenProvider jwtTokenProvider;
 	private final AuthenticationService authenticationService;
 	
 	@ValidAspect
-	@PostMapping("/auth/signup")
+	@PostMapping("/signup")
 	public ResponseEntity<?> signup(@Valid @RequestBody  registerReqDto registerReqDto, BindingResult bindingResult){
 		authenticationService.checkDuplicatedUsername(registerReqDto.getUsername());
 		authenticationService.register(registerReqDto);
@@ -34,23 +37,16 @@ public class AuthenticationController {
 	}
 	
 	@ValidAspect
-	@PostMapping("/auth/login")
+	@PostMapping("/login")
 	public ResponseEntity<?> login(@Valid @RequestBody LoginReqDto loginReqDto, BindingResult bindingResult){
 		System.out.println(loginReqDto);
 		return ResponseEntity.ok().body(authenticationService.login(loginReqDto));
 	}
 	
-	@GetMapping("/auth/authenticated")
-	public ResponseEntity<?> authenticated(String accessToken){
-		return ResponseEntity.ok().body(authenticationService.authenticated(accessToken));
-		
+	@GetMapping("/authenticated")
+	public ResponseEntity<?> authenticated(@RequestHeader(value = "Authorization") String accessToken) {
+		return ResponseEntity.ok(jwtTokenProvider.validateToken(jwtTokenProvider.getToken(accessToken)));
 	}
-	
-	@GetMapping("/auth/principal")
-	public ResponseEntity<?>principal( @RequestParam String accessToken){
-		return ResponseEntity.ok().body(authenticationService.getPrincipal(accessToken));
-	}
-	
 	
 }
 

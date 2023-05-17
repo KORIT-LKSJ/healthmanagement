@@ -26,7 +26,7 @@ public class JwtAuthenticationFilter extends GenericFilter  {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		String accessToken = httpServletRequest.getHeader("Authorization"); 
 		accessToken = jwtTokenProvider.getToken(accessToken);
-		boolean validationFlag = jwtTokenProvider.vaildateToken(accessToken); // 유효성 검사
+		boolean validationFlag = jwtTokenProvider.validateToken(accessToken); // 유효성 검사
 		
 		if(validationFlag) { 
 				Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
