@@ -106,6 +106,10 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     setIsOpen(false);
   };
 
+  const mypageClickHandle = () => {
+    navigate("/mypage");
+  };
+
   const likeListClickHandle = () => {
     navigate("/gym/" + userId + "/like/list");
   };
@@ -142,7 +146,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         </div>
       </header>
       <main css={main}>
-        <ListButton title="내 정보 수정">
+        <ListButton title="내 정보 수정" onClick={mypageClickHandle}>
           {" "}
           <BiUser />{" "}
         </ListButton>
