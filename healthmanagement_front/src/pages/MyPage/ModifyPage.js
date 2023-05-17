@@ -6,22 +6,16 @@ import { BiExit } from "react-icons/bi";
 import { GiSaveArrow } from "react-icons/gi";
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";
+import Header from "../../components/Main/Header/Header";
+import Footer from "../../components/Main/Footer/Footer";
 
 const container = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
+  height: 809px;
 `;
-const header = css`
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 40px;
-  background-color: white;
-`;
+
 const main = css`
   display: flex;
   flex-direction: column;
@@ -127,6 +121,12 @@ const phoneText = css`
   width: 100%;
   font-size: 18px;
   font-weight: 600;
+`;
+
+const inputContainer = css`
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
 `;
 
 const emailText = css`
@@ -271,7 +271,7 @@ const ModifyPage = () => {
       setPhoneMessage("사용가능한 번호입니다");
       setIsPhone(true);
     }
-    setChangeUser({ ...changeuser, [phone]: currentPhone });
+    setChangeUser({ ...changeuser, phone: currentPhone });
   };
 
   // 이메일 정보수정
@@ -288,7 +288,7 @@ const ModifyPage = () => {
       setEmailMessage("사용가능한 이메일 입니다");
       setIsEmail(true);
     }
-    setChangeUser({ ...changeuser, [email]: currentEmail });
+    setChangeUser({ ...changeuser, email: currentEmail });
   };
   const onsuccessClickHandle = async () => {
     saveinfo.mutate();
@@ -297,7 +297,7 @@ const ModifyPage = () => {
   // 회원정보 수정시 저장되는 것을 구현을 해야함, namebox디자인 수정 필요(높이 수정)
   return (
     <div css={container}>
-      <header css={header}></header>
+      <Header />
       <main css={main}>
         <div css={title}>
           <h1 css={titleText}>ModifyPage</h1>
@@ -319,15 +319,17 @@ const ModifyPage = () => {
 
           <div css={phoneText}>
             <h2 css={namebox}> Phone </h2>
-            <input
-              css={informationinput}
-              type="text"
-              placeholder="ex.010-xxxx-xxxx"
-              onChange={onchangePhone}
-              name="phone"
-              value={userInfo.data.data.phone}
-            ></input>
-            <div css={errorMsg}>{phoneMessage}</div>
+            <div css={inputContainer}>
+              <input
+                css={informationinput}
+                type="text"
+                placeholder="ex.010-xxxx-xxxx"
+                onChange={onchangePhone}
+                name="phone"
+                value={userInfo.data ? userInfo.data.data.phone : ""}
+              ></input>
+              <div css={errorMsg}>{phoneMessage}</div>
+            </div>
           </div>
           <div css={emailText}>
             <h2 css={namebox}> Email</h2>
@@ -337,7 +339,7 @@ const ModifyPage = () => {
               placeholder="이메일을 기입해주세요"
               onChange={onchangeEmail}
               name="email"
-              value={userInfo.data.data.email}
+              value={userInfo.data ? userInfo.data.data.email : ""}
             ></input>
             <div css={errorMsg}>{emailMessage}</div>
           </div>
@@ -363,6 +365,7 @@ const ModifyPage = () => {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

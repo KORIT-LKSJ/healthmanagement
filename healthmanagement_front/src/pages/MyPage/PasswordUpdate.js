@@ -6,6 +6,8 @@ import { useMutation, useQuery } from "react-query";
 import { BiExit } from "react-icons/bi";
 import { GiSaveArrow } from "react-icons/gi";
 import axios from "axios";
+import Footer from "../../components/Main/Footer/Footer";
+import Header from "../../components/Main/Header/Header";
 
 const container = css`
   display: flex;
@@ -13,15 +15,7 @@ const container = css`
   align-items: center;
   height: 100%;
 `;
-const header = css`
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 40px;
-  background-color: white;
-`;
+
 const main = css`
   display: flex;
   flex-direction: column;
@@ -125,16 +119,6 @@ const informationinput = css`
 const errorMsg = css`
   font-size: 14px;
   color: red;
-`;
-const footer = css`
-  position: fixed;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 40px;
-  background-color: white;
 `;
 
 const PasswordUpdate = () => {
@@ -251,7 +235,7 @@ const PasswordUpdate = () => {
 
   return (
     <div css={container}>
-      <header css={header}></header>
+      <Header />
       <main css={main}>
         <div css={title}>
           <h1 css={titleText}>Passwordchange</h1>
@@ -291,7 +275,7 @@ const PasswordUpdate = () => {
           <div css={errorMsg}>{passwordConfirmMessage}</div>
         </div>
       </main>
-      <footer css={footer}></footer>
+      <Footer />
     </div>
   );
 };
