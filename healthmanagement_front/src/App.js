@@ -17,6 +17,7 @@ import LikeList from "./pages/LikeList/LikeList";
 import KaKaoMap from "./pages/Map/KakaoMap";
 
 function App() {
+
   return (
     <>
       <Global styles={Reset} />
