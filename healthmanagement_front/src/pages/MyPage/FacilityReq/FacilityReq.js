@@ -5,6 +5,9 @@ import FacilityDetaill from "./FacilityDetaill";
 import { useState } from "react";
 import { async } from "q";
 import axios from "axios";
+import DaumPostcode from "react-daum-postcode";
+import { useDaumPostcodePopup } from 'react-daum-postcode';
+import Post from "./Post";
 
 const container = css`
     border: 1px solid #dbdbdb;
@@ -113,7 +116,16 @@ const registButton = css`
 
 const FacilityReq = () => {
     
-    const [ registerGym, setRegistserGym ] = useState({gymName : "", gymAddress : "", gymTel : "", businessnNumber : "", gymPrice : "", gymImgUrl : ""})
+    const [ registerGym, setRegistserGym ] = useState({gymName : "",  
+                                                    gymTel : "", 
+                                                    businessnNumber : "", 
+                                                    gymPrice : "",
+                                                    registDate : ""})
+    const [enroll_company, setEnroll_company] = useState({
+        gymAddress:''
+    });
+    
+    const [popup, setPopup] = useState(false);
 
     const inputs = ["input1", "input2", "input3"]
     const handleClick = () => {
@@ -146,12 +158,21 @@ const FacilityReq = () => {
                 "Content-Type" : "application/json"
             }
         }
-        const response = await axios.post("http://localhost:8080/faclilty", JSON.stringify({...registerGym}), option);
+        const response = await axios.post("http://localhost:8080/faclilty", JSON.stringify({...registerGym, ...enroll_company}), option);
         
         return response;
+    };
+
+    const handleInput = (e) => {
+        const {name, value} = e.target;
+        setEnroll_company({...enroll_company, [name]: value});
+    }   
+    console.log(enroll_company)
+
+    const handleComplete = (data) => {
+        setPopup(!popup);
     }
-    
-    console.log(registerGym)
+
     return (
         <div css={container}>
             <header css={header}>
@@ -170,10 +191,13 @@ const FacilityReq = () => {
                 <label css={inputTitle}>운동시설 이름</label>
                 <FacilityDetaill type="name" placeholder="운동시설 이름" onChange={handleChange}  name="gymName" onKeyDown={(e) => { if (e.keyCode===13) nextInput("gymName") }}>
                 </FacilityDetaill>
-
+            
                 <label css={inputTitle}>주소</label>
-                <FacilityDetaill type="text" placeholder="-동 까지 입력" onChange={handleChange} name="gymAddress" onKeyDown={(e) => { if (e.keyCode===13) nextInput("gymName") }}>
+                <FacilityDetaill type="text" placeholder="-까지 입력해주세요" onChange={handleInput} name="gymAddress" value={enroll_company.gymAddress}>
                 </FacilityDetaill>
+                <button onClick={handleComplete}>주소 찾기</button>
+                   {popup && <Post company={enroll_company} setcompany={setEnroll_company}></Post>}
+                
 
                 <label css={inputTitle}>전화번호</label>
                 <FacilityDetaill type="text" placeholder="-까지 입력해주세요" onChange={handleChange} name="gymTel" onKeyDown={(e) => { if (e.keyCode===13) nextInput("gymName") }}>
@@ -187,9 +211,13 @@ const FacilityReq = () => {
                 <FacilityDetaill type="text" placeholder="가격입력" onChange={handleChange} name="gymPrice" onKeyDown={(e) => { if (e.keyCode===13) nextInput("gymName") }}>
                 </FacilityDetaill>
 
+                <label css={inputTitle}>등록일</label>
+                <FacilityDetaill type="text" placeholder="오늘 날짜 입력" onChange={handleChange} name="registDate" onKeyDown={(e) => { if (e.keyCode===13) nextInput("gymName") }}>
+                </FacilityDetaill>
+
                 <label css={inputTitle}>이미지</label>
                 <div css={imgInputContainer}>
-                <input type="file" accept="image/*" name="gymImgUrl"  multiple />
+                <input type="file" accept="image/*"/>
                 </div>
                 <div css={footer}>
                     <button css={registButton} onClick={registerHandleSubmit}>등록하기</button>

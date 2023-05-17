@@ -9,8 +9,10 @@
 		<result property="gymTel" column="gym_tel"/>
 		<result property="businessNumber" column="businessnumber"/>
 		<result property="gymPrice" column="gym_price"/>
-		<result property="gymImgUrl" column="gym_img_url"/>
 		<result property="likeCount" column="like_count"/>
+		<result property="registDate" column="regist_Date"/>
+		<result property="removeDate" column="remove_Date"/>
+		
 	</resultMap>
 	
 	<resultMap type="com.portfolio.healthmanagement.entity.User" id="userMap">
@@ -37,7 +39,7 @@
 		<association property="gym" resultMap="GymMap"></association>
 	</resultMap>
 	
-	<select id="searchGyms" parameterType="hashmap" resultMap="GymMap">
+	<select id="searchGyms" parameterType="hashmap" resultMap="gymMap">
 		select
 			gt.gym_id,
 		    gt.gym_name,
@@ -45,7 +47,6 @@
 		    gt.gym_tel,
 		    gt.businessnumber,
 		    gt.gym_price,
-		    gt.gym_img_url,
 		    
 		    lc.like_count,
 		    
@@ -74,7 +75,6 @@
 				gt.gym_tel,
 				gt.businessnumber,
 				gt.gym_price,
-				gt.gym_img_url,
 				
 				got.gym_owner_id
 			
@@ -144,8 +144,7 @@
 				gt.gym_address,
 				gt.gym_tel,
 				gt.businessnumber,
-				gt.gym_price,
-				gt.gym_img_url
+				gt.gym_price
 			from
 				gym_tb gt
 			where
@@ -154,7 +153,7 @@
 		
 		<insert id="saveGym" parameterType="com.portfolio.healthmanagement.entity.Gym">
 			insert into gym_tb
-			values (0,#{gymName},#{gymAddress},#{gymTel},#{businessNumber},#{gymPrice},#{gymImgUrl})		
+			values (0,#{gymName},#{gymAddress},#{gymTel},#{businessNumber},#{gymPrice},#{likeCount},#{registDate},#{removeDate})		
 		</insert>
 		
 		<select id="likeGyms" parameterType="hashmap"  resultType="com.portfolio.healthmanagement.entity.LikeList">
@@ -164,7 +163,6 @@
 			    gt.gym_address as gymAddress,
 			    gt.gym_tel as gymTel,
 			    gt.gym_price as gymPrice,
-			    gt.gym_img_url as gymImgUrl,
 			    
 			    ut.user_id as userId
 			from
@@ -175,7 +173,7 @@
 				ut.user_id = #{userId}
     </select>
 
-		<select id="NearbyGymAddressesAndGymName" parameterType="hashMap" resultMap="GymMap">
+		<select id="NearbyGymAddressesAndGymName" parameterType="hashMap" resultMap="gymMap">
 			select
 				gym_address,
 				gym_name

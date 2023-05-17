@@ -18,13 +18,14 @@ const input = css`
 `;
 
 
-const FacilityDetaill = ({ type, placeholder, onChange, name }) => {
+const FacilityDetaill = ({ type, placeholder, onChange, name, value}) => {
     return (
         <div>
             <input css={input} 
             type={type} 
             placeholder={placeholder} 
             onChange={onChange}
+            value={value}
             name={name}/>
         </div>
     );

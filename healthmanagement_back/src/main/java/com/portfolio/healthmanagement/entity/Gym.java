@@ -1,5 +1,7 @@
 package com.portfolio.healthmanagement.entity;
 
+import java.time.LocalDate;
+
 import com.portfolio.healthmanagement.dto.gym.GetGymAddressAndGymNameRespDto;
 import com.portfolio.healthmanagement.dto.gym.GetGymRespDto;
 import com.portfolio.healthmanagement.dto.gym.RegisterGymReqDto;
@@ -23,8 +25,9 @@ public class Gym {
 	private String gymTel;
 	private String businessNumber;
 	private String gymPrice;
-	private String gymImgUrl;
 	private int likeCount;
+	private LocalDate registDate;
+	private LocalDate removeDate;
 	
 	
 	public SearchGymRespDto toDto() {
@@ -35,8 +38,9 @@ public class Gym {
 				.gymTel(gymTel)
 				.businessNumber(businessNumber)
 				.gymPrice(gymPrice)
-				.gymImgUrl(gymImgUrl)
 				.likeCount(likeCount)
+				.registDate(registDate)
+				.removeDate(removeDate)
 				.build();
 				
 	}
@@ -49,7 +53,8 @@ public class Gym {
 				.gymTel(gymTel)
 				.businessNumber(businessNumber)
 				.gymPrice(gymPrice)
-				.gymImgUrl(gymImgUrl)
+				.registDate(registDate)
+				.removeDate(removeDate)
 				.build();
 		
 		

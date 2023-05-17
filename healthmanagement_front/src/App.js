@@ -11,7 +11,6 @@ import FindPassword from "./pages/Find/Password/FindPassword";
 import AuthRouteReactQuery from "./components/Routes/AuthRoute/AuthRouteReactQuery";
 import ModifyPage from "./pages/MyPage/ModifyPage";
 import FacilityReq from "./pages/MyPage/FacilityReq/FacilityReq";
-import Map from "./pages/Map/Map";
 import GymDetail from "./pages/GymDetail/GymDetail";
 import LikeList from "./pages/LikeList/LikeList";
 import KaKaoMap from "./pages/Map/KakaoMap";

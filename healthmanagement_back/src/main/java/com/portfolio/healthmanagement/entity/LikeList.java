@@ -17,7 +17,6 @@ public class LikeList {
 	private String gymName;
 	private String gymAddress;
 	private int gymPrice;
-	private String gymImgUrl;
 	
 	public LikeListRespDto toDto(){
 		return LikeListRespDto.builder()
@@ -26,7 +25,6 @@ public class LikeList {
 				.gymName(gymName)
 				.gymAddress(gymAddress)
 				.gymPrice(gymPrice)
-				.gymImgUrl(gymImgUrl)
 				.likeStatus(userId==0)
 				.build();
 	}
