@@ -38,12 +38,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests()
 		.antMatchers("/auth/**") 
-		.permitAll();
-//		.anyRequest()
-//		.authenticated()
-//		.and()
-//		.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class) //필터에서 UsernamePasswordAuthenticationFilter 검사함
-//		.exceptionHandling()
-//		.authenticationEntryPoint(jwtAuthenticationEntryPoint);
+		.permitAll()
+		.anyRequest()
+		.authenticated()
+		.and()
+		.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class) //필터에서 UsernamePasswordAuthenticationFilter 검사함
+		.exceptionHandling()
+		.authenticationEntryPoint(jwtAuthenticationEntryPoint);
 	}
 }

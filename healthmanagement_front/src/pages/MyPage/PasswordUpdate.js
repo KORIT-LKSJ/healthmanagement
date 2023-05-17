@@ -157,23 +157,25 @@ const PasswordUpdate = () => {
   );
 
   // 비밀번호가 저장되는 것 구현중
-  const saveinfo = useMutation(
-    async (userId) => {
+  const savePassword = useMutation(
+    async () => {
       const option = {
         headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("accessToken"),
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       };
-      return await axios.post(
-        `http://localhost:8080/modifypage/${password}`,
-        JSON.stringify({}),
+      return await axios.put(
+        `http://localhost:8080/account/password`,
+        {
+          userId: principal.data.data.userId,
+          password,
+        },
         option
       );
     },
     {
       onSuccess: () => {
-        
+        alert("비밀번호 변경 완료");
       },
     }
   );
@@ -216,22 +218,7 @@ const PasswordUpdate = () => {
     }
   };
   const onsuccessClickHandle = async () => {
-    try {
-      const accessToken = localStorage.getItem("accessToken");
-      const response = await axios.post(
-        "http://localhost:8080/modifypage",
-        { password },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log(response.data); //수정된 회원정보 확인
-      navigate("/mypage");
-    } catch (error) {
-      console.error(error);
-    }
+    savePassword.mutate();
   };
 
   return (

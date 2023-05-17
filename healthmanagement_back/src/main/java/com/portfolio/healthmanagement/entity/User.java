@@ -4,6 +4,7 @@ package com.portfolio.healthmanagement.entity;
 import java.sql.Date;
 import java.util.List;
 
+import com.portfolio.healthmanagement.dto.response.PrincipalRespDto;
 import com.portfolio.healthmanagement.security.PrincipalUserDetails;
 
 import lombok.AllArgsConstructor;
@@ -36,6 +37,22 @@ public class User {
 				.username(username)
 				.password(password)
 				.authorities(authorities)
+				.build();
+	}
+	
+	public PrincipalRespDto toPrincipalRespDto() {
+		
+		StringBuilder builder = new StringBuilder();
+		authorities.forEach(authority -> {
+			builder.append(authority.getRole().getRoleName() + ",");
+		});
+		builder.delete(builder.length() - 1, builder.length());
+		
+		return PrincipalRespDto.builder()
+				.userId(userId)
+				.username(username)
+				.name(name)
+				.authorities(builder.toString())
 				.build();
 	}
 

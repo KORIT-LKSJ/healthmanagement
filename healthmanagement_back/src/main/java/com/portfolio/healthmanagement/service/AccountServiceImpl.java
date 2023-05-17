@@ -1,18 +1,15 @@
 package com.portfolio.healthmanagement.service;
 
-import java.util.ArrayList;import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.portfolio.healthmanagement.dto.response.PrincipalRespDto;
 import com.portfolio.healthmanagement.entity.User;
 import com.portfolio.healthmanagement.repository.AccountRepository;
 import com.portfolio.healthmanagement.repository.UserRepository;
+import com.portfolio.healthmanagement.security.PrincipalUserDetails;
 
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -20,27 +17,17 @@ import lombok.RequiredArgsConstructor;
 public class AccountServiceImpl implements AccountService {
 
 	private final AccountRepository accountRepository;
-	private final UserRepository userRepositiory;
+	private final UserRepository userRepository;
 	
 	@Override
-	public PrincipalRespDto getPrincipal(Authentication authentication) {
+	public PrincipalRespDto getPrincipal() {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalUserDetails principalUser = (PrincipalUserDetails) authentication.getPrincipal();
 		
-		User userEntity = userRepositiory.findUserByUsername(authentication.getName());
-		StringBuilder authoritesBuilder = new StringBuilder();
+		User userEntity = userRepository.findUserByUsername(principalUser.getUsername());
 		
-		userEntity.getAuthorities().forEach(authority -> {
-			authoritesBuilder.append(authority.getRole().getRoleName() + ",");
-		});
-		
-		authoritesBuilder.delete(authoritesBuilder.length() - 1, authoritesBuilder.length());
-		
-		
-		return PrincipalRespDto.builder()
-				.userId(userEntity.getUserId())
-				.username(userEntity.getUsername())
-				.name(userEntity.getName())
-				.authorities(authoritesBuilder.toString())
-				.build();
+		return userEntity.toPrincipalRespDto();
 	}
 	
 	@Override
