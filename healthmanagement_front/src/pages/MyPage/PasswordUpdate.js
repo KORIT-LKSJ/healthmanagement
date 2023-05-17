@@ -57,7 +57,6 @@ const titleText = css`
 
 const box = css`
   display: flex;
-  flex-direction: column;
   align-items: center;
   margin-top: 20px;
 `;
@@ -244,8 +243,8 @@ const PasswordUpdate = () => {
     <div css={container}>
       <header css={header}></header>
       <main css={main}>
-        <h1 css={titleText}>Passwordchange</h1>
         <div css={title}>
+          <h1 css={titleText}>Passwordchange</h1>
           <div css={box}>
             <div css={button} onClick={onclickExitHandle}>
               <BiExit css={icon} />

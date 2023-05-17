@@ -377,7 +377,7 @@ const MyPage = () => {
                 <label htmlFor="profile-image"></label>
                 <img
                   css={img}
-                  src={selectedFile}
+                  src="https://img.freepik.com/free-photo/adorable-domestic-kitty-with-copy-space_23-2149167112.jpg?size=626&ext=jpg"
                   alt=""
                   onClick={handleImageClick}
                   onLoad={() => console.log("image loaded")}

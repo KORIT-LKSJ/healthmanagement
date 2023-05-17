@@ -294,11 +294,6 @@ const ModifyPage = () => {
     saveinfo.mutate();
   };
 
- 
-
-
-  
-
   // 회원정보 수정시 저장되는 것을 구현을 해야함, namebox디자인 수정 필요(높이 수정)
   return (
     <div css={container}>
