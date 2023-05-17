@@ -110,7 +110,7 @@ const KaKaoMap = () => {
         async () => {
             const option = {
                 headers: {
-                    Authorization: localStorage.getItem("accessToken"),
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                 },
                 params: {
                     myAddress: myCenter,

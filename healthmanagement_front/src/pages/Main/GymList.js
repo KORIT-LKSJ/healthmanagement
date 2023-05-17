@@ -1,19 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from 'react';
+import React from "react";
 import { useNavigate } from "react-router-dom";
 const cardContainer = css`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    margin: 10px;
-    margin-bottom: 60px;
+    margin: 1%;
+    margin-bottom: 6%;
     border: 1px solid #dbdbdb;
     border-radius: 7px;
     box-shadow: 0px 0px 5px #dbdbdb;
-    width: 350px;
-    max-height: 450px;
+    width: 45%;
+    height: 100%;
     cursor: pointer;
     &:hover {
         box-shadow: 0px 0px 10px #dbdbdb;
@@ -26,7 +25,9 @@ const header = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    margin: 4%;
+    width: 100%;
+    height: 5%;
 `;
 
 const titleText = css`
@@ -34,79 +35,85 @@ const titleText = css`
 `;
 const main = css`
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    margin-bottom: 4%;
     width: 100%;
+    height: 55%;
 `;
+
 const imgBox = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 10px;
     border-radius: 7px;
     box-shadow: 0px 5px 5px #dbdbdb;
     padding: 5px;
-    height: 200px;
+    width: 90%;
+    height: 100%;
     background-color: #fafafa;
     overflow: hidden;
 `;
 const img = css`
-    width: 300px;
+    width: 100%;
+    height: 100%;
 `;
 
 const footer = css`
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    gap: 10px;
     font-weight: 600;
     font-size: 14px;
-    padding: 20px;
+    width: 90%;
+    height: 30%;
+    padding-bottom: 5%;
+`;
+
+const infoDetail = css`
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `;
 
 const like = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 10px;
     border: 1px solid #dbdbdb;
     border-radius: 7px;
-    padding: 10px;
+    padding: 5%;
     height: 30px;
     background-color: white;
     font-weight: 600;
     box-shadow: 0px 5px 5px #dbdbdb;
 `;
 
-const likeIcon = css`
-    padding-right: 5px;
-`
-
-
 const GymList = ({ gym }) => {
     const navigate = useNavigate();
 
     const clickHandle = () => {
         navigate("/gym/" + gym.gymId);
-      }
-      
+    };
+
     return (
         <>
-        <div css={cardContainer} onClick={clickHandle}>
-        <header css={header}>
-            <h1 css={titleText}>{gym.gymName}</h1>
-        </header>
-        <main css={main}>
-            <div css={imgBox}>
-                <img css={img} src={gym.gymImgUrl}/>
+            <div css={cardContainer} onClick={clickHandle}>
+                <header css={header}>
+                    <h1 css={titleText}>{gym.gymName}</h1>
+                </header>
+                <main css={main}>
+                    <div css={imgBox}>
+                        <img css={img} src={gym.gymImgUrl} />
+                    </div>
+                </main>
+                <footer css={footer}>
+                    <h2 css={infoDetail}>위치: {gym.gymAddress} </h2>
+                    <h2 css={infoDetail}>가격: (월) {gym.gymPrice}&#8361;</h2>
+                    <div css={like}>추천: {gym.likeCount}</div>
+                </footer>
             </div>
-        </main>
-        <footer css={footer}>
-            <h2>위치: {gym.gymAddress} </h2>
-            <h2>가격: (월) {gym.gymPrice}&#8361;</h2>
-            <div css={like}><div css={likeIcon}></div>추천: {gym.likeCount}</div>
-        </footer>
-        </div>
-    </>    
+        </>
     );
 };
 

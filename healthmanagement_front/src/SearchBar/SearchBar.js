@@ -1,15 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import React from 'react';
-import { BiSearch } from 'react-icons/bi';
-const searchBar = (isOpen2) => css`
-
+import { css } from "@emotion/react";
+import React from "react";
+import { BiSearch } from "react-icons/bi";
+const searchBar = (isSearchBarOpen) => css`
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
     margin-top: 160px;
-    left: ${isOpen2 ? `750px` : `1400px`};
+    left: ${isSearchBarOpen ? `1400px` : `750px`};
     border: 1px solid #dbdbdb;
     border-radius: 10px;
     width: 400px;
@@ -18,7 +17,9 @@ const searchBar = (isOpen2) => css`
     transition: left 1s ease;
     background-color: white;
 
-    ${isOpen2 ? "" : `
+    ${isSearchBarOpen
+        ? ""
+        : `
         cursor: pointer;
     `}
 `;
@@ -29,17 +30,17 @@ const searchInput = css`
     padding: 5px;
     width: 300px;
     height: 50px;
-`
+`;
 
 const searchIcon = css`
     font-size: 30px;
-`
+`;
 
-const SearchBar = ({isOpen2, searchInputHandle, searchSubmitHandle}) => {
-
+const SearchBar = ({ isSearchBarOpen, searchInputHandle, searchSubmitHandle }) => {
     return (
-        <div css={searchBar(isOpen2)}>
-           <input css={searchInput} type="search" onKeyUp={searchSubmitHandle} onChange={searchInputHandle}/> <BiSearch css={searchIcon}/>
+        <div css={searchBar(isSearchBarOpen)}>
+            <input css={searchInput} type="search" onKeyUp={searchSubmitHandle} onChange={searchInputHandle} />{" "}
+            <BiSearch css={searchIcon} />
         </div>
     );
 };
