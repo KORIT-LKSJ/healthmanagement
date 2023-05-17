@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { QueryClient, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 
 const LikeList = () => {
