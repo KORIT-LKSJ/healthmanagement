@@ -8,22 +8,14 @@ import { FaRegStar } from "react-icons/fa";
 import { TbPassword } from "react-icons/tb";
 import { AiOutlineDoubleRight } from "react-icons/ai";
 import axios from "axios";
+import Footer from "../../components/Main/Footer/Footer";
+import Header from "../../components/Main/Header/Header";
 
 const container = css`
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
-`;
-
-const header = css`
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 40px;
-  background-color: white;
 `;
 
 const main = css`
@@ -278,17 +270,6 @@ const nowButton = css`
   font-size: 30px;
 `;
 
-const footer = css`
-  position: fixed;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 40px;
-  background-color: white;
-`;
-
 const MyPage = () => {
   const [selectedFile, setSelectedFile] = useState(
     localStorage.getItem("profileimage") || "./images/noimage.jpg"
@@ -323,11 +304,29 @@ const MyPage = () => {
     navigate("/mypage/passwordupdate");
   };
 
-  //유저이미지 들고옴
+  //유저이미지를 파일에서 들고와서 변환하게 하는것 구현
 
+  // const handleImageClick = () => {
+  //   const input = document.getElementById("profile-image");
+  //   input.click();
+  // };
+  // const handleFileSelect = (event) => {
+  //   const reader = new FileReader();
+  //   const file = event.target.files[0];
+  //   reader.onloadend = function () {
+  //     setSelectedFile(reader.result);
+  //     localStorage.setItem("profileimage", reader.result);
+  //   };
+  //   if (file) {
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+
+  // 유저이미지를 특정이미지로 고정되도록 구현중
   const handleImageClick = () => {
-    const input = document.getElementById("profile-image");
-    input.click();
+    const imageUrl = "https://example.com/path/to/image.jpg";
+    setSelectedFile(imageUrl);
+    localStorage.setItem("profileimage", imageUrl);
   };
   const handleFileSelect = (event) => {
     const reader = new FileReader();
@@ -337,7 +336,7 @@ const MyPage = () => {
       localStorage.setItem("profileimage", reader.result);
     };
     if (file) {
-      reader.readAsDataURL(file);
+      reader.readeAsDataURL(file);
     }
   };
 
@@ -349,7 +348,7 @@ const MyPage = () => {
 
   return (
     <div css={container}>
-      <header css={header}></header>
+      <Header />
       <main css={main}>
         <h1 css={titleText}>MyPage</h1>
         <div css={mypagecontainer}>
@@ -359,7 +358,7 @@ const MyPage = () => {
                 <label htmlFor="profile-image"></label>
                 <img
                   css={img}
-                  src={selectedFile}
+                  src="https://img.freepik.com/free-photo/adorable-domestic-kitty-with-copy-space_23-2149167112.jpg?size=626&ext=jpg"
                   alt=""
                   onClick={handleImageClick}
                   onLoad={() => console.log("image loaded")}
@@ -407,7 +406,7 @@ const MyPage = () => {
           </div>
         </div>
       </main>
-      <footer css={footer}></footer>
+      <Footer />
     </div>
   );
 };

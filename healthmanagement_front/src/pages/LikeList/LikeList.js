@@ -43,7 +43,7 @@ const LikeList = () => {
     console.log(userId)
     const navigate = useNavigate();
 
-    const likeGyms = useQuery(["likeGyms"], async() => {
+    const likeGyms = useQuery(["likeGyms"], async () => {
         const option = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`
@@ -52,8 +52,8 @@ const LikeList = () => {
         return await axios.get(`http://localhost:8080/gym/${userId}/like/list`, option);
     });
 
-    if(likeGyms.isLoading){
-        return <div>로딩중...</div>
+    if (likeGyms.isLoading) {
+        return <div>로딩중...</div>;
     }
 
     const titleClickHandle = (e) =>{

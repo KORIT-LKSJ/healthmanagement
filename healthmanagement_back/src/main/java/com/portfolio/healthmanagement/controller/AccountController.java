@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.portfolio.healthmanagement.dto.account.ModifyPasswordReqDto;
+import com.portfolio.healthmanagement.dto.account.ModifyUserInfoReqDto;
 import com.portfolio.healthmanagement.service.AccountService;
 
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,11 @@ public class AccountController {
 	@PutMapping("/password")
 	public ResponseEntity<?> modifyPassword(@RequestBody ModifyPasswordReqDto modifyPasswordReqDto) {
 		System.out.println(modifyPasswordReqDto);
+		return ResponseEntity.ok(null);
+	}
+	@PutMapping("/modifyinfo")
+	public ResponseEntity<?> modifyuserInfo(@RequestBody ModifyUserInfoReqDto modifyUserInfoReqDto){
+		System.out.println(modifyUserInfoReqDto);
 		return ResponseEntity.ok(null);
 	}
 }
