@@ -71,6 +71,7 @@ const modifycontainer = css`
   flex-direction: column;
   display: flex;
   border: none;
+  padding-bottom: 30px;
   gap: 20px;
 `;
 
@@ -94,6 +95,7 @@ const informationinput = css`
   display: flex;
   flex-direction: column;
   border: 1px solid #dbdbdb;
+  border-radius: 10px;
   width: 300px;
   padding: 10px;
   justify-content: center;
@@ -102,6 +104,7 @@ const informationinput = css`
 
 const inputContainer = css`
   display: flex;
+  padding-top: 30px;
   align-items: flex-start;
   flex-direction: column;
 `;
@@ -315,7 +318,7 @@ const ModifyPage = () => {
         </div>
         <div css={modifycontainer}>
           <div css={usernameTextBox}>
-            <h2 css={namebox}>username</h2>
+            <h2 css={namebox}>Username</h2>
             <div css={getname}>{principal.data.data.username}</div>
           </div>
 
@@ -335,15 +338,17 @@ const ModifyPage = () => {
           </div>
           <div css={emailTextBox}>
             <h2 css={namebox}> Email</h2>
-            <input
-              css={informationinput}
-              type="text"
-              placeholder="이메일을 기입해주세요"
-              onChange={onchangeEmail}
-              name="email"
-              value={email}
-            ></input>
-            <div css={errorMsg}>{emailMessage}</div>
+            <div css={inputContainer}>
+              <input
+                css={informationinput}
+                type="text"
+                placeholder="이메일을 기입해주세요"
+                onChange={onchangeEmail}
+                name="email"
+                value={email}
+              ></input>
+              <div css={errorMsg}>{emailMessage}</div>
+            </div>
           </div>
           <div css={addressTextBox}>
             <h2 css={namebox}> Address</h2>

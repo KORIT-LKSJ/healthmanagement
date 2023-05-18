@@ -61,9 +61,9 @@ const button = css`
 `;
 
 const passwordbox = css`
-display: flex;
-border: none;
-height: 100px;
+  display: flex;
+  border: none;
+  height: 100px;
 `;
 
 const icon = css`
@@ -250,9 +250,11 @@ const PasswordUpdate = () => {
           <div css={box}>
             <div css={button} onClick={onclickExitHandle}>
               <BiExit css={icon} />
+              exit
             </div>
             <div css={button} onClick={onsuccessClickHandle}>
               <GiSaveArrow css={icon} />
+              save
             </div>
           </div>
         </div>

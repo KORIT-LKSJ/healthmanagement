@@ -297,7 +297,7 @@ const MyPage = () => {
   };
 
   const bookMarkClickHandle = () => {
-    navigate("/mypage/bookmark");
+    navigate("/likepage");
   };
 
   const passwordulHandle = () => {
@@ -406,7 +406,7 @@ const MyPage = () => {
           </div>
         </div>
       </main>
-      <Footer />
+      <Footer></Footer>
     </div>
   );
 };
