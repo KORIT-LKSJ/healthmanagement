@@ -11,7 +11,7 @@ public class ModifyUserInfoReqDto {
 	private String email;
 	private int weight;
 	private int height;
-	private Date birthdate;
+	private Date birthDate;
 	
 
 }

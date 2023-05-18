@@ -11,7 +11,7 @@
 		<result property="email" column="email"/>
 		<result property="weight" column="weight"/>
 		<result property="height" column="height"/>
-		<result property="birthdate" column="birthdate" />
+		<result property="birthDate" column="birthdate" />
 		<collection property="authorities" javaType="list" resultMap="authorityMap" />
 	</resultMap>
 	
@@ -33,6 +33,11 @@
 			ut.username,
 			ut.password,
 			ut.name,
+			ut.phone,
+			ut.email,
+			ut.weight,
+			ut.height,
+			ut.birthdate,
 			
 			at.authority_id,
 			at.user_id,
