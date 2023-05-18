@@ -9,6 +9,7 @@ const container = css`
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100%;
 `;
 
 const main = css`
@@ -23,6 +24,7 @@ const main = css`
     overflow: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    z-index: -1;
     ::-webkit-scrollbar {
         display: none;
     }

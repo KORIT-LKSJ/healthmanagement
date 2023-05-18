@@ -4,9 +4,10 @@ import axios from "axios";
 import React from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
-import Sidebar from "../../SideBar/SideBar";
+import Header from "../../components/Main/Header/Header";
+import Footer from "../../components/Main/Footer/Footer";
 
-const Container = css`
+const container = css`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,11 +25,13 @@ const header = css`
 `;
 
 const main = css`
+    position: relative;
+    top: 5%;
     display: flex;
     flex-direction: column;
-    width: 750px;
-    height: 100%;
-    padding-top: 20px;
+    align-items: center;
+    width: 40%;
+    height: 90%;
     background-color: white;
 `;
 
@@ -68,8 +71,8 @@ const GymDetail = () => {
     const getGym = useQuery(["getGym"], async () => {
         const option = {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-            }
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
         };
         const response = await axios.get(`http://localhost:8080/gym/${gymId}`, option);
         return response;
@@ -78,8 +81,8 @@ const GymDetail = () => {
     const getLikeCount = useQuery(["getLikeCount"], async () => {
         const option = {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-            }
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
         };
 
         const response = await axios.get(`http://localhost:8080/gym/${gymId}/like`, option);
@@ -92,8 +95,8 @@ const GymDetail = () => {
                 userId: queryClient.getQueryData("principal").data.userId,
             },
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-            }
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
         };
         const response = await axios.get(`http://localhost:8080/gym/${gymId}/like/status`, option);
         return response;
@@ -119,7 +122,7 @@ const GymDetail = () => {
             onSuccess: () => {
                 queryClient.invalidateQueries("getLikeCount");
                 queryClient.invalidateQueries("getLikeStatus");
-            }
+            },
         }
     );
 
@@ -149,12 +152,12 @@ const GymDetail = () => {
 
     if (!getGym.isLoading)
         return (
-            <div css={Container}>
-                <header css={header}></header>
-                <div>
-                    <img css={gymImg} src={getGym.data.data.gymImgUrl} />
-                </div>
+            <div css={container}>
+                <Header search={false} />
                 <main css={main}>
+                    <div>
+                        <img css={gymImg} src={getGym.data.data.gymImgUrl} />
+                    </div>
                     <div css={detailName}>
                         <h1 css={gymName}>{getGym.data.data.gymName}</h1>
                         <h1 css={gymAddress}>{getGym.data.data.gymAddress}</h1>
@@ -184,7 +187,7 @@ const GymDetail = () => {
                         </div>
                     </div>
                 </main>
-                <footer></footer>
+                <Footer />
             </div>
         );
 };

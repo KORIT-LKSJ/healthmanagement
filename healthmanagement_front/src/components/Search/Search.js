@@ -5,7 +5,7 @@ import QueryString from "qs";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { BiSearch } from "react-icons/bi";
-import SearchBar from "../../SearchBar/SearchBar";
+import SearchBar from "../SearchBar/SearchBar";
 
 const headerIcon = css`
     display: flex;

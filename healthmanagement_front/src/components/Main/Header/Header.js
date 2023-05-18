@@ -2,8 +2,8 @@
 import { css } from "@emotion/react";
 import React, { useState } from "react";
 import { BiUser } from "react-icons/bi";
-import Sidebar from "../../../SideBar/SideBar";
 import Search from "../../Search/Search";
+import Sidebar from "../../SideBar/SideBar";
 
 const header = css`
     position: fixed;
@@ -51,11 +51,11 @@ const Header = ({ gyms, setGyms, refresh, setRefresh, search }) => {
                     <div css={headerIcon} onClick={sideBarClickHandle}>
                         <BiUser />
                     </div>
-                    <img css={mainLogo} src="image/gymLogo.png" alt="" />
+                    <img css={mainLogo} src="/image/gymLogo.png" alt="" />
                     {search ? (
                         <Search refresh={refresh} setRefresh={setRefresh} gyms={gyms} setGyms={setGyms} />
                     ) : (
-                        <div></div>
+                        <div style={{ width: 22 }}></div>
                     )}
                 </div>
             </header>

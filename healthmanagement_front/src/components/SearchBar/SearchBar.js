@@ -3,32 +3,27 @@ import { css } from "@emotion/react";
 import React from "react";
 import { BiSearch } from "react-icons/bi";
 const searchBar = (isSearchBarOpen) => css`
-    display: flex;
+    position: absolute;
+    display: ${isSearchBarOpen ? "flex" : "none"};
     justify-content: center;
     align-items: center;
-    position: absolute;
-    margin-top: 160px;
-    left: ${isSearchBarOpen ? `1400px` : `750px`};
+    top: 100%;
+    left: 55%;
     border: 1px solid #dbdbdb;
     border-radius: 10px;
-    width: 400px;
-    height: 100px;
+    width: 15%;
+    height: 80px;
     box-shadow: -1px 0px 5px #dbdbdb;
-    transition: left 1s ease;
+    transition: opacity, display 1s ease;
     background-color: white;
-
-    ${isSearchBarOpen
-        ? ""
-        : `
-        cursor: pointer;
-    `}
+    cursor: ${isSearchBarOpen ? "pointer" : ""};
 `;
 
 const searchInput = css`
     border: 2px solid #dbdbdb;
     border-radius: 7px;
-    padding: 5px;
-    width: 300px;
+    margin: 0 5px;
+    width: 80%;
     height: 50px;
 `;
 

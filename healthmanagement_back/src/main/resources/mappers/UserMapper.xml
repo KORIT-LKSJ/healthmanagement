@@ -51,7 +51,7 @@
 	<insert id="saveUser" parameterType="com.portfolio.healthmanagement.entity.User" useGeneratedKeys="true"
 	keyProperty="userId">
 		insert into user_tb
-		values(0,#{username},#{password},#{name},#{phone},#{email},#{weight},#{height},#{birthdate})
+		values(0,#{username},#{password},#{name},#{phone},#{email},#{weight},#{height},#{birthdate},#{gender})
 	</insert>
 	
 	<insert id="saveAuthority" parameterType="com.portfolio.healthmanagement.entity.Authority">
