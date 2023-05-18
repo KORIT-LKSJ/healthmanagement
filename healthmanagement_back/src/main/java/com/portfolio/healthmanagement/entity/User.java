@@ -24,8 +24,6 @@ public class User {
 	private String name;
 	private String phone;
 	private String email;
-	private int weight;
-	private int height;
 	private Date birthDate;
 	
 	private List<Authority> authorities;
@@ -37,6 +35,10 @@ public class User {
 				.username(username)
 				.password(password)
 				.authorities(authorities)
+				.name(name)
+				.phone(phone)
+				.email(email)
+				.birthDate(birthDate)
 				.build();
 	}
 	
@@ -53,6 +55,10 @@ public class User {
 				.username(username)
 				.name(name)
 				.authorities(builder.toString())
+				.name(name)
+				.phone(phone)
+				.email(email)
+				.birthDate(birthDate)
 				.build();
 	}
 
