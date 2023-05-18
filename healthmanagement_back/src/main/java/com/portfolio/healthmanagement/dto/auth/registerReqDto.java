@@ -39,8 +39,12 @@ public class registerReqDto {
 		    message = "휴대폰 번호를 양식에 맞게 입력해주세요. (ex: 010-1234-5678)")
 	private String phone;
 	
-	private Date birthdate;
+	private int weight;
+	
+	private int height;
 
+	private Date birthdate;
+	
 	private int userType;
 
 	public User toEntity() {
@@ -51,6 +55,8 @@ public class registerReqDto {
 				.name(name)
 				.phone(phone)
 				.birthDate(birthdate)
+				.weight(weight)
+				.height(height)
 				.build();
 	}
 }

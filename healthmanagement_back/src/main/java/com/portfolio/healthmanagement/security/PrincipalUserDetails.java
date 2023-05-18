@@ -1,6 +1,5 @@
 package com.portfolio.healthmanagement.security;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -23,13 +22,6 @@ public class PrincipalUserDetails implements UserDetails{
 	private int userId; 
 	private String username;
 	private String password;
-	private String name;
-	private String phone;
-	private String email;
-	private int weight;
-	private int height;
-	private Date birthDate;
-	private String gender;
 	private List<Authority> authorities;
 	
 	@Override

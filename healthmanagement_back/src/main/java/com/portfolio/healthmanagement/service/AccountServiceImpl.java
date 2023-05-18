@@ -27,13 +27,11 @@ public class AccountServiceImpl implements AccountService {
 		
 		User userEntity = userRepository.findUserByUsername(principalUser.getUsername());
 		
-		System.out.println(userEntity);
 		return userEntity.toPrincipalRespDto();
 	}
-		
+	
 	@Override
 	public User getUserInfo(int userId) {
-		
 		return accountRepository.getUserInfo(userId);
 	}
 }

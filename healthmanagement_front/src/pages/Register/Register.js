@@ -119,7 +119,9 @@ const Register = () => {
         email: "",
         phone: "",
         birthdate: "",
-        userType: ""
+        height: "",
+        weight: "",
+        userType: "",
     });
 
     const [errorMessage, setErrorMessage] = useState({
@@ -173,10 +175,6 @@ const Register = () => {
     };
 
     const userTypeClickHandle = (e) => {
-        setRegisterUser({ ...registerUser, [e.target.name]: e.target.value });
-    };
-
-    const userGenderClickHandle = (e) => {
         setRegisterUser({ ...registerUser, [e.target.name]: e.target.value });
     };
 
@@ -238,7 +236,7 @@ const Register = () => {
                             <input
                                 css={registerInput}
                                 type="text"
-                                placeholder="ex)1996-02-05"
+                                placeholder="생년월일을 입력해 주세요."
                                 name="birthdate"
                                 onChange={onchangeHandle}
                             />
@@ -248,12 +246,32 @@ const Register = () => {
                             <input
                                 css={registerInput}
                                 type="tel"
-                                placeholder="ex)010-xxxx-xxxx"
+                                placeholder="전화번호를 입력해 주세요."
                                 name="phone"
                                 onChange={onchangeHandle}
                             />
                         </div>
                         <div css={errorMsg}>{errorMessage.phone}</div>
+                        <div css={registerDetail}>
+                            <label css={registerLabel}>키</label>
+                            <input
+                                css={registerInput}
+                                type="number"
+                                placeholder="키를 입력해 주세요."
+                                name="height"
+                                onChange={onchangeHandle}
+                            />
+                        </div>
+                        <div css={registerDetail}>
+                            <label css={registerLabel}>몸무게</label>
+                            <input
+                                css={registerInput}
+                                type="number"
+                                placeholder="몸무게를 입력해 주세요."
+                                name="weight"
+                                onChange={onchangeHandle}
+                            />
+                        </div>
                     </div>
                     <div css={radioCheck}>
                         <div>

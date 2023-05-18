@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { BiUser } from "react-icons/bi";
 import Sidebar from "../../../SideBar/SideBar";
 import Search from "../../Search/Search";
-import { useNavigate } from "react-router-dom";
 
 const header = css`
     position: fixed;
@@ -26,7 +25,6 @@ const headerButton = css`
 
 const mainLogo = css`
     height: 100%;
-    cursor: pointer;
 `;
 
 const headerIcon = css`
@@ -37,18 +35,14 @@ const headerIcon = css`
     cursor: pointer;
 `;
 
-const Header = ({ gyms, setGyms, refresh, setRefresh, search}) => {
+const Header = ({ gyms, setGyms, refresh, setRefresh, search }) => {
     const [isSideBarOpen, setIsSideBarOpen] = useState();
-    const navigate = useNavigate();
+
     const sideBarClickHandle = () => {
         if (!isSideBarOpen) {
             setIsSideBarOpen(true);
         }
     };
-
-    const HomeClickHandle = () => {
-        navigate("/")
-    }
 
     return (
         <>
@@ -57,7 +51,7 @@ const Header = ({ gyms, setGyms, refresh, setRefresh, search}) => {
                     <div css={headerIcon} onClick={sideBarClickHandle}>
                         <BiUser />
                     </div>
-                    <img css={mainLogo} src="/image/gymLogo.png" alt="" onClick={HomeClickHandle}/>
+                    <img css={mainLogo} src="image/gymLogo.png" alt="" />
                     {search ? (
                         <Search refresh={refresh} setRefresh={setRefresh} gyms={gyms} setGyms={setGyms} />
                     ) : (

@@ -9,8 +9,9 @@
 		<result property="name" column="name"/>
 		<result property="phone" column="phone"/>
 		<result property="email" column="email"/>
+		<result property="weight" column="weight"/>
+		<result property="height" column="height"/>
 		<result property="birthdate" column="birthdate" />
-		
 		<collection property="authorities" javaType="list" resultMap="authorityMap" />
 	</resultMap>
 	
@@ -50,7 +51,7 @@
 	<insert id="saveUser" parameterType="com.portfolio.healthmanagement.entity.User" useGeneratedKeys="true"
 	keyProperty="userId">
 		insert into user_tb
-		values(0,#{username},#{password},#{name},#{phone},#{email},#{birthDate})
+		values(0,#{username},#{password},#{name},#{phone},#{email},#{weight},#{height},#{birthdate})
 	</insert>
 	
 	<insert id="saveAuthority" parameterType="com.portfolio.healthmanagement.entity.Authority">
