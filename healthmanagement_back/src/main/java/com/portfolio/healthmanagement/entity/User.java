@@ -53,6 +53,9 @@ public class User {
 				.username(username)
 				.name(name)
 				.authorities(builder.toString())
+				.weight(weight)
+				.height(height)
+				.birthDate(birthDate)
 				.build();
 	}
 

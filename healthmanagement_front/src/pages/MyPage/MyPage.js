@@ -348,7 +348,7 @@ const MyPage = () => {
 
   return (
     <div css={container}>
-      <Header />
+      <Header search={false} />
       <main css={main}>
         <h1 css={titleText}>MyPage</h1>
         <div css={mypagecontainer}>

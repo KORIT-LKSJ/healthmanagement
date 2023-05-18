@@ -71,6 +71,7 @@ const modifycontainer = css`
   flex-direction: column;
   display: flex;
   border: none;
+  padding-top: 30px;
   padding-bottom: 30px;
   gap: 20px;
 `;
@@ -113,7 +114,7 @@ const usernameTextBox = css`
   border: 1px solid #dbdbdb;
   border-radius: 10px;
   align-items: center;
-  height: 200px;
+  height: 100px;
   width: 100%;
   font-size: 18px;
   font-weight: 600;
@@ -124,7 +125,7 @@ const phoneTextBox = css`
   border: 1px solid #dbdbdb;
   border-radius: 10px;
   align-items: center;
-  height: 200px;
+  height: 100px;
   width: 100%;
   font-size: 18px;
   font-weight: 600;
@@ -135,34 +136,50 @@ const emailTextBox = css`
   border: 1px solid #dbdbdb;
   border-radius: 10px;
   align-items: center;
-  height: 200px;
+  height: 100px;
   width: 100%;
   font-size: 18px;
   font-weight: 600;
 `;
-
-const addressTextBox = css`
+const weightTextBox = css`
   display: flex;
   border: 1px solid #dbdbdb;
   border-radius: 10px;
   align-items: center;
-  height: 200px;
+  height: 100px;
   width: 100%;
   font-size: 18px;
   font-weight: 600;
 `;
 
-const deliveryaddressTextBox = css`
+const heightTextBox = css`
   display: flex;
   border: 1px solid #dbdbdb;
   border-radius: 10px;
   align-items: center;
-  height: 200px;
+  height: 100px;
   width: 100%;
   font-size: 18px;
   font-weight: 600;
 `;
 
+const birthdateTextBox = css`
+  display: flex;
+  border: 1px solid #dbdbdb;
+  border-radius: 10px;
+  align-items: center;
+  height: 100px;
+  width: 100%;
+  font-size: 18px;
+  font-weight: 600;
+`;
+const getbirthdate = css`
+  display: flex;
+  align-items: center;
+  width: 200px;
+  margin-left: 20px;
+  margin-right: 20px;
+`;
 const errorMsg = css`
   font-size: 14px;
   color: red;
@@ -176,16 +193,22 @@ const ModifyPage = () => {
 
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [weight, setWeight] = useState("");
+  const [height, setHeight] = useState("");
 
   // 오류메세지 저장
 
   const [emailMessage, setEmailMessage] = useState("");
   const [phoneMessage, setPhoneMessage] = useState("");
+  const [weightMessage, setWeightMessage] = useState("");
+  const [heightMessage, setHeightMessage] = useState("");
 
   //유효성 검사
 
-  const [isemail, setIsEmail] = useState(true);
-  const [isphone, setIsPhone] = useState(true);
+  const [isEmail, setIsEmail] = useState(true);
+  const [isPhone, setIsPhone] = useState(true);
+  const [isWeight, setIsWeight] = useState(true);
+  const [isHeight, setIsHeight] = useState(true);
 
   const principal = useQuery(["Principal"], async () => {
     const response = await axios.get(
@@ -217,10 +240,12 @@ const ModifyPage = () => {
       onSuccess: (response) => {
         setPhone(response.data.phone);
         setEmail(response.data.email);
+        setWeight(response.data.weight);
+        setHeight(response.data.height);
       },
     }
   );
-  //회원정보가 저장되는 것 구현중, 주소는 아직 구현하지 않았음
+  //회원정보가 저장되는 것 구현완료
   const saveinfo = useMutation(
     async (userId) => {
       const option = {
@@ -234,6 +259,8 @@ const ModifyPage = () => {
           userId: principal.data.data.userId,
           phone,
           email,
+          weight,
+          height,
         },
         option
       );
@@ -295,14 +322,45 @@ const ModifyPage = () => {
     }
     setChangeUser({ ...changeuser, email: currentEmail });
   };
+
+  // 몸무게 정보수정
+  const onchangeWeight = (e) => {
+    const currentWeight = e.target.value;
+    setWeight(currentWeight);
+    const weightRegExp = /^([0-9]{2,3})$/;
+    if (!weightRegExp.test(currentWeight)) {
+      setWeightMessage("형식이 올바르지 않습니다 ");
+      setIsWeight(false);
+    } else {
+      setWeightMessage("success");
+      setIsWeight(true);
+    }
+    setChangeUser({ ...changeuser, weight: currentWeight });
+  };
+
+  // 키 정보수정
+  const onchangeHeight = (e) => {
+    const currentHeight = e.target.value;
+    setHeight(currentHeight);
+    const heightRegExp = /^([0-9]{2,3})$/;
+    if (!heightRegExp.test(currentHeight)) {
+      setHeightMessage(" 형식이 올바르지 않습니다 ");
+      setIsHeight(false);
+    } else {
+      setHeightMessage("success");
+      setIsHeight(true);
+    }
+    setChangeUser({ ...changeuser, height: currentHeight });
+  };
+
   const onsuccessClickHandle = async () => {
     saveinfo.mutate();
   };
 
-  // 회원정보 수정시 저장되는 것을 구현을 해야함, namebox디자인 수정 필요(높이 수정)
+  // 회원정보 수정시 저장구현완료
   return (
     <div css={container}>
-      <Header />
+      <Header search={false} />
       <main css={main}>
         <div css={title}>
           <h1 css={titleText}>ModifyPage</h1>
@@ -336,6 +394,7 @@ const ModifyPage = () => {
               <div css={errorMsg}>{phoneMessage}</div>
             </div>
           </div>
+
           <div css={emailTextBox}>
             <h2 css={namebox}> Email</h2>
             <div css={inputContainer}>
@@ -350,25 +409,40 @@ const ModifyPage = () => {
               <div css={errorMsg}>{emailMessage}</div>
             </div>
           </div>
-          <div css={addressTextBox}>
-            <h2 css={namebox}> Address</h2>
-            <input
-              css={informationinput}
-              type="text"
-              placeholder="도로지번으로 입력하여주세요"
-              onChange={onchangeHandle}
-              name="address"
-            ></input>
+
+          <div css={weightTextBox}>
+            <h2 css={namebox}> Weight</h2>
+            <div css={inputContainer}>
+              <input
+                css={informationinput}
+                type="text"
+                placeholder="체중을 기입해주세요"
+                onChange={onchangeWeight}
+                name="weight"
+                value={weight}
+              ></input>
+              <div css={errorMsg}>{weightMessage}</div>
+            </div>
           </div>
-          <div css={deliveryaddressTextBox}>
-            <h2 css={namebox}> DeliveryAddress</h2>
-            <input
-              css={informationinput}
-              type="text"
-              placeholder="도로지번으로 입력하여주세요"
-              onChange={onchangeHandle}
-              name="deliveryaddress"
-            ></input>
+
+          <div css={heightTextBox}>
+            <h2 css={namebox}> Height</h2>
+            <div css={inputContainer}>
+              <input
+                css={informationinput}
+                type="text"
+                placeholder="키를 입력해주세요"
+                onChange={onchangeHeight}
+                name="height"
+                value={height}
+              ></input>
+              <div css={errorMsg}>{heightMessage}</div>
+            </div>
+          </div>
+
+          <div css={birthdateTextBox}>
+            <h2 css={namebox}>Birthdate</h2>
+            <div css={getbirthdate}>{principal.data.data.birthdate}</div>
           </div>
         </div>
       </main>

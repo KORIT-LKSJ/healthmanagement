@@ -1,5 +1,7 @@
 package com.portfolio.healthmanagement.dto.response;
 
+import java.sql.Date;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,4 +13,7 @@ public class PrincipalRespDto {
 	private String username;
 	private String name;
 	private String authorities; 
+	private int weight;
+	private int height;
+	private Date birthDate;
 }

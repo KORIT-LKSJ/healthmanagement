@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import React, { useState } from "react";
 import { BiUser } from "react-icons/bi";
-import Sidebar from "../../../SideBar/SideBar";
+import Sidebar from "../../SideBar/SideBar";
 import Search from "../../Search/Search";
 
 const header = css`

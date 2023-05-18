@@ -243,7 +243,7 @@ const PasswordUpdate = () => {
 
   return (
     <div css={container}>
-      <Header />
+      <Header search={false} />
       <main css={main}>
         <div css={title}>
           <h1 css={titleText}>Passwordchange</h1>
