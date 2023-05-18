@@ -21,7 +21,7 @@ const main = css`
   flex-direction: column;
   padding: 20px 22px 75px 22px;
   width: 750px;
-  height: 100%;
+  height: 809px;
   background-color: whitesmoke;
   overflow: hidden;
 `;
@@ -60,7 +60,7 @@ const button = css`
 `;
 
 const icon = css`
-  width: 50px;
+  width: 30px;
   height: 40px;
   cursor: pointer;
   &:hover {
@@ -71,19 +71,7 @@ const modifycontainer = css`
   flex-direction: column;
   display: flex;
   border: none;
-  padding-top: 20px;
   gap: 20px;
-`;
-
-const usernameText = css`
-  display: flex;
-  border: 1px solid #dbdbdb;
-  border-radius: 10px;
-  align-items: center;
-  height: 600px;
-  width: 100%;
-  font-size: 18px;
-  font-weight: 600;
 `;
 
 const namebox = css`
@@ -106,21 +94,10 @@ const informationinput = css`
   display: flex;
   flex-direction: column;
   border: 1px solid #dbdbdb;
-  width: 400px;
+  width: 300px;
   padding: 10px;
   justify-content: center;
   background-color: whitesmoke;
-`;
-
-const phoneText = css`
-  display: flex;
-  border: 1px solid #dbdbdb;
-  border-radius: 10px;
-  align-items: center;
-  height: 600px;
-  width: 100%;
-  font-size: 18px;
-  font-weight: 600;
 `;
 
 const inputContainer = css`
@@ -128,35 +105,56 @@ const inputContainer = css`
   align-items: flex-start;
   flex-direction: column;
 `;
-
-const emailText = css`
+const usernameTextBox = css`
   display: flex;
   border: 1px solid #dbdbdb;
   border-radius: 10px;
   align-items: center;
-  height: 600px;
+  height: 200px;
   width: 100%;
   font-size: 18px;
   font-weight: 600;
 `;
 
-const addressText = css`
+const phoneTextBox = css`
   display: flex;
   border: 1px solid #dbdbdb;
   border-radius: 10px;
   align-items: center;
-  height: 600px;
+  height: 200px;
   width: 100%;
   font-size: 18px;
   font-weight: 600;
 `;
 
-const deliveryaddressText = css`
+const emailTextBox = css`
   display: flex;
   border: 1px solid #dbdbdb;
   border-radius: 10px;
   align-items: center;
-  height: 600px;
+  height: 200px;
+  width: 100%;
+  font-size: 18px;
+  font-weight: 600;
+`;
+
+const addressTextBox = css`
+  display: flex;
+  border: 1px solid #dbdbdb;
+  border-radius: 10px;
+  align-items: center;
+  height: 200px;
+  width: 100%;
+  font-size: 18px;
+  font-weight: 600;
+`;
+
+const deliveryaddressTextBox = css`
+  display: flex;
+  border: 1px solid #dbdbdb;
+  border-radius: 10px;
+  align-items: center;
+  height: 200px;
   width: 100%;
   font-size: 18px;
   font-weight: 600;
@@ -312,12 +310,12 @@ const ModifyPage = () => {
           </div>
         </div>
         <div css={modifycontainer}>
-          <div css={usernameText}>
+          <div css={usernameTextBox}>
             <h2 css={namebox}>username</h2>
             <div css={getname}>{principal.data.data.username}</div>
           </div>
 
-          <div css={phoneText}>
+          <div css={phoneTextBox}>
             <h2 css={namebox}> Phone </h2>
             <div css={inputContainer}>
               <input
@@ -331,7 +329,7 @@ const ModifyPage = () => {
               <div css={errorMsg}>{phoneMessage}</div>
             </div>
           </div>
-          <div css={emailText}>
+          <div css={emailTextBox}>
             <h2 css={namebox}> Email</h2>
             <input
               css={informationinput}
@@ -343,7 +341,7 @@ const ModifyPage = () => {
             ></input>
             <div css={errorMsg}>{emailMessage}</div>
           </div>
-          <div css={addressText}>
+          <div css={addressTextBox}>
             <h2 css={namebox}> Address</h2>
             <input
               css={informationinput}
@@ -353,7 +351,7 @@ const ModifyPage = () => {
               name="address"
             ></input>
           </div>
-          <div css={deliveryaddressText}>
+          <div css={deliveryaddressTextBox}>
             <h2 css={namebox}> DeliveryAddress</h2>
             <input
               css={informationinput}

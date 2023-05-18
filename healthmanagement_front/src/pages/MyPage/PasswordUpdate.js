@@ -60,8 +60,14 @@ const button = css`
   height: 50px;
 `;
 
+const passwordbox = css`
+display: flex;
+border: none;
+height: 100px;
+`;
+
 const icon = css`
-  width: 50px;
+  width: 30px;
   height: 40px;
   cursor: pointer;
   &:hover {
@@ -72,6 +78,8 @@ const icon = css`
 const passwordcontainer = css`
   display: flex;
   flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
   border: none;
   height: 400px;
   gap: 20px;
@@ -248,6 +256,7 @@ const PasswordUpdate = () => {
             </div>
           </div>
         </div>
+        <div css={passwordbox}></div>
         <div css={passwordcontainer}>
           <div css={passwordText}>
             <h2 css={namebox}>passoword</h2>
