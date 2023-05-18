@@ -15,6 +15,7 @@ import FacilityReq from "./pages/MyPage/FacilityReq/FacilityReq";
 import GymDetail from "./pages/GymDetail/GymDetail";
 import LikeList from "./pages/LikeList/LikeList";
 import KaKaoMap from "./pages/Map/KakaoMap";
+import FacilityDetaill from "./pages/MyPage/FacilityReq/FacilityDetaill";
 
 function App() {
 
@@ -64,7 +65,10 @@ function App() {
           path="/gym/:gymId"
           element={<AuthRoute path="/gym" element={<GymDetail />} />}
         />
-        <Route path="/facility" element={<FacilityReq />} />
+       <Route
+          path="/facility"
+          element={<AuthRoute path="/facility" element={<FacilityReq/>} />}
+        />
         <Route path="/gym/:userId/like/list" element={<LikeList />} />
         <Route path="/map" element={<KaKaoMap />}></Route>
       </Routes>
