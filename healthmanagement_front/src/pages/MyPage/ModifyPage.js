@@ -211,6 +211,10 @@ const ModifyPage = () => {
     },
     {
       enabled: !!principal.data,
+      onSuccess: (response) => {
+        setPhone(response.data.phone);
+        setEmail(response.data.email);
+      },
     }
   );
   //회원정보가 저장되는 것 구현중, 주소는 아직 구현하지 않았음
@@ -324,7 +328,7 @@ const ModifyPage = () => {
                 placeholder="ex.010-xxxx-xxxx"
                 onChange={onchangePhone}
                 name="phone"
-                value={userInfo.data ? userInfo.data.data.phone : ""}
+                value={phone}
               ></input>
               <div css={errorMsg}>{phoneMessage}</div>
             </div>
@@ -337,7 +341,7 @@ const ModifyPage = () => {
               placeholder="이메일을 기입해주세요"
               onChange={onchangeEmail}
               name="email"
-              value={userInfo.data ? userInfo.data.data.email : ""}
+              value={email}
             ></input>
             <div css={errorMsg}>{emailMessage}</div>
           </div>
