@@ -3,6 +3,7 @@ import { css } from "@emotion/react";
 export const Reset = css`
     * {
         box-sizing: border-box;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
         color: #333;
     }
     html,

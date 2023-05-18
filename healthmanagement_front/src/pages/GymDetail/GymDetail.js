@@ -69,7 +69,7 @@ const GymDetail = () => {
     const getGym = useQuery(["getGym"], async () => {
         const option = {
             headers: {
-                Authorization: localStorage.getItem("accessToken")
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
             }
         }
         const response = await axios.get(`http://localhost:8080/gym/${gymId}`, option);
@@ -79,7 +79,7 @@ const GymDetail = () => {
     const getLikeCount = useQuery(["getLikeCount"], async () => {
         const option = {
             headers: {
-                Authorization: localStorage.getItem("accessToken")
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
             }
         }
         const response = await axios.get(`http://localhost:8080/gym/${gymId}/like`, option);
@@ -92,7 +92,7 @@ const GymDetail = () => {
                 userId: queryClient.getQueryData("principal").data.userId
             },
             headers: {
-                Authorization: localStorage.getItem("accessToken")
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
             }
         }
         const response = await axios.get(`http://localhost:8080/gym/${gymId}/like/status`, option);
@@ -103,7 +103,7 @@ const GymDetail = () => {
         const option = {
             headers: {
                 "Content-Type" : "application/json",
-                Authorization: localStorage.getItem("accessToken")
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
             }
         }
         return await axios.post(`http://localhost:8080/gym/${gymId}/like`, JSON.stringify({
@@ -122,7 +122,7 @@ const GymDetail = () => {
                 userId: queryClient.getQueryData("principal").data.userId
             },
             headers: {
-                Authorization: localStorage.getItem("accessToken")
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
             }
         }
             return await axios.delete(`http://localhost:8080/gym/${gymId}/like`,option);
