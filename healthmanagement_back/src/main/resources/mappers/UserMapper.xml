@@ -34,6 +34,8 @@
 			ut.password,
 			ut.email,
 			ut.name,
+			ut.phone,
+			ut.email,
 			
 			at.authority_id,
 			at.user_id,

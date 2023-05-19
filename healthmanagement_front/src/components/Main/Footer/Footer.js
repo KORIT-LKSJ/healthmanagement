@@ -3,6 +3,11 @@ import { css } from "@emotion/react";
 import React from "react";
 import { BiLike, BiShoppingBag } from "react-icons/bi";
 import { HiHome, HiMap } from "react-icons/hi";
+<<<<<<< HEAD
+=======
+import { useNavigate } from "react-router-dom";
+import { RiCalculatorFill } from 'react-icons/ri';
+>>>>>>> origin/dongmin
 
 const footer = css`
     display: flex;
@@ -44,16 +49,33 @@ const pageLocationName = css`
 `;
 
 const Footer = () => {
+<<<<<<< HEAD
     return (
         <footer css={footer}>
             <div css={pageButton}>
                 <div css={pageLocation}>
+=======
+    const navigate = useNavigate();
+
+    const onClickMain = () => {
+        navigate("/")
+    }
+
+    const onClickMyCalory = () => {
+        navigate("/myCalory")
+    }
+
+    return (
+        <footer css={footer}>
+            <div css={pageButton} >
+                <div css={pageLocation} onClick={onClickMain}>
+>>>>>>> origin/dongmin
                     <HiHome css={pageLocationIcon} />
                     <div css={pageLocationName}>홈</div>
                 </div>
-                <div css={pageLocation}>
-                    <BiLike css={pageLocationIcon} />
-                    <div css={pageLocationName}>여기어때?</div>
+                <div css={pageLocation} onClick={onClickMyCalory}>
+                    <RiCalculatorFill css={pageLocationIcon} />
+                    <div css={pageLocationName}>칼로리 계산</div>
                 </div>
                 <div css={pageLocation}>
                     <HiMap css={pageLocationIcon} />
