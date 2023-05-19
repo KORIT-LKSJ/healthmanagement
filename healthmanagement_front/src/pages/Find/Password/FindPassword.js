@@ -7,7 +7,6 @@ const container = css`
     flex-direction: column;
     align-items: center;
     height: 100%;
-    background-color: gray;
 `;
 
 const header = css`
@@ -15,32 +14,30 @@ const header = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 40px;
+    width: 40%;
+    height: 5%;
     background-color: white;
+`;
+
+const mainLogo = css`
+    height: 100%;
 `;
 
 const main = css`
+    position: relative;
+    top: 5%;
     display: flex;
     flex-direction: column;
-    padding: 20px 22px 75px 22px;
-    width: 750px;
-    height: 100%;
+    width: 40%;
+    height: 85%;
     background-color: white;
-    overflow: hidden;
-`;
-
-const logo = css`
-    display: flex;
-    padding: 5px;
-    width: 214px;
-    height: 90px;
 `;
 
 const titleContainer = css`
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 10px;
     height: 80px;
 `;
 
@@ -57,8 +54,10 @@ const subtitle = css`
 const inputContainer = css`
     display: flex;
     flex-direction: column;
-    font-size: 15px;
-    font-weight: 400;
+    color: #58595b;
+    padding: 1%;
+    height: 20%;
+    min-height: 150px;
     gap: 10px;
 `;
 
@@ -70,38 +69,44 @@ const input = css`
     padding: 12px;
 `;
 
-const FindButton = css`
-    position: absolute;
-    bottom: 60px;
-    padding: 15px 0px;
-    border: 2px solid #dbdbdb;
+const footer = css`
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: 10%;
+    bottom: 0;
+    background-color: white;
+`;
+
+const find = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 2%;
+    width: 100%;
+    height: 100%;
+`;
+
+const findButton = css`
+    padding: 10px 0;
+    border: 1px solid #dbdbdb;
     border-radius: 10px;
-    width: 706px;
+    width: 100%;
     font-size: 15px;
     font-weight: 600;
     background-color: #eda058;
     cursor: pointer;
 `;
 
-const footer = css`
-    position: fixed;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 40px;
-    background-color: white;
-`;
-
 const FindPassword = () => {
     return (
         <div css={container}>
-            <header css={header}></header>
+            <header css={header}>
+                <img css={mainLogo} src="/image/gymLogo.png" alt="" />
+            </header>
             <main css={main}>
-                <div css={logo}>
-                    <img src="/images/logo.png" alt="로고" />
-                </div>
                 <div css={titleContainer}>
                     <h1 css={title}>비밀번호 찾기</h1>
                     <h2 css={subtitle}>비밀번호는 이름, 가입한 아이디, 이메일을 통해 찾으실 수 있습니다.</h2>
@@ -111,9 +116,12 @@ const FindPassword = () => {
                     <input css={input} type="text" placeholder="이름을 입력해 주세요." />
                     <input css={input} type="email" placeholder="이메일을 입력해 주세요." />
                 </div>
-                <button css={FindButton}>찾기</button>
             </main>
-            <footer css={footer}></footer>
+            <footer css={footer}>
+                <div css={find}>
+                    <button css={findButton}>찾기</button>
+                </div>
+            </footer>
         </div>
     );
 };

@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React, { useState } from "react";
-import { BiUser } from "react-icons/bi";
-import Search from "../../Search/Search";
+import { BiUser, BiSearch } from "react-icons/bi";
 import Sidebar from "../../SideBar/SideBar";
+import SearchBar from "../../SearchBar/SearchBar";
 
 const header = css`
-    position: fixed;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,11 +16,14 @@ const header = css`
 `;
 
 const headerButton = css`
+    position: relative;
+    z-index: 10;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 2%;
     width: 40%;
+    background-color: white;
 `;
 
 const mainLogo = css`
@@ -28,6 +31,7 @@ const mainLogo = css`
 `;
 
 const headerIcon = css`
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,13 +39,26 @@ const headerIcon = css`
     cursor: pointer;
 `;
 
+const headerOptionContainer = (isSideBarOpen, isSearchBarOpen) => css`
+    position: absolute;
+    transform: translateX(-50%);
+    top: 5%;
+    left: 50%;
+    width: 40%;
+    height: 40%;
+    overflow: hidden;
+`;
+
 const Header = ({ gyms, setGyms, refresh, setRefresh, search }) => {
     const [isSideBarOpen, setIsSideBarOpen] = useState();
+    const [isSearchBarOpen, setIsSearchBarOpen] = useState();
 
     const sideBarClickHandle = () => {
-        if (!isSideBarOpen) {
-            setIsSideBarOpen(true);
-        }
+        setIsSideBarOpen(!isSideBarOpen);
+    };
+
+    const searchBarClickHandle = () => {
+        setIsSearchBarOpen(!isSearchBarOpen);
     };
 
     return (
@@ -53,13 +70,26 @@ const Header = ({ gyms, setGyms, refresh, setRefresh, search }) => {
                     </div>
                     <img css={mainLogo} src="/image/gymLogo.png" alt="" />
                     {search ? (
-                        <Search refresh={refresh} setRefresh={setRefresh} gyms={gyms} setGyms={setGyms} />
+                        <div css={headerIcon} onClick={searchBarClickHandle}>
+                            <BiSearch />
+                        </div>
                     ) : (
                         <div style={{ width: 22 }}></div>
                     )}
                 </div>
+                <Sidebar isSideBarOpen={isSideBarOpen} setIsSideBarOpen={setIsSideBarOpen} />
+                {search ? (
+                    <SearchBar
+                        isSearchBarOpen={isSearchBarOpen}
+                        gyms={gyms}
+                        setGyms={setGyms}
+                        refresh={refresh}
+                        setRefresh={setRefresh}
+                    />
+                ) : (
+                    <></>
+                )}
             </header>
-            <Sidebar isSideBarOpen={isSideBarOpen} setIsSideBarOpen={setIsSideBarOpen} />
         </>
     );
 };

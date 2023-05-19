@@ -12,22 +12,20 @@ import axios from "axios";
 const sidebar = (isSideBarOpen) => css`
     position: absolute;
     display: flex;
-    margin-top: 60px;
-    left: ${isSideBarOpen ? `0px` : `-260px`};
+    top: ${isSideBarOpen ? `100%` : `-800%`};
+    left: 30%;
     flex-direction: column;
     border: 1px solid #dbdbdb;
-    border-radius: 10px;
     width: 250px;
-    height: 50%;
-    box-shadow: -1px 0px 5px #dbdbdb;
-    transition: left 1s ease;
+    height: 800%;
+    transition: top 1s ease;
     background-color: white;
-
+    z-index: 99;
     ${isSideBarOpen
         ? ""
         : `
         cursor: pointer;
-    `}
+    `};
 `;
 
 const header = css`

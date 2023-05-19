@@ -23,8 +23,6 @@
 			name,
 			phone,
 			email,
-			weight,
-			height,
 			birthdate
 		from
 			user_tb

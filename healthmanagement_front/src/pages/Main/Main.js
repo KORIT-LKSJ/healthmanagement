@@ -9,12 +9,9 @@ const container = css`
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
 `;
 
 const main = css`
-    position: relative;
-    top: 5%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,7 +21,6 @@ const main = css`
     overflow: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    z-index: -1;
     ::-webkit-scrollbar {
         display: none;
     }
@@ -57,11 +53,14 @@ const mentCss = css`
 
 const gymListContainer = css`
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
-    padding: 0 5%;
+    padding: 0% 2%;
     width: 100%;
-    height: 400px;
+`;
+
+const gymListBottom = css`
+    width: 100%;
+    height: 2%;
 `;
 
 const Main = () => {
@@ -80,7 +79,7 @@ const Main = () => {
             });
         };
         const observer = new IntersectionObserver(observerService, {
-            threshold: 1,
+            threshold: 0.5,
         });
         observer.observe(lastGymRef.current);
     }, []);
@@ -98,7 +97,7 @@ const Main = () => {
                 <div css={mentCss}> 여긴 어때요?</div>
                 <div css={gymListContainer}>
                     {gyms.length > 0 ? gyms.map((gym) => <GymList key={gym.gymId} gym={gym}></GymList>) : ""}
-                    <div ref={lastGymRef}></div>
+                    <div css={gymListBottom} ref={lastGymRef}></div>
                 </div>
             </main>
             <Footer />
