@@ -135,17 +135,15 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
     
     const userId = principal.data.data.userId;
     const user = principal.data.data;
+    console.log(user)
     return (
         <div css={sidebar(isSideBarOpen)}>
             <header css={header}>
                 <div css={userIcon}>{user.name}</div>
                 <div css={userInfo}>
                     <h1 css={userName}>{user.name}</h1>
-                    <p css={userEmail}> </p>
-                    <p css={userEmail}></p>
-                    <p css={userEmail}></p>
-                    <p css={userEmail}></p>
-                    <p css={userEmail}></p>
+                    <p css={userEmail}>{user.email}</p>
+                    <p css={userEmail}>{user.phone}</p>
 
                 </div>
                 <div css={closeButton} onClick={sidebarCloseClickHandle}>

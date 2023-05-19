@@ -175,10 +175,7 @@ const Register = () => {
     const userTypeClickHandle = (e) => {
         setRegisterUser({ ...registerUser, [e.target.name]: e.target.value });
     };
-
-    const userGenderClickHandle = (e) => {
-        setRegisterUser({ ...registerUser, [e.target.name]: e.target.value });
-    };
+    
 
     if (!registerSubmit.isLoading)
         return (
