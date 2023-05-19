@@ -105,9 +105,9 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
     const sidebarCloseClickHandle = () => {
         setIsSideBarOpen(false);
     };
-  
+
     const mypageClickHandle = () => {
-      navigate("/mypage");
+        navigate("/mypage");
     };
 
     const likeListClickHandle = () => {

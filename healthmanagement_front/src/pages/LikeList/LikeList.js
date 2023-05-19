@@ -1,16 +1,15 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import axios from 'axios';
-import React from 'react';
-import { QueryClient, useQuery } from 'react-query';
-import { useNavigate, useParams } from 'react-router-dom';
-
+import axios from "axios";
+import React from "react";
+import { QueryClient, useQuery } from "react-query";
+import { useNavigate, useParams } from "react-router-dom";
 
 const container = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
 `;
 
 const table = css`
@@ -30,7 +29,7 @@ const thAndTdTitle = css`
     &:active {
         background-color: #fafafa;
     }
-`
+`;
 
 const thAndTd = css`
     border: 1px solid #dbdbdb;
@@ -39,16 +38,16 @@ const thAndTd = css`
 `;
 
 const LikeList = () => {
-    const {userId} = useParams();
-    console.log(userId)
+    const { userId } = useParams();
+    console.log(userId);
     const navigate = useNavigate();
 
     const likeGyms = useQuery(["likeGyms"], async () => {
         const option = {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        }
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+        };
         return await axios.get(`http://localhost:8080/gym/${userId}/like/list`, option);
     });
 
@@ -56,32 +55,41 @@ const LikeList = () => {
         return <div>로딩중...</div>;
     }
 
-    const titleClickHandle = (e) =>{
-        
-    }
+    const titleClickHandle = (e) => {};
 
     return (
         <div css={container}>
-        <table css={table}>
-            <thead></thead>
-            <tbody>
-                <tr >
-                    <th css={thAndTd}>헬스장 명</th>
-                    <th css={thAndTd}>위치</th>
-                    <th css={thAndTd}>전화번호</th>
-                    <th css={thAndTd}>가격</th>
-                </tr>
-                {likeGyms.data.data.map(likeGym => {
-                    return(<tr key={likeGym.gymId}>
-                        <td css={thAndTd}><div css={thAndTdTitle} onClick={()=>{navigate("/gym/"+likeGym.gymId)}}>{likeGym.gymName}</div></td>
-                        <td css={thAndTd}>{likeGym.gymAddress}</td>
-                        <td css={thAndTd}>{likeGym.gymTel}</td>
-                        <td css={thAndTd}>{likeGym.gymPrice}￦</td>
-                    </tr>)
-                })}
-            </tbody>
-    </table>
-    </div>
+            <table css={table}>
+                <thead></thead>
+                <tbody>
+                    <tr>
+                        <th css={thAndTd}>헬스장 명</th>
+                        <th css={thAndTd}>위치</th>
+                        <th css={thAndTd}>전화번호</th>
+                        <th css={thAndTd}>가격</th>
+                    </tr>
+                    {likeGyms.data.data.map((likeGym) => {
+                        return (
+                            <tr key={likeGym.gymId}>
+                                <td css={thAndTd}>
+                                    <div
+                                        css={thAndTdTitle}
+                                        onClick={() => {
+                                            navigate("/gym/" + likeGym.gymId);
+                                        }}
+                                    >
+                                        {likeGym.gymName}
+                                    </div>
+                                </td>
+                                <td css={thAndTd}>{likeGym.gymAddress}</td>
+                                <td css={thAndTd}>{likeGym.gymTel}</td>
+                                <td css={thAndTd}>{likeGym.gymPrice}￦</td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </div>
     );
 };
 
