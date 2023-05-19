@@ -14,16 +14,6 @@ const container = css`
     height: 100%;
 `;
 
-const header = css`
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 40px;
-    background-color: white;
-`;
-
 const main = css`
     position: relative;
     top: 5%;
@@ -186,7 +176,6 @@ const KaKaoMap = () => {
         return <></>;
     }
 
-    console.log(nearLatLngNames);
     return (
         <div css={container}>
             <Header search={false} />

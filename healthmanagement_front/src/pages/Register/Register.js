@@ -32,7 +32,7 @@ const main = css`
     display: flex;
     flex-direction: column;
     width: 40%;
-    height: 90%;
+    height: 85%;
     background-color: white;
 `;
 
@@ -41,7 +41,7 @@ const registerInfo = css`
     flex-direction: column;
     color: #58595b;
     padding: 1%;
-    height: 88%;
+    height: 76%;
     gap: 10px;
 `;
 
@@ -69,6 +69,18 @@ const errorMsg = css`
     margin-left: 5px;
     font-size: 12px;
     color: red;
+`;
+
+const radioList = css`
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+`;
+
+const radio = css`
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
 `;
 
 const radioGenderCheck = css`
@@ -261,7 +273,7 @@ const Register = () => {
                             />
                             <div css={errorMsg}>{errorMessage.phone}</div>
                         </div>
-                        <div css={registerDetail}>
+                        {/* <div css={registerDetail}>
                             <label css={registerLabel}>키</label>
                             <input
                                 css={registerInput}
@@ -282,58 +294,62 @@ const Register = () => {
                                 onChange={onchangeHandle}
                             />
                             <div css={errorMsg}></div>
-                        </div>
+                        </div> */}
                         <div css={registerDetail}>
-                            <div css={registerLabel} style={{ height: 20 }}>
-                                성별
-                            </div>
-                            <div css={radioGenderCheck}>
-                                <div>
-                                    <input
-                                        type="radio"
-                                        id="male"
-                                        name="gender"
-                                        value="male"
-                                        onClick={genderClickHandle}
-                                    />
-                                    <label htmlFor="male">male</label>
+                            <div css={radioList}>
+                                <div css={radio}>
+                                    <div css={registerLabel} style={{ height: 20 }}>
+                                        성별
+                                    </div>
+                                    <div css={radioGenderCheck}>
+                                        <div>
+                                            <input
+                                                type="radio"
+                                                id="male"
+                                                name="gender"
+                                                value="male"
+                                                onClick={genderClickHandle}
+                                            />
+                                            <label htmlFor="male">male</label>
+                                        </div>
+                                        <div>
+                                            <input
+                                                type="radio"
+                                                id="female"
+                                                name="gender"
+                                                value="female"
+                                                onClick={genderClickHandle}
+                                            />
+                                            <label htmlFor="female">female</label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <input
-                                        type="radio"
-                                        id="female"
-                                        name="gender"
-                                        value="female"
-                                        onClick={genderClickHandle}
-                                    />
-                                    <label htmlFor="female">female</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div css={registerDetail}>
-                            <div css={registerLabel} style={{ height: 20 }}>
-                                권한
-                            </div>
-                            <div css={radioUserTypeCheck}>
-                                <div>
-                                    <input
-                                        type="radio"
-                                        id="user"
-                                        name="userType"
-                                        value={0}
-                                        onClick={userTypeClickHandle}
-                                    />
-                                    <label htmlFor="user">user</label>
-                                </div>
-                                <div>
-                                    <input
-                                        type="radio"
-                                        id="owner"
-                                        name="userType"
-                                        value={1}
-                                        onClick={userTypeClickHandle}
-                                    />
-                                    <label htmlFor="owner">owner</label>
+                                <div css={radio}>
+                                    <div css={registerLabel} style={{ height: 20 }}>
+                                        권한
+                                    </div>
+                                    <div css={radioUserTypeCheck}>
+                                        <div>
+                                            <input
+                                                type="radio"
+                                                id="user"
+                                                name="userType"
+                                                value={0}
+                                                onClick={userTypeClickHandle}
+                                            />
+                                            <label htmlFor="user">user</label>
+                                        </div>
+                                        <div>
+                                            <input
+                                                type="radio"
+                                                id="owner"
+                                                name="userType"
+                                                value={1}
+                                                onClick={userTypeClickHandle}
+                                            />
+                                            <label htmlFor="owner">owner</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
