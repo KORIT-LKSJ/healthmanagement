@@ -15,14 +15,18 @@ const container = css`
 `;
 
 const main = css`
-    position: relative;
-    top: 5%;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 40%;
     height: 90%;
     background-color: white;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    ::-webkit-scrollbar {
+        display: none;
+    }
 `;
 
 const mapStyle = css`

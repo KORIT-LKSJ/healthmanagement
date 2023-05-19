@@ -1,23 +1,24 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 
-
 const postmodal = css`
-    background : rgba(0,0,0,0.25);
-    left:0;
-    top:0;
-    height:100%;
-    width:100%;
-`
+    display: flex;
+    border: 1px solid #dbdbdb;
+    width: 100%;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    ::-webkit-scrollbar {
+        display: none;
+    }
+`;
 
-const Post  = (props) => {
-    const complete = (data) =>{
-        let fullAddress = (data.jibunAddress == "" ? data.autoJibunAddress : data.jibunAddress)
+const Post = (props) => {
+    const complete = (data) => {
+        let fullAddress = data.jibunAddress == "" ? data.autoJibunAddress : data.jibunAddress;
 
-        ;
-        let extraAddress = '';
+        let extraAddress = "";
 
         // if (data.addressType === 'R') {
         //     if (data.bname !== '') {
@@ -28,25 +29,21 @@ const Post  = (props) => {
         //     }
         //     fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
         // }
-        console.log(data)
-        console.log(fullAddress)
-        console.log(data.zonecode)
+        console.log(data);
+        console.log(fullAddress);
+        console.log(data.zonecode);
 
         props.setcompany({
             ...props.company,
-            gymAddress:fullAddress,
-        })
-    }
-    
+            gymAddress: fullAddress,
+        });
+    };
+
     return (
         <div css={postmodal}>
-            <DaumPostcode
-                className="postmodal"
-                autoClose
-                onComplete={complete} />
+            <DaumPostcode className="postmodal" autoClose onComplete={complete} />
         </div>
     );
 };
-
 
 export default Post;

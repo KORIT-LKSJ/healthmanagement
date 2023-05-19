@@ -6,13 +6,12 @@ const cardContainer = css`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 1%;
-    margin-bottom: 6%;
+    margin: 2% 2.5%;
+    /* margin-bottom: 6%; */
     border: 1px solid #dbdbdb;
-    border-radius: 7px;
     box-shadow: 0px 0px 5px #dbdbdb;
     width: 45%;
-    height: 100%;
+    height: 40%;
     cursor: pointer;
     &:hover {
         box-shadow: 0px 0px 10px #dbdbdb;
@@ -31,7 +30,12 @@ const header = css`
 `;
 
 const titleText = css`
+    width: 70%;
     font-weight: 600;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `;
 const main = css`
     display: flex;

@@ -1,9 +1,16 @@
 import { css } from "@emotion/react";
 
 export const Reset = css`
+    @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+    @font-face {
+        font-family: "Pretendard";
+        src: url("./images/Pretendard-Thin.woff") format("woff");
+        font-weight: 100, 200, 300, 400, 500, 600, 700, 800, 900;
+        font-display: swap;
+    }
     * {
         box-sizing: border-box;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-family: "Pretendard", sans-serif;
         color: #333;
     }
     html,

@@ -54,6 +54,7 @@ public class User {
 		return PrincipalRespDto.builder()
 				.userId(userId)
 				.username(username)
+				.email(email)
 				.name(name)
 				.authorities(builder.toString())
 				.build();

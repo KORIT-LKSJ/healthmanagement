@@ -5,13 +5,11 @@ import { BiLike, BiShoppingBag } from "react-icons/bi";
 import { HiHome, HiMap } from "react-icons/hi";
 
 const footer = css`
-    position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 5%;
-    bottom: 0;
     background-color: white;
 `;
 

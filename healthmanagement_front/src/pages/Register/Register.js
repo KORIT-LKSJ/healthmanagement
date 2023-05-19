@@ -41,7 +41,7 @@ const registerInfo = css`
     flex-direction: column;
     color: #58595b;
     padding: 1%;
-    height: 76%;
+    height: 72.5%;
     gap: 10px;
 `;
 
