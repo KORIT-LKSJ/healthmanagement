@@ -47,7 +47,7 @@ const userIcon = css`
     height: 45px;
     background-color: #713fff;
     color: white;
-    font-size: 15px;
+    font-size: 30px;
     font-weight: 600;
 `;
 
@@ -114,11 +114,6 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
         navigate("/gym/" + userId + "/like/list");
     };
 
-    const gymRegistHandle = () => {
-        navigate("/facility");
-    };
-
-
     const principal = useQuery(["principal"], async () => {
         const response = await axios.get("http://localhost:8080/account/principal", {
             headers: {
@@ -128,25 +123,20 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
         return response;
     });
 
-
     if (principal.isLoading) {
         return <div>로딩중...</div>;
     }
-    
+    console.log(principal);
     const userId = principal.data.data.userId;
-    const user = principal.data.data;
+
     return (
         <div css={sidebar(isSideBarOpen)}>
             <header css={header}>
-                <div css={userIcon}>{user.name}</div>
+                <div css={userIcon}>d</div>
                 <div css={userInfo}>
-                    <h1 css={userName}>{user.name}</h1>
-                    <p css={userEmail}> </p>
-                    <p css={userEmail}></p>
-                    <p css={userEmail}></p>
-                    <p css={userEmail}></p>
-                    <p css={userEmail}></p>
-
+                    <h1 css={userName}></h1>
+                    <p css={userEmail}>1803kcal</p>
+                    <p css={userEmail}>탄:250g 단:150g 지:60g</p>
                 </div>
                 <div css={closeButton} onClick={sidebarCloseClickHandle}>
                     <GrFormClose />
@@ -161,7 +151,7 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
                     {" "}
                     <BiLike />
                 </ListButton>
-                <ListButton title="우리 업체 등록" onClick={gymRegistHandle}>
+                <ListButton title="우리 업체 등록">
                     {" "}
                     <FaRegistered />
                 </ListButton>

@@ -3,7 +3,6 @@ import { css } from "@emotion/react";
 import React from "react";
 import { BiLike, BiShoppingBag } from "react-icons/bi";
 import { HiHome, HiMap } from "react-icons/hi";
-import { useNavigate } from "react-router-dom";
 
 const footer = css`
     position: fixed;
@@ -35,15 +34,7 @@ const pageLocation = css`
     background-color: white;
     color: #dbdbdb;
     cursor: pointer;
-    &:hover {
-        text-shadow: 0px 0px 10px #dbdbdb;
-        opacity: 0.5;
-    }
-    &:active {
-        background-color: #fafafa;
-    }
 `;
-
 const pageLocationIcon = css`
     font-size: 22px;
     height: 100%;
@@ -54,16 +45,10 @@ const pageLocationName = css`
     height: 100%;
 `;
 
-
 const Footer = () => {
-    const navigate = useNavigate();
-
-    const onClickMain = () => {
-        navigate("/")
-    }
     return (
         <footer css={footer}>
-            <div css={pageButton} onClick={onClickMain}>
+            <div css={pageButton}>
                 <div css={pageLocation}>
                     <HiHome css={pageLocationIcon} />
                     <div css={pageLocationName}>홈</div>

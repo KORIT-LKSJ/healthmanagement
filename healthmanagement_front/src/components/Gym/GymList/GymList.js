@@ -2,13 +2,6 @@
 import { css } from "@emotion/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
-const container = css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`;
-
 const cardContainer = css`
     display: flex;
     flex-direction: column;

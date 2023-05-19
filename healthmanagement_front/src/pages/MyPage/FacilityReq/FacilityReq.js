@@ -129,7 +129,7 @@ const FacilityReq = () => {
 
     const inputs = ["input1", "input2", "input3"]
     const handleClick = () => {
-        window.location.href = "http://localhost:3000/"; 
+        window.location.href = "http://localhost:3000/MyPage"; 
       };
 
     const handleChange = (e) => {
@@ -140,6 +140,15 @@ const FacilityReq = () => {
     const onkeyHandPress = (e) => {
         if(e.keyCode === 13){
             registerHandleSubmit()
+        }
+    }
+
+    const nextInput = (currentInput) => {
+        nextInput = inputs[0]
+        const currentIndex = inputs.indexOf(currentInput);
+        const nextInput = inputs[currentIndex + 1];
+        if(nextInput) {
+            document.getElementsByName(nextInput)[0].focus();
         }
     }
 
@@ -175,12 +184,12 @@ const FacilityReq = () => {
                         파트너가 되고 싶은 사장님이신가요?!
                         <br/>
                         <br/>
-                        매출부터 운영까지, 모두의 짐이 함께 고민합니다. 지금 모두의 짐의 파트너센터가 되어보세요
+                        매출부터 운영까지, 다짐이 함께 고민합니다. 지금 다짐의 파트너센터가 되어보세요
                     </div>
                 </div>
             <main css={mainContainer}> 
                 <label css={inputTitle}>운동시설 이름</label>
-                <FacilityDetaill type="name" placeholder="운동시설 이름" onChange={handleChange}  name="gymName">
+                <FacilityDetaill type="name" placeholder="운동시설 이름" onChange={handleChange}  name="gymName" onKeyDown={(e) => { if (e.keyCode===13) nextInput("gymName") }}>
                 </FacilityDetaill>
             
                 <label css={inputTitle}>주소</label>
@@ -191,19 +200,19 @@ const FacilityReq = () => {
                 
 
                 <label css={inputTitle}>전화번호</label>
-                <FacilityDetaill type="text" placeholder="-까지 입력해주세요" onChange={handleChange} name="gymTel">
+                <FacilityDetaill type="text" placeholder="-까지 입력해주세요" onChange={handleChange} name="gymTel" onKeyDown={(e) => { if (e.keyCode===13) nextInput("gymName") }}>
                 </FacilityDetaill>
 
                 <label css={inputTitle}>사업자등록번호 </label>
-                <FacilityDetaill type="text" placeholder="-까지 입력해주세요" onChange={handleChange} name="businessNumber">
+                <FacilityDetaill type="text" placeholder="-까지 입력해주세요" onChange={handleChange} name="businessNumber" onKeyDown={(e) => { if (e.keyCode===13) nextInput("gymName") }}>
                 </FacilityDetaill>
 
                 <label css={inputTitle}>가격</label>
-                <FacilityDetaill type="text" placeholder="가격입력" onChange={handleChange} name="gymPrice">
+                <FacilityDetaill type="text" placeholder="가격입력" onChange={handleChange} name="gymPrice" onKeyDown={(e) => { if (e.keyCode===13) nextInput("gymName") }}>
                 </FacilityDetaill>
 
                 <label css={inputTitle}>등록일</label>
-                <FacilityDetaill type="text" placeholder="오늘 날짜 입력" onChange={handleChange} name="registDate">
+                <FacilityDetaill type="text" placeholder="오늘 날짜 입력" onChange={handleChange} name="registDate" onKeyDown={(e) => { if (e.keyCode===13) nextInput("gymName") }}>
                 </FacilityDetaill>
 
                 <label css={inputTitle}>이미지</label>

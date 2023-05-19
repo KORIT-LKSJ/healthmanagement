@@ -33,7 +33,6 @@ public class AccountController {
 	public ResponseEntity<?> principal() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
-		System.out.println(accountService.getPrincipal());
 		return ResponseEntity.ok().body(accountService.getPrincipal());
 	}
 	
