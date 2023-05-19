@@ -194,14 +194,10 @@ const Register = () => {
     const userTypeClickHandle = (e) => {
         setRegisterUser({ ...registerUser, [e.target.name]: e.target.value });
     };
-<<<<<<< HEAD
 
     const genderClickHandle = (e) => {
         setRegisterUser({ ...registerUser, [e.target.name]: e.target.value });
     };
-=======
-    
->>>>>>> origin/dongmin
 
     if (!registerSubmit.isLoading)
         return (

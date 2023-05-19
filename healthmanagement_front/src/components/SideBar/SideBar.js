@@ -126,27 +126,16 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
     }
     console.log(principal);
     const userId = principal.data.data.userId;
-<<<<<<< HEAD:healthmanagement_front/src/components/SideBar/SideBar.js
-
-=======
     const user = principal.data.data;
-    console.log(user)
->>>>>>> origin/dongmin:healthmanagement_front/src/SideBar/SideBar.js
+    console.log(user);
     return (
         <div css={sidebar(isSideBarOpen)}>
             <header css={header}>
                 <div css={userIcon}>d</div>
                 <div css={userInfo}>
-<<<<<<< HEAD:healthmanagement_front/src/components/SideBar/SideBar.js
-                    <h1 css={userName}></h1>
-                    <p css={userEmail}>1803kcal</p>
-                    <p css={userEmail}>탄:250g 단:150g 지:60g</p>
-=======
                     <h1 css={userName}>{user.name}</h1>
                     <p css={userEmail}>{user.email}</p>
                     <p css={userEmail}>{user.phone}</p>
-
->>>>>>> origin/dongmin:healthmanagement_front/src/SideBar/SideBar.js
                 </div>
                 <div css={closeButton} onClick={sidebarCloseClickHandle}>
                     <GrFormClose />
