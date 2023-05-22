@@ -293,60 +293,8 @@ const MyPage = () => {
         return response;
     });
 
-<<<<<<< HEAD
-  if (principal.isLoading) {
-    return <div></div>;
-  }
-
-  const modifyClickHandle = () => {
-    navigate("/mypage/modifypage");
-  };
-
-  const bookMarkClickHandle = () => {
-    navigate("/likepage");
-  };
-
-  const passwordulHandle = () => {
-    navigate("/mypage/passwordupdate");
-  };
-
-  //유저이미지를 파일에서 들고와서 변환하게 하는것 구현
-
-  // const handleImageClick = () => {
-  //   const input = document.getElementById("profile-image");
-  //   input.click();
-  // };
-  // const handleFileSelect = (event) => {
-  //   const reader = new FileReader();
-  //   const file = event.target.files[0];
-  //   reader.onloadend = function () {
-  //     setSelectedFile(reader.result);
-  //     localStorage.setItem("profileimage", reader.result);
-  //   };
-  //   if (file) {
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
-
-  // 유저이미지를 특정이미지로 고정되도록 구현중
-  const handleImageClick = () => {
-    const imageUrl = "https://example.com/path/to/image.jpg";
-    setSelectedFile(imageUrl);
-    localStorage.setItem("profileimage", imageUrl);
-  };
-  const handleFileSelect = (event) => {
-    const reader = new FileReader();
-    const file = event.target.files[0];
-    reader.onloadend = function () {
-      setSelectedFile(reader.result);
-      localStorage.setItem("profileimage", reader.result);
-    };
-    if (file) {
-      reader.readeAsDataURL(file);
-=======
     if (principal.isLoading) {
         return <div></div>;
->>>>>>> main
     }
 
     const modifyClickHandle = () => {
@@ -357,71 +305,6 @@ const MyPage = () => {
         navigate("/mypage/bookmark");
     };
 
-<<<<<<< HEAD
-  return (
-    <div css={container}>
-      <Header search={false} />
-      <main css={main}>
-        <h1 css={titleText}>MyPage</h1>
-        <div css={mypagecontainer}>
-          <div css={userInfo}>
-            <div css={user}>
-              <div css={imgbox}>
-                <label htmlFor="profile-image"></label>
-                <img
-                  css={img}
-                  src="https://img.freepik.com/free-photo/adorable-domestic-kitty-with-copy-space_23-2149167112.jpg?size=626&ext=jpg"
-                  alt=""
-                  onClick={handleImageClick}
-                  onLoad={() => console.log("image loaded")}
-                />
-                <label>
-                  <input
-                    type="file"
-                    id="profile-image"
-                    accept="image/*"
-                    style={{ display: "none" }}
-                    onChange={handleFileSelect}
-                  ></input>
-                </label>
-              </div>
-              <h2 css={username}>UserName:{principalData.username}</h2>
-            </div>
-          </div>
-          <div css={select}>
-            <div css={rating}>Rating</div>
-            <div css={coupon}>Coupon</div>
-            <div css={point}>Point</div>
-          </div>
-          <div css={sideContainer}>
-            <div css={accountSetting} onClick={modifyClickHandle}>
-              <div css={accountTitle}>
-                <BiUserCircle css={userIcon} />
-                <div css={personalName}>Modify</div>
-              </div>
-              <AiOutlineDoubleRight css={nowButton} />
-            </div>
-            <div css={passwordul} onClick={passwordulHandle}>
-              <div css={passwordulTitle}>
-                <TbPassword css={passwordulIcon} />
-                <div css={passwordulName}>PasswordFrom</div>
-              </div>
-              <AiOutlineDoubleRight css={nowButton} />
-            </div>
-            <div css={bookMark} onClick={bookMarkClickHandle}>
-              <div css={bookTitle}>
-                <FaRegStar css={bookMarkIcon} />
-                <div css={bookMarkName}>BookMark</div>
-              </div>
-              <AiOutlineDoubleRight css={nowButton} />
-            </div>
-          </div>
-        </div>
-      </main>
-      <Footer></Footer>
-    </div>
-  );
-=======
     const passwordulHandle = () => {
         navigate("/mypage/passwordupdate");
     };
@@ -534,7 +417,6 @@ const MyPage = () => {
             <Footer />
         </div>
     );
->>>>>>> main
 };
 
 export default MyPage;

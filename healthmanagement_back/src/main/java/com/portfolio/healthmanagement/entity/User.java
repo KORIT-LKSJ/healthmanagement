@@ -59,7 +59,7 @@ public class User {
 				.authorities(builder.toString())
 				.weight(weight)
 				.height(height)
-				.birthDate(birthDate)
+				.birthdate(birthdate)
 				.build();
 	}
 

@@ -68,19 +68,12 @@ const icon = css`
     }
 `;
 const modifycontainer = css`
-<<<<<<< HEAD
-  flex-direction: column;
-  display: flex;
-  border: none;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  gap: 40px;
-=======
     flex-direction: column;
     display: flex;
     border: none;
-    gap: 20px;
->>>>>>> main
+    padding-top: 30px;
+    padding-bottom: 30px;
+    gap: 40px;
 `;
 
 const namebox = css`
@@ -100,76 +93,10 @@ const getname = css`
 `;
 
 const informationinput = css`
-<<<<<<< HEAD
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #dbdbdb;
-  border-radius: 10px;
-  width: 300px;
-  padding: 10px;
-  justify-content: center;
-  background-color: whitesmoke;
-`;
-
-const inputContainer = css`
-  display: flex;
-  padding-top: 30px;
-  align-items: flex-start;
-  flex-direction: column;
-`;
-const usernameTextBox = css`
-  display: flex;
-  border: 1px solid #dbdbdb;
-  border-radius: 10px;
-  align-items: center;
-  height: 100px;
-  width: 100%;
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const phoneTextBox = css`
-  display: flex;
-  border: 1px solid #dbdbdb;
-  border-radius: 10px;
-  align-items: center;
-  height: 100px;
-  width: 100%;
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const emailTextBox = css`
-  display: flex;
-  border: 1px solid #dbdbdb;
-  border-radius: 10px;
-  align-items: center;
-  height: 100px;
-  width: 100%;
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const birthdateTextBox = css`
-  display: flex;
-  border: 1px solid #dbdbdb;
-  border-radius: 10px;
-  align-items: center;
-  height: 100px;
-  width: 100%;
-  font-size: 18px;
-  font-weight: 600;
-`;
-const getbirthdate = css`
-  display: flex;
-  align-items: center;
-  width: 200px;
-  margin-left: 20px;
-  margin-right: 20px;
-=======
     display: flex;
     flex-direction: column;
     border: 1px solid #dbdbdb;
+    border-radius: 10px;
     width: 300px;
     padding: 10px;
     justify-content: center;
@@ -178,6 +105,7 @@ const getbirthdate = css`
 
 const inputContainer = css`
     display: flex;
+    padding-top: 30px;
     align-items: flex-start;
     flex-direction: column;
 `;
@@ -186,7 +114,7 @@ const usernameTextBox = css`
     border: 1px solid #dbdbdb;
     border-radius: 10px;
     align-items: center;
-    height: 200px;
+    height: 100px;
     width: 100%;
     font-size: 18px;
     font-weight: 600;
@@ -197,7 +125,7 @@ const phoneTextBox = css`
     border: 1px solid #dbdbdb;
     border-radius: 10px;
     align-items: center;
-    height: 200px;
+    height: 100px;
     width: 100%;
     font-size: 18px;
     font-weight: 600;
@@ -208,33 +136,28 @@ const emailTextBox = css`
     border: 1px solid #dbdbdb;
     border-radius: 10px;
     align-items: center;
-    height: 200px;
+    height: 100px;
     width: 100%;
     font-size: 18px;
     font-weight: 600;
 `;
 
-const addressTextBox = css`
+const birthdateTextBox = css`
     display: flex;
     border: 1px solid #dbdbdb;
     border-radius: 10px;
     align-items: center;
-    height: 200px;
+    height: 100px;
     width: 100%;
     font-size: 18px;
     font-weight: 600;
 `;
-
-const deliveryaddressTextBox = css`
+const getbirthdate = css`
     display: flex;
-    border: 1px solid #dbdbdb;
-    border-radius: 10px;
     align-items: center;
-    height: 200px;
-    width: 100%;
-    font-size: 18px;
-    font-weight: 600;
->>>>>>> main
+    width: 200px;
+    margin-left: 20px;
+    margin-right: 20px;
 `;
 const errorMsg = css`
     font-size: 14px;
@@ -257,13 +180,8 @@ const ModifyPage = () => {
 
     //유효성 검사
 
-<<<<<<< HEAD
-  const [isEmail, setIsEmail] = useState(true);
-  const [isPhone, setIsPhone] = useState(true);
-=======
-    const [isemail, setIsEmail] = useState(true);
-    const [isphone, setIsPhone] = useState(true);
->>>>>>> main
+    const [isEmail, setIsEmail] = useState(true);
+    const [isPhone, setIsPhone] = useState(true);
 
     const principal = useQuery(["Principal"], async () => {
         const response = await axios.get("http://localhost:8080/account/principal", {
@@ -286,26 +204,11 @@ const ModifyPage = () => {
         },
         {
             enabled: !!principal.data,
+            onSuccess: (response) => {
+                setPhone(response.data.phone);
+                setEmail(response.data.email);
+            },
         }
-<<<<<<< HEAD
-      );
-      return response;
-    },
-    {
-      enabled: !!principal.data,
-      onSuccess: (response) => {
-        setPhone(response.data.phone);
-        setEmail(response.data.email);
-      },
-    }
-  );
-  //회원정보가 저장되는 것 구현완료
-  const saveinfo = useMutation(
-    async (userId) => {
-      const option = {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-=======
     );
     //회원정보가 저장되는 것 구현중, 주소는 아직 구현하지 않았음
     const saveinfo = useMutation(
@@ -324,7 +227,6 @@ const ModifyPage = () => {
                 },
                 option
             );
->>>>>>> main
         },
         {
             onSuccess: () => {
@@ -382,89 +284,12 @@ const ModifyPage = () => {
         }
         setChangeUser({ ...changeuser, email: currentEmail });
     };
+
     const onsuccessClickHandle = async () => {
         saveinfo.mutate();
     };
 
-<<<<<<< HEAD
-    if (!emailRegExp.test(currentEmail)) {
-      setEmailMessage("이메일의 형식이 올바르지 않습니다");
-      setIsEmail(false);
-    } else {
-      setEmailMessage("사용가능한 이메일 입니다");
-      setIsEmail(true);
-    }
-    setChangeUser({ ...changeuser, email: currentEmail });
-  };
-
-  const onsuccessClickHandle = async () => {
-    saveinfo.mutate();
-  };
-
-  // 회원정보 수정시 저장구현완료
-  return (
-    <div css={container}>
-      <Header search={false} />
-      <main css={main}>
-        <div css={title}>
-          <h1 css={titleText}>ModifyPage</h1>
-          <div css={box}>
-            {" "}
-            <div css={button} onClick={onclickExitHandle}>
-              <BiExit css={icon} />
-            </div>
-            <div css={button} onClick={onsuccessClickHandle}>
-              <GiSaveArrow css={icon} />
-            </div>
-          </div>
-        </div>
-        <div css={modifycontainer}>
-          <div css={usernameTextBox}>
-            <h2 css={namebox}>Username</h2>
-            <div css={getname}>{principal.data.data.username}</div>
-          </div>
-
-          <div css={phoneTextBox}>
-            <h2 css={namebox}> Phone </h2>
-            <div css={inputContainer}>
-              <input
-                css={informationinput}
-                type="text"
-                placeholder="ex.010-xxxx-xxxx"
-                onChange={onchangePhone}
-                name="phone"
-                value={phone}
-              ></input>
-              <div css={errorMsg}>{phoneMessage}</div>
-            </div>
-          </div>
-
-          <div css={emailTextBox}>
-            <h2 css={namebox}> Email</h2>
-            <div css={inputContainer}>
-              <input
-                css={informationinput}
-                type="text"
-                placeholder="이메일을 기입해주세요"
-                onChange={onchangeEmail}
-                name="email"
-                value={email}
-              ></input>
-              <div css={errorMsg}>{emailMessage}</div>
-            </div>
-          </div>
-
-          <div css={birthdateTextBox}>
-            <h2 css={namebox}>Birthdate</h2>
-            <div css={getbirthdate}>{principal.data.data.birthDate}</div>
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </div>
-  );
-=======
-    // 회원정보 수정시 저장되는 것을 구현을 해야함, namebox디자인 수정 필요(높이 수정)
+    // 회원정보 수정시 저장구현완료
     return (
         <div css={container}>
             <Header search={false} />
@@ -483,7 +308,7 @@ const ModifyPage = () => {
                 </div>
                 <div css={modifycontainer}>
                     <div css={usernameTextBox}>
-                        <h2 css={namebox}>username</h2>
+                        <h2 css={namebox}>Username</h2>
                         <div css={getname}>{principal.data.data.username}</div>
                     </div>
 
@@ -496,49 +321,36 @@ const ModifyPage = () => {
                                 placeholder="ex.010-xxxx-xxxx"
                                 onChange={onchangePhone}
                                 name="phone"
-                                value={userInfo.data ? userInfo.data.data.phone : ""}
+                                value={phone}
                             ></input>
                             <div css={errorMsg}>{phoneMessage}</div>
                         </div>
                     </div>
+
                     <div css={emailTextBox}>
                         <h2 css={namebox}> Email</h2>
-                        <input
-                            css={informationinput}
-                            type="text"
-                            placeholder="이메일을 기입해주세요"
-                            onChange={onchangeEmail}
-                            name="email"
-                            value={userInfo.data ? userInfo.data.data.email : ""}
-                        ></input>
-                        <div css={errorMsg}>{emailMessage}</div>
+                        <div css={inputContainer}>
+                            <input
+                                css={informationinput}
+                                type="text"
+                                placeholder="이메일을 기입해주세요"
+                                onChange={onchangeEmail}
+                                name="email"
+                                value={email}
+                            ></input>
+                            <div css={errorMsg}>{emailMessage}</div>
+                        </div>
                     </div>
-                    <div css={addressTextBox}>
-                        <h2 css={namebox}> Address</h2>
-                        <input
-                            css={informationinput}
-                            type="text"
-                            placeholder="도로지번으로 입력하여주세요"
-                            onChange={onchangeHandle}
-                            name="address"
-                        ></input>
-                    </div>
-                    <div css={deliveryaddressTextBox}>
-                        <h2 css={namebox}> DeliveryAddress</h2>
-                        <input
-                            css={informationinput}
-                            type="text"
-                            placeholder="도로지번으로 입력하여주세요"
-                            onChange={onchangeHandle}
-                            name="deliveryaddress"
-                        ></input>
+
+                    <div css={birthdateTextBox}>
+                        <h2 css={namebox}>Birthdate</h2>
+                        <div css={getbirthdate}>{principal.data.data.birthDate}</div>
                     </div>
                 </div>
             </main>
             <Footer />
         </div>
     );
->>>>>>> main
 };
 
 export default ModifyPage;
