@@ -9,9 +9,7 @@
 		<result property="name" column="name"/>
 		<result property="phone" column="phone"/>
 		<result property="email" column="email"/>
-		<result property="weight" column="weight"/>
-		<result property="height" column="height"/>
-		<result property="birthDate" column="birthdate" />
+		<result property="birthdate" column="birthdate" />
 	</resultMap>
 	
 	
