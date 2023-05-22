@@ -1,53 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-<<<<<<< HEAD
-import React from "react";
-import { BiSearch } from "react-icons/bi";
-const searchBar = (isSearchBarOpen) => css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    margin-top: 160px;
-    left: ${isSearchBarOpen ? `1400px` : `750px`};
-    border: 1px solid #dbdbdb;
-    border-radius: 10px;
-    width: 400px;
-    height: 100px;
-    box-shadow: -1px 0px 5px #dbdbdb;
-    transition: left 1s ease;
-    background-color: white;
-
-    ${isSearchBarOpen
-        ? ""
-        : `
-        cursor: pointer;
-    `}
-`;
-
-const searchInput = css`
-    border: 2px solid #dbdbdb;
-    border-radius: 7px;
-    padding: 5px;
-    width: 300px;
-    height: 50px;
-`;
-
-const searchIcon = css`
-    font-size: 30px;
-`;
-
-const SearchBar = ({ isSearchBarOpen, searchInputHandle, searchSubmitHandle }) => {
-=======
 import axios from "axios";
 import QueryString from "qs";
 import React, { useState } from "react";
 import { BiSearch } from "react-icons/bi";
-<<<<<<<< HEAD:healthmanagement_front/src/components/Search/Search.js
-import SearchBar from "../SearchBar/SearchBar";
-========
 import { useQuery } from "react-query";
->>>>>>>> main:healthmanagement_front/src/components/SearchBar/SearchBar.js
 
 const searchBar = (isSearchBarOpen) => css`
     position: absolute;
@@ -126,7 +83,6 @@ const SearchBar = ({ isSearchBarOpen, gyms, setGyms, refresh, setRefresh }) => {
         }
     };
 
->>>>>>> main
     return (
         <div css={searchBar(isSearchBarOpen)}>
             <input css={searchInput} type="search" onKeyUp={searchSubmitHandle} onChange={searchInputHandle} />{" "}
