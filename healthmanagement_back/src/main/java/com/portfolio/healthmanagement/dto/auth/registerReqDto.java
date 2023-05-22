@@ -38,6 +38,10 @@ public class registerReqDto {
 	@Pattern(regexp = "^\\d{3}-\\d{3,4}-\\d{4}$",
 		    message = "휴대폰 번호를 양식에 맞게 입력해주세요. (ex: 010-1234-5678)")
 	private String phone;
+	
+	private int weight;
+	
+	private int height;
 
 	private Date birthdate;
 	
@@ -53,6 +57,8 @@ public class registerReqDto {
 				.name(name)
 				.phone(phone)
 				.birthdate(birthdate)
+				.weight(weight)
+				.height(height)
 				.gender(gender)
 				.build();
 	}
