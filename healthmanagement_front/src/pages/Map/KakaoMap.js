@@ -12,28 +12,21 @@ const container = css`
     flex-direction: column;
     align-items: center;
     height: 100%;
-    background-color: gray;
-`;
-
-const header = css`
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 40px;
-    background-color: white;
 `;
 
 const main = css`
-    position: relative;
-    top: 5%;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 40%;
     height: 90%;
     background-color: white;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    ::-webkit-scrollbar {
+        display: none;
+    }
 `;
 
 const mapStyle = css`
@@ -187,7 +180,6 @@ const KaKaoMap = () => {
         return <></>;
     }
 
-    console.log(nearLatLngNames);
     return (
         <div css={container}>
             <Header search={false} />

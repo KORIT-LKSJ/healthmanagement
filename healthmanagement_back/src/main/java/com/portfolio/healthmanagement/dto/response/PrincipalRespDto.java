@@ -12,6 +12,7 @@ public class PrincipalRespDto {
 	private int userId;
 	private String username;
 	private String name;
+	private String email;
 	private String authorities; 
 	private int weight;
 	private int height;

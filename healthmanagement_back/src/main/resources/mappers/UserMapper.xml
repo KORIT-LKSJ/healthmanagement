@@ -32,12 +32,16 @@
 			ut.user_id,
 			ut.username,
 			ut.password,
+			ut.email,
 			ut.name,
 			ut.phone,
 			ut.email,
+<<<<<<< HEAD
 			ut.weight,
 			ut.height,
 			ut.birthdate,
+=======
+>>>>>>> main
 			
 			at.authority_id,
 			at.user_id,
@@ -56,7 +60,7 @@
 	<insert id="saveUser" parameterType="com.portfolio.healthmanagement.entity.User" useGeneratedKeys="true"
 	keyProperty="userId">
 		insert into user_tb
-		values(0,#{username},#{password},#{name},#{phone},#{email},#{weight},#{height},#{birthdate})
+		values(0,#{username},#{password},#{name},#{phone},#{email},#{weight},#{height},#{birthdate},#{gender})
 	</insert>
 	
 	<insert id="saveAuthority" parameterType="com.portfolio.healthmanagement.entity.Authority">

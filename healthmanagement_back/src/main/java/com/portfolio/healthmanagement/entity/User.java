@@ -10,10 +10,12 @@ import com.portfolio.healthmanagement.security.PrincipalUserDetails;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Builder
 @Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -26,7 +28,8 @@ public class User {
 	private String email;
 	private int weight;
 	private int height;
-	private Date birthDate;
+	private Date birthdate;
+	private String gender;
 	
 	private List<Authority> authorities;
 	
@@ -51,6 +54,7 @@ public class User {
 		return PrincipalRespDto.builder()
 				.userId(userId)
 				.username(username)
+				.email(email)
 				.name(name)
 				.authorities(builder.toString())
 				.weight(weight)

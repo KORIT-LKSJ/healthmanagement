@@ -10,7 +10,6 @@ const container = css`
     flex-direction: column;
     align-items: center;
     height: 100%;
-    background-color: gray;
 `;
 
 const header = css`
@@ -18,54 +17,52 @@ const header = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 40px;
+    width: 40%;
+    height: 5%;
     background-color: white;
 `;
 
+const mainLogo = css`
+    height: 100%;
+`;
+
 const main = css`
+    position: relative;
+    top: 5%;
     display: flex;
     flex-direction: column;
-    padding: 20px 22px 75px 22px;
-    width: 750px;
-    height: 100%;
+    width: 40%;
+    height: 85%;
     background-color: white;
-    overflow: hidden;
 `;
 
 const registerInfo = css`
     display: flex;
     flex-direction: column;
     color: #58595b;
-`;
-
-const logo = css`
-    display: flex;
-    padding: 5px;
-    width: 214px;
-    height: 90px;
+    padding: 1%;
+    height: 72.5%;
+    gap: 10px;
 `;
 
 const registerDetail = css`
     display: flex;
     flex-direction: column;
-    padding-top: 15px;
     font-size: 15px;
     font-weight: 400;
-    gap: 5px;
+    gap: 3px;
 `;
 
 const registerLabel = css`
-    padding-left: 2px;
+    margin-left: 5px;
 `;
 
 const registerInput = css`
-    margin-bottom: 3px;
-    border: 1px solid #dbdbdb;
-    border-radius: 10px;
-    padding: 12px;
     width: 100%;
     background-color: white;
+    border: 1px solid #dbdbdb;
+    border-radius: 10px;
+    padding: 8px;
 `;
 
 const errorMsg = css`
@@ -74,40 +71,59 @@ const errorMsg = css`
     color: red;
 `;
 
-const register = css`
+const radioList = css`
     display: flex;
     flex-direction: column;
+    gap: 20px;
 `;
 
-const registerButton = css`
-    position: absolute;
-    bottom: 60px;
-    padding: 15px 0px;
-    border: 2px solid #dbdbdb;
-    border-radius: 10px;
-    width: 706px;
-    font-size: 15px;
-    font-weight: 600;
-    background-color: #eda058;
-    cursor: pointer;
+const radio = css`
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
 `;
 
-const radioCheck = css`
+const radioGenderCheck = css`
     display: flex;
     justify-content: space-between;
-    width: 130px;
-    margin-top: 10px;
+    width: 145px;
+`;
+
+const radioUserTypeCheck = css`
+    display: flex;
+    justify-content: space-between;
+    width: 140px;
 `;
 
 const footer = css`
     position: fixed;
-    bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 40px;
+    width: 40%;
+    height: 10%;
+    bottom: 0;
     background-color: white;
+`;
+
+const register = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 2%;
+    width: 100%;
+    height: 100%;
+`;
+
+const registerButton = css`
+    padding: 10px 0;
+    border: 1px solid #dbdbdb;
+    border-radius: 10px;
+    width: 100%;
+    font-size: 15px;
+    font-weight: 600;
+    background-color: #eda058;
+    cursor: pointer;
 `;
 
 const Register = () => {
@@ -122,6 +138,7 @@ const Register = () => {
         height: "",
         weight: "",
         userType: "",
+        gender: "",
     });
 
     const [errorMessage, setErrorMessage] = useState({
@@ -141,7 +158,7 @@ const Register = () => {
             phone: "",
         });
         alert("회원가입 성공!");
-        navigate("/login");
+        navigate("/auth/login");
     };
 
     const errorRegister = (error) => {
@@ -178,15 +195,18 @@ const Register = () => {
         setRegisterUser({ ...registerUser, [e.target.name]: e.target.value });
     };
 
+    const genderClickHandle = (e) => {
+        setRegisterUser({ ...registerUser, [e.target.name]: e.target.value });
+    };
+
     if (!registerSubmit.isLoading)
         return (
             <div css={container}>
-                <header css={header}></header>
+                <header css={header}>
+                    <img css={mainLogo} src="/image/gymLogo.png" alt="" />
+                </header>
                 <main css={main}>
                     <div css={registerInfo}>
-                        <div css={logo}>
-                            <img src="images/logo.png" alt="로고" />
-                        </div>
                         <div css={registerDetail}>
                             <label css={registerLabel}>아이디</label>
                             <input
@@ -196,8 +216,8 @@ const Register = () => {
                                 name="username"
                                 onChange={onchangeHandle}
                             />
+                            <div css={errorMsg}>{errorMessage.username}</div>
                         </div>
-                        <div css={errorMsg}>{errorMessage.username}</div>
                         <div css={registerDetail}>
                             <label css={registerLabel}>비밀번호</label>
                             <input
@@ -207,8 +227,8 @@ const Register = () => {
                                 name="password"
                                 onChange={onchangeHandle}
                             />
+                            <div css={errorMsg}>{errorMessage.password}</div>
                         </div>
-                        <div css={errorMsg}>{errorMessage.password}</div>
                         <div css={registerDetail}>
                             <label css={registerLabel}>이름</label>
                             <input
@@ -218,8 +238,8 @@ const Register = () => {
                                 name="name"
                                 onChange={onchangeHandle}
                             />
+                            <div css={errorMsg}>{errorMessage.name}</div>
                         </div>
-                        <div css={errorMsg}>{errorMessage.name}</div>
                         <div css={registerDetail}>
                             <label css={registerLabel}>이메일</label>
                             <input
@@ -229,8 +249,8 @@ const Register = () => {
                                 name="email"
                                 onChange={onchangeHandle}
                             />
+                            <div css={errorMsg}>{errorMessage.email}</div>
                         </div>
-                        <div css={errorMsg}>{errorMessage.email}</div>
                         <div css={registerDetail}>
                             <label css={registerLabel}>생년월일</label>
                             <input
@@ -240,6 +260,7 @@ const Register = () => {
                                 name="birthdate"
                                 onChange={onchangeHandle}
                             />
+                            <div css={errorMsg}></div>
                         </div>
                         <div css={registerDetail}>
                             <label css={registerLabel}>전화번호</label>
@@ -250,9 +271,9 @@ const Register = () => {
                                 name="phone"
                                 onChange={onchangeHandle}
                             />
+                            <div css={errorMsg}>{errorMessage.phone}</div>
                         </div>
-                        <div css={errorMsg}>{errorMessage.phone}</div>
-                        <div css={registerDetail}>
+                        {/* <div css={registerDetail}>
                             <label css={registerLabel}>키</label>
                             <input
                                 css={registerInput}
@@ -261,6 +282,7 @@ const Register = () => {
                                 name="height"
                                 onChange={onchangeHandle}
                             />
+                            <div css={errorMsg}></div>
                         </div>
                         <div css={registerDetail}>
                             <label css={registerLabel}>몸무게</label>
@@ -271,18 +293,69 @@ const Register = () => {
                                 name="weight"
                                 onChange={onchangeHandle}
                             />
+                            <div css={errorMsg}></div>
+                        </div> */}
+                        <div css={registerDetail}>
+                            <div css={radioList}>
+                                <div css={radio}>
+                                    <div css={registerLabel} style={{ height: 20 }}>
+                                        성별
+                                    </div>
+                                    <div css={radioGenderCheck}>
+                                        <div>
+                                            <input
+                                                type="radio"
+                                                id="male"
+                                                name="gender"
+                                                value="male"
+                                                onClick={genderClickHandle}
+                                            />
+                                            <label htmlFor="male">male</label>
+                                        </div>
+                                        <div>
+                                            <input
+                                                type="radio"
+                                                id="female"
+                                                name="gender"
+                                                value="female"
+                                                onClick={genderClickHandle}
+                                            />
+                                            <label htmlFor="female">female</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div css={radio}>
+                                    <div css={registerLabel} style={{ height: 20 }}>
+                                        권한
+                                    </div>
+                                    <div css={radioUserTypeCheck}>
+                                        <div>
+                                            <input
+                                                type="radio"
+                                                id="user"
+                                                name="userType"
+                                                value={0}
+                                                onClick={userTypeClickHandle}
+                                            />
+                                            <label htmlFor="user">user</label>
+                                        </div>
+                                        <div>
+                                            <input
+                                                type="radio"
+                                                id="owner"
+                                                name="userType"
+                                                value={1}
+                                                onClick={userTypeClickHandle}
+                                            />
+                                            <label htmlFor="owner">owner</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div css={radioCheck}>
-                        <div>
-                            <input type="radio" id="user" name="userType" value={0} onClick={userTypeClickHandle} />
-                            <label htmlFor="user">user</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="owner" name="userType" value={1} onClick={userTypeClickHandle} />
-                            <label htmlFor="owner">owner</label>
-                        </div>
-                    </div>
+                </main>
+                <footer css={footer}>
                     <div css={register}>
                         <button
                             css={registerButton}
@@ -293,8 +366,7 @@ const Register = () => {
                             회원가입
                         </button>
                     </div>
-                </main>
-                <footer css={footer}></footer>
+                </footer>
             </div>
         );
 };

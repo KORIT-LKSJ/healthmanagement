@@ -15,61 +15,41 @@ import FacilityReq from "./pages/MyPage/FacilityReq/FacilityReq";
 import GymDetail from "./pages/GymDetail/GymDetail";
 import LikeList from "./pages/LikeList/LikeList";
 import KaKaoMap from "./pages/Map/KakaoMap";
+import MyCalory from "./pages/MyCalory/MyCalory";
 
 function App() {
-
-  return (
-    <>
-      <Global styles={Reset} />
-      <Routes>
-        <Route
-          path="/auth/login"
-          element={<AuthRoute path="/auth/login" element={<Login />} />}
-        ></Route>
-        <Route
-          path="/auth/register"
-          element={<AuthRoute path="/auth/register" element={<Register />} />}
-        ></Route>
-        <Route
-          path="/auth/find/id"
-          element={<AuthRoute path="/auth/find/id" element={<FindId />} />}
-        ></Route>
-        <Route
-          path="/auth/find/password"
-          element={
-            <AuthRoute path="/auth/find/password" element={<FindPassword />} />
-          }
-        ></Route>
-        <Route path="/" element={<AuthRoute path="/" element={<Main />} />} />
-        <Route
-          path="/mypage"
-          element={<AuthRoute path="/mypage" element={<MyPage />} />}
-        />
-        <Route
-          path="/mypage/modifypage"
-          element={
-            <AuthRoute path="/mypage/modifypage" element={<ModifyPage />} />
-          }
-        ></Route>
-        <Route
-          path="/mypage/passwordupdate"
-          element={
-            <AuthRoute
-              path="/mypage/passwordupdate"
-              element={<PasswordUpdate />}
-            />
-          }
-        ></Route>
-        <Route
-          path="/gym/:gymId"
-          element={<AuthRoute path="/gym" element={<GymDetail />} />}
-        />
-        <Route path="/facility" element={<FacilityReq />} />
-        <Route path="/gym/:userId/like/list" element={<LikeList />} />
-        <Route path="/map" element={<KaKaoMap />}></Route>
-      </Routes>
-    </>
-  );
+    return (
+        <>
+            <Global styles={Reset} />
+            <Routes>
+                <Route path="/auth/login" element={<AuthRoute path="/auth/login" element={<Login />} />}></Route>
+                <Route
+                    path="/auth/register"
+                    element={<AuthRoute path="/auth/register" element={<Register />} />}
+                ></Route>
+                <Route path="/auth/find/id" element={<AuthRoute path="/auth/find/id" element={<FindId />} />}></Route>
+                <Route
+                    path="/auth/find/password"
+                    element={<AuthRoute path="/auth/find/password" element={<FindPassword />} />}
+                ></Route>
+                <Route path="/" element={<AuthRoute path="/" element={<Main />} />} />
+                <Route path="/mypage" element={<AuthRoute path="/mypage" element={<MyPage />} />} />
+                <Route
+                    path="/mypage/modifypage"
+                    element={<AuthRoute path="/mypage/modifypage" element={<ModifyPage />} />}
+                ></Route>
+                <Route
+                    path="/mypage/passwordupdate"
+                    element={<AuthRoute path="/mypage/passwordupdate" element={<PasswordUpdate />} />}
+                ></Route>
+                <Route path="/gym/:gymId" element={<AuthRoute path="/gym" element={<GymDetail />} />} />
+                <Route path="/facility" element={<AuthRoute path="/facility" element={<FacilityReq />} />} />
+                <Route path="/myCalory" element={<AuthRoute path="/myCalory" element={<MyCalory />} />} />
+                <Route path="/gym/:userId/like/list" element={<LikeList />} />
+                <Route path="/map" element={<KaKaoMap />}></Route>
+            </Routes>
+        </>
+    );
 }
 
 export default App;
