@@ -213,6 +213,10 @@ const Login = () => {
         setLoginUser({ ...loginUser, [name]: value });
     };
 
+    const googleAuthLoginClickHandle = () => {
+        window.location.href = "http://localhost:8080/oauth2/authorization/google";
+    };
+
     if (!loginSubmit.isLoading)
         return (
             <div css={container}>
@@ -255,7 +259,12 @@ const Login = () => {
                     <div css={moreLogin}>
                         <img css={loginImg} src="../../images/naverLogin.png" alt="naver" />
                         <img css={loginImg} src="../../images/kakaoLogin.png" alt="kakao" />
-                        <img css={loginImg} src="../../images/googleLogin.png" alt="google" />
+                        <img
+                            css={loginImg}
+                            src="../../images/googleLogin.png"
+                            alt="google"
+                            onClick={googleAuthLoginClickHandle}
+                        />
                     </div>
                     <div css={signUpContainer}>
                         <div css={signUp} onClick={signUpClickHandle}>

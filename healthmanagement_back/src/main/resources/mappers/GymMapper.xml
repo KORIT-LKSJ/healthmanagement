@@ -12,7 +12,6 @@
 		<result property="likeCount" column="like_count"/>
 		<result property="registDate" column="regist_Date"/>
 		<result property="removeDate" column="remove_Date"/>
-		
 	</resultMap>
 	
 	<resultMap type="com.portfolio.healthmanagement.entity.User" id="userMap">
@@ -22,8 +21,7 @@
 		<result property="name" column="name"/>
 		<result property="phone" column="phone"/>
 		<result property="email" column="email"/>
-		<result property="birthDate" column="birthdate"/>
-		
+		<result property="birthdate" column="birthdate"/>
 	</resultMap>
 	
 
@@ -31,7 +29,6 @@
 		<id property="gymOwnerId" column="gym_owner_id"/>
 		<result property="gymId" column="gym_id"/>
 		<result property="userId" column="user_id"/>
-		
 		<association property="user" resultMap="UserMap"></association>
 		<association property="gym" resultMap="GymMap"></association>
 	</resultMap>
