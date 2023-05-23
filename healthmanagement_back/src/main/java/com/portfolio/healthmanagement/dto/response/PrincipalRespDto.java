@@ -14,7 +14,5 @@ public class PrincipalRespDto {
 	private String name;
 	private String email;
 	private String authorities; 
-	private int weight;
-	private int height;
 	private Date birthdate;
 }

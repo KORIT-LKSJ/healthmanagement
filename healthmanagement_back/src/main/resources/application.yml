@@ -1,4 +1,8 @@
 spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://portfolio.cnnw9ccj3lgu.ap-northeast-2.rds.amazonaws.com:3306/health_management
@@ -11,3 +15,6 @@ mybatis:
     
 jwt:
   secret: n9GeQdOVaqlkAH3kMmKcCSpp2KDvk697oUXqFRXjCiFPCoou5UgrxV9vX70vTekO
+  
+file:
+  path: C:\aws_project\workspace\healthmanagement\healthmanagement_back\upLoad\

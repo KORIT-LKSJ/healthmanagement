@@ -27,7 +27,6 @@ public class User {
 	private String phone;
 	private String email;
 	private Date birthdate;
-	private String gender;
 	
 	private List<Authority> authorities;
 	

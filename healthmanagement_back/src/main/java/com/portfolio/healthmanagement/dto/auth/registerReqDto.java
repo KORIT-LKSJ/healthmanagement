@@ -41,8 +41,6 @@ public class registerReqDto {
 
 	private Date birthdate;
 	
-	private String gender;
-	
 	private int userType;
 
 	public User toEntity() {
@@ -53,7 +51,6 @@ public class registerReqDto {
 				.name(name)
 				.phone(phone)
 				.birthdate(birthdate)
-				.gender(gender)
 				.build();
 	}
 }
