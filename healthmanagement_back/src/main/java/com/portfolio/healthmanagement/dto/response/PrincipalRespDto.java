@@ -16,5 +16,5 @@ public class PrincipalRespDto {
 	private String authorities; 
 	private int weight;
 	private int height;
-	private Date birthdate;
+	private Date birthDate;
 }

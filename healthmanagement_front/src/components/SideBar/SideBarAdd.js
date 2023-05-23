@@ -144,8 +144,7 @@ const SideBarAdd = ({ isSidebarOpen, setIsSidebarOpen }) => {
     return <div>로딩중...</div>;
   }
 
-  const principalData = queryClient.getQueryData("principal").data;
-  const isOwner = principalData.role === "owner"; // 역할에 따라 소유자인지 여부를 판단
+  const isOwner = principal.data.data.authorities === "ROLE_OWNER"; // 역할에 따라 소유자인지 여부를 판단
   const userId = principal.data.data.userId;
   const user = principal.data.data;
 
@@ -156,7 +155,7 @@ const SideBarAdd = ({ isSidebarOpen, setIsSidebarOpen }) => {
   return (
     <div css={sidebar(isSidebarOpen)}>
       <header css={header}>
-        <div css={userIcon}>{principalData.name.substr(0, 1)}</div>{" "}
+        <div css={userIcon}>{principal.data.data.name.substr(0, 1)}</div>{" "}
         {/* 사용자의 이름또는 이메일의 첫글자 하나만 들고오겠다 */}
         <div css={userInfo}>
           <h1 css={userName}>{user.name}</h1>
@@ -172,7 +171,7 @@ const SideBarAdd = ({ isSidebarOpen, setIsSidebarOpen }) => {
           <BiUser />{" "}
         </ListButton>
 
-        { isOwner && (
+        {isOwner && (
           <ListButton title="우리 업체 등록" onClick={myBusinessAddHandle}>
             {" "}
             <FaRegistered />

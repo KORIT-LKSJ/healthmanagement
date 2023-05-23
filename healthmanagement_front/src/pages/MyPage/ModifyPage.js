@@ -230,7 +230,6 @@ const ModifyPage = () => {
           userId: principal.data.data.userId,
           phone,
           email,
-          
         },
         option
       );

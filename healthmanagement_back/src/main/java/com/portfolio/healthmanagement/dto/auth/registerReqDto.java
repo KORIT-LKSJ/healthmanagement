@@ -43,7 +43,7 @@ public class registerReqDto {
 	
 	private int height;
 
-	private Date birthdate;
+	private Date birthDate;
 	
 	private String gender;
 	
@@ -56,10 +56,7 @@ public class registerReqDto {
 				.email(email)
 				.name(name)
 				.phone(phone)
-				.birthdate(birthdate)
-				.weight(weight)
-				.height(height)
-				.gender(gender)
+				.birthDate(birthDate)
 				.build();
 	}
 }
