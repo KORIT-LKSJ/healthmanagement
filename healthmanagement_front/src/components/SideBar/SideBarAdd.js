@@ -144,13 +144,9 @@ const SideBarAdd = ({ isSidebarOpen, setIsSidebarOpen }) => {
     return <div>로딩중...</div>;
   }
 
-  const isOwner = principal.data.data.authorities === "ROLE_OWNER"; // 역할에 따라 소유자인지 여부를 판단
+  const isOwner = principal.data.data.authorities === "ROLE_OWNER"; // 역할에 따라 오너인지 여부를 판단
   const userId = principal.data.data.userId;
   const user = principal.data.data;
-
-  // 로그인을 하면 일반사용자인지 오너인지 구분
-
-  // 아이콘에 조건식을 써서 권한에 따라 바뀌는 것 구현
 
   return (
     <div css={sidebar(isSidebarOpen)}>
@@ -170,7 +166,7 @@ const SideBarAdd = ({ isSidebarOpen, setIsSidebarOpen }) => {
           {" "}
           <BiUser />{" "}
         </ListButton>
-
+        {/* 일반 유저와 오너 여부에 따라 아이콘이 다르게 구현  */}
         {isOwner && (
           <ListButton title="우리 업체 등록" onClick={myBusinessAddHandle}>
             {" "}
