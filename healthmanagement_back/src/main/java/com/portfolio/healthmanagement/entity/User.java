@@ -29,6 +29,7 @@ public class User {
 	private String email;
 	private Date birthdate;
 	private String provider;
+
 	
 	private List<Authority> authorities;
 	
@@ -57,7 +58,7 @@ public class User {
 				.email(email)
 				.name(name)
 				.authorities(builder.toString())
-				.birthdate(birthdate)
+				.birthDate(birthDate)
 				.build();
 	}
 
