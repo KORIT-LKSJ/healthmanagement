@@ -10,6 +10,7 @@
 		<result property="phone" column="phone"/>
 		<result property="email" column="email"/>
 		<result property="birthdate" column="birthdate" />
+		<result property="provider" column="provider"/>
 		<collection property="authorities" javaType="list" resultMap="authorityMap" />
 	</resultMap>
 	
@@ -34,6 +35,7 @@
 			ut.name,
 			ut.phone,
 			ut.birthdate,
+			ut.provider,
 			
 			at.authority_id,
 			at.user_id,
@@ -49,10 +51,35 @@
 			ut.username = #{username}
 	</select>
 	
+	<select id="findUserByEmail" resultMap="userMap">
+		select
+			ut.user_id,
+			ut.username,
+			ut.password,
+			ut.email,
+			ut.name,
+			ut.phone,
+			ut.birthdate,
+			ut.provider,
+			
+			at.authority_id,
+			at.user_id,
+			at.role_id,
+			
+			rt.role_id,
+			rt.role_name
+		from
+			user_tb ut
+			left outer join authority_tb at on(at.user_id = ut.user_id)
+			left outer join role_tb rt on(rt.role_id = at.role_id)
+		where
+			ut.email = #{email}
+	</select>
+	
 	<insert id="saveUser" parameterType="com.portfolio.healthmanagement.entity.User" useGeneratedKeys="true"
 	keyProperty="userId">
 		insert into user_tb
-		values(0,#{username},#{password},#{name},#{phone},#{email},#{birthdate})
+		values(0,#{username},#{password},#{name},#{phone},#{email},#{birthdate},#{provider})
 	</insert>
 	
 	<insert id="saveAuthority" parameterType="com.portfolio.healthmanagement.entity.Authority">

@@ -6,12 +6,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.portfolio.healthmanagement.security.JwtAuthenticationEntryPoint;
 import com.portfolio.healthmanagement.security.JwtAuthenticationFilter;
 import com.portfolio.healthmanagement.security.JwtTokenProvider;
+import com.portfolio.healthmanagement.security.OAuth2SuccessHandler;
+import com.portfolio.healthmanagement.service.AuthenticationService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,8 +23,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	 private final JwtTokenProvider jwtTokenProvider;
-	 private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+	private final JwtTokenProvider jwtTokenProvider;
+	private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+	private final AuthenticationService authenticationService;
+	private final OAuth2SuccessHandler oAuth2SuccessHandler;
+	
 	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -44,6 +50,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class) //필터에서 UsernamePasswordAuthenticationFilter 검사함
 		.exceptionHandling()
-		.authenticationEntryPoint(jwtAuthenticationEntryPoint);
+		.authenticationEntryPoint(jwtAuthenticationEntryPoint)
+		.and()
+		.oauth2Login()
+		.loginPage("http://localhost:3000/auth/login")
+		.successHandler(oAuth2SuccessHandler)
+		.userInfoEndpoint()
+		.userService(authenticationService);
 	}
 }

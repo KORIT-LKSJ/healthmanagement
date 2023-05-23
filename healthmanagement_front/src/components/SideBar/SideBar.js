@@ -124,10 +124,8 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
     if (principal.isLoading) {
         return <div>로딩중...</div>;
     }
-    console.log(principal);
     const userId = principal.data.data.userId;
     const user = principal.data.data;
-    console.log(user);
     return (
         <div css={sidebar(isSideBarOpen)}>
             <header css={header}>

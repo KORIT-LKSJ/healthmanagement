@@ -1,35 +1,38 @@
 package com.portfolio.healthmanagement.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Collections;
 import java.util.Map;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import com.portfolio.healthmanagement.dto.auth.LoginReqDto;
+import com.portfolio.healthmanagement.dto.auth.OAuth2RegisterReqDto;
 import com.portfolio.healthmanagement.dto.auth.registerReqDto;
-import com.portfolio.healthmanagement.dto.response.JwtRespDto;
-import com.portfolio.healthmanagement.dto.response.PrincipalRespDto;
 import com.portfolio.healthmanagement.entity.Authority;
 import com.portfolio.healthmanagement.entity.User;
 import com.portfolio.healthmanagement.exception.CustomException;
 import com.portfolio.healthmanagement.exception.ErrorMap;
 import com.portfolio.healthmanagement.repository.UserRepository;
 import com.portfolio.healthmanagement.security.JwtTokenProvider;
+import com.portfolio.healthmanagement.security.OAuth2Attribute;
 
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationServiceImpl implements AuthenticationService, UserDetailsService{
+public class AuthenticationServiceImpl implements AuthenticationService {
 	
 	private final UserRepository userRepositiory;
 	private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -41,7 +44,7 @@ public class AuthenticationServiceImpl implements AuthenticationService, UserDet
 		}
 	}
 	
-	public void register(registerReqDto registerReqDto) {
+	public int register(registerReqDto registerReqDto) {
 		
 		User userEntity = registerReqDto.toEntity();
 		userRepositiory.saveUser(userEntity);
@@ -50,12 +53,11 @@ public class AuthenticationServiceImpl implements AuthenticationService, UserDet
 		
 		if(registerReqDto.getUserType() == 1) {
 			authority = Authority.builder().userId(userEntity.getUserId()).roleId(2).build();
-		}
-		else {
+		} else {
 			authority = Authority.builder().userId(userEntity.getUserId()).roleId(3).build();
 		}
 		
-		userRepositiory.saveAuthority(authority);
+		return userRepositiory.saveAuthority(authority);
 	}
 
 	public String login(LoginReqDto loginReqDto) {
@@ -71,13 +73,39 @@ public class AuthenticationServiceImpl implements AuthenticationService, UserDet
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		System.out.println(username);
 		User userEntity = userRepositiory.findUserByUsername(username);
-		System.out.println("호출?");
 
 		if(userEntity == null) {
 			return null;
 		}
 		
 		return userEntity.toPrincipal();
+	}
+
+	@Override
+	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+		OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService = new DefaultOAuth2UserService();
+		// 모든 oauth의 형식을 같게 만들기 위해 한바퀴 돔
+		OAuth2User oAuth2User = oAuth2UserService.loadUser(userRequest);
+		
+		String registrationId = userRequest.getClientRegistration().getRegistrationId();
+		OAuth2Attribute oAuth2Attribute = OAuth2Attribute.of(registrationId, oAuth2User.getAttributes());
+		Map<String, Object> attributes = oAuth2Attribute.convertToMap();
+		
+		return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")), attributes, "email");
+	}
+	
+	public int oauth2Registe(OAuth2RegisterReqDto oAuth2RegisterReqDto) {
+		User userEntity = oAuth2RegisterReqDto.toEntity();
+		userRepositiory.saveUser(userEntity);
+		
+		Authority authority = null;
+		if(oAuth2RegisterReqDto.getUserType() == 1) {
+			authority = Authority.builder().userId(userEntity.getUserId()).roleId(2).build();
+		} else {
+			authority = Authority.builder().userId(userEntity.getUserId()).roleId(3).build();
+		}
+		
+		return userRepositiory.saveAuthority(authority);
 	}
 	
 }
