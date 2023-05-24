@@ -58,7 +58,7 @@ public class User {
 				.email(email)
 				.name(name)
 				.authorities(builder.toString())
-				.birthDate(birthDate)
+				.birthdate(birthdate)
 				.build();
 	}
 
