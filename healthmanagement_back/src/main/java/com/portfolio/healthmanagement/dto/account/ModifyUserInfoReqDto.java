@@ -1,7 +1,6 @@
 package com.portfolio.healthmanagement.dto.account;
 
 import java.sql.Date;
-
 import lombok.Data;
 
 @Data

@@ -10,8 +10,7 @@ const container = css`
     align-items: center;
 `;
 
-const mainContainer = css`
-    position: relative;
+const main = css`
     top: 5%;
     display: flex;
     flex-direction: column;
@@ -26,7 +25,7 @@ const mainContainer = css`
         display: none;
     }
 `;
-const cardContainer = css`
+const calculatorDetail = css`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -37,7 +36,7 @@ const cardContainer = css`
     height: 160%;
 `;
 
-const gymListContainer = css`
+const calculatorContainer = css`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -57,7 +56,7 @@ const header = css`
 const titleText = css`
     font-weight: 600;
 `;
-const main = css`
+const inputContainer = css`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -240,13 +239,13 @@ const MyCalory = () => {
     return (
         <div css={container}>
             <Header search={false}></Header>
-            <div css={mainContainer}>
-                <div css={gymListContainer}>
-                    <div css={cardContainer}>
+            <div css={main}>
+                <div css={calculatorContainer}>
+                    <div css={calculatorDetail}>
                         <header css={header}>
                             <h1 css={titleText}>칼로리 계산기</h1>
                         </header>
-                        <main css={main}>
+                        <main css={inputContainer}>
                             <div css={imgBox}>
                                 <div css={boxProporty}>
                                     <input
