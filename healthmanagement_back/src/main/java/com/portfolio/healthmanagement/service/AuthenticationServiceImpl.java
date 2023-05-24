@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
@@ -18,6 +19,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import com.portfolio.healthmanagement.dto.auth.LoginReqDto;
+import com.portfolio.healthmanagement.dto.auth.OAuth2ProviderMergeReqDto;
 import com.portfolio.healthmanagement.dto.auth.OAuth2RegisterReqDto;
 import com.portfolio.healthmanagement.dto.auth.registerReqDto;
 import com.portfolio.healthmanagement.entity.Authority;
@@ -63,7 +65,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	public String login(LoginReqDto loginReqDto) {
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
 				new UsernamePasswordAuthenticationToken(loginReqDto.getUsername(),loginReqDto.getPassword());
-		System.out.println(usernamePasswordAuthenticationToken);
 		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(usernamePasswordAuthenticationToken);
 		
 		return jwtTokenProvider.generateAccessToken(authentication);
@@ -71,7 +72,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		System.out.println(username);
 		User userEntity = userRepositiory.findUserByUsername(username);
 
 		if(userEntity == null) {
@@ -106,6 +106,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		}
 		
 		return userRepositiory.saveAuthority(authority);
+	}
+
+	@Override
+	public boolean checkPassword(OAuth2ProviderMergeReqDto oAuth2ProviderMergeReqDto) {
+		User userEntity = userRepositiory.findUserByEmail(oAuth2ProviderMergeReqDto.getEmail());
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		return passwordEncoder.matches(oAuth2ProviderMergeReqDto.getPassword(), userEntity.getPassword());
+	}
+
+	@Override
+	public int oauth2ProviderMerge(OAuth2ProviderMergeReqDto oAuth2ProviderMergeReqDto) {
+		User userEntity = userRepositiory.findUserByEmail(oAuth2ProviderMergeReqDto.getEmail());
+		return 0;
 	}
 	
 }

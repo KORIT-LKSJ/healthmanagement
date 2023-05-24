@@ -41,6 +41,7 @@ public class AccountController {
 		System.out.println(modifyPasswordReqDto);
 		return ResponseEntity.ok(null);
 	}
+	
 	@PutMapping("/modifyinfo")
 	public ResponseEntity<?> modifyuserInfo(@RequestBody ModifyUserInfoReqDto modifyUserInfoReqDto){
 		System.out.println(modifyUserInfoReqDto);

@@ -7,6 +7,7 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.portfolio.healthmanagement.dto.auth.LoginReqDto;
+import com.portfolio.healthmanagement.dto.auth.OAuth2ProviderMergeReqDto;
 import com.portfolio.healthmanagement.dto.auth.OAuth2RegisterReqDto;
 import com.portfolio.healthmanagement.dto.auth.registerReqDto;
 
@@ -17,6 +18,7 @@ public interface AuthenticationService extends OAuth2UserService<OAuth2UserReque
 	public int register(registerReqDto registerReqDto);
 	public String login(LoginReqDto loginReqDto);
 	public int oauth2Registe(OAuth2RegisterReqDto oAuth2RegisterReqDto);
-
+	public boolean checkPassword(OAuth2ProviderMergeReqDto oAuth2ProviderMergeReqDto);
+	public int oauth2ProviderMerge(OAuth2ProviderMergeReqDto oAuth2ProviderMergeReqDto);
 }
 
