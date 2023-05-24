@@ -14,7 +14,7 @@ const container = css`
   font-size: 12px;
 `;
 
-const main = css`
+const mainContainer = css`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,7 +29,7 @@ const main = css`
   }
 `;
 
-const table = css`
+const addlistcontainer = css`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,8 +56,23 @@ const thAndTd = css`
 `;
 
 const AddGymList = () => {
-  const { userId } = useParams();
-  console.log(userId);
+    
+  const principal = useQuery(["principal"], async () => {
+    const option = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    };
+    const response = await axios.get(
+      "http://localhost:8080/account/principal",
+      option
+    );
+    return response;
+  });
+
+  const userId = principal.data.data.userId;
+
+  console.log(userId)
   const navigate = useNavigate();
 
   const addGyms = useQuery(["AddGyms"], async () => {
@@ -66,25 +81,23 @@ const AddGymList = () => {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     };
-    return await axios.get(`http://localhost:8080/addgymlist`, option);
+    return await axios.get(
+      `http://localhost:8080/addgymlist/${userId}`,
+      option
+    );
   });
+
+
   if (addGyms.isLoading) {
     return <div>로딩중...</div>;
   }
-
-  const titleClickHandle = (e) => {};
+  console.log(addGyms);
 
   return (
     <div css={container}>
       <Header search={false} />
-      <main css={main}>
-        <div css={table}>
-          <tr>
-            <th css={thAndTd}>헬스장 명</th>
-            <th css={thAndTd}>위치</th>
-            <th css={thAndTd}>전화번호</th>
-            <th css={thAndTd}>가격</th>
-          </tr>
+      <main css={mainContainer}>
+        <div css={addlistcontainer}>
           {addGyms.data.data.map((addGym) => {
             return (
               <tr key={addGym.gymId}>

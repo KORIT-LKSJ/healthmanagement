@@ -29,43 +29,43 @@ const sidebar = (isSidebarOpen) => css`
 `;
 
 const header = css`
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    padding: 10px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 10px;
 `;
 
 const userIcon = css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px;
-    border-radius: 8px;
-    width: 45px;
-    height: 45px;
-    background-color: #713fff;
-    color: white;
-    font-size: 30px;
-    font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  border-radius: 8px;
+  width: 45px;
+  height: 45px;
+  background-color: #713fff;
+  color: white;
+  font-size: 30px;
+  font-weight: 600;
 `;
 
 const userInfo = css`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
 `;
 
 const userName = css`
-    display: flex;
-    align-items: flex-end;
-    padding-left: 3px;
-    font-size: 18px;
-    font-weight: 600;
+  display: flex;
+  align-items: flex-end;
+  padding-left: 3px;
+  font-size: 18px;
+  font-weight: 600;
 `;
 const userEmail = css`
-    padding-left: 3px;
-    font-size: 12px;
+  padding-left: 3px;
+  font-size: 12px;
 `;
 
 const closeButton = css`
@@ -96,7 +96,7 @@ const maincontainer = css`
 `;
 
 const footer = css`
-    padding: 10px;
+  padding: 10px;
 `;
 
 const SideBar = ({ isSidebarOpen, setIsSidebarOpen }) => {
@@ -119,7 +119,7 @@ const SideBar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   };
 
   const myAddFitnessHandle = () => {
-    navigate("/addgymlist");
+    navigate("/addgymlist/" + userId);
   };
 
   const logoutClickHandle = () => {
