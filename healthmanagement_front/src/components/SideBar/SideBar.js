@@ -124,6 +124,7 @@ const SideBar = ({ isSidebarOpen, setIsSidebarOpen }) => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
       localStorage.removeItem("accessToken");
       queryClient.invalidateQueries("principal");
+      window.location.href = "/"; // 새로고침 없이 바로 로그인 화면으로 넘어가는 것
     }
   };
 
