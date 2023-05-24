@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -34,16 +34,16 @@ public class JwtTokenProvider {
 	}
 	
 	public String generateAccessToken(Authentication authentication) {
-		String username = null;
+		String email = null;
 		
 		if(authentication.getPrincipal().getClass() == PrincipalUserDetails.class) {
 			//PrincipalUser
 			PrincipalUserDetails principalUser = (PrincipalUserDetails) authentication.getPrincipal();
-			username = principalUser.getUsername();
+			email = principalUser.getEmail();
 		}else {
-//			//OAuth2User
-//			OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-//			email = oAuth2User.getAttribute("email");
+			//OAuth2User
+			OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+			email = oAuth2User.getAttribute("email");
 		}
 		
 		if(authentication.getAuthorities() == null) {
@@ -60,31 +60,28 @@ public class JwtTokenProvider {
 		
 		Date tokenExpiresDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24));
 		
-		System.out.println("토큰생성(username): " + username);
-		
 		return Jwts.builder()
 				.setSubject("AccessToken")
-				.claim("username", username)
+				.claim("email", email)
 				.claim("auth", roles)
 				.setExpiration(tokenExpiresDate)
 				.signWith(key, SignatureAlgorithm.HS256)
 				.compact();
 	}
 	
-//	public String generateOAuth2RegisterToken(Authentication authentication) {
-//		
-//		Date tokenExpiresDate = new Date(new Date().getTime() + (1000 * 60 * 10));
-//		OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
-//		String email = oAuth2User.getAttribute("email");
-//		
-//		return Jwts.builder()
-//				.setSubject("OAuth2Register")
-//				.claim("email", email)
-//				.setExpiration(tokenExpiresDate)
-//				.signWith(key, SignatureAlgorithm.HS256)
-//				.compact();
-//		
-//	}
+	public String generateOAuth2RegisterToken(Authentication authentication) {
+		
+		Date tokenExpiresDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24));
+		OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
+		String email = oAuth2User.getAttribute("email");
+		
+		return Jwts.builder()
+				.setSubject("OAuth2Register")
+				.claim("email", email)
+				.setExpiration(tokenExpiresDate)
+				.signWith(key, SignatureAlgorithm.HS256)
+				.compact();
+	}
 	
 	public Authentication getAuthentication(String accessToken) {
 		
@@ -105,8 +102,8 @@ public class JwtTokenProvider {
 //			authorities.add(new SimpleGrantedAuthority(role));
 //		}
 		
-		String username = claims.get("username").toString();
-		User userEntity = userRepository.findUserByUsername(username);
+		String email = claims.get("email").toString();
+		User userEntity = userRepository.findUserByEmail(email);
 		
 		PrincipalUserDetails principalUser = userEntity.toPrincipal();
 		

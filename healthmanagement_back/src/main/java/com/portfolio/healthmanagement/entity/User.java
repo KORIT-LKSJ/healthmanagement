@@ -1,6 +1,7 @@
 package com.portfolio.healthmanagement.entity;
 
 
+
 import java.sql.Date;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class User {
 	private String phone;
 	private String email;
 	private Date birthdate;
+	private String provider;
 	
 	private List<Authority> authorities;
 	
@@ -36,6 +38,7 @@ public class User {
 				.userId(userId)
 				.username(username)
 				.password(password)
+				.email(email)
 				.authorities(authorities)
 				.build();
 	}

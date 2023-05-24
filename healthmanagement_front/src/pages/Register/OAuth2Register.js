@@ -3,7 +3,8 @@ import { css } from "@emotion/react";
 import axios from "axios";
 import React, { useState } from "react";
 import { useMutation } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { v4 } from "uuid";
 
 const container = css`
     display: flex;
@@ -41,7 +42,7 @@ const registerInfo = css`
     flex-direction: column;
     color: #58595b;
     padding: 1%;
-    height: 68.5%;
+    height: 50%;
     gap: 10px;
 `;
 
@@ -120,35 +121,36 @@ const registerButton = css`
     cursor: pointer;
 `;
 
-const Register = () => {
+const OAuth2Register = () => {
     const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const registerToken = searchParams.get("registerToken");
+    const username = v4().split("-").join("");
+    const password = v4().split("-").join("");
+    const email = searchParams.get("email");
+    const name = searchParams.get("name");
+    const provider = searchParams.get("provider");
+
     const [registerUser, setRegisterUser] = useState({
-        username: "",
-        password: "",
-        name: "",
-        email: "",
+        username: username,
+        password: password,
+        name: name,
+        email: email,
         phone: "",
         birthdate: "",
+        provider: provider,
         userType: "",
     });
 
     const [errorMessage, setErrorMessage] = useState({
-        username: "",
-        password: "",
-        name: "",
-        email: "",
-        phone: "",
         birthdate: "",
+        phone: "",
     });
 
     const successRegister = () => {
         setErrorMessage({
-            username: "",
-            password: "",
-            name: "",
-            email: "",
-            phone: "",
             birthdate: "",
+            phone: "",
         });
         alert("회원가입 성공!");
         navigate("/auth/login");
@@ -156,24 +158,20 @@ const Register = () => {
 
     const errorRegister = (error) => {
         setErrorMessage({
-            username: "",
-            password: "",
-            name: "",
-            email: "",
-            phone: "",
             birthdate: "",
+            phone: "",
             ...error.response.data.errorData,
         });
     };
 
-    const registerSubmit = useMutation(async () => {
+    const oauth2RegisterSubmit = useMutation(async () => {
         const option = {
             headers: {
-                "Content-Type": "application/json",
+                registerToken: `Bearer ${registerToken}`,
             },
         };
         try {
-            await axios.post("http://localhost:8080/auth/signup", JSON.stringify({ ...registerUser }), option);
+            await axios.post("http://localhost:8080/auth/oauth2/register", registerUser, option);
             successRegister();
         } catch (error) {
             errorRegister(error);
@@ -189,7 +187,7 @@ const Register = () => {
         setRegisterUser({ ...registerUser, [e.target.name]: e.target.value });
     };
 
-    if (!registerSubmit.isLoading)
+    if (!oauth2RegisterSubmit.isLoading)
         return (
             <div css={container}>
                 <header css={header}>
@@ -198,48 +196,14 @@ const Register = () => {
                 <main css={main}>
                     <div css={registerInfo}>
                         <div css={registerDetail}>
-                            <label css={registerLabel}>아이디</label>
-                            <input
-                                css={registerInput}
-                                type="text"
-                                placeholder="아이디를 입력해 주세요."
-                                name="username"
-                                onChange={onchangeHandle}
-                            />
-                            <div css={errorMsg}>{errorMessage.username}</div>
-                        </div>
-                        <div css={registerDetail}>
-                            <label css={registerLabel}>비밀번호</label>
-                            <input
-                                css={registerInput}
-                                type="password"
-                                placeholder="영문, 숫자, 특수문자 포함 8~16자를 입력해 주세요."
-                                name="password"
-                                onChange={onchangeHandle}
-                            />
-                            <div css={errorMsg}>{errorMessage.password}</div>
-                        </div>
-                        <div css={registerDetail}>
                             <label css={registerLabel}>이름</label>
-                            <input
-                                css={registerInput}
-                                type="text"
-                                placeholder="이름을 입력해 주세요."
-                                name="name"
-                                onChange={onchangeHandle}
-                            />
-                            <div css={errorMsg}>{errorMessage.name}</div>
+                            <input css={registerInput} type="text" value={name} disabled />
+                            <div css={errorMsg}></div>
                         </div>
                         <div css={registerDetail}>
                             <label css={registerLabel}>이메일</label>
-                            <input
-                                css={registerInput}
-                                type="email"
-                                placeholder="이메일을 입력해 주세요."
-                                name="email"
-                                onChange={onchangeHandle}
-                            />
-                            <div css={errorMsg}>{errorMessage.email}</div>
+                            <input css={registerInput} type="email" value={email} disabled />
+                            <div css={errorMsg}></div>
                         </div>
                         <div css={registerDetail}>
                             <label css={registerLabel}>생년월일</label>
@@ -301,7 +265,7 @@ const Register = () => {
                         <button
                             css={registerButton}
                             onClick={() => {
-                                registerSubmit.mutate();
+                                oauth2RegisterSubmit.mutate();
                             }}
                         >
                             회원가입
@@ -312,4 +276,4 @@ const Register = () => {
         );
 };
 
-export default Register;
+export default OAuth2Register;

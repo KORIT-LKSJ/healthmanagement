@@ -16,6 +16,8 @@ import GymDetail from "./pages/GymDetail/GymDetail";
 import LikeList from "./pages/LikeList/LikeList";
 import KaKaoMap from "./pages/Map/KakaoMap";
 import MyCalory from "./pages/MyCalory/MyCalory";
+import OAuth2Register from "./pages/Register/OAuth2Register";
+import OAuth2Login from "./pages/Login/OAuth2Login";
 
 function App() {
     return (
@@ -24,9 +26,17 @@ function App() {
             <Routes>
                 <Route path="/auth/login" element={<AuthRoute path="/auth/login" element={<Login />} />}></Route>
                 <Route
+                    path="/auth/oauth2/login"
+                    element={<AuthRoute path={"/auth/oauth2/login"} element={<OAuth2Login />} />}
+                />
+                <Route
                     path="/auth/register"
                     element={<AuthRoute path="/auth/register" element={<Register />} />}
                 ></Route>
+                <Route
+                    path="/auth/oauth2/register"
+                    element={<AuthRoute path={"/auth/oauth2/register"} element={<OAuth2Register />} />}
+                />
                 <Route path="/auth/find/id" element={<AuthRoute path="/auth/find/id" element={<FindId />} />}></Route>
                 <Route
                     path="/auth/find/password"
@@ -46,7 +56,7 @@ function App() {
                 <Route path="/facility" element={<AuthRoute path="/facility" element={<FacilityReq />} />} />
                 <Route path="/myCalory" element={<AuthRoute path="/myCalory" element={<MyCalory />} />} />
                 <Route path="/gym/:userId/like/list" element={<LikeList />} />
-                <Route path="/map" element={<KaKaoMap />}></Route>
+                <Route path="/map" element={<AuthRoute path="/map" element={<KaKaoMap />} />} />
             </Routes>
         </>
     );

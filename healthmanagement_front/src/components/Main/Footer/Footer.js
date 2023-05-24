@@ -63,6 +63,10 @@ const Footer = () => {
         navigate("/myCalory");
     };
 
+    const onClickMap = () => {
+        navigate("/map");
+    };
+
     return (
         <footer css={footer}>
             <div css={pageButton}>
@@ -75,7 +79,7 @@ const Footer = () => {
                     <div css={pageLocationName}>칼로리 계산</div>
                 </div>
                 <div css={pageLocation}>
-                    <HiMap css={pageLocationIcon} />
+                    <HiMap css={pageLocationIcon} onClick={onClickMap} />
                     <div css={pageLocationName}>내 주변 헬스장</div>
                 </div>
                 <div css={pageLocation}>

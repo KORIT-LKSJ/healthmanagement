@@ -10,6 +10,7 @@
 		<result property="phone" column="phone"/>
 		<result property="email" column="email"/>
 		<result property="birthdate" column="birthdate" />
+		<result property="provider" column="provider"/>
 	</resultMap>
 	
 	
