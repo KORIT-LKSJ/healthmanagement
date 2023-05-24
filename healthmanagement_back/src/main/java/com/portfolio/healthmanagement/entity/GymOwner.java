@@ -16,7 +16,6 @@ public class GymOwner {
 	private int gymOwnerId;
 	private int gym_id;
 	private int user_id;
-	
 	private User user;
 	private Gym gym;
 //	
