@@ -19,6 +19,8 @@ import MyCalory from "./pages/MyCalory/MyCalory";
 import OAuth2Register from "./pages/Register/OAuth2Register";
 import OAuth2Login from "./pages/Login/OAuth2Login";
 import AddGymList from "./pages/AddGymList/AddGymList";
+import OAuth2Merge from "./pages/OAuth2Merge/OAuth2Merge";
+
 
 function App() {
     return (
@@ -37,6 +39,10 @@ function App() {
                 <Route
                     path="/auth/oauth2/register"
                     element={<AuthRoute path={"/auth/oauth2/register"} element={<OAuth2Register />} />}
+                />
+                <Route
+                    path="/auth/oauth2/merge"
+                    element={<AuthRoute path={"/auth/oauth2/merge"} element={<OAuth2Merge />} />}
                 />
                 <Route path="/auth/find/id" element={<AuthRoute path="/auth/find/id" element={<FindId />} />}></Route>
                 <Route

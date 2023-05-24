@@ -213,6 +213,10 @@ const Login = () => {
         setLoginUser({ ...loginUser, [name]: value });
     };
 
+    const naverAuthLoginClickHandle = () => {
+        window.location.href = "http://localhost:8080/oauth2/authorization/naver";
+    };
+
     const googleAuthLoginClickHandle = () => {
         window.location.href = "http://localhost:8080/oauth2/authorization/google";
     };
@@ -257,7 +261,12 @@ const Login = () => {
                         </div>
                     </div>
                     <div css={moreLogin}>
-                        <img css={loginImg} src="../../images/naverLogin.png" alt="naver" />
+                        <img
+                            css={loginImg}
+                            src="../../images/naverLogin.png"
+                            alt="naver"
+                            onClick={naverAuthLoginClickHandle}
+                        />
                         <img css={loginImg} src="../../images/kakaoLogin.png" alt="kakao" />
                         <img
                             css={loginImg}

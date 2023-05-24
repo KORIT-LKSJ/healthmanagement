@@ -2,7 +2,10 @@ package com.portfolio.healthmanagement.controller;
 
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.portfolio.healthmanagement.aop.annotation.ValidAspect;
 import com.portfolio.healthmanagement.dto.gym.RegisterGymReqDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymReqDto;
 import com.portfolio.healthmanagement.service.GymService;
@@ -63,12 +67,12 @@ public class GymController {
 	
 	@GetMapping("/gym/{userId}/like/list")
 	public ResponseEntity<?> likeGyms(@PathVariable int userId){
-		System.out.println(userId);
 		return ResponseEntity.ok().body(gymService.likeGyms(userId));
 	}
 	
+	@ValidAspect
 	@PostMapping("/faclilty")
-	public ResponseEntity<?> createGym(@RequestBody RegisterGymReqDto registerGymReqDto){
+	public ResponseEntity<?> createGym(@Valid @RequestBody RegisterGymReqDto registerGymReqDto, BindingResult bindingResult){
 		System.out.println(registerGymReqDto);
 		return ResponseEntity.ok().body(gymService.addGym(registerGymReqDto));
 	}

@@ -29,7 +29,6 @@ public class User {
 	private String email;
 	private Date birthdate;
 	private String provider;
-
 	
 	private List<Authority> authorities;
 	

@@ -26,7 +26,6 @@ public class AccountServiceImpl implements AccountService {
 		PrincipalUserDetails principalUser = (PrincipalUserDetails) authentication.getPrincipal();
 		
 		User userEntity = userRepository.findUserByUsername(principalUser.getUsername());
-		System.out.println(userEntity);
 		return userEntity.toPrincipalRespDto();
 	}
 	
