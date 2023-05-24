@@ -10,11 +10,18 @@ import Post from "./Post";
 import Header from "../../../components/Main/Header/Header";
 import Footer from "../../../components/Main/Footer/Footer";
 import { useMutation, useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 
 const container = css`
     display: flex;
     flex-direction: column;
     align-items: center;
+`;
+
+const errorMsg = css`
+    margin-left: 5px;
+    font-size: 12px;
+    color: red;
 `;
 
 const main = css`
@@ -24,7 +31,7 @@ const main = css`
     width: 40%;
     height: 90%;
     background-color: white;
-    overflow-y: auto;
+    overflow: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
     ::-webkit-scrollbar {
@@ -151,23 +158,58 @@ const registeButton = css`
     cursor: pointer;
 `;
 
+const postList = css`
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+`
 const FacilityReq = () => {
     const today = new Date();
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, '0');
     const day = String(today.getDate()).padStart(2, '0');
     const currentDate = `${year}-${month}-${day}`;
+    const navigate = useNavigate();
 
     const [registerGym, setRegistserGym] = useState({
         gymName: "",
         gymTel: "",
-        businessnNumber: "",
+        businessNumber: "",
         gymPrice: "",
         registDate: currentDate,
     });
     const [enroll_company, setEnroll_company] = useState({
         gymAddress: "",
     });
+
+    const [errorMessage, setErrorMessage] = useState({
+        gymName: "",
+        gymTel: "",
+        businessNumber: "",
+        gymPrice: "",
+    });
+
+    const successRegister = () => {
+        setErrorMessage({
+            gymName: "",
+            gymTel: "",
+            businessNumber: "",
+            gymPrice: "",
+        });
+        alert("헬스장 등록 성공!");
+        navigate("/");
+    };
+
+    const errorRegister = (error) => {
+        setErrorMessage({
+            gymName: "",
+            gymTel: "",
+            businessNumber: "",
+            gymPrice: "",
+            ...error.response.data.errorData,
+        });
+    };
+
     const [popup, setPopup] = useState(false);
     const [imgFiles, setImgFiles ] = useState([]);
     const fileId = useRef(1);
@@ -204,13 +246,13 @@ const FacilityReq = () => {
                 "Content-Type": "application/json",
             },
         };
-        const response = await axios.post(
-            "http://localhost:8080/faclilty",
-            JSON.stringify({ ...registerGym, ...enroll_company }),
-            option
-        );
-
-        return response;
+        try{
+            await axios.post("http://localhost:8080/faclilty", JSON.stringify({ ...registerGym, ...enroll_company }), option);
+            successRegister();
+        } catch(error){
+            errorRegister(error);
+            console.log(error);
+        }
     });
 
     const principal = useQuery(["principal"], async () => {
@@ -291,6 +333,7 @@ const FacilityReq = () => {
                             onChange={handleChange}
                             name="gymName"
                         />
+                        <div css={errorMsg}>{errorMessage.gymName}</div>
                     </div>
                     <div css={inputBox}>
                         <label css={inputTitle}>주소</label>
@@ -319,20 +362,23 @@ const FacilityReq = () => {
                             onChange={handleChange}
                             name="gymTel"
                         />
+                        <div css={errorMsg}>{errorMessage.gymTel}</div>
                     </div>
                     <div css={inputBox}>
                         <label css={inputTitle}>사업자등록번호 </label>
                         <input
                             css={input}
                             type="text"
-                            placeholder="-까지 입력해주세요"
+                            placeholder="-를 제외하고 입력해주세요"
                             onChange={handleChange}
                             name="businessNumber"
                         />
+                        <div css={errorMsg}>{errorMessage.businessNumber}</div>
                     </div>
                     <div css={inputBox}>
                         <label css={inputTitle}>가격</label>
                         <input css={input} type="text" placeholder="가격입력" onChange={handleChange} name="gymPrice" />
+                        <div css={errorMsg}>{errorMessage.gymPrice}</div>
                     </div>
                     <div css={inputBox}>
                         <label css={inputTitle}>등록일</label>
@@ -348,16 +394,22 @@ const FacilityReq = () => {
                         <label css={inputTitle}>이미지</label>
                         <div css={imgInput}>
                             <input type="file" multiple={true} onChange={addFileHandle} accept={".jpg,.png"} />
-                            <ul>
-                                {imgFiles.map(imgFile => <li key={imgFile.id}>{imgFile.file.name} <button value={imgFile.id} onClick={removeFileHandle}>삭제</button></li>)}
+                            <ul css={postList}>
+                                {imgFiles.map(imgFile => 
+                                            <li key={imgFile.id}>{imgFile.file.name} <button value={imgFile.id} onClick={removeFileHandle}>삭제</button></li>)}
                             </ul>
                         </div>
                     </div>
 
                     <div css={gymRegiste}>
-                        <button css={registeButton} onClick={() => {registerHandleSubmit.mutate(); postRegisterSubmit.mutate();}} >
-                            등록하기
-                        </button>
+                        <button css={registeButton} 
+                                // onClick={{registerHandleSubmit.mutate(); postRegisterSubmit.mutate();}} 코드로 실행시 
+                                // registerHandleSubmit.mutate(); 부분에서 오류가 나도 postRegisterSubmit.mutate();가 실행되어
+                                // 헬스장 등록은 안되는데 사진만 등록되는 현상이 생겨 비동기로 처리함.
+                                onClick={async () => { const registerResult = await registerHandleSubmit.mutateAsync(); 
+                                                        if (registerResult) { 
+                                                            postRegisterSubmit.mutate(); 
+                                                        } }}> 등록하기 </button>
                     </div>
                 </div>
             </main>
