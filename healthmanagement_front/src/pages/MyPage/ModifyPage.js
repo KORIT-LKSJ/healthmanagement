@@ -351,7 +351,7 @@ const ModifyPage = () => {
 
           <div css={birthdateTextBox}>
             <h2 css={namebox}>Birthdate</h2>
-            <div css={getbirthdate}>{principal.data.data.birthDate}</div>
+            <div css={getbirthdate}>{principal.data.data.birthdate}</div>
           </div>
         </div>
       </main>
