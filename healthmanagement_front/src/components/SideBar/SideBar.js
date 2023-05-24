@@ -112,6 +112,10 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
     navigate("/gym/" + userId + "/like/list");
   };
 
+  const facilityRegisterHandle = () => {
+    navigate("/facility");
+  };
+
   const principal = useQuery(["principal"], async () => {
     const response = await axios.get(
       "http://localhost:8080/account/principal",
@@ -153,7 +157,7 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
           {" "}
           <BiLike />
         </ListButton>
-        <ListButton title="우리 업체 등록">
+        <ListButton title="우리 업체 등록" onClick={facilityRegisterHandle}>
           {" "}
           <FaRegistered />
         </ListButton>

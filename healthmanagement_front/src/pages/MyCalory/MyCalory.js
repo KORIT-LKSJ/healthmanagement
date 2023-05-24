@@ -256,6 +256,7 @@ const MyCalory = () => {
                                         css={inputBox}
                                         onChange={onchangeHandle}
                                         value={calInfo.age}
+                                        min="0"
                                     ></input>
                                     <label css={boxProporty}>세</label>
                                 </div>
@@ -267,6 +268,7 @@ const MyCalory = () => {
                                         css={inputBox}
                                         onChange={onchangeHandle}
                                         value={calInfo.height}
+                                        min="0"
                                     ></input>
                                     <label css={boxProporty}>cm</label>
                                 </div>
@@ -278,6 +280,7 @@ const MyCalory = () => {
                                         css={inputBox}
                                         onChange={onchangeHandle}
                                         value={calInfo.weight}
+                                        min="0"
                                     ></input>
                                     <label css={boxProporty}>kg</label>
                                 </div>

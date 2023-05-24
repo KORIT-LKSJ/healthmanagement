@@ -13,9 +13,8 @@ const container = css`
     align-items: center;
 `;
 
-const mainContainer = css`
-     position: relative;
-    top: 5%;
+const main = css`
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -36,9 +35,8 @@ const cardContainer = css`
     align-items: center;
     margin: 1%;
     margin-bottom: 6%;
-    margin-top: 2%;
+    margin-top: 4%;
     border: 1px solid #dbdbdb;
-    border-radius: 7px;
     box-shadow: 0px 0px 5px #dbdbdb;
     width: 75%;
     height: 100%;
@@ -51,11 +49,11 @@ const cardContainer = css`
     }
 `;
 
-const gymListContainer = css`
+const gymListDetail = css`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    padding: 0 5%;
+    padding: 0;
     width: 100%;
     height: 400px;
 `
@@ -71,7 +69,7 @@ const header = css`
 const titleText = css`
     font-weight: 600;
 `;
-const main = css`
+const cardMain = css`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -84,7 +82,6 @@ const imgBox = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 7px;
     box-shadow: 0px 5px 5px #dbdbdb;
     padding: 5px;
     width: 90%;
@@ -119,13 +116,22 @@ const like = css`
     justify-content: center;
     align-items: center;
     border: 1px solid #dbdbdb;
-    border-radius: 7px;
     padding: 5%;
     height: 30px;
     background-color: white;
     font-weight: 600;
     box-shadow: 0px 5px 5px #dbdbdb;
 `;
+
+const likeTitle = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #3D3D3D;
+    color: white;
+    width: 100%;
+    height: 10%;
+`
 
 const LikeList = () => {
     const [refresh, setRefresh] = useState(false);
@@ -149,8 +155,11 @@ const LikeList = () => {
     return (
         <div css={container}>
             <Header search={false}></Header>
-            <div css={mainContainer}>
-                <div css={gymListContainer}>
+            <div css={main}>
+                <div css={gymListDetail}>
+                    <div css={likeTitle}>
+                        관심목록
+                    </div>
                     {likeGyms.data.data.map(likeGym => {
                     return(
                         <>
@@ -158,7 +167,7 @@ const LikeList = () => {
                             <header css={header}>
                                 <h1 css={titleText}>{likeGym.gymName}</h1>
                             </header>
-                            <main css={main}>
+                            <main css={cardMain}>
                                 <div css={imgBox}>
                                     <img css={img} src={likeGym.gymImgUrl} />
                                 </div>
