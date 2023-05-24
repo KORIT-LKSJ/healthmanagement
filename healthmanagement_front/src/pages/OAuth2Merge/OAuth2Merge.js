@@ -122,9 +122,14 @@ const OAuth2Merge = () => {
     const providerMerge = useMutation(
         async () => {
             try {
-                await axios.put("http://localhost:8080/auth/oauth2/merge", mergeData);
+                const response = await axios.put(
+                    "http://localhost:8080/auth/oauth2/merge",
+                    mergeData
+                );
+                return response;
             } catch (error) {
                 setErrorMessage(error.response.data.message);
+                return error;
             }
         },
         {
@@ -141,6 +146,14 @@ const OAuth2Merge = () => {
         setMergeData({ ...mergeData, [e.target.name]: e.target.value });
     };
 
+    const submitClickHandle = () => {
+        providerMerge.mutate();
+    };
+
+    const cancleClickHandle = () => {
+        window.location.replace("/auth/login");
+    };
+
     return (
         <div css={container}>
             <header css={header}>
@@ -150,8 +163,13 @@ const OAuth2Merge = () => {
                 <div css={titleContainer}>
                     <h1 css={title}>계정 통합 안내</h1>
                     <div css={subTitleContainer}>
-                        <h2 css={subtitle}>{email}는 이미 가입된 이메일입니다.</h2>
-                        <h2 css={subtitle}>기존 계정과 {provider}계정을 통합하는 것에 동의 하십니까?</h2>
+                        <h2 css={subtitle}>
+                            {email}는 이미 가입된 이메일입니다.
+                        </h2>
+                        <h2 css={subtitle}>
+                            기존 계정과 {provider}계정을 통합하는 것에 동의
+                            하십니까?
+                        </h2>
                         <input
                             css={Input}
                             type="password"
@@ -165,15 +183,12 @@ const OAuth2Merge = () => {
             </main>
             <footer css={footer}>
                 <div css={merge}>
-                    <button
-                        css={mergeButton}
-                        onClick={() => {
-                            providerMerge.mutate();
-                        }}
-                    >
+                    <button css={mergeButton} onClick={submitClickHandle}>
                         동의
                     </button>
-                    <button css={mergeButton}>취소</button>
+                    <button css={mergeButton} onClick={cancleClickHandle}>
+                        취소
+                    </button>
                 </div>
             </footer>
         </div>

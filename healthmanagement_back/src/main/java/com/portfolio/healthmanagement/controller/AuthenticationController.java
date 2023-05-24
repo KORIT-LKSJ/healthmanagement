@@ -60,6 +60,8 @@ public class AuthenticationController {
 		if(!validatedFlag) {
 			throw new CustomException("회원가입 요청 시간이 초과하였습니다.");
 		}
+		
+		authenticationService.checkDuplicatedUsername(oAuth2RegisterReqDto.getUsername());
 		return ResponseEntity.ok(authenticationService.oauth2Registe(oAuth2RegisterReqDto));
 	}
 	
@@ -68,7 +70,7 @@ public class AuthenticationController {
 		if(!authenticationService.checkPassword(oAuth2ProviderMergeReqDto)) {
 			throw new CustomException("비밀번호가 일치하지 않습니다.");
 		};
-		return ResponseEntity.ok(null);
+		return ResponseEntity.ok(authenticationService.oauth2ProviderMerge(oAuth2ProviderMergeReqDto));
 	}
 
 }
