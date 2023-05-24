@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.portfolio.healthmanagement.dto.gym.AddGymListRespDto;
 import com.portfolio.healthmanagement.dto.gym.GetGymAddressAndGymNameRespDto;
 import com.portfolio.healthmanagement.dto.gym.GetGymRespDto;
 import com.portfolio.healthmanagement.dto.gym.RegisterGymReqDto;
@@ -95,6 +96,15 @@ public class GymService {
 		List<LikeListRespDto> list = new ArrayList<>();
 		gymRepository.likeGyms(userId).forEach(likeData -> {
 			list.add(likeData.toDto());
+		});
+		
+		return list;
+	}
+	
+	public List<AddGymListRespDto> AddGyms(int userId){
+		List<AddGymListRespDto> list = new ArrayList<>();
+		gymRepository.AddGyms(userId).forEach(addData -> {
+			list.add(addData.toDto());
 		});
 		
 		return list;

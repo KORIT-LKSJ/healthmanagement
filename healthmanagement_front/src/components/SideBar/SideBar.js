@@ -117,7 +117,7 @@ const SideBar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   };
 
   const myAddFitnessHandle = () => {
-    navigate("/");
+    navigate("/addgymlist");
   };
 
   const logoutClickHandle = () => {
