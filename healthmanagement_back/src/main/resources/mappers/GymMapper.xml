@@ -16,8 +16,8 @@
 	
 	<resultMap type="com.portfolio.healthmanagement.entity.GymOwner" id="gymOwnerMap">
 		<id property="gymOwnerId" column="gym_owner_id"/>
-		<result property="gymId" column="gym_id"/>
 		<result property="userId" column="user_id"/>
+		<result property="gymId" column="gym_id"/>
 		<association property="gym" resultMap="GymMap"></association>
 	</resultMap>
 	
@@ -36,16 +36,16 @@
 	<select id="searchGyms" parameterType="hashmap" resultMap="gymMap">
 		select
 			gt.gym_id,
-		    gt.gym_name,
-		    gt.gym_address,
-		    gt.gym_tel,
-		    gt.businessnumber,
-		    gt.gym_price,
-		    
-		    lc.like_count,
-		    
-		    got.gym_owner_id
-		    
+			gt.gym_name,
+			gt.gym_address,
+			gt.gym_tel,
+			gt.businessnumber,
+			gt.gym_price,
+		
+			lc.like_count,
+			
+			got.gym_owner_id
+		
 		from
 			gym_tb gt
 		    left outer join gym_owner_tb got on(got.gym_id = gt.gym_id)
@@ -131,7 +131,7 @@
 			values(0, #{gymId}, now())
 		</insert>
 		
-		<select id="findByBusinessnNumber" parameterType="String" resultMap="gymMap">
+		<select id="findByBusinessNumber" parameterType="String" resultMap="gymMap">
 			select
 				gt.gym_id,
 				gt.gym_name,

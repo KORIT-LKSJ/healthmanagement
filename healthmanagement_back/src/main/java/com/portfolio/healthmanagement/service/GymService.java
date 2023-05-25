@@ -63,8 +63,8 @@ public class GymService {
 
 		Gym gym = registerGymReqDto.toEntity();
 
-		if(gymRepository.findByBusinessnNumber(registerGymReqDto.getBusinessNumber()) != null) {
-			throw new CustomException("BusinessnNumber",ErrorMap.builder().put("BusinessnNumber","다시 한번 확인해보세요").build() );
+		if(gymRepository.findByBusinessNumber(registerGymReqDto.getBusinessNumber()) != null) {
+			throw new CustomException("BusinessNumber",ErrorMap.builder().put("BusinessNumber","다시 한번 확인해보세요").build());
 		}
 		
 		gymRepository.saveGym(gym);
@@ -72,7 +72,8 @@ public class GymService {
 		PrincipalUserDetails principalUserDetails = (PrincipalUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		GymOwner gymOwner = GymOwner.builder().userId(principalUserDetails.getUserId()).gymId(gym.getGymId()).build();
-		return gymRepository.saveGymOwner(gymOwner);
+		gymRepository.saveGymOwner(gymOwner);
+		return gym.getGymId();
 	}
 
 	public int getLikeCount(int gymId) {

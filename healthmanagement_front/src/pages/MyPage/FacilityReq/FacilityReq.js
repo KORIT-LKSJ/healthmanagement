@@ -228,13 +228,12 @@ const FacilityReq = () => {
                 JSON.stringify({ ...registerGym, ...enroll_company }),
                 gymInfoOption
             );
-            return response;
+
+            console.log("test");
             console.log(response);
 
-            const gymId = response.data.gymId;
-
             const formData = new FormData();
-            formData.append("gymId", gymId);
+            formData.append("gymId", response.data.gymId);
 
             imgFiles.forEach((imgFile) => {
                 formData.append("imgFiles", imgFile.file);
@@ -265,6 +264,7 @@ const FacilityReq = () => {
     });
 
     // const postRegisterSubmit = useMutation(async () => {
+
     //     return response;
     // });
 
@@ -284,7 +284,6 @@ const FacilityReq = () => {
     // if (principal.isLoading) {
     //     return <>...Loading</>;
     // }
-
 
     const handleClick = () => {
         window.location.href = "/";
@@ -480,8 +479,7 @@ const FacilityReq = () => {
                             // 헬스장 등록은 안되는데 사진만 등록되는 현상이 생겨 비동기로 처리함.
                             onClick={() => registerHandleSubmit.mutate()}
                         >
-                            {" "}
-                            등록하기{" "}
+                            등록하기
                         </button>
                     </div>
                 </div>
