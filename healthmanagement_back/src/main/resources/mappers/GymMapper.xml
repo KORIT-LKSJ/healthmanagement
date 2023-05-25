@@ -2,6 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.portfolio.healthmanagement.repository.GymRepository">
 	
+	<resultMap type="com.portfolio.healthmanagement.entity.User" id="userMap">
+		<id property="userId" column="user_id"/>
+		<result property="username" column="username"/>
+		<result property="password" column="password"/>
+		<result property="name" column="name"/>
+		<result property="phone" column="phone"/>
+		<result property="email" column="email"/>
+		<result property="birthdate" column="birthdate"/>
+		<result property="provider" column="provider"/>
+		<collection property="gymOwners" javaType="list" resultMap="gymOwnerMap" />
+	</resultMap>
+	
+	<resultMap type="com.portfolio.healthmanagement.entity.GymOwner" id="gymOwnerMap">
+		<id property="gymOwnerId" column="gym_owner_id"/>
+		<result property="gymId" column="gym_id"/>
+		<result property="userId" column="user_id"/>
+		<association property="gym" resultMap="GymMap"></association>
+	</resultMap>
+	
 	<resultMap type="com.portfolio.healthmanagement.entity.Gym" id="gymMap">
 		<id property="gymId" column="gym_id"/>
 		<result property="gymName" column="gym_name"/>
@@ -12,25 +31,6 @@
 		<result property="likeCount" column="like_count"/>
 		<result property="registDate" column="regist_Date"/>
 		<result property="removeDate" column="remove_Date"/>
-	</resultMap>
-	
-	<resultMap type="com.portfolio.healthmanagement.entity.User" id="userMap">
-		<id property="userId" column="user_id"/>
-		<result property="username" column="username"/>
-		<result property="password" column="password"/>
-		<result property="name" column="name"/>
-		<result property="phone" column="phone"/>
-		<result property="email" column="email"/>
-		<result property="birthdate" column="birthdate"/>
-	</resultMap>
-	
-
-	<resultMap type="com.portfolio.healthmanagement.entity.GymOwner" id="GymOwnerMap">
-		<id property="gymOwnerId" column="gym_owner_id"/>
-		<result property="gymId" column="gym_id"/>
-		<result property="userId" column="user_id"/>
-		<association property="user" resultMap="UserMap"></association>
-		<association property="gym" resultMap="GymMap"></association>
 	</resultMap>
 	
 	<select id="searchGyms" parameterType="hashmap" resultMap="gymMap">
@@ -145,9 +145,14 @@
 				gt.businessnumber = #{businessNumber}
 		</select>
 		
-		<insert id="saveGym" parameterType="com.portfolio.healthmanagement.entity.Gym">
+		<insert id="saveGym" parameterType="com.portfolio.healthmanagement.entity.Gym" useGeneratedKeys="true" keyProperty="gymId">
 			insert into gym_tb
 			values (0,#{gymName},#{gymAddress},#{gymTel},#{businessNumber},#{gymPrice},#{likeCount},#{registDate},#{removeDate})		
+		</insert>
+		
+		<insert id="saveGymOwner" parameterType="com.portfolio.healthmanagement.entity.GymOwner">
+			insert into gym_owner_tb
+			values(0,#{userId},#{gymId})
 		</insert>
 		
 		<select id="likeGyms" parameterType="Integer"  resultType="com.portfolio.healthmanagement.entity.LikeList">

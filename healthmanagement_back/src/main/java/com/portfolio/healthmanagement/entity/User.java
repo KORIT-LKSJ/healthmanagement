@@ -31,6 +31,7 @@ public class User {
 	private String provider;
 	
 	private List<Authority> authorities;
+	private List<GymOwner> gymOwners;
 	
 	
 	public PrincipalUserDetails toPrincipal() {
