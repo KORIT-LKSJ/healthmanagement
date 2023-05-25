@@ -60,7 +60,9 @@ public class GymService {
 	}
 	
 	public int addGym(RegisterGymReqDto registerGymReqDto) {
+
 		Gym gym = registerGymReqDto.toEntity();
+
 		if(gymRepository.findByBusinessnNumber(registerGymReqDto.getBusinessNumber()) != null) {
 			throw new CustomException("BusinessnNumber",ErrorMap.builder().put("BusinessnNumber","다시 한번 확인해보세요").build() );
 		}

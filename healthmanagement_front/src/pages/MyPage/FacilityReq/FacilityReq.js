@@ -228,10 +228,13 @@ const FacilityReq = () => {
                 JSON.stringify({ ...registerGym, ...enroll_company }),
                 gymInfoOption
             );
+            return response;
             console.log(response);
 
+            const gymId = response.data.gymId;
+
             const formData = new FormData();
-            formData.append("gymId", response.data.gymId);
+            formData.append("gymId", gymId);
 
             imgFiles.forEach((imgFile) => {
                 formData.append("imgFiles", imgFile.file);
@@ -254,7 +257,6 @@ const FacilityReq = () => {
                 formData,
                 gymImgOption
             );
-
             successRegister();
         } catch (error) {
             errorRegister(error);
@@ -263,7 +265,6 @@ const FacilityReq = () => {
     });
 
     // const postRegisterSubmit = useMutation(async () => {
-
     //     return response;
     // });
 
@@ -283,6 +284,7 @@ const FacilityReq = () => {
     // if (principal.isLoading) {
     //     return <>...Loading</>;
     // }
+
 
     const handleClick = () => {
         window.location.href = "/";
