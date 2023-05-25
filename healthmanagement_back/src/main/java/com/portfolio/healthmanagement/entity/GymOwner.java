@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 @Data
 public class GymOwner {
 	private int gymOwnerId;
-	private int gym_id;
-	private int user_id;
-	private User user;
+	private int userId;
+	private int gymId;
+
 	private Gym gym;
 //	
 //	public SearchGymRespDto toDto() {

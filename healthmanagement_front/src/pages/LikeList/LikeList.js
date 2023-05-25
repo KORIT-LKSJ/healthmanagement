@@ -8,11 +8,10 @@ import Header from "../../components/Main/Header/Header";
 import Footer from "../../components/Main/Footer/Footer";
 
 const container = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
-
 
 const main = css`
     position: relative;
@@ -28,8 +27,7 @@ const main = css`
     ::-webkit-scrollbar {
         display: none;
     }
-
-`
+`;
 const cardContainer = css`
     display: flex;
     flex-direction: column;
@@ -57,19 +55,19 @@ const gymListDetail = css`
     padding: 0;
     width: 100%;
     height: 400px;
-`
+`;
 
 const header = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 4%;
-  width: 100%;
-  height: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 4%;
+    width: 100%;
+    height: 5%;
 `;
 
 const titleText = css`
-  font-weight: 600;
+    font-weight: 600;
 `;
 
 const cardMain = css`
@@ -93,29 +91,28 @@ const imgBox = css`
     overflow: hidden;
 `;
 const img = css`
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 `;
 
 const footer = css`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  font-weight: 600;
-  font-size: 14px;
-  width: 90%;
-  height: 30%;
-  padding-bottom: 5%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    width: 90%;
+    height: 30%;
+    padding-bottom: 5%;
 `;
 
 const infoDetail = css`
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `;
 
 const like = css`
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -131,69 +128,83 @@ const likeTitle = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #3D3D3D;
+    background-color: #3d3d3d;
     color: white;
     width: 100%;
     height: 10%;
-`
+`;
 
 const LikeList = () => {
-  const [refresh, setRefresh] = useState(false);
-  const { userId } = useParams();
-  console.log(userId);
-  const navigate = useNavigate();
+    const [refresh, setRefresh] = useState(false);
+    const { userId } = useParams();
+    console.log(userId);
+    const navigate = useNavigate();
 
-  const likeGyms = useQuery(["likeGyms"], async () => {
-    const option = {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    };
-    return await axios.get(
-      `http://localhost:8080/gym/${userId}/like/list`,
-      option
-    );
-  });
+    const likeGyms = useQuery(["likeGyms"], async () => {
+        const option = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+        };
+        return await axios.get(
+            `http://localhost:8080/gym/${userId}/like/list`,
+            option
+        );
+    });
 
-  if (likeGyms.isLoading) {
-    return <div>로딩중...</div>;
-  }
-    
+    if (likeGyms.isLoading) {
+        return <div>로딩중...</div>;
+    }
+
     return (
         <div css={container}>
             <Header search={false}></Header>
             <div css={main}>
                 <div css={gymListDetail}>
-                    <div css={likeTitle}>
-                        관심목록
-                    </div>
-                    {likeGyms.data.data.map(likeGym => {
-                    return(
-                        <>
-                        <div css={cardContainer} onClick={()=>{navigate(("/gym/" + likeGym.gymId))}}>
-                            <header css={header}>
-                                <h1 css={titleText}>{likeGym.gymName}</h1>
-                            </header>
-                            <main css={cardMain}>
-                                <div css={imgBox}>
-                                    <img css={img} src={likeGym.gymImgUrl} />
+                    <div css={likeTitle}>관심목록</div>
+                    {likeGyms.data.data.map((likeGym) => {
+                        return (
+                            <>
+                                <div
+                                    css={cardContainer}
+                                    onClick={() => {
+                                        navigate("/gym/" + likeGym.gymId);
+                                    }}
+                                >
+                                    <header css={header}>
+                                        <h1 css={titleText}>
+                                            {likeGym.gymName}
+                                        </h1>
+                                    </header>
+                                    <main css={cardMain}>
+                                        <div css={imgBox}>
+                                            <img
+                                                css={img}
+                                                src={likeGym.gymImgUrl}
+                                            />
+                                        </div>
+                                    </main>
+                                    <footer css={footer}>
+                                        <h2 css={infoDetail}>
+                                            위치: {likeGym.gymAddress}{" "}
+                                        </h2>
+                                        <h2 css={infoDetail}>
+                                            가격: (월) {likeGym.gymPrice}&#8361;
+                                        </h2>
+                                        <h2 css={infoDetail}>
+                                            {" "}
+                                            ☎ {likeGym.gymTel}
+                                        </h2>
+                                    </footer>
                                 </div>
-                            </main>
-                            <footer css={footer}>
-                                <h2 css={infoDetail}>위치: {likeGym.gymAddress} </h2>
-                                <h2 css={infoDetail}>가격: (월) {likeGym.gymPrice}&#8361;</h2>
-                                <h2 css={infoDetail}> ☎ {likeGym.gymTel}</h2>
-                            </footer>
-                        </div>
-                    </>
-                    )
-                })}
+                            </>
+                        );
+                    })}
+                </div>
             </div>
+            <Footer />
         </div>
-      </div>
-      <Footer />
-    </div>
-  );
+    );
 };
 
 export default LikeList;
