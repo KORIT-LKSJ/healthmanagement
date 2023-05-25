@@ -10,7 +10,7 @@ import Post from "./Post";
 import Header from "../../../components/Main/Header/Header";
 import Footer from "../../../components/Main/Footer/Footer";
 import { useMutation, useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const container = css`
     display: flex;
@@ -211,14 +211,14 @@ const FacilityReq = () => {
     };
 
     const [popup, setPopup] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const [imgFiles, setImgFiles ] = useState([]);
     const fileId = useRef(1);
-
     
     const postRegisterSubmit = useMutation(async () => {
         const formData = new FormData();
         formData.append("userId", principal.data.data.userId);
-
+       
         imgFiles.forEach(imgFile => {
             formData.append("imgFiles", imgFile.file);
         })
@@ -282,6 +282,10 @@ const FacilityReq = () => {
         const { name, value } = e.target;
         setEnroll_company({ ...enroll_company, [name]: value });
     };
+
+    const isOpenClickHandle = () => {
+        setIsOpen(!isOpen);
+    }
 
     const handleComplete = () => {
         setPopup(!popup);
@@ -391,9 +395,9 @@ const FacilityReq = () => {
                         />
                     </div>
                     <div css={inputBox}>
-                        <label css={inputTitle}>이미지</label>
+                        <label css={inputTitle}>이미지 {isOpen === true? <button onClick={() =>{postRegisterSubmit.mutate(); isOpenClickHandle(); }}> 저장 </button> : "" }</label>
                         <div css={imgInput}>
-                            <input type="file" multiple={true} onChange={addFileHandle} accept={".jpg,.png"} />
+                            <input type="file" multiple={true} onChange={addFileHandle} onClick={isOpenClickHandle} accept={".jpg,.png"} />
                             <ul css={postList}>
                                 {imgFiles.map(imgFile => 
                                             <li key={imgFile.id}>{imgFile.file.name} <button value={imgFile.id} onClick={removeFileHandle}>삭제</button></li>)}
@@ -406,10 +410,7 @@ const FacilityReq = () => {
                                 // onClick={{registerHandleSubmit.mutate(); postRegisterSubmit.mutate();}} 코드로 실행시 
                                 // registerHandleSubmit.mutate(); 부분에서 오류가 나도 postRegisterSubmit.mutate();가 실행되어
                                 // 헬스장 등록은 안되는데 사진만 등록되는 현상이 생겨 비동기로 처리함.
-                                onClick={async () => { const registerResult = await registerHandleSubmit.mutateAsync(); 
-                                                        if (registerResult) { 
-                                                            postRegisterSubmit.mutate(); 
-                                                        } }}> 등록하기 </button>
+                                onClick={() => registerHandleSubmit.mutate() }> 등록하기 </button>
                     </div>
                 </div>
             </main>
