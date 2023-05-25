@@ -308,7 +308,7 @@ const MyPage = () => {
   };
 
   const bookMarkClickHandle = () => {
-    navigate("/mypage/bookmark");
+    navigate("/gym/" + principal.data.data.userId + "/like/list");
   };
 
   const passwordulHandle = () => {
