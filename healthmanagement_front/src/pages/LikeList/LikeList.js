@@ -183,14 +183,13 @@ const LikeList = () => {
                                 <h2 css={infoDetail}>위치: {likeGym.gymAddress} </h2>
                                 <h2 css={infoDetail}>가격: (월) {likeGym.gymPrice}&#8361;</h2>
                                 <h2 css={infoDetail}> ☎ {likeGym.gymTel}</h2>
-                            </footer>
+                            </footer>  
                         </div>
                     </>
                     )
                 })}
             </div>
         </div>
-      </div>
       <Footer />
     </div>
   );

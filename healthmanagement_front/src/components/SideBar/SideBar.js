@@ -99,7 +99,7 @@ const footer = css`
   padding: 10px;
 `;
 
-const SideBar = ({ isSidebarOpen, setIsSidebarOpen }) => {
+const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -206,4 +206,4 @@ const SideBar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   );
 };
 
-export default SideBar;
+export default Sidebar;
