@@ -150,7 +150,7 @@
 			values (0,#{gymName},#{gymAddress},#{gymTel},#{businessNumber},#{gymPrice},#{likeCount},#{registDate},#{removeDate})		
 		</insert>
 		
-		<select id="likeGyms" parameterType="hashmap"  resultType="com.portfolio.healthmanagement.entity.LikeList">
+		<select id="likeGyms" parameterType="integer"  resultType="com.portfolio.healthmanagement.entity.LikeList">
 			select
 			    gt.gym_id as gymId,
 			    gt.gym_name as gymName,
@@ -177,20 +177,20 @@
 				gym_address like concat("%",#{myAddress},"%")
 		</select>
 		
-	<select id="AddGyms" parameterType="Integer" resultType="com.portfolio.healthmanagement.entity.AddGym">
-		SELECT 
-	   		gt.gym_id,
-	    	gt.gym_name,
-	    	gt.gym_address,
-	    	gt.gym_tel,
-	    	gt.gym_price,
+	<select id="myGyms" parameterType="Integer" resultType="com.portfolio.healthmanagement.entity.MyGym">
+		select
+	   		gt.gym_id as gymId,
+			gt.gym_name as gymName,
+			gt.gym_address as gymAddress,
+			gt.gym_tel as gymTel,
+			gt.gym_price as gymPrice,
     
-    		ut.user_id
-		FROM 
+    		ut.user_id as userId
+		from
    			gym_owner_tb got 
-    	left outer join gym_tb gt on(got.gym_id = gt.gym_id)
-    	left outer join user_tb ut on(ut.user_id = got.user_id) 
-    	where
+	    	left outer join gym_tb gt on(got.gym_id = gt.gym_id)
+	    	left outer join user_tb ut on(ut.user_id = got.user_id) 
+	    where
 			ut.user_id = #{userId}
 				
 	</select>

@@ -30,12 +30,28 @@ const mainContainer = css`
 `;
 
 const addlistcontainer = css`
-  display: flex;
   flex-direction: column;
+  display: flex;
   align-items: center;
+  justify-content: center;
   border: 1px solid white;
   background-color: white;
-  width: 40%;
+  width: 100px;
+  height: 100px;
+`;
+
+const titlebox = css`
+  display: flex;
+  flex-direction: column;
+  border-style: double;
+  border: 1px solid black;
+`;
+
+const companyName = css`
+  display: flex;
+  width: 33.3%;
+  justify-content: center;
+  border: black;
 `;
 
 const thAndTdTitle = css`
@@ -56,6 +72,8 @@ const thAndTd = css`
 `;
 
 const AddGymList = () => {
+  const navigate = useNavigate();
+
   const principal = useQuery(["principal"], async () => {
     const option = {
       headers: {
@@ -69,53 +87,65 @@ const AddGymList = () => {
     return response;
   });
 
-  const userId = principal.data.data.userId;
+  const addGyms = useQuery(
+    ["addGyms"],
+    async () => {
+      const option = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      };
 
-  console.log(userId);
-  const navigate = useNavigate();
+      return await axios.get(
+        `http://localhost:8080/addgymlist/${principal.data.data.userId}`,
+        option
+      );
+    },
+    {
+      enabled: !!principal.data,
+    }
+  );
 
-  const addGyms = useQuery(["AddGyms"], async () => {
-    const option = {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    };
-    return await axios.get(
-      `http://localhost:8080/addgymlist/${userId}`,
-      option
-    );
-  });
-
-  if (addGyms.isLoading) {
+  if (principal.isLoading) {
     return <div>로딩중...</div>;
   }
+
   console.log(addGyms);
 
   return (
     <div css={container}>
       <Header search={false} />
       <main css={mainContainer}>
-        <div css={addlistcontainer}>
-          {addGyms.data.data.map((addGym) => {
-            return (
-              <tr key={addGym.gymId}>
-                <td css={thAndTd}>
-                  <div
-                    css={thAndTdTitle}
-                    onClick={() => {
-                      navigate("/gym/" + addGym.gymId);
-                    }}
-                  >
-                    {addGym.gymName}
-                  </div>
-                </td>
-                <td css={thAndTd}>{addGym.gymAddress}</td>
-                <td css={thAndTd}>{addGym.gymTel}</td>
-                <td css={thAndTd}>{addGym.gymPrice}￦</td>
-              </tr>
-            );
-          })}
-        </div>
+        <tobody css={addlistcontainer}>
+          {addGyms.isLoading
+            ? ""
+            : addGyms.data.data.map((addGym) => {
+                return (
+                  <tr key={addGym.gymId}>
+                   
+                      <h2 css={companyName}> 이름 </h2>
+                      <h2> 주소</h2>
+                      <h2> 전화번호 </h2>
+                      <h2> 가격 </h2>
+                    
+                    <div css={thAndTd}>
+                      <div
+                        css={thAndTdTitle}
+                        onClick={() => {
+                          navigate("/gym/" + addGym.gymId);
+                        }}
+                      >
+                        {addGym.gymName}
+                      </div>
+                    </div>
+
+                    <h2 css={thAndTd}>{addGym.gymAddress}</h2>
+                    <h2 css={thAndTd}>{addGym.gymTel}</h2>
+                    <h2 css={thAndTd}>{addGym.gymPrice}￦</h2>
+                  </tr>
+                );
+              })}
+        </tobody>
       </main>
       <Footer />
     </div>
