@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.portfolio.healthmanagement.dto.gym.AddGymListRespDto;
+import com.portfolio.healthmanagement.entity.AddGym;
 import com.portfolio.healthmanagement.entity.Gym;
 import com.portfolio.healthmanagement.entity.GymOwner;
 import com.portfolio.healthmanagement.entity.LikeList;
@@ -23,7 +25,10 @@ public interface GymRepository {
 	public int setLike(Map<String,Object> map);
 	public int disLike(Map<String, Object>map);
 	
+	
 	public List<LikeList> likeGyms(int userId);
+	
+	public List<AddGym> AddGyms(int userId);
 
 	public List<Gym> NearbyGymAddressesAndGymName(Map<String, Object> map);
 
