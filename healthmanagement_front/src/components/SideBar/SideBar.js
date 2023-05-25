@@ -130,6 +130,11 @@ const SideBar = ({ isSidebarOpen, setIsSidebarOpen }) => {
     }
   };
 
+
+  const facilityRegisterHandle = () => {
+    navigate("/facility");
+  };
+
   // principal 변수를 초기화하고 가져온 데이터를 사용하여 로딩상태를 처리 및  사용자 정보에 접근
   const principal = useQuery(["principal"], async () => {
     const response = await axios.get(
@@ -169,6 +174,7 @@ const SideBar = ({ isSidebarOpen, setIsSidebarOpen }) => {
           {" "}
           <BiUser />{" "}
         </ListButton>
+
         {/* 일반 유저와 오너 여부에 따라 아이콘이 다르게 구현  */}
         {isOwner && (
           <ListButton title="우리 업체 등록" onClick={myBusinessAddHandle}>
@@ -188,6 +194,7 @@ const SideBar = ({ isSidebarOpen, setIsSidebarOpen }) => {
             <BiLike />
           </ListButton>
         )}
+
       </main>
       <footer css={footer} onClick={logoutClickHandle}>
         <ListButton title="Logout">

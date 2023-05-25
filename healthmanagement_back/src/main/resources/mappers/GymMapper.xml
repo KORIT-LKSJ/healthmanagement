@@ -150,7 +150,7 @@
 			values (0,#{gymName},#{gymAddress},#{gymTel},#{businessNumber},#{gymPrice},#{likeCount},#{registDate},#{removeDate})		
 		</insert>
 		
-		<select id="likeGyms" parameterType="integer"  resultType="com.portfolio.healthmanagement.entity.LikeList">
+		<select id="likeGyms" parameterType="Integer"  resultType="com.portfolio.healthmanagement.entity.LikeList">
 			select
 			    gt.gym_id as gymId,
 			    gt.gym_name as gymName,

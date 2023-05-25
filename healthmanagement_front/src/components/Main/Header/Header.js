@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { BiUser, BiSearch } from "react-icons/bi";
 import SideBar from "../../SideBar/SideBar";
 import SearchBar from "../../SearchBar/SearchBar";
+import { useNavigate } from "react-router";
 
 const header = css`
   position: relative;
@@ -27,7 +28,8 @@ const headerButton = css`
 `;
 
 const mainLogo = css`
-  height: 100%;
+    height: 100%;
+    cursor: pointer;
 `;
 
 const headerIcon = css`
@@ -50,8 +52,10 @@ const headerOptionContainer = (isSidebarOpen, isSearchBarOpen) => css`
 `;
 
 const Header = ({ gyms, setGyms, refresh, setRefresh, search }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState();
-  const [isSearchBarOpen, setIsSearchBarOpen] = useState();
+    const navigate = useNavigate();
+    const [isSideBarOpen, setIsSideBarOpen] = useState();
+    const [isSearchBarOpen, setIsSearchBarOpen] = useState();
+
 
   const sideBarClickHandle = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -61,41 +65,41 @@ const Header = ({ gyms, setGyms, refresh, setRefresh, search }) => {
     setIsSearchBarOpen(!isSearchBarOpen);
   };
 
-  return (
-    <>
-      <header css={header}>
-        <div css={headerButton}>
-          <div css={headerIcon} onClick={sideBarClickHandle}>
-            <BiUser />
-          </div>
-          <img css={mainLogo} src="/image/gymLogo.png" alt="" />
-          {search ? (
-            <div css={headerIcon} onClick={searchBarClickHandle}>
-              <BiSearch />
-            </div>
-          ) : (
-            <div style={{ width: 22 }}></div>
-          )}
-        </div>
 
-        <SideBar
-          isSidebarOpen={isSidebarOpen}
-          setIsSidebarOpen={setIsSidebarOpen}
-        />
-        {search ? (
-          <SearchBar
-            isSearchBarOpen={isSearchBarOpen}
-            gyms={gyms}
-            setGyms={setGyms}
-            refresh={refresh}
-            setRefresh={setRefresh}
-          />
-        ) : (
-          <></>
-        )}
-      </header>
-    </>
-  );
+    const mainClickHandle = () => {
+        navigate("/")
+    }
+    return (
+        <>
+            <header css={header}>
+                <div css={headerButton}>
+                    <div css={headerIcon} onClick={sideBarClickHandle}>
+                        <BiUser />
+                    </div>
+                    <img css={mainLogo} src="/image/gymLogo.png" alt="" onClick={mainClickHandle}/>
+                    {search ? (
+                        <div css={headerIcon} onClick={searchBarClickHandle}>
+                            <BiSearch />
+                        </div>
+                    ) : (
+                        <div style={{ width: 22 }}></div>
+                    )}
+                </div>
+                <Sidebar isSideBarOpen={isSideBarOpen} setIsSideBarOpen={setIsSideBarOpen} />
+                {search ? (
+                    <SearchBar
+                        isSearchBarOpen={isSearchBarOpen}
+                        gyms={gyms}
+                        setGyms={setGyms}
+                        refresh={refresh}
+                        setRefresh={setRefresh}
+                    />
+                ) : (
+                    <></>
+                )}
+            </header>
+        </>
+    );
 };
 
 export default Header;
