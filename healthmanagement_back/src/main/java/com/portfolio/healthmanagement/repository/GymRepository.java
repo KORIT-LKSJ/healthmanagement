@@ -16,7 +16,9 @@ public interface GymRepository {
 	public Gym findByBusinessnNumber(String businessnNumber);
 	public List<Gym> searchGyms(Map<String, Object> map);
 	public int getTotalCount(Map<String, Object> map);
+	
 	public int saveGym(Gym gym);
+	public int saveGymOwner(GymOwner gymOwner);
 
 	public int getLikeCount(int bookId);
 	public int getLikeStatus(Map<String, Object> map);

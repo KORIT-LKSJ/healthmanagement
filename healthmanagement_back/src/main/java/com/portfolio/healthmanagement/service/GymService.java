@@ -1,10 +1,12 @@
 package com.portfolio.healthmanagement.service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.portfolio.healthmanagement.dto.gym.MyGymListRespDto;
@@ -15,11 +17,13 @@ import com.portfolio.healthmanagement.dto.gym.LikeListRespDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymReqDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymRespDto;
 import com.portfolio.healthmanagement.entity.Gym;
+import com.portfolio.healthmanagement.entity.GymOwner;
 import com.portfolio.healthmanagement.entity.User;
 import com.portfolio.healthmanagement.exception.CustomException;
 import com.portfolio.healthmanagement.exception.ErrorMap;
 import com.portfolio.healthmanagement.repository.GymRepository;
 import com.portfolio.healthmanagement.repository.UserRepository;
+import com.portfolio.healthmanagement.security.PrincipalUserDetails;
 
 import lombok.RequiredArgsConstructor;
 
@@ -56,12 +60,19 @@ public class GymService {
 	}
 	
 	public int addGym(RegisterGymReqDto registerGymReqDto) {
-		
+
+		Gym gym = registerGymReqDto.toEntity();
+
 		if(gymRepository.findByBusinessnNumber(registerGymReqDto.getBusinessNumber()) != null) {
 			throw new CustomException("BusinessnNumber",ErrorMap.builder().put("BusinessnNumber","다시 한번 확인해보세요").build() );
 		}
 		
-	    return gymRepository.saveGym(registerGymReqDto.toEntity());
+		gymRepository.saveGym(gym);
+		
+		PrincipalUserDetails principalUserDetails = (PrincipalUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		GymOwner gymOwner = GymOwner.builder().userId(principalUserDetails.getUserId()).gymId(gym.getGymId()).build();
+		return gymRepository.saveGymOwner(gymOwner);
 	}
 
 	public int getLikeCount(int gymId) {

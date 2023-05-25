@@ -216,7 +216,6 @@ const FacilityReq = () => {
     const fileId = useRef(1);
 
     const registerHandleSubmit = useMutation(async () => {
-
         const gymInfoOption = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -266,26 +265,26 @@ const FacilityReq = () => {
     });
 
     // const postRegisterSubmit = useMutation(async () => {
-
     //     return response;
     // });
 
-    const principal = useQuery(["principal"], async () => {
-        const option = {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-        };
-        const response = await axios.get(
-            "http://localhost:8080/account/principal",
-            option
-        );
-        return response;
-    });
+    // const principal = useQuery(["principal"], async () => {
+    //     const option = {
+    //         headers: {
+    //             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    //         },
+    //     };
+    //     const response = await axios.get(
+    //         "http://localhost:8080/account/principal",
+    //         option
+    //     );
+    //     return response;
+    // });
 
-    if (principal.isLoading) {
-        return <>...Loading</>;
-    }
+    // if (principal.isLoading) {
+    //     return <>...Loading</>;
+    // }
+
 
     const handleClick = () => {
         window.location.href = "/";
