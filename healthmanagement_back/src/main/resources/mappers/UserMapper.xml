@@ -86,5 +86,13 @@
 		insert into authority_tb
 		values(0,#{userId},#{roleId})
 	</insert>
+	
+	<update id="updateProvider" parameterType="com.portfolio.healthmanagement.entity.User">
+		update user_tb
+		set
+			provider = #{provider}
+		where
+			user_id = #{userId}
+	</update>
 
 </mapper>

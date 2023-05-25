@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.portfolio.healthmanagement.dto.auth.LoginReqDto;
 import com.portfolio.healthmanagement.dto.auth.OAuth2ProviderMergeReqDto;
@@ -118,7 +119,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Override
 	public int oauth2ProviderMerge(OAuth2ProviderMergeReqDto oAuth2ProviderMergeReqDto) {
 		User userEntity = userRepositiory.findUserByEmail(oAuth2ProviderMergeReqDto.getEmail());
-		return 0;
+		String provider = oAuth2ProviderMergeReqDto.getProvider();
+		
+		if(StringUtils.hasText(userEntity.getProvider())) {
+			userEntity.setProvider(userEntity.getProvider() + "," + provider);
+		} else {
+			userEntity.setProvider(provider);
+		}
+		
+		return userRepositiory.updateProvider(userEntity);
 	}
 	
 }

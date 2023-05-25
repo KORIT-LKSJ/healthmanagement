@@ -4,7 +4,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { v4 } from "uuid";
 
 const container = css`
     display: flex;
@@ -42,7 +41,7 @@ const registerInfo = css`
     flex-direction: column;
     color: #58595b;
     padding: 1%;
-    height: 50%;
+    height: 68.5%;
     gap: 10px;
 `;
 
@@ -62,7 +61,6 @@ const registerInput = css`
     width: 100%;
     background-color: white;
     border: 1px solid #dbdbdb;
-    border-radius: 10px;
     padding: 8px;
 `;
 
@@ -113,7 +111,6 @@ const register = css`
 const registerButton = css`
     padding: 10px 0;
     border: 1px solid #dbdbdb;
-    border-radius: 10px;
     width: 100%;
     font-size: 15px;
     font-weight: 600;
@@ -125,15 +122,13 @@ const OAuth2Register = () => {
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const registerToken = searchParams.get("registerToken");
-    const username = v4().split("-").join("");
-    const password = v4().split("-").join("");
     const email = searchParams.get("email");
     const name = searchParams.get("name");
     const provider = searchParams.get("provider");
 
     const [registerUser, setRegisterUser] = useState({
-        username: username,
-        password: password,
+        username: "",
+        password: "",
         name: name,
         email: email,
         phone: "",
@@ -143,12 +138,16 @@ const OAuth2Register = () => {
     });
 
     const [errorMessage, setErrorMessage] = useState({
+        username: "",
+        password: "",
         birthdate: "",
         phone: "",
     });
 
     const successRegister = () => {
         setErrorMessage({
+            username: "",
+            password: "",
             birthdate: "",
             phone: "",
         });
@@ -158,6 +157,8 @@ const OAuth2Register = () => {
 
     const errorRegister = (error) => {
         setErrorMessage({
+            username: "",
+            password: "",
             birthdate: "",
             phone: "",
             ...error.response.data.errorData,
@@ -171,7 +172,11 @@ const OAuth2Register = () => {
             },
         };
         try {
-            await axios.post("http://localhost:8080/auth/oauth2/register", registerUser, option);
+            await axios.post(
+                "http://localhost:8080/auth/oauth2/register",
+                registerUser,
+                option
+            );
             successRegister();
         } catch (error) {
             errorRegister(error);
@@ -196,13 +201,45 @@ const OAuth2Register = () => {
                 <main css={main}>
                     <div css={registerInfo}>
                         <div css={registerDetail}>
+                            <label css={registerLabel}>아이디</label>
+                            <input
+                                css={registerInput}
+                                type="text"
+                                placeholder="아이디를 입력해 주세요."
+                                name="username"
+                                onChange={onchangeHandle}
+                            />
+                            <div css={errorMsg}>{errorMessage.username}</div>
+                        </div>
+                        <div css={registerDetail}>
+                            <label css={registerLabel}>비밀번호</label>
+                            <input
+                                css={registerInput}
+                                type="password"
+                                placeholder="영문, 숫자, 특수문자 포함 8~16자를 입력해 주세요."
+                                name="password"
+                                onChange={onchangeHandle}
+                            />
+                            <div css={errorMsg}>{errorMessage.password}</div>
+                        </div>
+                        <div css={registerDetail}>
                             <label css={registerLabel}>이름</label>
-                            <input css={registerInput} type="text" value={name} disabled />
+                            <input
+                                css={registerInput}
+                                type="text"
+                                value={name}
+                                disabled
+                            />
                             <div css={errorMsg}></div>
                         </div>
                         <div css={registerDetail}>
                             <label css={registerLabel}>이메일</label>
-                            <input css={registerInput} type="email" value={email} disabled />
+                            <input
+                                css={registerInput}
+                                type="email"
+                                value={email}
+                                disabled
+                            />
                             <div css={errorMsg}></div>
                         </div>
                         <div css={registerDetail}>
@@ -230,7 +267,10 @@ const OAuth2Register = () => {
                         <div css={registerDetail}>
                             <div css={radioList}>
                                 <div css={radio}>
-                                    <div css={registerLabel} style={{ height: 20 }}>
+                                    <div
+                                        css={registerLabel}
+                                        style={{ height: 20 }}
+                                    >
                                         사용자
                                     </div>
                                     <div css={radioUserTypeCheck}>

@@ -78,8 +78,8 @@ const Footer = () => {
                     <RiCalculatorFill css={pageLocationIcon} />
                     <div css={pageLocationName}>칼로리 계산</div>
                 </div>
-                <div css={pageLocation}>
-                    <HiMap css={pageLocationIcon} onClick={onClickMap} />
+                <div css={pageLocation} onClick={onClickMap}>
+                    <HiMap css={pageLocationIcon} />
                     <div css={pageLocationName}>내 주변 헬스장</div>
                 </div>
                 <div css={pageLocation}>
