@@ -43,7 +43,7 @@ const userIcon = css`
   border-radius: 8px;
   width: 45px;
   height: 45px;
-  background-color: #713fff;
+  background-color: #eea460;
   color: white;
   font-size: 30px;
   font-weight: 600;

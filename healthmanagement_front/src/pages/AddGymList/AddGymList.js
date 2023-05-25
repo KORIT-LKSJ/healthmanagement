@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import React from "react";
 import Header from "../../components/Main/Header/Header";
 import Footer from "../../components/Main/Footer/Footer";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import axios from "axios";
 
@@ -56,7 +56,6 @@ const thAndTd = css`
 `;
 
 const AddGymList = () => {
-    
   const principal = useQuery(["principal"], async () => {
     const option = {
       headers: {
@@ -72,7 +71,7 @@ const AddGymList = () => {
 
   const userId = principal.data.data.userId;
 
-  console.log(userId)
+  console.log(userId);
   const navigate = useNavigate();
 
   const addGyms = useQuery(["AddGyms"], async () => {
@@ -86,7 +85,6 @@ const AddGymList = () => {
       option
     );
   });
-
 
   if (addGyms.isLoading) {
     return <div>로딩중...</div>;

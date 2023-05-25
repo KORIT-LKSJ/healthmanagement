@@ -369,7 +369,7 @@ const MyPage = () => {
                 <label htmlFor="profile-image"></label>
                 <img
                   css={img}
-                  src="https://img.freepik.com/free-photo/adorable-domestic-kitty-with-copy-space_23-2149167112.jpg?size=626&ext=jpg"
+                  src="https://schoolshop-lab.jp/wp-content/uploads/2018/11/240ec862387d03003cb4c41cd93cb0be.png"
                   alt=""
                   onClick={handleImageClick}
                   onLoad={() => console.log("image loaded")}
