@@ -1,17 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import axios from 'axios';
-import React, { useState } from 'react';
-import { QueryClient, useQuery } from 'react-query';
-import { useNavigate, useParams } from 'react-router-dom';
+import axios from "axios";
+import React, { useState } from "react";
+import { QueryClient, useQuery } from "react-query";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "../../components/Main/Header/Header";
 import Footer from "../../components/Main/Footer/Footer";
 
 const container = css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
+
 
 const main = css`
     position: relative;
@@ -57,18 +58,20 @@ const gymListDetail = css`
     width: 100%;
     height: 400px;
 `
+
 const header = css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 4%;
-    width: 100%;
-    height: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4%;
+  width: 100%;
+  height: 5%;
 `;
 
 const titleText = css`
-    font-weight: 600;
+  font-weight: 600;
 `;
+
 const cardMain = css`
     display: flex;
     justify-content: center;
@@ -90,28 +93,29 @@ const imgBox = css`
     overflow: hidden;
 `;
 const img = css`
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 `;
 
 const footer = css`
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    font-weight: 600;
-    font-size: 14px;
-    width: 90%;
-    height: 30%;
-    padding-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  width: 90%;
+  height: 30%;
+  padding-bottom: 5%;
 `;
 
 const infoDetail = css`
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const like = css`
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -134,23 +138,26 @@ const likeTitle = css`
 `
 
 const LikeList = () => {
-    const [refresh, setRefresh] = useState(false);
-    const {userId} = useParams();
-    console.log(userId)
-    const navigate = useNavigate();
+  const [refresh, setRefresh] = useState(false);
+  const { userId } = useParams();
+  console.log(userId);
+  const navigate = useNavigate();
 
-    const likeGyms = useQuery(["likeGyms"], async () => {
-        const option = {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        }
-        return await axios.get(`http://localhost:8080/gym/${userId}/like/list`, option);
-    });
+  const likeGyms = useQuery(["likeGyms"], async () => {
+    const option = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    };
+    return await axios.get(
+      `http://localhost:8080/gym/${userId}/like/list`,
+      option
+    );
+  });
 
-    if (likeGyms.isLoading) {
-        return <div>로딩중...</div>;
-    }
+  if (likeGyms.isLoading) {
+    return <div>로딩중...</div>;
+  }
     
     return (
         <div css={container}>
@@ -183,9 +190,10 @@ const LikeList = () => {
                 })}
             </div>
         </div>
-        <Footer/>
+      </div>
+      <Footer />
     </div>
-    );
+  );
 };
 
 export default LikeList;

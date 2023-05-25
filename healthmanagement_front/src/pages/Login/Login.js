@@ -213,8 +213,19 @@ const Login = () => {
         setLoginUser({ ...loginUser, [name]: value });
     };
 
+    const naverAuthLoginClickHandle = () => {
+        window.location.href =
+            "http://localhost:8080/oauth2/authorization/naver";
+    };
+
+    const kakaoAuthLoginClickHandle = () => {
+        window.location.href =
+            "http://localhost:8080/oauth2/authorization/kakao";
+    };
+
     const googleAuthLoginClickHandle = () => {
-        window.location.href = "http://localhost:8080/oauth2/authorization/google";
+        window.location.href =
+            "http://localhost:8080/oauth2/authorization/google";
     };
 
     if (!loginSubmit.isLoading)
@@ -249,16 +260,32 @@ const Login = () => {
                         </div>
                     </div>
                     <div css={find}>
-                        <div css={findUsernamePassword} onClick={findIdClickHandle}>
+                        <div
+                            css={findUsernamePassword}
+                            onClick={findIdClickHandle}
+                        >
                             아이디찾기
                         </div>
-                        <div css={findUsernamePassword} onClick={findPasswordClickHandle}>
+                        <div
+                            css={findUsernamePassword}
+                            onClick={findPasswordClickHandle}
+                        >
                             비밀번호찾기
                         </div>
                     </div>
                     <div css={moreLogin}>
-                        <img css={loginImg} src="../../images/naverLogin.png" alt="naver" />
-                        <img css={loginImg} src="../../images/kakaoLogin.png" alt="kakao" />
+                        <img
+                            css={loginImg}
+                            src="../../images/naverLogin.png"
+                            alt="naver"
+                            onClick={naverAuthLoginClickHandle}
+                        />
+                        <img
+                            css={loginImg}
+                            src="../../images/kakaoLogin.png"
+                            alt="kakao"
+                            onClick={kakaoAuthLoginClickHandle}
+                        />
                         <img
                             css={loginImg}
                             src="../../images/googleLogin.png"
