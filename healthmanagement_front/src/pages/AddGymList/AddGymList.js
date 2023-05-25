@@ -42,8 +42,10 @@ const addlistcontainer = css`
     height: 30px;
     text-align: center;
     vertical-align: middle;
-
     border: 1px solid #dbdbdb;
+  }
+  & th {
+    font-family: "Black Han Sans", sans-serif;
   }
 `;
 
