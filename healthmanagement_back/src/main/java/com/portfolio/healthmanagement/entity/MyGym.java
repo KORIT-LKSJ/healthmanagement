@@ -1,6 +1,6 @@
 package com.portfolio.healthmanagement.entity;
 
-import com.portfolio.healthmanagement.dto.gym.AddGymListRespDto;
+import com.portfolio.healthmanagement.dto.gym.MyGymListRespDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,18 +11,21 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AddGym {
+public class MyGym {
 	private int userId;
 	private int gymId;
 	private String gymName;
+	private String gymTel;
 	private String gymAddress;
 	private String gymPrice;
 	
-	public AddGymListRespDto toDto() {
-		return AddGymListRespDto.builder()
+	public MyGymListRespDto toDto() {
+		return MyGymListRespDto.builder()
 				.userId(userId)
 				.gymId(gymId)
+				.gymName(gymName)
 				.gymAddress(gymAddress)
+				.gymTel(gymTel)
 				.gymPrice(gymPrice)
 				.build();
 	}

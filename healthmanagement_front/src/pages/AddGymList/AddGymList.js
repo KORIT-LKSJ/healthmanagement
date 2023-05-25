@@ -1,11 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
-import Header from "../../components/Main/Header/Header";
-import Footer from "../../components/Main/Footer/Footer";
-import { useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "react-query";
 import axios from "axios";
+import React from "react";
+import { useQuery } from "react-query";
+import Footer from "../../components/Main/Footer/Footer";
+import Header from "../../components/Main/Header/Header";
 
 const container = css`
   display: flex;
@@ -14,7 +13,7 @@ const container = css`
   font-size: 12px;
 `;
 
-const main = css`
+const mainContainer = css`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,82 +28,90 @@ const main = css`
   }
 `;
 
-const table = css`
+const addlistcontainer = css`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  border: 1px solid white;
+  justify-content: center;
   background-color: white;
-  width: 40%;
-`;
+  width: 800px;
+  height: 100px;
 
-const thAndTdTitle = css`
-  cursor: pointer;
-  &:hover {
-    text-shadow: 0px 5px 10px #dbdbdb;
-    color: #dbdbdb;
-  }
-  &:active {
-    background-color: #fafafa;
-  }
-`;
+  & th,
+  td {
+    width: 150px;
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
 
-const thAndTd = css`
-  border: 1px solid #dbdbdb;
-  padding: 5px 10px;
-  text-align: center;
+    border: 1px solid #dbdbdb;
+  }
 `;
 
 const AddGymList = () => {
-  const { userId } = useParams();
-  console.log(userId);
-  const navigate = useNavigate();
-
-  const addGyms = useQuery(["AddGyms"], async () => {
+  const principal = useQuery(["principal"], async () => {
     const option = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     };
-    return await axios.get(`http://localhost:8080/addgymlist`, option);
+    const response = await axios.get(
+      "http://localhost:8080/account/principal",
+      option
+    );
+    return response;
   });
-  if (addGyms.isLoading) {
+
+  const addGyms = useQuery(
+    ["addGyms"],
+    async () => {
+      const option = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      };
+
+      return await axios.get(
+        `http://localhost:8080/addgymlist/${principal.data.data.userId}`,
+        option
+      );
+    },
+    {
+      enabled: !!principal.data,
+    }
+  );
+
+  if (principal.isLoading) {
     return <div>로딩중...</div>;
   }
 
-  const titleClickHandle = (e) => {};
+  console.log(addGyms);
 
   return (
     <div css={container}>
       <Header search={false} />
-      <main css={main}>
-        <div css={table}>
-          <tr>
-            <th css={thAndTd}>헬스장 명</th>
-            <th css={thAndTd}>위치</th>
-            <th css={thAndTd}>전화번호</th>
-            <th css={thAndTd}>가격</th>
-          </tr>
-          {addGyms.data.data.map((addGym) => {
-            return (
-              <tr key={addGym.gymId}>
-                <td css={thAndTd}>
-                  <div
-                    css={thAndTdTitle}
-                    onClick={() => {
-                      navigate("/gym/" + addGym.gymId);
-                    }}
-                  >
-                    {addGym.gymName}
-                  </div>
-                </td>
-                <td css={thAndTd}>{addGym.gymAddress}</td>
-                <td css={thAndTd}>{addGym.gymTel}</td>
-                <td css={thAndTd}>{addGym.gymPrice}￦</td>
-              </tr>
-            );
-          })}
-        </div>
+      <main css={mainContainer}>
+        <table css={addlistcontainer}>
+          <tbody>
+            <tr>
+              <th> 이름 </th>
+              <th> 주소</th>
+              <th> 전화번호 </th>
+              <th> 가격 </th>
+            </tr>
+            {addGyms.isLoading
+              ? ""
+              : addGyms.data.data.map((addGym) => {
+                  return (
+                    <tr>
+                      <td>{addGym.gymName}</td>
+                      <td>{addGym.gymAddress}</td>
+                      <td>{addGym.gymTel}</td>
+                      <td>{addGym.gymPrice}</td>
+                    </tr>
+                  );
+                })}
+          </tbody>
+        </table>
       </main>
       <Footer />
     </div>

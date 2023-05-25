@@ -76,4 +76,10 @@ public class GymController {
 		System.out.println(registerGymReqDto);
 		return ResponseEntity.ok().body(gymService.addGym(registerGymReqDto));
 	}
+	
+	@GetMapping("/addgymlist/{userId}")
+	public ResponseEntity<?> myGyms(@PathVariable int userId ){
+		System.out.println(userId);
+		return ResponseEntity.ok().body(gymService.myGyms(userId));
+	}
 }
