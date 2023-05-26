@@ -41,6 +41,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class GymService {
+	
 	@Value("${file.path}")
 	private String filePath;
 	private final GymRepository gymRepository;
@@ -78,9 +79,7 @@ public class GymService {
 		
 		if(gymRepository.findByBusinessNumber(registerGymReqDto.getBusinessNumber()) != null) {
 			throw new CustomException("BusinessNumber",ErrorMap.builder().put("BusinessNumber","다시 한번 확인해보세요").build() );
-			
 		}
-		
 		
 		gymRepository.saveGym(gym);
 		
@@ -173,9 +172,11 @@ public class GymService {
 			Path uploadPath = Paths.get(filePath + "post/" + tempFileName);
 			
 			File f = new File(filePath + "post");
+			
 			if(!f.exists()) {
-				f.mkdir();
+				f.mkdirs();
 			}
+			
 			try {
 				Files.write(uploadPath, file.getBytes());
 			} catch (IOException e) {
