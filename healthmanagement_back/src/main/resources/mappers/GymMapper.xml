@@ -131,7 +131,7 @@
 			values(0, #{gymId}, now())
 		</insert>
 		
-		<select id="findByBusinessnNumber" parameterType="String" resultMap="gymMap">
+		<select id="findByBusinessNumber" parameterType="String" resultMap="gymMap">
 			select
 				gt.gym_id,
 				gt.gym_name,
@@ -199,6 +199,14 @@
 			ut.user_id = #{userId}
 				
 	</select>
+	
+	<insert id="registerGymImgs" parameterType="Integer">
+		insert into gym_img_tb
+		values 
+		<foreach collection="list" item="postsImg" separator=",">
+			(0, #{postsImg.gymId}, #{postsImg.originName}, #{postsImg.tempName},#{postsImg.imgSize})		
+		</foreach>
+	</insert>
 </mapper>
 
 	

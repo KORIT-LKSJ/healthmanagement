@@ -1,15 +1,24 @@
 package com.portfolio.healthmanagement.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.portfolio.healthmanagement.dto.gym.MyGymListRespDto;
+import com.portfolio.healthmanagement.dto.gym.RegisterGymImgsReqDto;
 import com.portfolio.healthmanagement.dto.gym.GetGymAddressAndGymNameRespDto;
 import com.portfolio.healthmanagement.dto.gym.GetGymRespDto;
 import com.portfolio.healthmanagement.dto.gym.RegisterGymReqDto;
@@ -17,6 +26,8 @@ import com.portfolio.healthmanagement.dto.gym.LikeListRespDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymReqDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymRespDto;
 import com.portfolio.healthmanagement.entity.Gym;
+import com.portfolio.healthmanagement.entity.GymImgs;
+import com.portfolio.healthmanagement.entity.GymImgsDetail;
 import com.portfolio.healthmanagement.entity.GymOwner;
 import com.portfolio.healthmanagement.entity.User;
 import com.portfolio.healthmanagement.exception.CustomException;
@@ -30,6 +41,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class GymService {
+	@Value("${file.path}")
+	private String filePath;
 	private final GymRepository gymRepository;
 	private final UserRepository userRepositiory;
 	
@@ -62,10 +75,12 @@ public class GymService {
 	public int addGym(RegisterGymReqDto registerGymReqDto) {
 
 		Gym gym = registerGymReqDto.toEntity();
-
-		if(gymRepository.findByBusinessnNumber(registerGymReqDto.getBusinessNumber()) != null) {
-			throw new CustomException("BusinessnNumber",ErrorMap.builder().put("BusinessnNumber","다시 한번 확인해보세요").build() );
+		
+		if(gymRepository.findByBusinessNumber(registerGymReqDto.getBusinessNumber()) != null) {
+			throw new CustomException("BusinessNumber",ErrorMap.builder().put("BusinessNumber","다시 한번 확인해보세요").build() );
+			
 		}
+		
 		
 		gymRepository.saveGym(gym);
 		
@@ -137,6 +152,45 @@ public class GymService {
 		
 		return responseMap;
 		
+	}
+	
+	public int registerGymImgs(RegisterGymImgsReqDto gymImgsReqDto) {
+		GymImgs gymImgs = gymImgsReqDto.toEntity();
+		
+		List<MultipartFile> files = gymImgsReqDto.getImgFiles();
+			if(files == null) {
+				return 0;
+			}
+			
+		List<GymImgsDetail> postsFiles = new ArrayList<>();
+		
+		files.forEach(file -> {
+			String originFileName = file.getOriginalFilename();
+			String extension = originFileName.substring(originFileName.lastIndexOf("."));
+			String tempFileName = UUID.randomUUID().toString().replaceAll("-", "") + extension;
+			
+			Path uploadPath = Paths.get(filePath + "post/" + tempFileName);
+			
+			File f = new File(filePath + "post");
+			if(!f.exists()) {
+				f.mkdir();
+			}
+			try {
+				Files.write(uploadPath, file.getBytes());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			postsFiles.add(GymImgsDetail.builder()
+					.gymId(gymImgsReqDto.getGymId())
+					.originName(file.getOriginalFilename())
+					.tempName(tempFileName)
+					.imgSize(Long.toString(file.getSize()))
+					.build());
+		});
+		
+		
+			return gymRepository.registerGymImgs(postsFiles);
 	}
 
 }

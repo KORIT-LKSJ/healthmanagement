@@ -229,9 +229,11 @@ const FacilityReq = () => {
                 gymInfoOption
             );
             return response;
-            console.log(response);
 
-            const gymId = response.data.gymId;
+            const gymId = response
+
+            if(gymId!== null) {
+            
 
             const formData = new FormData();
             formData.append("gymId", gymId);
@@ -244,6 +246,7 @@ const FacilityReq = () => {
                 console.log("key" + key + ",value" + value);
             });
 
+            
             const gymImgOption = {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem(
@@ -253,15 +256,17 @@ const FacilityReq = () => {
                 },
             };
             await axios.post(
-                "http://localhost:8080/post/register",
+                "http://localhost:8080/gym/img/register",
                 formData,
                 gymImgOption
             );
             successRegister();
+        }
         } catch (error) {
             errorRegister(error);
             console.log(error);
         }
+    
     });
 
     // const postRegisterSubmit = useMutation(async () => {
