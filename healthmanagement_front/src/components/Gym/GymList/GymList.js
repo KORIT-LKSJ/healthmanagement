@@ -50,7 +50,6 @@ const imgBox = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 7px;
     box-shadow: 0px 5px 5px #dbdbdb;
     padding: 5px;
     width: 90%;
@@ -85,7 +84,6 @@ const like = css`
     justify-content: center;
     align-items: center;
     border: 1px solid #dbdbdb;
-    border-radius: 7px;
     padding: 5%;
     height: 30px;
     background-color: white;

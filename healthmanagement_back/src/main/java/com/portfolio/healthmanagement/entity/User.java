@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 
 @Builder
 @Data
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {

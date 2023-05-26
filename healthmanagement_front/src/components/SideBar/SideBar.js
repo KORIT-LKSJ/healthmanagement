@@ -10,10 +10,10 @@ import { BiLike, BiLogOut, BiUser } from "react-icons/bi";
 import { FaRegistered } from "react-icons/fa";
 import { MdOutlineFitnessCenter } from "react-icons/md";
 
-const sidebar = (isSidebarOpen) => css`
+const sideBar = (isSideBarOpen) => css`
     position: absolute;
     display: flex;
-    top: ${isSidebarOpen ? `100%` : `-800%`};
+    top: ${isSideBarOpen ? `100%` : `-800%`};
     left: 30%;
     flex-direction: column;
     border: 1px solid #dbdbdb;
@@ -22,7 +22,7 @@ const sidebar = (isSidebarOpen) => css`
     transition: top 1s ease;
     background-color: white;
     z-index: 99;
-    ${isSidebarOpen
+    ${isSideBarOpen
         ? ""
         : `cursor:pointer;
     `}
@@ -99,12 +99,12 @@ const footer = css`
     padding: 10px;
 `;
 
-const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
+const SideBar = ({ isSideBarOpen, setIsSideBarOpen }) => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
 
-    const sidebarCloseHandle = () => {
-        setIsSidebarOpen(false);
+    const sideBarCloseHandle = () => {
+        setIsSideBarOpen(false);
     };
 
     const mypageClickHandle = () => {
@@ -158,7 +158,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const user = principal.data.data;
 
     return (
-        <div css={sidebar(isSidebarOpen)}>
+        <div css={sideBar(isSideBarOpen)}>
             <header css={header}>
                 <div css={userIcon}>
                     {principal.data.data.name.substr(0, 1)}
@@ -168,7 +168,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     <h1 css={userName}>{user.name}</h1>
                     <p css={userEmail}>{user.email}</p>
                 </div>
-                <div css={closeButton} onClick={sidebarCloseHandle}>
+                <div css={closeButton} onClick={sideBarCloseHandle}>
                     <GrFormClose />
                 </div>
             </header>
@@ -214,4 +214,4 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
     );
 };
 
-export default Sidebar;
+export default SideBar;

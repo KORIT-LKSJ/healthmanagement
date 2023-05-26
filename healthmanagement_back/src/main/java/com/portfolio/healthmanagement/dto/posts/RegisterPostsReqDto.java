@@ -5,18 +5,14 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.portfolio.healthmanagement.entity.Posts;
+import com.portfolio.healthmanagement.entity.PostsImg;
 
 import lombok.Data;
 
 
 @Data
 public class RegisterPostsReqDto {
-	private int userId;
+	private int gymId;
 	private List<MultipartFile> imgFiles;
-	
-	public Posts toEntity() {
-		return Posts.builder()
-				.userId(userId)
-				.build();
-	}
+
 }
