@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { BiUser, BiSearch } from "react-icons/bi";
 import SearchBar from "../../SearchBar/SearchBar";
 import { useNavigate } from "react-router";
-import Sidebar from "../../SideBar/SideBar";
+import SideBar from "../../SideBar/SideBar";
 
 const header = css`
     position: relative;
@@ -41,23 +41,13 @@ const headerIcon = css`
     cursor: pointer;
 `;
 
-const headerOptionContainer = (isSidebarOpen, isSearchBarOpen) => css`
-    position: absolute;
-    transform: translateX(-50%);
-    top: 5%;
-    left: 50%;
-    width: 40%;
-    height: 40%;
-    overflow: hidden;
-`;
-
 const Header = ({ gyms, setGyms, refresh, setRefresh, search }) => {
     const navigate = useNavigate();
-    const [isSidebarOpen, setIsSidebarOpen] = useState();
+    const [isSideBarOpen, setIsSideBarOpen] = useState();
     const [isSearchBarOpen, setIsSearchBarOpen] = useState();
 
     const sideBarClickHandle = () => {
-        setIsSidebarOpen(!isSidebarOpen);
+        setIsSideBarOpen(!isSideBarOpen);
     };
 
     const searchBarClickHandle = () => {
@@ -88,7 +78,10 @@ const Header = ({ gyms, setGyms, refresh, setRefresh, search }) => {
                         <div style={{ width: 22 }}></div>
                     )}
                 </div>
-                <Sidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+                <SideBar
+                    isSideBarOpen={isSideBarOpen}
+                    setIsSideBarOpen={setIsSideBarOpen}
+                />
                 {search ? (
                     <SearchBar
                         isSearchBarOpen={isSearchBarOpen}

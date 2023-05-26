@@ -29,7 +29,28 @@ public class PostsServiceImpl implements PostsService{
 	
 	@Override
 	public int registerPosts(RegisterPostsReqDto registerPostsReqDto) {
-		Posts posts = registerPostsReqDto.toEntity();
+		List<MultipartFile> files = registerPostsReqDto.getImgFiles();
+		List<PostsImg> postsFiles = new ArrayList<>();
+		files.forEach(file -> {
+			String originFileName = file.getOriginalFilename();
+			String extension = originFileName.substring(originFileName.lastIndexOf("."));
+			String tempFileName = UUID.randomUUID().toString().replaceAll("-", "") + extension;
+			
+			Path uploadPath = Paths.get(filePath + "post/" + tempFileName);
+			File f = new File(filePath + "post");
+			if(!f.exists()) {
+				f.mkdir();
+			}
+			
+			postsFiles.add(PostsImg.builder()
+					.gymId(registerPostsReqDto.getGymId())
+					.originName(file.getOriginalFilename())
+					.tempName(tempFileName)
+					.imgSize(Long.toString(file.getSize()))
+					.build());
+		});
+		
+		
 		postsRepository.registerPosts(posts);
 		
 		uploadFile(posts.getPostsId(), registerPostsReqDto.getImgFiles());
