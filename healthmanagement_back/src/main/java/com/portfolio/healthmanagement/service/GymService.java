@@ -87,7 +87,8 @@ public class GymService {
 		PrincipalUserDetails principalUserDetails = (PrincipalUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		GymOwner gymOwner = GymOwner.builder().userId(principalUserDetails.getUserId()).gymId(gym.getGymId()).build();
-		return gymRepository.saveGymOwner(gymOwner);
+		gymRepository.saveGymOwner(gymOwner);
+		return gym.getGymId();
 	}
 
 	public int getLikeCount(int gymId) {

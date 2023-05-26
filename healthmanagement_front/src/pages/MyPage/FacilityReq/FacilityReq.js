@@ -18,12 +18,6 @@ const container = css`
     align-items: center;
 `;
 
-const errorMsg = css`
-    margin-left: 5px;
-    font-size: 12px;
-    color: red;
-`;
-
 const main = css`
     display: flex;
     flex-direction: column;
@@ -116,6 +110,12 @@ const input = css`
     color: #58595b;
 `;
 
+const errorMsg = css`
+    margin-left: 5px;
+    font-size: 12px;
+    color: red;
+`;
+
 const addressInput = css`
     display: flex;
     justify-content: space-between;
@@ -143,9 +143,7 @@ const gymRegiste = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 2% 2%;
     width: 100%;
-    height: 100%;
 `;
 
 const registeButton = css`
@@ -163,6 +161,7 @@ const postList = css`
     flex-direction: column;
     padding-bottom: 10px;
 `;
+
 const FacilityReq = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -236,7 +235,7 @@ const FacilityReq = () => {
             
 
             const formData = new FormData();
-            formData.append("gymId", gymId);
+            formData.append("gymId", response.data.gymId);
 
             imgFiles.forEach((imgFile) => {
                 formData.append("imgFiles", imgFile.file);
@@ -268,28 +267,6 @@ const FacilityReq = () => {
         }
     
     });
-
-    // const postRegisterSubmit = useMutation(async () => {
-    //     return response;
-    // });
-
-    // const principal = useQuery(["principal"], async () => {
-    //     const option = {
-    //         headers: {
-    //             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-    //         },
-    //     };
-    //     const response = await axios.get(
-    //         "http://localhost:8080/account/principal",
-    //         option
-    //     );
-    //     return response;
-    // });
-
-    // if (principal.isLoading) {
-    //     return <>...Loading</>;
-    // }
-
 
     const handleClick = () => {
         window.location.href = "/";
@@ -333,7 +310,7 @@ const FacilityReq = () => {
     const removeFileHandle = (e) => {
         setImgFiles([
             ...imgFiles.filter(
-                (imgFile) => imgFile.id != parseInt(e.target.value)
+                (imgFile) => imgFile.id !== parseInt(e.target.value)
             ),
         ]);
     };
@@ -361,7 +338,7 @@ const FacilityReq = () => {
                         <input
                             css={input}
                             type="name"
-                            placeholder="운동시설 이름"
+                            placeholder="헬스장 이름을 입력해주세요."
                             onChange={handleChange}
                             name="gymName"
                         />
@@ -392,24 +369,25 @@ const FacilityReq = () => {
                                 setcompany={setEnroll_company}
                             ></Post>
                         )}
+                        <div css={errorMsg}></div>
                     </div>
                     <div css={inputBox}>
                         <label css={inputTitle}>전화번호</label>
                         <input
                             css={input}
                             type="text"
-                            placeholder="-까지 입력해주세요"
+                            placeholder="전화번호를 입력해주세요. (ex: 010-1234-5678)"
                             onChange={handleChange}
                             name="gymTel"
                         />
                         <div css={errorMsg}>{errorMessage.gymTel}</div>
                     </div>
                     <div css={inputBox}>
-                        <label css={inputTitle}>사업자등록번호 </label>
+                        <label css={inputTitle}>사업자등록번호</label>
                         <input
                             css={input}
                             type="text"
-                            placeholder="-를 제외하고 입력해주세요"
+                            placeholder="사업자등록번호를 입력해주세요. (ex: 123-45-67890)"
                             onChange={handleChange}
                             name="businessNumber"
                         />
@@ -420,7 +398,7 @@ const FacilityReq = () => {
                         <input
                             css={input}
                             type="text"
-                            placeholder="가격입력"
+                            placeholder="이용 가격을 입력해주세요."
                             onChange={handleChange}
                             name="gymPrice"
                         />
@@ -437,22 +415,7 @@ const FacilityReq = () => {
                         />
                     </div>
                     <div css={inputBox}>
-                        <label css={inputTitle}>
-                            이미지{" "}
-                            {/* {isOpen === true ? (
-                                <button
-                                    onClick={() => {
-                                        postRegisterSubmit.mutate();
-                                        isOpenClickHandle();
-                                    }}
-                                >
-                                    {" "}
-                                    저장{" "}
-                                </button>
-                            ) : (
-                                ""
-                            )} */}
-                        </label>
+                        <label css={inputTitle}>이미지 </label>
                         <div css={imgInput}>
                             <input
                                 type="file"
@@ -476,17 +439,12 @@ const FacilityReq = () => {
                             </ul>
                         </div>
                     </div>
-
                     <div css={gymRegiste}>
                         <button
                             css={registeButton}
-                            // onClick={{registerHandleSubmit.mutate(); postRegisterSubmit.mutate();}} 코드로 실행시
-                            // registerHandleSubmit.mutate(); 부분에서 오류가 나도 postRegisterSubmit.mutate();가 실행되어
-                            // 헬스장 등록은 안되는데 사진만 등록되는 현상이 생겨 비동기로 처리함.
                             onClick={() => registerHandleSubmit.mutate()}
                         >
-                            {" "}
-                            등록하기{" "}
+                            등록하기
                         </button>
                     </div>
                 </div>

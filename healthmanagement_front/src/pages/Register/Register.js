@@ -248,7 +248,7 @@ const Register = () => {
                             <input
                                 css={registerInput}
                                 type="text"
-                                placeholder="생년월일을 입력해 주세요."
+                                placeholder="생년월일을 입력해 주세요. (ex: 1900-01-01)"
                                 name="birthdate"
                                 onChange={onchangeHandle}
                             />
@@ -259,7 +259,7 @@ const Register = () => {
                             <input
                                 css={registerInput}
                                 type="tel"
-                                placeholder="전화번호를 입력해 주세요."
+                                placeholder="전화번호를 입력해 주세요. (ex: 010-1234-5678)"
                                 name="phone"
                                 onChange={onchangeHandle}
                             />

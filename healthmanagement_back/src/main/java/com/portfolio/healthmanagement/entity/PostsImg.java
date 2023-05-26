@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class PostsImg {
-	private int postsImgId;
-	private int postsId;
+	private int gymImgId;
+	private int gymId;
 	private String originName;
 	private String tempName;
 	private String imgSize;

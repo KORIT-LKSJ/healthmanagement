@@ -65,8 +65,7 @@ const input = css`
     width: 100%;
     background-color: white;
     border: 1px solid #dbdbdb;
-    border-radius: 10px;
-    padding: 12px;
+    padding: 8px;
 `;
 
 const footer = css`
@@ -109,12 +108,27 @@ const FindPassword = () => {
             <main css={main}>
                 <div css={titleContainer}>
                     <h1 css={title}>비밀번호 찾기</h1>
-                    <h2 css={subtitle}>비밀번호는 이름, 가입한 아이디, 이메일을 통해 찾으실 수 있습니다.</h2>
+                    <h2 css={subtitle}>
+                        비밀번호는 이름, 가입한 아이디, 이메일을 통해 찾으실 수
+                        있습니다.
+                    </h2>
                 </div>
                 <div css={inputContainer}>
-                    <input css={input} type="text" placeholder="아이디를 입력해 주세요." />
-                    <input css={input} type="text" placeholder="이름을 입력해 주세요." />
-                    <input css={input} type="email" placeholder="이메일을 입력해 주세요." />
+                    <input
+                        css={input}
+                        type="text"
+                        placeholder="아이디를 입력해 주세요."
+                    />
+                    <input
+                        css={input}
+                        type="text"
+                        placeholder="이름을 입력해 주세요."
+                    />
+                    <input
+                        css={input}
+                        type="email"
+                        placeholder="이메일을 입력해 주세요."
+                    />
                 </div>
             </main>
             <footer css={footer}>
