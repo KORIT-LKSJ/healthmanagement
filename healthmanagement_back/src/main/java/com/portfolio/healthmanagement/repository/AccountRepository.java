@@ -8,4 +8,5 @@ import com.portfolio.healthmanagement.entity.User;
 public interface AccountRepository {
 	
 	public User getUserInfo(int userId);
+	public int modifyUser(User user);
 }

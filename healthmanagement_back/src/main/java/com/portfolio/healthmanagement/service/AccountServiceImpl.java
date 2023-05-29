@@ -4,6 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.portfolio.healthmanagement.dto.account.ModifyUserInfoReqDto;
 import com.portfolio.healthmanagement.dto.response.PrincipalRespDto;
 import com.portfolio.healthmanagement.entity.User;
 import com.portfolio.healthmanagement.repository.AccountRepository;
@@ -33,4 +34,16 @@ public class AccountServiceImpl implements AccountService {
 	public User getUserInfo(int userId) {
 		return accountRepository.getUserInfo(userId);
 	}
+
+	@Override
+	public int modifyUser(ModifyUserInfoReqDto modifyUserInfoReqDto) {
+		User userEntity = userRepository.findUserByUsername(modifyUserInfoReqDto.getUsername());
+		userEntity.setEmail(modifyUserInfoReqDto.getEmail());
+		userEntity.setPhone(modifyUserInfoReqDto.getPhone());
+		return accountRepository.modifyUser(userEntity);
+	}
+
+
+
+	
 }
