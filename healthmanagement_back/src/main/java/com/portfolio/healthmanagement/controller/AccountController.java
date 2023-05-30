@@ -48,10 +48,16 @@ public class AccountController {
 		return ResponseEntity.ok(null);
 	}
 	// 이메일이라는 파라미터를 가져와서 해당정보를 사용해 아이디를 찾는 로직 구현중 
-	@GetMapping("/find-username")
+	@GetMapping("/find-userId")
 	public ResponseEntity<?> findUsername(@RequestParam("email") String email){
 		String username = accountService.findUsernameByEmail(email);
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.ok(null);
+	}
+	// 이메일이라는 파라미터를 가져와서 해당정보를 사용해 패스워드를 찾는 로직 구현중
+	@GetMapping("/find-userPassword")
+	public ResponseEntity<?> findUserPassword(@RequestParam("email") String email){
+		String userpassword = accountService.findUserPasswordByEmail(email);
+		return ResponseEntity.ok(null);
 	}
 	
 }

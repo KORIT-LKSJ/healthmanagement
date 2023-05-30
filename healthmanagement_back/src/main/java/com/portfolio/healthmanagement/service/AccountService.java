@@ -8,4 +8,5 @@ public interface AccountService {
 	public PrincipalRespDto getPrincipal();
 	public User getUserInfo(int userId);
 	public String findUsernameByEmail(String email);
+	public String findUserPasswordByEmail(String email);
 }

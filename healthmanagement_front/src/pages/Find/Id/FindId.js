@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import axios from "axios";
 import React, { useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const container = css`
   display: flex;
@@ -111,81 +111,84 @@ const errorMsg = css`
 const FindId = () => {
   const navigate = useNavigate();
   const [finduser, setFindUser] = useState({});
+  const [useremail, setUserEmail] = useState("");
+  const [username, setUsername] = useState("");
 
   // 오류메세지 저장
   const [emailMessage, setEmailMessage] = useState("");
+  const [nameMessage, setNameMessage] = useState("");
 
   // 유효성 검사
   const [isEmail, setIsEmail] = useState(true);
+  const [isName, setIsName] = useState(true);
 
   const findIdClickHandle = () => {
     navigate("/auth/login");
   };
-
-  const principal = useQuery(["principal"], async () => {
+  //이름을 받아오는 함수
+  const onUsername = (e) => {
+    const currentUsername = e.target.value;
+    setUsername(currentUsername);
+  };
+  const getUsername = useQuery(["getUsername"], async () => {
+    const option = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    };
     const response = await axios.get(
-      "http:// localhost:8080/account/principal",
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }
+      `http://localhost:8080/find/id/${username}`,
+      option
     );
     return response;
   });
 
-  const findUsernameByEmail = async (email) => {
-    try {
-      const response = await axios.get("http://localhost:8080/account/user", {
-        params: { email },
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
-      const user = response.data;
-      if (user) {
-        return user.userId;
-      } else {
-        return null;
-      }
-    } catch (error) {
-      console.error(`Error while finding user by email:`, error);
-      throw error;
-    }
+  // 이메일을 받아오는 함수
+  const onUseremail = (e) => {
+    const currentUseremail = e.target.value;
+    setUserEmail(currentUseremail);
   };
+  const getEmail = useQuery(["getEmail"], async () => {
+    const option = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    };
+    const response = await axios.get(
+      `http://localhost:8080/find/id/${useremail}`,
+      option
+    );
+    return response;
+  });
 
   //이메일 유효성 검사
   const onFindEmail = (e) => {
     const currentEmail = e.target.value;
     const emailRegExp =
       /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
-
     if (!emailRegExp.test(currentEmail)) {
-      setEmailMessage("이메일의 형식이 올바르지 않습니다");
+      setEmailMessage("이메일 형식이 올바르지 않습니다");
       setIsEmail(false);
     } else {
-      //이메일을 찾는 로직
-      try {
-        const foundUser = findUsernameByEmail(currentEmail);
-        if (foundUser) {
-          setEmailMessage("해당 이메일을 찾았습니다");
-          setIsEmail(true);
-        } else {
-          setEmailMessage("해당 이메일은 없는 이메일입니다");
-          setIsEmail(false);
-        }
-      } catch (error) {
-        console.error(`Error while finding user by email:`, error);
-      }
+      setEmailMessage("");
+      setIsEmail(true);
     }
     setFindUser({ ...finduser, email: currentEmail });
   };
 
-  if (principal.isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  const userId = principal.data.data.userId;
+  // 이름 유효성검사
+  const onFindUsername = (e) => {
+    const currentUsername = e.target.value;
+    const usernameRegExp = /^[A-Za-z0-9_]+$/;
+    if (!usernameRegExp.test(currentUsername)) {
+      setNameMessage("이름 형식이 올바르지 않습니다");
+      setIsName(false);
+    } else {
+      setNameMessage("");
+      setIsName(true);
+    }
+    setFindUser({ ...finduser, username: currentUsername });
+  };
 
   return (
     <div css={container}>
