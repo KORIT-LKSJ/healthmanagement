@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import axios from "axios";
 import React, { useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 const container = css`
   display: flex;
@@ -111,8 +111,9 @@ const errorMsg = css`
 const FindId = () => {
   const navigate = useNavigate();
   const [finduser, setFindUser] = useState({});
-  const [useremail, setUserEmail] = useState("");
-  const [username, setUsername] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const email = searchParams.get("email");
+  const username = searchParams.get("name");
 
   // 오류메세지 저장
   const [emailMessage, setEmailMessage] = useState("");
@@ -125,37 +126,40 @@ const FindId = () => {
   const findIdClickHandle = () => {
     navigate("/auth/login");
   };
+
   //이름을 받아오는 함수
   const onUsername = (e) => {
-    const currentUsername = e.target.value;
-    setUsername(currentUsername);
+    const usernameValue = e.target.value;
+    setFindUser({ ...finduser, username: usernameValue });
   };
-  const getUsername = useQuery(["getUsername"], async () => {
+  const getUsername = useQuery(["getUsername", finduser.username], async () => {
     const option = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     };
     const response = await axios.get(
-      `http://localhost:8080/find/id/${username}`,
+      `http://localhost:8080/find/id/${finduser.username}`,
       option
     );
+    console.log(username);
     return response;
   });
 
   // 이메일을 받아오는 함수
   const onUseremail = (e) => {
-    const currentUseremail = e.target.value;
-    setUserEmail(currentUseremail);
+    const emailValue = e.target.value;
+    setFindUser({ ...finduser, email: emailValue });
   };
-  const getEmail = useQuery(["getEmail"], async () => {
+  const getEmail = useQuery(["getEmail", finduser.email], async () => {
     const option = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     };
     const response = await axios.get(
-      `http://localhost:8080/find/id/${useremail}`,
+      `http://localhost:8080/
+      find/id/${finduser.email}`,
       option
     );
     return response;
@@ -203,11 +207,18 @@ const FindId = () => {
           </h2>
         </div>
         <div css={inputContainer}>
-          <input css={input} type="text" placeholder="이름을 입력해 주세요." />
+          <input
+            css={input}
+            type="text"
+            placeholder="이름을 입력해 주세요."
+            onChange={onFindUsername}
+          />
+          <div css={errorMsg}>{nameMessage}</div>
           <input
             css={input}
             type="email"
             placeholder="이메일을 입력해 주세요."
+            onChange={onFindEmail}
           />
           <div css={errorMsg}>{emailMessage}</div>
         </div>

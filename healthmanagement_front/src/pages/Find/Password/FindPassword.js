@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import axios from "axios";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const container = css`
   display: flex;
@@ -103,77 +103,102 @@ const findButton = css`
   cursor: pointer;
 `;
 
+const errorMsg = css`
+  font-size: 14px;
+  color: red;
+`;
+
 const FindPassword = () => {
   const navigate = useNavigate();
   const [findPassword, setFindPassword] = useState({});
-  const [useremail, setUserEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [userId, setUserId] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const email = searchParams.get("email");
+  const username = searchParams.get("name");
+  const userid = searchParams.get("id");
 
   // 오류메세지 저장
   const [emailMessage, setEmailMessage] = useState("");
   const [nameMessage, setNameMessage] = useState("");
+  const [idMessage, setIdMessage] = useState("");
 
   // 유효성 검사
   const [isEmail, setIsEmail] = useState(true);
   const [isName, setIsName] = useState(true);
+  const [isId, setIsId] = useState(true);
 
   const findPasswordHandle = () => {
     navigate("/auth/login");
   };
   // 아이디를 받아오는 함수
   const onUserId = (e) => {
-    const currentUserId = e.target.value;
-    setUserId(currentUserId);
+    const useridValue = e.target.value;
+    setFindPassword({ ...findPassword, userid: useridValue });
   };
   const getUserId = useQuery(["getUserId"], async () => {
-    const option ={
-        headers:{
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
+    const option = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     };
     const response = await axios.get(
-        `http://localhost:8080/find/password/${userId}`,
-        option
+      `http://localhost:8080/find/password/${findPassword.userid}`,
+      option
     );
     return response;
-  })
+  });
 
   // 이름을 받아오는 함수
   const onUsername = (e) => {
-    const currentUsername = e.target.value;
-    setUsername(currentUsername);
+    const usernameValue = e.target.value;
+    setFindPassword({ ...findPassword, username: usernameValue });
   };
-  const getUsername = useQuery(["getUsername"], async () => {
+  const getUsername = useQuery(
+    ["getUsername", findPassword.username],
+    async () => {
+      const option = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      };
+      const response = await axios.get(
+        `http://localhost:8080/find/password/${findPassword.username}`,
+        option
+      );
+      return response;
+    }
+  );
+
+  // 이메일을 받아오는 함수
+  const onUseremail = (e) => {
+    const emailValue = e.target.value;
+    setFindPassword({ ...findPassword, email: emailValue });
+  };
+  const getEmail = useQuery(["getEmail", findPassword.email], async () => {
     const option = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     };
     const response = await axios.get(
-      `http://localhost:8080/find/password/${username}`,
+      `https://localhost:8080/find/password/${findPassword.email}`,
       option
     );
     return response;
   });
 
-  // 이메일을 받아오는 함수
-  const onUseremail = (e) => {
-    const currentUseremail = e.target.value;
-    setUserEmail(currentUseremail);
+  //아이디 유효성 검사
+  const onFindUserId = (e) => {
+    const currentUserId = e.target.value;
+    const userIdRegExp = /^[A-Za-z0-9_]+$/;
+    if (!userIdRegExp.test(currentUserId)) {
+      setIdMessage("아이디가 올바르지 않습니다");
+      setIsId(false);
+    } else {
+      setIdMessage("올바른 아이디입니다");
+      setIsId(true);
+    }
+    setFindPassword({ ...findPassword, userId: currentUserId });
   };
-  const getEmail = useQuery(["getEmail"], async () => {
-    const option = {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    };
-    const response = await axios.get(
-      `https://localhost:8080/find/password/${useremail}`,
-      option
-    );
-    return response;
-  });
 
   //이름 유효성 검사
   const onFindUsername = (e) => {
@@ -194,14 +219,14 @@ const FindPassword = () => {
     const currentEmail = e.target.value;
     const emailRegExp =
       /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
-      if(!emailRegExp.test(currentEmail)){
-        setEmailMessage("이메일 형식이 올바르지 않습니다");
-        setIsEmail(false);
-      }else{
-        setEmailMessage("");
-        setIsEmail(true);
-      }
-      setFindPassword({...findPassword, email:currentEmail});
+    if (!emailRegExp.test(currentEmail)) {
+      setEmailMessage("이메일 형식이 올바르지 않습니다");
+      setIsEmail(false);
+    } else {
+      setEmailMessage("");
+      setIsEmail(true);
+    }
+    setFindPassword({ ...findPassword, email: currentEmail });
   };
 
   return (
@@ -221,13 +246,23 @@ const FindPassword = () => {
             css={input}
             type="text"
             placeholder="아이디를 입력해 주세요."
+            onChange={onFindUserId}
           />
-          <input css={input} type="text" placeholder="이름을 입력해 주세요." />
+          <div css={errorMsg}>{idMessage}</div>
+          <input
+            css={input}
+            type="text"
+            placeholder="이름을 입력해 주세요."
+            onChange={onFindUsername}
+          />
+          <div css={errorMsg}>{nameMessage}</div>
           <input
             css={input}
             type="email"
             placeholder="이메일을 입력해 주세요."
+            onChange={onFindEmail}
           />
+          <div css={errorMsg}>{emailMessage}</div>
         </div>
       </main>
       <footer css={footer}>
