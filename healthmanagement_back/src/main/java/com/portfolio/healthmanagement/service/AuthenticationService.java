@@ -20,5 +20,7 @@ public interface AuthenticationService extends OAuth2UserService<OAuth2UserReque
 	public int oauth2Registe(OAuth2RegisterReqDto oAuth2RegisterReqDto);
 	public boolean checkPassword(OAuth2ProviderMergeReqDto oAuth2ProviderMergeReqDto);
 	public int oauth2ProviderMerge(OAuth2ProviderMergeReqDto oAuth2ProviderMergeReqDto);
+	public String findUsernameByEmail(String email);
+	public String findUserPasswordByEmail(String email);
 }
 

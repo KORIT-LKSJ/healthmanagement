@@ -33,26 +33,10 @@ public class AccountServiceImpl implements AccountService {
 	public User getUserInfo(int userId) {
 		return accountRepository.getUserInfo(userId);
 	}
-
-	// 이메일로 아이디를 찾을 수 있는 로직 구현중
-	@Override
-	public String findUsernameByEmail(String email) {
-		User user = userRepository.findUsernameByEmail(email);
-		if (user != null) {
-			return user.getUsername();
-		} else {
-			return null;
-		}
-	}
-
-	// 이메일로 패스워드를 찾을 수 있는 로직 구현중 
-	@Override
-	public String findUserPasswordByEmail(String email) {
-		User user = userRepository.findUserPasswordByEmail(email);
-		if (user != null) {
-			return user.getPassword();
-		} else {
-			return null;
-		}
-	}
 }
+
+	
+
+
+	
+	

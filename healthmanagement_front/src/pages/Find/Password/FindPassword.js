@@ -104,7 +104,7 @@ const findButton = css`
 `;
 
 const errorMsg = css`
-  font-size: 14px;
+  font-size: 12px;
   color: red;
 `;
 
@@ -188,45 +188,45 @@ const FindPassword = () => {
 
   //아이디 유효성 검사
   const onFindUserId = (e) => {
-    const currentUserId = e.target.value;
+    const useridValue = e.target.value;
     const userIdRegExp = /^[A-Za-z0-9_]+$/;
-    if (!userIdRegExp.test(currentUserId)) {
+    if (!userIdRegExp.test(useridValue)) {
       setIdMessage("아이디가 올바르지 않습니다");
       setIsId(false);
     } else {
       setIdMessage("올바른 아이디입니다");
       setIsId(true);
     }
-    setFindPassword({ ...findPassword, userId: currentUserId });
+    setFindPassword({ ...findPassword, userId: useridValue });
   };
 
   //이름 유효성 검사
   const onFindUsername = (e) => {
-    const currentUsername = e.target.value;
+    const usernameValue = e.target.value;
     const usernameRegExp = /^[A-Za-z0-9_]+$/;
-    if (!usernameRegExp.test(currentUsername)) {
+    if (!usernameRegExp.test(usernameValue)) {
       setNameMessage("이름 형식이 올바르지 않습니다");
       setIsName(false);
     } else {
       setNameMessage("");
       setIsName(true);
     }
-    setFindPassword({ ...findPassword, username: currentUsername });
+    setFindPassword({ ...findPassword, username: usernameValue });
   };
 
   //이메일 유효성 검사
   const onFindEmail = (e) => {
-    const currentEmail = e.target.value;
+    const emailValue = e.target.value;
     const emailRegExp =
       /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
-    if (!emailRegExp.test(currentEmail)) {
+    if (!emailRegExp.test(emailValue)) {
       setEmailMessage("이메일 형식이 올바르지 않습니다");
       setIsEmail(false);
     } else {
       setEmailMessage("");
       setIsEmail(true);
     }
-    setFindPassword({ ...findPassword, email: currentEmail });
+    setFindPassword({ ...findPassword, email: emailValue });
   };
 
   return (

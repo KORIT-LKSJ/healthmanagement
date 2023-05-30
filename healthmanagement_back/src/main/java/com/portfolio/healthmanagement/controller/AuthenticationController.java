@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.portfolio.healthmanagement.aop.annotation.ValidAspect;
@@ -19,6 +20,7 @@ import com.portfolio.healthmanagement.dto.auth.OAuth2RegisterReqDto;
 import com.portfolio.healthmanagement.dto.auth.registerReqDto;
 import com.portfolio.healthmanagement.exception.CustomException;
 import com.portfolio.healthmanagement.security.JwtTokenProvider;
+import com.portfolio.healthmanagement.service.AccountService;
 import com.portfolio.healthmanagement.service.AuthenticationService;
 
 import lombok.RequiredArgsConstructor;
@@ -72,5 +74,17 @@ public class AuthenticationController {
 		};
 		return ResponseEntity.ok(authenticationService.oauth2ProviderMerge(oAuth2ProviderMergeReqDto));
 	}
+	// 이메일이라는 파라미터를 가져와서 해당정보를 사용해 아이디를 찾는 로직 구현중 
+		@GetMapping("/find/userid")
+		public ResponseEntity<?> findUsername(@RequestParam("email") String email){
+			String username = authenticationService.findUsernameByEmail(email);
+			return ResponseEntity.ok(null);
+		}
+		// 이메일이라는 파라미터를 가져와서 해당정보를 사용해 패스워드를 찾는 로직 구현중
+		@GetMapping("/find/userpassword")
+		public ResponseEntity<?> findUserPassword(@RequestParam("email") String email){
+			String userpassword = authenticationService.findUserPasswordByEmail(email);
+			return ResponseEntity.ok(null);
+		}
 
 }

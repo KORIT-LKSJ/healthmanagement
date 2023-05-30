@@ -36,38 +36,39 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
-	
+
 	private final UserRepository userRepositiory;
 	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 	private final JwtTokenProvider jwtTokenProvider;
-	
+
 	public void checkDuplicatedUsername(String username) {
-		if(userRepositiory.findUserByUsername(username) != null) {
-			throw new CustomException("Duplicated Email", ErrorMap.builder().put("username","가입 된 아이디 입니다." ).build());
+		if (userRepositiory.findUserByUsername(username) != null) {
+			throw new CustomException("Duplicated Email", ErrorMap.builder().put("username", "가입 된 아이디 입니다.").build());
 		}
 	}
-	
+
 	public int register(registerReqDto registerReqDto) {
-		
+
 		User userEntity = registerReqDto.toEntity();
 		userRepositiory.saveUser(userEntity);
-		
+
 		Authority authority = null;
-		
-		if(registerReqDto.getUserType() == 1) {
+
+		if (registerReqDto.getUserType() == 1) {
 			authority = Authority.builder().userId(userEntity.getUserId()).roleId(2).build();
 		} else {
 			authority = Authority.builder().userId(userEntity.getUserId()).roleId(3).build();
 		}
-		
+
 		return userRepositiory.saveAuthority(authority);
 	}
 
 	public String login(LoginReqDto loginReqDto) {
-		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-				new UsernamePasswordAuthenticationToken(loginReqDto.getUsername(),loginReqDto.getPassword());
-		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(usernamePasswordAuthenticationToken);
-		
+		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+				loginReqDto.getUsername(), loginReqDto.getPassword());
+		Authentication authentication = authenticationManagerBuilder.getObject()
+				.authenticate(usernamePasswordAuthenticationToken);
+
 		return jwtTokenProvider.generateAccessToken(authentication);
 	}
 
@@ -75,10 +76,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User userEntity = userRepositiory.findUserByUsername(username);
 
-		if(userEntity == null) {
+		if (userEntity == null) {
 			return null;
 		}
-		
+
 		return userEntity.toPrincipal();
 	}
 
@@ -87,25 +88,26 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService = new DefaultOAuth2UserService();
 		// 모든 oauth의 형식을 같게 만들기 위해 한바퀴 돔
 		OAuth2User oAuth2User = oAuth2UserService.loadUser(userRequest);
-		
+
 		String registrationId = userRequest.getClientRegistration().getRegistrationId();
 		OAuth2Attribute oAuth2Attribute = OAuth2Attribute.of(registrationId, oAuth2User.getAttributes());
 		Map<String, Object> attributes = oAuth2Attribute.convertToMap();
-		
-		return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")), attributes, "email");
+
+		return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")), attributes,
+				"email");
 	}
-	
+
 	public int oauth2Registe(OAuth2RegisterReqDto oAuth2RegisterReqDto) {
 		User userEntity = oAuth2RegisterReqDto.toEntity();
 		userRepositiory.saveUser(userEntity);
-		
+
 		Authority authority = null;
-		if(oAuth2RegisterReqDto.getUserType() == 1) {
+		if (oAuth2RegisterReqDto.getUserType() == 1) {
 			authority = Authority.builder().userId(userEntity.getUserId()).roleId(2).build();
 		} else {
 			authority = Authority.builder().userId(userEntity.getUserId()).roleId(3).build();
 		}
-		
+
 		return userRepositiory.saveAuthority(authority);
 	}
 
@@ -120,14 +122,36 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	public int oauth2ProviderMerge(OAuth2ProviderMergeReqDto oAuth2ProviderMergeReqDto) {
 		User userEntity = userRepositiory.findUserByEmail(oAuth2ProviderMergeReqDto.getEmail());
 		String provider = oAuth2ProviderMergeReqDto.getProvider();
-		
-		if(StringUtils.hasText(userEntity.getProvider())) {
+
+		if (StringUtils.hasText(userEntity.getProvider())) {
 			userEntity.setProvider(userEntity.getProvider() + "," + provider);
 		} else {
 			userEntity.setProvider(provider);
 		}
-		
+
 		return userRepositiory.updateProvider(userEntity);
 	}
-	
+
+	// 이메일로 아이디를 찾을 수 있는 로직 구현중
+	@Override
+	public String findUsernameByEmail(String email) {
+		User user = userRepositiory.findUsernameByEmail(email);
+		if (user != null) {
+			return user.getUsername();
+		} else {
+		return null;
+	}
+	}
+
+	// 이메일로 패스워드를 찾을 수 있는 로직 구현중
+	@Override
+	public String findUserPasswordByEmail(String email) {
+		User user = userRepositiory.findUserPasswordByEmail(email);
+		if (user != null) {
+			return user.getPassword();
+		} else {
+			return null;
+		}
+	}
+
 }

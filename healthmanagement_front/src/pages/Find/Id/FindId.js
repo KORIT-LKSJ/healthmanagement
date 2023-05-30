@@ -104,7 +104,7 @@ const findButton = css`
 `;
 
 const errorMsg = css`
-  font-size: 14px;
+  font-size: 12px;
   color: red;
 `;
 
@@ -139,7 +139,7 @@ const FindId = () => {
       },
     };
     const response = await axios.get(
-      `http://localhost:8080/find/id/${finduser.username}`,
+      `http://localhost:8080/auth/find/id/${finduser.username}`,
       option
     );
     console.log(username);
@@ -159,7 +159,7 @@ const FindId = () => {
     };
     const response = await axios.get(
       `http://localhost:8080/
-      find/id/${finduser.email}`,
+      auth/find/id/${finduser.email}`,
       option
     );
     return response;
@@ -167,31 +167,31 @@ const FindId = () => {
 
   //이메일 유효성 검사
   const onFindEmail = (e) => {
-    const currentEmail = e.target.value;
+    const emailValue = e.target.value;
     const emailRegExp =
       /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
-    if (!emailRegExp.test(currentEmail)) {
+    if (!emailRegExp.test(emailValue)) {
       setEmailMessage("이메일 형식이 올바르지 않습니다");
       setIsEmail(false);
     } else {
       setEmailMessage("");
       setIsEmail(true);
     }
-    setFindUser({ ...finduser, email: currentEmail });
+    setFindUser({ ...finduser, email: emailValue });
   };
 
   // 이름 유효성검사
   const onFindUsername = (e) => {
-    const currentUsername = e.target.value;
+    const usernameValue = e.target.value;
     const usernameRegExp = /^[A-Za-z0-9_]+$/;
-    if (!usernameRegExp.test(currentUsername)) {
+    if (!usernameRegExp.test(usernameValue)) {
       setNameMessage("이름 형식이 올바르지 않습니다");
       setIsName(false);
     } else {
       setNameMessage("");
       setIsName(true);
     }
-    setFindUser({ ...finduser, username: currentUsername });
+    setFindUser({ ...finduser, username: usernameValue });
   };
 
   return (
