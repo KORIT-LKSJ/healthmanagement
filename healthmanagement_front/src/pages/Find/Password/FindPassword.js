@@ -112,9 +112,7 @@ const FindPassword = () => {
   const navigate = useNavigate();
   const [findPassword, setFindPassword] = useState({});
   const [searchParams, setSearchParams] = useSearchParams();
-  const email = searchParams.get("email");
-  const username = searchParams.get("name");
-  const userid = searchParams.get("id");
+  const [findPasswordSubmit, setfindPasswordSubmit] = useState(false);
 
   // 오류메세지 저장
   const [emailMessage, setEmailMessage] = useState("");

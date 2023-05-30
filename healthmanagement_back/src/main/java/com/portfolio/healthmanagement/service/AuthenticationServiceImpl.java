@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.portfolio.healthmanagement.dto.auth.FindUsernameReqDto;
 import com.portfolio.healthmanagement.dto.auth.LoginReqDto;
 import com.portfolio.healthmanagement.dto.auth.OAuth2ProviderMergeReqDto;
 import com.portfolio.healthmanagement.dto.auth.OAuth2RegisterReqDto;
@@ -134,12 +135,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	// 이메일로 아이디를 찾을 수 있는 로직 구현중
 	@Override
-	public String findUsernameByEmail(String email) {
-		User user = userRepositiory.findUsernameByEmail(email);
-		if (user != null) {
-			return user.getUsername();
+	public String findUsernameByEmailAndName(FindUsernameReqDto findUsernameReqDto) {
+		String username = userRepositiory.findUserByEmailAndName(findUsernameReqDto.toEntity());
+		if (username == null) {
+			throw new CustomException("가입된 정보가 없습니다.");
 		} else {
-		return null;
+		return username;
 	}
 	}
 

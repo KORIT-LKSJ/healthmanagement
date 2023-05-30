@@ -94,13 +94,14 @@
 		where
 			user_id = #{userId}
 	</update>
-	<select id="findUsernameByEmail" resultMap="userMap">
+	<select id="findUserByEmailAndName" resultType="String" parameterType="com.portfolio.healthmanagement.entity.User">
 		select
-			ut.username
+			username
 		from
 			user_tb
 		where
 			email = #{email}
+		and name = #{name}
 	</select>
 	<select id="findUserPasswordByEmail" resultMap="userMap">
 		select

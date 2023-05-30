@@ -116,40 +116,6 @@ const select = css`
   display: flex;
   justify-content: center;
   border-style: double;
-  height: 180px;
-`;
-
-const rating = css`
-  display: flex;
-  width: 33.3%;
-  justify-content: center;
-  border: 1px solid black;
-  font-style: italic;
-  font-weight: 600;
-  font-size: 17px;
-  background-color: white;
-`;
-
-const coupon = css`
-  display: flex;
-  width: 33.3%;
-  justify-content: center;
-  border: 1px solid black;
-  font-style: italic;
-  font-weight: 600;
-  font-size: 17px;
-  background-color: white;
-`;
-
-const point = css`
-  display: flex;
-  width: 33.3%;
-  justify-content: center;
-  border: 1px solid black;
-  font-style: italic;
-  font-weight: 600;
-  font-size: 17px;
-  background-color: white;
 `;
 
 const sideContainer = css`
@@ -280,6 +246,20 @@ const nowButton = css`
   justify-content: space-between;
   font-size: 30px;
 `;
+const memberWd = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  width: 100%;
+  height: 100px;
+  font-weight: 600;
+  background-color: white;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
+`;
 
 const MyPage = () => {
   const [selectedFile, setSelectedFile] = useState(
@@ -357,6 +337,31 @@ const MyPage = () => {
 
   const roles = principalData.authorities.split(",");
 
+  // 회원탈퇴
+  const userDeletehandle = (e) => {
+    e.preventDefault();
+    if (window.confirm("확인을 누르면 회원정보가 삭제됩니다")) {
+      const userId = principalData.userId;
+      axios
+        .delete(
+          `${process.env.REACT_APP_PROXY_URL}/users/${principalData.userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        )
+        .then(() => {
+          localStorage.clear();
+          alert("그동안 이용해 주셔서 감사합니다");
+          navigate("/");
+        })
+        .catch((error) => alert(error.response.message));
+    } else {
+      return;
+    }
+  };
+
   return (
     <div css={container}>
       <Header />
@@ -390,11 +395,7 @@ const MyPage = () => {
               </div>
             </div>
           </div>
-          <div css={select}>
-            <div css={rating}>Rating</div>
-            <div css={coupon}>Coupon</div>
-            <div css={point}>Point</div>
-          </div>
+          <div css={select}></div>
           <div css={sideContainer}>
             <div css={accountSetting} onClick={modifyClickHandle}>
               <div css={accountTitle}>
@@ -416,6 +417,10 @@ const MyPage = () => {
                 <div css={bookMarkName}>BookMark</div>
               </div>
               <AiOutlineDoubleRight css={nowButton} />
+            </div>
+            <div css={memberWd} onClick={userDeletehandle}>
+              {" "}
+              회원탈퇴
             </div>
           </div>
         </div>
