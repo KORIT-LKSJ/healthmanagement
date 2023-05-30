@@ -47,4 +47,11 @@ public class AccountController {
 		System.out.println(modifyUserInfoReqDto);
 		return ResponseEntity.ok(null);
 	}
+	// 이메일이라는 파라미터를 가져와서 해당정보를 사용해 아이디를 찾는 로직 구현중 
+	@GetMapping("/find-username")
+	public ResponseEntity<?> findUsername(@RequestParam("email") String email){
+		String username = accountService.findUsernameByEmail(email);
+		return ResponseEntity.notFound().build();
+	}
+	
 }

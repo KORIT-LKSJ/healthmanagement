@@ -18,19 +18,30 @@ public class AccountServiceImpl implements AccountService {
 
 	private final AccountRepository accountRepository;
 	private final UserRepository userRepository;
-	
+
 	@Override
 	public PrincipalRespDto getPrincipal() {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalUserDetails principalUser = (PrincipalUserDetails) authentication.getPrincipal();
-		
+
 		User userEntity = userRepository.findUserByUsername(principalUser.getUsername());
 		return userEntity.toPrincipalRespDto();
 	}
-	
+
 	@Override
 	public User getUserInfo(int userId) {
 		return accountRepository.getUserInfo(userId);
+	}
+
+	// 이메일로 아이디를 찾을 수 있는 로직 구현중
+	@Override
+	public String findUsernameByEmail(String email) {
+		User user = userRepository.findUserByEmail(email);
+		if (user != null) {
+			return user.getUsername();
+		} else {
+			return null;
+		}
 	}
 }

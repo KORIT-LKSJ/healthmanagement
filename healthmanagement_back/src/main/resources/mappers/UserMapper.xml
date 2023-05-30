@@ -94,5 +94,13 @@
 		where
 			user_id = #{userId}
 	</update>
+	<select id="findUsernameByEmail" resultMap="userMap">
+		select
+			ut.username
+		from
+			user_tb
+		where
+			email = #{email}
+	</select>
 
 </mapper>

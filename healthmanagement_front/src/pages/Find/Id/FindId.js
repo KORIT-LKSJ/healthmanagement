@@ -111,7 +111,6 @@ const errorMsg = css`
 const FindId = () => {
   const navigate = useNavigate();
   const [finduser, setFindUser] = useState({});
-  const [findemail, setFindEmail] = useState({});
 
   // 오류메세지 저장
   const [emailMessage, setEmailMessage] = useState("");
@@ -123,7 +122,7 @@ const FindId = () => {
     navigate("/auth/login");
   };
 
-  const prinicpal = useQuery(["principal"], async () => {
+  const principal = useQuery(["principal"], async () => {
     const response = await axios.get(
       "http:// localhost:8080/account/principal",
       {
@@ -134,9 +133,26 @@ const FindId = () => {
     );
     return response;
   });
-  // 회원아이디를 찾는 것 구현중
 
-  // 이메일을 찾는 것 구현중
+  const findUsernameByEmail = async (email) => {
+    try {
+      const response = await axios.get("http://localhost:8080/account/user", {
+        params: { email },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+      const user = response.data;
+      if (user) {
+        return user.userId;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error(`Error while finding user by email:`, error);
+      throw error;
+    }
+  };
 
   //이메일 유효성 검사
   const onFindEmail = (e) => {
@@ -149,25 +165,27 @@ const FindId = () => {
       setIsEmail(false);
     } else {
       //이메일을 찾는 로직
-      const foundUser = findUserByEmail(currentEmail);
-      if (foundUser) {
-        setEmailMessage("해당 이메일을 찾았습니다");
-        setIsEmail(true);
-      } else {
-        setEmailMessage("해당 이메일은 없는 이메일입니다");
-        setIsEmail(false);
+      try {
+        const foundUser = findUsernameByEmail(currentEmail);
+        if (foundUser) {
+          setEmailMessage("해당 이메일을 찾았습니다");
+          setIsEmail(true);
+        } else {
+          setEmailMessage("해당 이메일은 없는 이메일입니다");
+          setIsEmail(false);
+        }
+      } catch (error) {
+        console.error(`Error while finding user by email:`, error);
       }
     }
     setFindUser({ ...finduser, email: currentEmail });
   };
 
-  if (prinicpal.isLoading) {
+  if (principal.isLoading) {
     return <div>Loading...</div>;
   }
 
-  const findUserByEmail = (email) => {};
-
-  const userId = prinicpal.data.data.userId;
+  const userId = principal.data.data.userId;
 
   return (
     <div css={container}>
