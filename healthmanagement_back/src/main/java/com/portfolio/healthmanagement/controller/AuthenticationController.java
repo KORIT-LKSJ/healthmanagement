@@ -85,6 +85,7 @@ public class AuthenticationController {
 	public ResponseEntity<?> findUserPassword(FindPasswordReqDto findPasswordReqDto){
 		return ResponseEntity.ok(authenticationService.findPasswordByEmailAndNameAndId(findPasswordReqDto));
 	}
+	
 		
 
 }

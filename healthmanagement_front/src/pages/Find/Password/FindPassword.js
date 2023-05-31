@@ -4,7 +4,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import Modal from "react-modal";
 
 const container = css`
   display: flex;
@@ -115,10 +114,10 @@ const errorMsgEmail = (isEmail) => css`
   color: ${isEmail ? "green" : "red"};
 `;
 
-const errorMsgId = (isUserId) => css`
+const errorMsgId = (isuserId) => css`
   margin-left: 5px;
   font-size: 12px;
-  color: ${isUserId ? "green" : "red"};
+  color: ${isuserId ? "green" : "red"};
 `;
 
 const modal = css`
@@ -188,12 +187,12 @@ const FindPassword = () => {
   // 오류메세지 저장
   const [emailMessage, setEmailMessage] = useState("");
   const [nameMessage, setNameMessage] = useState("");
-  const [userIdMessage, setUserIdMessage] = useState("");
+  const [useridMessage, setUserIdMessage] = useState("");
 
   // 유효성 검사
   const [isEmail, setIsEmail] = useState(true);
   const [isName, setIsName] = useState(true);
-  const [isUserId, setIsUserId] = useState(true);
+  const [isuserId, setIsUserId] = useState(true);
 
   const findPasswordHandle = () => {
     setfindPasswordSubmit(true);
