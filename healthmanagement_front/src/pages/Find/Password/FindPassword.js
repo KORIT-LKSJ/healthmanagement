@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Modal from "react-modal";
 
 const container = css`
   display: flex;
@@ -108,10 +109,69 @@ const errorMsg = css`
   color: red;
 `;
 
+const modal = css`
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #00000088;
+`;
+const modalContainer = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border: 1px solid #dbdbdb;
+  border-radius: 10px;
+  width: 300px;
+  height: 200px;
+
+  background-color: white;
+`;
+const modalTitle = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #dbdbdb;
+  padding: 10px;
+  width: 100%;
+  height: 30%;
+  font-size: 14px;
+  font-weight: 700;
+`;
+
+const modalMessage = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+  font-size: 12px;
+`;
+const modalCloseButton = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-top: 1px solid #dbdbdb;
+  width: 100%;
+  height: 20%;
+  background-color: white;
+  cursor: pointer;
+`;
+
 const FindPassword = () => {
   const navigate = useNavigate();
-  const [findPassword, setFindPassword] = useState({});
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [findpassword, setFindPassword] = useState({});
   const [findPasswordSubmit, setfindPasswordSubmit] = useState(false);
+  const [modalData, setModalData] = useState({
+    title: "",
+    message: "",
+  });
 
   // 오류메세지 저장
   const [emailMessage, setEmailMessage] = useState("");
@@ -125,30 +185,44 @@ const FindPassword = () => {
 
   const findPasswordHandle = () => {
     setfindPasswordSubmit(true);
+    setModalIsOpen(true);
   };
-  const findpassword = useQuery(
-    ["findPassword", findPassword.password],
+  const findPassword = useQuery(
+    ["findPassword", findpassword.password],
     async () => {
       const option = {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
         params: {
-          id: findPassword.id,
-          name: findPassword.name,
-          email: findPassword.email,
+          id: findpassword.id,
+          name: findpassword.name,
+          email: findpassword.email,
         },
       };
-      const response = await axios.get(
-        `http://localhost:8080/auth/find/password`,
-        option
-      );
-      return response;
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/auth/find/password`,
+          option
+        );
+        setModalData({
+          title: "비밀번호를 찾았습니다.",
+          message: response.data,
+        });
+        return response;
+      } catch (error) {
+        setModalData({
+          title: error.response.data.message,
+          message: "정보를 다시 확인해주세요.",
+        });
+        return error.response;
+      }
     },
     {
       enabled: findPasswordSubmit,
       onSuccess: () => {
         setfindPasswordSubmit(false);
+        setModalIsOpen(true);
       },
     }
   );
@@ -158,13 +232,11 @@ const FindPassword = () => {
     const useridValue = e.target.value;
     const userIdRegExp = /^[A-Za-z0-9_]+$/;
     if (!userIdRegExp.test(useridValue)) {
-      setIdMessage("아이디가 올바르지 않습니다");
-      setIsId(false);
+      setIdMessage("아이디는 숫자로만 이루어져있습니다");
     } else {
       setIdMessage("올바른 아이디입니다");
-      setIsId(true);
     }
-    setFindPassword({ ...findPassword, userId: useridValue });
+    setFindPassword({ ...findpassword, userId: useridValue });
   };
 
   //이름 유효성 검사
@@ -173,12 +245,10 @@ const FindPassword = () => {
     const usernameRegExp = /^[가-힣]{2,7}$/;
     if (!usernameRegExp.test(usernameValue)) {
       setNameMessage("이름은 한글이름만 작성가능합니다");
-      setIsName(false);
     } else {
       setNameMessage("");
-      setIsName(true);
     }
-    setFindPassword({ ...findPassword, username: usernameValue });
+    setFindPassword({ ...findpassword, username: usernameValue });
   };
 
   //이메일 유효성 검사
@@ -188,12 +258,10 @@ const FindPassword = () => {
       /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
     if (!emailRegExp.test(emailValue)) {
       setEmailMessage("이메일 형식이 올바르지 않습니다");
-      setIsEmail(false);
     } else {
       setEmailMessage("");
-      setIsEmail(true);
     }
-    setFindPassword({ ...findPassword, email: emailValue });
+    setFindPassword({ ...findpassword, email: emailValue });
   };
 
   return (
@@ -239,6 +307,17 @@ const FindPassword = () => {
           </button>
         </div>
       </footer>
+      {modalIsOpen && (
+        <div css={modal}>
+          <div css={modalContainer}>
+            <h2 css={modalTitle}>{modalData.title}</h2>
+            <p css={modalMessage}>{modalData.message}</p>
+            <button css={modalCloseButton} onClick={() => setModalData(false)}>
+              닫기
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

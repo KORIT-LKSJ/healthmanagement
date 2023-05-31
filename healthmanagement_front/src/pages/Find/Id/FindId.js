@@ -3,7 +3,8 @@ import { css } from "@emotion/react";
 import axios from "axios";
 import React, { useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Modal from "react-modal";
 
 const container = css`
   display: flex;
@@ -68,7 +69,6 @@ const input = css`
   width: 100%;
   background-color: white;
   border: 1px solid #dbdbdb;
-  border-radius: 10px;
   padding: 12px;
 `;
 
@@ -95,7 +95,6 @@ const find = css`
 const findButton = css`
   padding: 10px 0;
   border: 1px solid #dbdbdb;
-  border-radius: 10px;
   width: 100%;
   font-size: 15px;
   font-weight: 600;
@@ -103,15 +102,85 @@ const findButton = css`
   cursor: pointer;
 `;
 
-const errorMsg = css`
+const errorMsgEmail = (setEmailMessage) => css`
+  margin-left: 5px;
   font-size: 12px;
-  color: red;
+  color: ${setEmailMessage ? "green" : "red"};
+`;
+
+const errorMsgName = (setNameMessage) => css`
+  margin-left: 5px;
+  font-size: 12px;
+  color: ${setNameMessage ? "green" : "red"};
+`;
+
+const modal = css`
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #00000088;
+`;
+
+const modalContainer = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border: 1px solid #dbdbdb;
+  border-radius: 10px;
+  width: 300px;
+  height: 200px;
+
+  background-color: white;
+`;
+
+const modalTitle = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #dbdbdb;
+  padding: 10px;
+  width: 100%;
+  height: 30%;
+  font-size: 14px;
+  font-weight: 700;
+`;
+
+const modalMessage = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+  font-size: 12px;
+`;
+
+const modalCloseButton = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-top: 1px solid #dbdbdb;
+  width: 100%;
+  height: 20%;
+  background-color: white;
+  cursor: pointer;
 `;
 
 const FindId = () => {
   const navigate = useNavigate();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [finduser, setFindUser] = useState({});
   const [findUsernameSubmit, setFindUsernameSubmit] = useState(false);
+  const [modalData, setModalData] = useState({
+    title: "",
+    message: "",
+  });
+
   // 오류메세지 저장
   const [emailMessage, setEmailMessage] = useState("");
   const [nameMessage, setNameMessage] = useState("");
@@ -136,16 +205,29 @@ const FindId = () => {
           email: finduser.email,
         },
       };
-      const response = await axios.get(
-        `http://localhost:8080/auth/find/username`,
-        option
-      );
-      return response;
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/auth/find/username`,
+          option
+        );
+        setModalData({
+          title: "아이디를 찾았습니다.",
+          message: response.data,
+        });
+        return response;
+      } catch (error) {
+        setModalData({
+          title: error.response.data.message,
+          message: "정보를 다시 확인해주세요.",
+        });
+        return error.response;
+      }
     },
     {
       enabled: findUsernameSubmit,
       onSuccess: () => {
         setFindUsernameSubmit(false);
+        setModalIsOpen(true); //아이디를 찾은 후 모달을 열도록
       },
     }
   );
@@ -157,10 +239,8 @@ const FindId = () => {
       /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
     if (!emailRegExp.test(emailValue)) {
       setEmailMessage("이메일 형식이 올바르지 않습니다");
-      setIsEmail(false);
     } else {
       setEmailMessage("");
-      setIsEmail(true);
     }
     setFindUser({ ...finduser, email: emailValue });
   };
@@ -171,10 +251,8 @@ const FindId = () => {
     const nameRegExp = /^[가-힣]{2,7}$/;
     if (!nameRegExp.test(nameValue)) {
       setNameMessage("이름은 한글이름만 작성가능합니다");
-      setIsName(false);
     } else {
       setNameMessage("");
-      setIsName(true);
     }
     setFindUser({ ...finduser, name: nameValue });
   };
@@ -198,14 +276,14 @@ const FindId = () => {
             placeholder="이름을 입력해 주세요."
             onChange={onFindUsername}
           />
-          <div css={errorMsg}>{nameMessage}</div>
+          <div css={errorMsgName}>{nameMessage}</div>
           <input
             css={input}
             type="email"
             placeholder="이메일을 입력해 주세요."
             onChange={onFindEmail}
           />
-          <div css={errorMsg}>{emailMessage}</div>
+          <div css={errorMsgEmail}>{emailMessage}</div>
         </div>
       </main>
       <footer css={footer}>
@@ -215,6 +293,20 @@ const FindId = () => {
           </button>
         </div>
       </footer>
+      {modalIsOpen && (
+        <div css={modal}>
+          <div css={modalContainer}>
+            <h2 css={modalTitle}>{modalData.title}</h2>
+            <p css={modalMessage}>{modalData.message}</p>
+            <button
+              css={modalCloseButton}
+              onClick={() => setModalIsOpen(false)}
+            >
+              닫기
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

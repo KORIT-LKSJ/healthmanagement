@@ -81,7 +81,7 @@ public class AuthenticationController {
 	public ResponseEntity<?> findUsername(FindUsernameReqDto findUsernameReqDto){
 		return ResponseEntity.ok(authenticationService.findUsernameByEmailAndName(findUsernameReqDto));
 	}
-	@GetMapping("/find/userpassword")
+	@GetMapping("/find/password")
 	public ResponseEntity<?> findUserPassword(FindPasswordReqDto findPasswordReqDto){
 		return ResponseEntity.ok(authenticationService.findPasswordByEmailAndNameAndId(findPasswordReqDto));
 	}
