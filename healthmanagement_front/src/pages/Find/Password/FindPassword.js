@@ -104,17 +104,17 @@ const findButton = css`
   cursor: pointer;
 `;
 
-const errorMsgName =(setIsName)=> css`
+const errorMsgName = (isName) => css`
   margin-left: 5px;
   font-size: 12px;
-  color: ${setIsName ? "green": "red"};
+  color: ${isName ? "green" : "red"};
 `;
 
-const errorMsgEmail = (setIsEmail) => css`
-margin-left: 5px;
-font-size: 12px;
-color: ${setIsEmail ? "red": "green"};
-`
+const errorMsgEmail = (isEmail) => css`
+  margin-left: 5px;
+  font-size: 12px;
+  color: ${isEmail ? "green" : "red"};
+`;
 
 const modal = css`
   position: absolute;
@@ -191,7 +191,6 @@ const FindPassword = () => {
 
   const findPasswordHandle = () => {
     setfindPasswordSubmit(true);
-    setModalIsOpen(true);
   };
   const findPassword = useQuery(
     ["findPassword", findpassword.password],
@@ -241,7 +240,7 @@ const FindPassword = () => {
       setNameMessage("이름은 한글이름만 작성가능합니다");
       setIsName(false);
     } else {
-      setNameMessage("");
+      setNameMessage("올바른 입력입니다");
       setIsName(true);
     }
     setFindPassword({ ...findpassword, username: usernameValue });
@@ -256,7 +255,7 @@ const FindPassword = () => {
       setEmailMessage("이메일 형식이 올바르지 않습니다");
       setIsEmail(false);
     } else {
-      setEmailMessage("");
+      setEmailMessage("올바른 입력입니다");
       setIsEmail(true);
     }
     setFindPassword({ ...findpassword, email: emailValue });
@@ -286,14 +285,14 @@ const FindPassword = () => {
             placeholder="이름을 입력해 주세요."
             onChange={onFindUsername}
           />
-          <div css={errorMsgName}>{nameMessage}</div>
+          <div css={errorMsgName(isName)}>{nameMessage}</div>
           <input
             css={input}
             type="email"
             placeholder="이메일을 입력해 주세요."
             onChange={onFindEmail}
           />
-          <div css={errorMsgEmail}>{emailMessage}</div>
+          <div css={errorMsgEmail(isEmail)}>{emailMessage}</div>
         </div>
       </main>
       <footer css={footer}>
