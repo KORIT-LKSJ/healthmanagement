@@ -26,19 +26,30 @@ const main = css`
     }
 `;
 
+const titleText = css`
+    display: flex;
+    align-items: center;
+    padding-left: 3%;
+    width: 100%;
+    height: 10%;
+    font-size: 35px;
+    font-weight: 600;
+    color: #eea460;
+    text-shadow: 2px 2px 2px #eea46050;
+`;
+
 const siteContainer = css`
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
     width: 100%;
-    height: 77%;
+    max-height: 75%;
 `;
 
 const siteBox = css`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 5%;
     width: 50%;
     height: 50%;
     gap: 5px;
@@ -46,7 +57,8 @@ const siteBox = css`
 
 const iconImg = css`
     width: 80%;
-    height: 100%;
+    height: 85%;
+    cursor: pointer;
 `;
 
 const siteName = css`
@@ -71,6 +83,7 @@ const Shop = () => {
         <div css={container}>
             <Header search={false} />
             <main css={main}>
+                <h1 css={titleText}>Shop</h1>
                 <div css={siteContainer}>
                     <div css={siteBox}>
                         <img
