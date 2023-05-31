@@ -104,10 +104,17 @@ const findButton = css`
   cursor: pointer;
 `;
 
-const errorMsg = css`
+const errorMsgName =(setIsName)=> css`
+  margin-left: 5px;
   font-size: 12px;
-  color: red;
+  color: ${setIsName ? "green": "red"};
 `;
+
+const errorMsgEmail = (setIsEmail) => css`
+margin-left: 5px;
+font-size: 12px;
+color: ${setIsEmail ? "red": "green"};
+`
 
 const modal = css`
   position: absolute;
@@ -181,7 +188,6 @@ const FindPassword = () => {
   // 유효성 검사
   const [isEmail, setIsEmail] = useState(true);
   const [isName, setIsName] = useState(true);
-  const [isId, setIsId] = useState(true);
 
   const findPasswordHandle = () => {
     setfindPasswordSubmit(true);
@@ -227,26 +233,16 @@ const FindPassword = () => {
     }
   );
 
-  //아이디 유효성 검사
-  const onFindUserId = (e) => {
-    const useridValue = e.target.value;
-    const userIdRegExp = /^[A-Za-z0-9_]+$/;
-    if (!userIdRegExp.test(useridValue)) {
-      setIdMessage("아이디는 숫자로만 이루어져있습니다");
-    } else {
-      setIdMessage("올바른 아이디입니다");
-    }
-    setFindPassword({ ...findpassword, userId: useridValue });
-  };
-
   //이름 유효성 검사
   const onFindUsername = (e) => {
     const usernameValue = e.target.value;
     const usernameRegExp = /^[가-힣]{2,7}$/;
     if (!usernameRegExp.test(usernameValue)) {
       setNameMessage("이름은 한글이름만 작성가능합니다");
+      setIsName(false);
     } else {
       setNameMessage("");
+      setIsName(true);
     }
     setFindPassword({ ...findpassword, username: usernameValue });
   };
@@ -258,8 +254,10 @@ const FindPassword = () => {
       /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
     if (!emailRegExp.test(emailValue)) {
       setEmailMessage("이메일 형식이 올바르지 않습니다");
+      setIsEmail(false);
     } else {
       setEmailMessage("");
+      setIsEmail(true);
     }
     setFindPassword({ ...findpassword, email: emailValue });
   };
@@ -281,23 +279,21 @@ const FindPassword = () => {
             css={input}
             type="text"
             placeholder="아이디를 입력해 주세요."
-            onChange={onFindUserId}
           />
-          <div css={errorMsg}>{idMessage}</div>
           <input
             css={input}
             type="text"
             placeholder="이름을 입력해 주세요."
             onChange={onFindUsername}
           />
-          <div css={errorMsg}>{nameMessage}</div>
+          <div css={errorMsgName}>{nameMessage}</div>
           <input
             css={input}
             type="email"
             placeholder="이메일을 입력해 주세요."
             onChange={onFindEmail}
           />
-          <div css={errorMsg}>{emailMessage}</div>
+          <div css={errorMsgEmail}>{emailMessage}</div>
         </div>
       </main>
       <footer css={footer}>

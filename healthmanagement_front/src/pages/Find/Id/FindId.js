@@ -102,16 +102,16 @@ const findButton = css`
   cursor: pointer;
 `;
 
-const errorMsgEmail = (setEmailMessage) => css`
+const errorMsgEmail = (isEmail) => css`
   margin-left: 5px;
   font-size: 12px;
-  color: ${setEmailMessage ? "green" : "red"};
+  color: ${isEmail ? "green" : "red"};
 `;
 
-const errorMsgName = (setNameMessage) => css`
+const errorMsgName = (isName) => css`
   margin-left: 5px;
   font-size: 12px;
-  color: ${setNameMessage ? "green" : "red"};
+  color: ${isName ? "green" : "red"};
 `;
 
 const modal = css`
@@ -239,8 +239,10 @@ const FindId = () => {
       /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
     if (!emailRegExp.test(emailValue)) {
       setEmailMessage("이메일 형식이 올바르지 않습니다");
+      setIsEmail(false);
     } else {
-      setEmailMessage("");
+      setEmailMessage("올바른 입력입니다");
+      setIsEmail(true);
     }
     setFindUser({ ...finduser, email: emailValue });
   };
@@ -251,8 +253,10 @@ const FindId = () => {
     const nameRegExp = /^[가-힣]{2,7}$/;
     if (!nameRegExp.test(nameValue)) {
       setNameMessage("이름은 한글이름만 작성가능합니다");
+      setIsName(false);
     } else {
-      setNameMessage("");
+      setNameMessage("올바른 입력입니다");
+      setIsName(true);
     }
     setFindUser({ ...finduser, name: nameValue });
   };
@@ -276,14 +280,14 @@ const FindId = () => {
             placeholder="이름을 입력해 주세요."
             onChange={onFindUsername}
           />
-          <div css={errorMsgName}>{nameMessage}</div>
+          <div css={errorMsgName(isName)}>{nameMessage}</div>
           <input
             css={input}
             type="email"
             placeholder="이메일을 입력해 주세요."
             onChange={onFindEmail}
           />
-          <div css={errorMsgEmail}>{emailMessage}</div>
+          <div css={errorMsgEmail(isEmail)}>{emailMessage}</div>
         </div>
       </main>
       <footer css={footer}>
