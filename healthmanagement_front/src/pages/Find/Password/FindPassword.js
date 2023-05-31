@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Modal from "react-modal";
+import { response } from "express";
 
 const container = css`
   display: flex;
@@ -115,6 +116,12 @@ const errorMsgEmail = (isEmail) => css`
   color: ${isEmail ? "green" : "red"};
 `;
 
+const errorMsgId = (isuserId) => css`
+  margin-left: 5px;
+  font-size: 12px;
+  color: ${isuserId ? "green" : "red"};
+`;
+
 const modal = css`
   position: absolute;
   left: 0;
@@ -182,11 +189,12 @@ const FindPassword = () => {
   // 오류메세지 저장
   const [emailMessage, setEmailMessage] = useState("");
   const [nameMessage, setNameMessage] = useState("");
-  const [idMessage, setIdMessage] = useState("");
+  const [useridMessage, setUserIdMessage] = useState("");
 
   // 유효성 검사
   const [isEmail, setIsEmail] = useState(true);
   const [isName, setIsName] = useState(true);
+  const [isuserId, setIsUserId] = useState(true);
 
   const findPasswordHandle = () => {
     setfindPasswordSubmit(true);
@@ -230,6 +238,22 @@ const FindPassword = () => {
       },
     }
   );
+
+  // 아이디가 존재하는지 검사
+
+  const onFindUserId = async (e) => {
+    const userIdValue = e.target.value;
+    await isuserId(userIdValue);
+
+    if (findpassword.userId !== userIdValue) {
+      setUserIdMessage("존재하지 않는 아이디입니다");
+      setIsUserId(false);
+    } else {
+      setUserIdMessage("유효한 아이디입니다");
+      setIsUserId(true);
+    }
+    setFindPassword({ ...findpassword, userId: userIdValue });
+  };
 
   //이름 유효성 검사
   const onFindUsername = (e) => {
@@ -277,7 +301,9 @@ const FindPassword = () => {
             css={input}
             type="text"
             placeholder="아이디를 입력해 주세요."
+            onChange={onFindUserId}
           />
+          <div css={errorMsgId(isuserId)}>{useridMessage}</div>
           <input
             css={input}
             type="text"
