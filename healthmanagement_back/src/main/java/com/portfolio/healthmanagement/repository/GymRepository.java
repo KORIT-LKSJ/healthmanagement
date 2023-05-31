@@ -35,6 +35,9 @@ public interface GymRepository {
 
 	public List<Gym> NearbyGymAddressesAndGymName(Map<String, Object> map);
 	
-	public int registerGymImgs(List<GymImgsDetail> gymImgs);
+
+	public int registerGymImgsDetail (List<GymImgsDetail> gymImgsDetails);
+	
+	public List<GymImgsDetail> getImgs(int gymId);
 
 }

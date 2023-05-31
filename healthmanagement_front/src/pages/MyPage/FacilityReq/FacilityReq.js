@@ -227,30 +227,39 @@ const FacilityReq = () => {
                 JSON.stringify({ ...registerGym, ...enroll_company }),
                 gymInfoOption
             );
+            console.log(response);
+            
+            const gymId = response.data;
 
-            if (response.status === 200) {
-                const formData = new FormData();
-                formData.append("gymId", parseInt(response.data));
+            if(gymId!== null) {
+            
+            const formData = new FormData();
+            formData.append("gymId", gymId);
 
-                imgFiles.forEach((imgFile) => {
-                    formData.append("imgFiles", imgFile.file);
-                });
+            imgFiles.forEach((imgFile) => {
+                formData.append("imgFiles", imgFile.file);
+            });
 
-                const gymImgOption = {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            "accessToken"
-                        )}`,
-                        "Context-Type": "multipart/form-data",
-                    },
-                };
-                await axios.post(
-                    "http://localhost:8080/gym/img/register",
-                    formData,
-                    gymImgOption
-                );
-                successRegister();
-            }
+            formData.forEach((value, key) => {
+                console.log("key" + key + ",value" + value);
+            });
+
+            
+            const gymImgOption = {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem(
+                        "accessToken"
+                    )}`,
+                    "Context-Type": "multipart/form-data",
+                },
+            };
+            await axios.post(
+                "http://localhost:8080/gym/img/register",
+                formData,
+                gymImgOption
+            );
+            successRegister();
+        }
         } catch (error) {
             errorRegister(error);
             console.log(error);

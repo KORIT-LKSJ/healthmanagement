@@ -45,5 +45,13 @@
 		where
 			user_id = #{userId}
 	</update>
+	
+	<delete id="deleteUser" parameterType="Integer">
+		delete 
+		from 
+			user_tb
+		where 
+			user_id = #{userId}
+	</delete>
 
 </mapper>

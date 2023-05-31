@@ -25,11 +25,24 @@ const main = css`
         display: none;
     }
 `;
+
+const mainTitleText = css`
+    display: flex;
+    align-items: center;
+    padding-left: 3%;
+    width: 100%;
+    height: 10%;
+    font-size: 35px;
+    font-weight: 600;
+    color: #eea460;
+    text-shadow: 2px 2px 2px #eea46050;
+`;
+
 const calculatorDetail = css`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20%;
+    margin-top: 5%;
     border: 1px solid #dbdbdb;
     box-shadow: 0px 0px 5px #dbdbdb;
     width: 75%;
@@ -240,6 +253,7 @@ const MyCalory = () => {
         <div css={container}>
             <Header search={false}></Header>
             <div css={main}>
+                <h1 css={mainTitleText}>Calorie</h1>
                 <div css={calculatorContainer}>
                     <div css={calculatorDetail}>
                         <header css={header}>

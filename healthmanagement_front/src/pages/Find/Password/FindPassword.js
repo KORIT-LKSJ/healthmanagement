@@ -237,11 +237,10 @@ const FindPassword = () => {
     }
   );
 
-  // 아이디가 존재하는지 검사
-
+  //아이디가 있는지 찾는것
   const onFindUserId = async (e) => {
     const userIdValue = e.target.value;
-    await isuserId(userIdValue);
+    await findpassword(userIdValue);
 
     if (findpassword.userId !== userIdValue) {
       setUserIdMessage("존재하지 않는 아이디입니다");
@@ -301,7 +300,7 @@ const FindPassword = () => {
             placeholder="아이디를 입력해 주세요."
             onChange={onFindUserId}
           />
-          <div css={errorMsgId(isuserId)}>{useridMessage}</div>
+          <div css={errorMsgId(isUserId)}>{userIdMessage}</div>
           <input
             css={input}
             type="text"

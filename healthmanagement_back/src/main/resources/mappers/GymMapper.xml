@@ -126,10 +126,6 @@
 			and user_id = #{userId}
 		</delete>
 		
-		<insert id="registGymList" parameterType="Integer">
-			insert into gym_list_tb
-			values(0, #{gymId}, now())
-		</insert>
 		
 		<select id="findByBusinessNumber" parameterType="String" resultMap="gymMap">
 			select
@@ -200,13 +196,29 @@
 				
 	</select>
 	
-	<insert id="registerGymImgs" parameterType="Integer">
+	<insert id="registerGymImgsDetail" parameterType="Integer">
 		insert into gym_img_tb
 		values 
 		<foreach collection="list" item="postsImg" separator=",">
 			(0, #{postsImg.gymId}, #{postsImg.originName}, #{postsImg.tempName},#{postsImg.imgSize})		
 		</foreach>
 	</insert>
+	
+		<select id="getImgs" parameterType="Integer"  resultType="com.portfolio.healthmanagement.entity.GymImgsDetail">
+			select 
+				git.gym_img_id as postsImgId,
+				git.gym_id as gymId,
+				git.origin_name as originName,
+				git.temp_name as tempName
+				
+			from
+				gym_img_tb git 
+				
+			where
+				git.gym_id = #{gymId}
+    	</select>
+    
+    	
 </mapper>
 
 	

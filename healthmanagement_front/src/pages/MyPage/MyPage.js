@@ -1,15 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React, { useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { BiUserCircle } from "react-icons/bi";
 import { FaRegStar } from "react-icons/fa";
 import { TbPassword } from "react-icons/tb";
 import { AiOutlineDoubleRight } from "react-icons/ai";
+import { IoPersonRemoveOutline } from "react-icons/io5";
 import axios from "axios";
 import Footer from "../../components/Main/Footer/Footer";
 import Header from "../../components/Main/Header/Header";
+import { useRecoilState } from "recoil";
+import { authenticationState } from "../../store/atoms/AuthAtoms";
 
 const container = css`
     display: flex;
@@ -155,41 +158,62 @@ const nowButton = css`
     display: flex;
     font-size: 30px;
 `;
+
 const memberWd = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
-  width: 100%;
-  height: 100px;
-  font-weight: 600;
-  background-color: white;
-  cursor: pointer;
-  &:hover {
-    opacity: 0.5;
-  }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    width: 100%;
+    height: 100px;
+    font-weight: 600;
+    background-color: white;
+    cursor: pointer;
+    &:hover {
+        opacity: 0.5;
+    }
 `;
 
 const MyPage = () => {
     const navigate = useNavigate();
+    const [authState, setAuthState] = useRecoilState(authenticationState);
 
     const principal = useQuery(["principal"], async () => {
-        const response = await axios.get(
-            "http://localhost:8080/account/principal",
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem(
-                        "accessToken"
-                    )}`,
-                },
-            }
-        );
+        const response = await axios.get("http://localhost:8080/account/principal", {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+        });
         return response;
     });
 
-    if (principal.isLoading) {
-        return <div></div>;
-    }
+    // 회원탈퇴
+    const userDeletehandle = useMutation(
+        async (userId) => {
+            const option = {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                },
+            };
+            const response = await axios.delete(`http://localhost:8080/account/remove/user/${userId}`, option);
+            console.log(response);
+            return response;
+        },
+        {
+            onSuccess: (response) => {
+                console.log(response);
+                if (response.status === 200) {
+                    alert("회원탈퇴 완료");
+                    localStorage.clear();
+                    setAuthState(false);
+                    navigate("/auth/login");
+                }
+            },
+            onError: (error) => {
+                alert("회원탈퇴 실패");
+            },
+        }
+    );
 
     const modifyClickHandle = () => {
         navigate("/mypage/modifypage");
@@ -202,84 +226,73 @@ const MyPage = () => {
     const passwordulHandle = () => {
         navigate("/mypage/passwordupdate");
     };
-  // 회원탈퇴
-  const userDeletehandle = (e) => {
-    e.preventDefault();
-    if (window.confirm("확인을 누르면 회원정보가 삭제됩니다")) {
-      const userId = principalData.userId;
-      axios
-        .delete(
-          `${process.env.REACT_APP_PROXY_URL}/users/${principalData.userId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          }
-        )
-        .then(() => {
-          localStorage.clear();
-          alert("그동안 이용해 주셔서 감사합니다");
-          navigate("/");
-        })
-        .catch((error) => alert(error.response.message));
-    } else {
-      return;
-    }
-  };
-    const principalData = principal.data.data;
 
-    return (
-        <div css={container}>
-            <Header search={false} />
-            <main css={main}>
-                <h1 css={titleText}>MyPage</h1>
-                <div css={mypagecontainer}>
-                    <div css={userInfo}>
-                        <div css={user}>
-                            <div css={imgbox}>
-                                <label htmlFor="profile-image"></label>
-                                <img
-                                    css={img}
-                                    src="https://schoolshop-lab.jp/wp-content/uploads/2018/11/240ec862387d03003cb4c41cd93cb0be.png"
-                                    alt=""
-                                />
-                            </div>
-                            <div css={usernameAndEmail}>
-                                <div css={username}>
-                                    {principalData.username}
+    const deleteClickHandle = () => {
+        if (window.confirm("확인을 누르면 회원정보가 삭제됩니다")) {
+            userDeletehandle.mutate(principal.data.data.userId);
+        } else {
+            return;
+        }
+    };
+
+    if (!principal.isLoading)
+        return (
+            <div css={container}>
+                <Header search={false} />
+                <main css={main}>
+                    <h1 css={titleText}>MyPage</h1>
+                    <div css={mypagecontainer}>
+                        <div css={userInfo}>
+                            <div css={user}>
+                                <div css={imgbox}>
+                                    <label htmlFor="profile-image"></label>
+                                    <img
+                                        css={img}
+                                        src="https://schoolshop-lab.jp/wp-content/uploads/2018/11/240ec862387d03003cb4c41cd93cb0be.png"
+                                        alt=""
+                                    />
                                 </div>
-                                <div css={email}>{principalData.email}</div>
+                                <div css={usernameAndEmail}>
+                                    <div css={username}>{principal.data.data.username}</div>
+                                    <div css={email}>{principal.data.data.email}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div css={sideContainer}>
+                            <div css={buttonArea} onClick={modifyClickHandle}>
+                                <div css={title}>
+                                    <BiUserCircle css={Icon} />
+                                    <div css={Name}>정보 수정</div>
+                                </div>
+                                <AiOutlineDoubleRight css={nowButton} />
+                            </div>
+                            <div css={buttonArea} onClick={passwordulHandle}>
+                                <div css={title}>
+                                    <TbPassword css={Icon} />
+                                    <div css={Name}>비밀번호 변경</div>
+                                </div>
+                                <AiOutlineDoubleRight css={nowButton} />
+                            </div>
+                            <div css={buttonArea} onClick={bookMarkClickHandle}>
+                                <div css={title}>
+                                    <FaRegStar css={Icon} />
+                                    <div css={Name}>관심목록</div>
+                                </div>
+                                <AiOutlineDoubleRight css={nowButton} />
+                            </div>
+                            <div css={buttonArea} onClick={deleteClickHandle}>
+                                <div css={title}>
+                                    <IoPersonRemoveOutline css={Icon} />
+                                    <div css={Name}>회원 탈퇴</div>
+                                </div>
+                                <AiOutlineDoubleRight css={nowButton} />
                             </div>
                         </div>
                     </div>
-                    <div css={sideContainer}>
-                        <div css={buttonArea} onClick={modifyClickHandle}>
-                            <div css={title}>
-                                <BiUserCircle css={Icon} />
-                                <div css={Name}>정보 수정</div>
-                            </div>
-                            <AiOutlineDoubleRight css={nowButton} />
-                        </div>
-                        <div css={buttonArea} onClick={passwordulHandle}>
-                            <div css={title}>
-                                <TbPassword css={Icon} />
-                                <div css={Name}>비밀번호 변경</div>
-                            </div>
-                            <AiOutlineDoubleRight css={nowButton} />
-                        </div>
-                        <div css={buttonArea} onClick={bookMarkClickHandle}>
-                            <div css={title}>
-                                <FaRegStar css={Icon} />
-                                <div css={Name}>관심목록</div>
-                            </div>
-                            <AiOutlineDoubleRight css={nowButton} />
-                        </div>
-                    </div>
-                </div>
-            </main>
-            <Footer />
-        </div>
-    );
+                </main>
+                <Footer />
+            </div>
+        );
 };
 
 export default MyPage;
