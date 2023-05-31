@@ -35,15 +35,16 @@ const addlistcontainer = css`
     background-color: white;
     width: 800px;
     height: 100px;
-
     & th,
     td {
-        width: 150px;
-        height: 30px;
-        text-align: center;
-        vertical-align: middle;
-
-        border: 1px solid #dbdbdb;
+      width: 150px;
+      height: 30px;
+      text-align: center;
+      vertical-align: middle;
+      border: 1px solid #dbdbdb;
+    }
+    & th {
+      font-family: "Black Han Sans", sans-serif;
     }
 `;
 

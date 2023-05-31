@@ -155,6 +155,20 @@ const nowButton = css`
     display: flex;
     font-size: 30px;
 `;
+const memberWd = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  width: 100%;
+  height: 100px;
+  font-weight: 600;
+  background-color: white;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
+`;
 
 const MyPage = () => {
     const navigate = useNavigate();
@@ -188,7 +202,30 @@ const MyPage = () => {
     const passwordulHandle = () => {
         navigate("/mypage/passwordupdate");
     };
-
+  // 회원탈퇴
+  const userDeletehandle = (e) => {
+    e.preventDefault();
+    if (window.confirm("확인을 누르면 회원정보가 삭제됩니다")) {
+      const userId = principalData.userId;
+      axios
+        .delete(
+          `${process.env.REACT_APP_PROXY_URL}/users/${principalData.userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        )
+        .then(() => {
+          localStorage.clear();
+          alert("그동안 이용해 주셔서 감사합니다");
+          navigate("/");
+        })
+        .catch((error) => alert(error.response.message));
+    } else {
+      return;
+    }
+  };
     const principalData = principal.data.data;
 
     return (

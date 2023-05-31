@@ -45,4 +45,6 @@ public class AccountController {
 	public ResponseEntity<?> modifyuserInfo(@RequestBody ModifyUserInfoReqDto modifyUserInfoReqDto){
 		return ResponseEntity.ok(accountService.modifyUser(modifyUserInfoReqDto));
 	}
+	
+	
 }

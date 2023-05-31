@@ -211,6 +211,7 @@ const Login = () => {
         const { name, value } = e.target;
         setLoginUser({ ...loginUser, [name]: value });
     };
+  
 
     const naverAuthLoginClickHandle = () => {
         window.location.href =
