@@ -41,9 +41,9 @@ public class AccountController {
 		return ResponseEntity.ok(null);
 	}
 	
-	@PutMapping("/modifyinfo")
+	@PutMapping("/modify")
 	public ResponseEntity<?> modifyuserInfo(@RequestBody ModifyUserInfoReqDto modifyUserInfoReqDto){
 		System.out.println(modifyUserInfoReqDto);
-		return ResponseEntity.ok(null);
+		return ResponseEntity.ok(accountService.modifyUser(modifyUserInfoReqDto));
 	}
 }

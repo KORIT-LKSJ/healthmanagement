@@ -58,9 +58,9 @@ const registerLabel = css`
 `;
 
 const registerInput = css`
+    border: 1px solid #dbdbdb;
     width: 100%;
     background-color: white;
-    border: 1px solid #dbdbdb;
     padding: 8px;
 `;
 
@@ -171,11 +171,7 @@ const Register = () => {
             },
         };
         try {
-            await axios.post(
-                "http://localhost:8080/auth/signup",
-                JSON.stringify({ ...registerUser }),
-                option
-            );
+            await axios.post("http://localhost:8080/auth/signup", JSON.stringify({ ...registerUser }), option);
             successRegister();
         } catch (error) {
             errorRegister(error);
@@ -268,10 +264,7 @@ const Register = () => {
                         <div css={registerDetail}>
                             <div css={radioList}>
                                 <div css={radio}>
-                                    <div
-                                        css={registerLabel}
-                                        style={{ height: 20 }}
-                                    >
+                                    <div css={registerLabel} style={{ height: 20 }}>
                                         사용자
                                     </div>
                                     <div css={radioUserTypeCheck}>
