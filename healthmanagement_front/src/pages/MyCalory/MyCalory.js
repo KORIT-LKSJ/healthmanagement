@@ -253,7 +253,7 @@ const MyCalory = () => {
         <div css={container}>
             <Header search={false}></Header>
             <div css={main}>
-                <h1 css={mainTitleText}>Carlory</h1>
+                <h1 css={mainTitleText}>Calorie</h1>
                 <div css={calculatorContainer}>
                     <div css={calculatorDetail}>
                         <header css={header}>
