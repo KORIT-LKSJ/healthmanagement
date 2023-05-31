@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
+
 const cardContainer = css`
     display: flex;
     flex-direction: column;
@@ -13,7 +14,7 @@ const cardContainer = css`
     border: 1px solid #dbdbdb;
     box-shadow: 0px 0px 5px #dbdbdb;
     width: 45%;
-    height: 40%;
+    height: 350px;
     cursor: pointer;
     &:hover {
         box-shadow: 0px 0px 10px #dbdbdb;
@@ -95,7 +96,7 @@ const like = css`
 
 const GymList = ({ gym }) => {
     const navigate = useNavigate();
-    const [ gymMainImgUrl, setGymMainImgUrl ] = useState();
+    const [gymMainImgUrl, setGymMainImgUrl] = useState();
 
     const clickHandle = () => {
         navigate("/gym/" + gym.gymId);
@@ -111,7 +112,7 @@ const GymList = ({ gym }) => {
         console.log(response)
         
         setGymMainImgUrl("http://localhost:8080/image/post/" + response.data[0].tempName);
-        
+
         return response;
     });
 
