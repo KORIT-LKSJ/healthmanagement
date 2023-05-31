@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class GymImgs {
-	private int postsId;
+	private int gymImgsId;
 	private int gymId;
 	
 	private List<GymImgsDetail> imgfiles;

@@ -1,21 +1,19 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import Header from "../../components/Main/Header/Header";
 import Footer from "../../components/Main/Footer/Footer";
-import GymImgs from "../../components/GymImgs/GymImgs";
+
 const container = css`
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100%;
 `;
-const gymImg = css`
-    width: 750px;
-`;
+
 const header = css`
     display: flex;
     justify-content: space-between;
@@ -41,6 +39,9 @@ const main = css`
     }
 `;
 
+const gymImg = css`
+    width: 750px;
+`;
 const detailName = css`
     display: flex;
     flex-direction: column;
@@ -70,16 +71,6 @@ const likeIcon = css`
 const GymDetail = () => {
     const { gymId } = useParams();
     const queryClient = useQueryClient();
-    const [ gymMainImgUrl, setGymMainImgUrl ] = useState();
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const handleOpenModal = () => {
-      setIsModalOpen(true);
-    };
-  
-    const handleCloseModal = () => {
-      setIsModalOpen(false);
-    };
 
     const getGym = useQuery(["getGym"], async () => {
         const option = {
@@ -91,17 +82,6 @@ const GymDetail = () => {
         return response;
     });
 
-    const getImgs = useQuery(["getImgs"], async () => {
-        const option = {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-        };
-        const response = await axios.get(`http://localhost:8080/gym/${gymId}/img`, option);
-        setGymMainImgUrl("http://localhost:8080/image/post/" + response.data[0].tempName);
-        return response;
-    });
-    
     const getLikeCount = useQuery(["getLikeCount"], async () => {
         const option = {
             headers: {
@@ -112,7 +92,6 @@ const GymDetail = () => {
         const response = await axios.get(`http://localhost:8080/gym/${gymId}/like`, option);
         return response;
     });
-
 
     const getLikeStatus = useQuery(["getLikeStatus"], async () => {
         const option = {
@@ -170,23 +149,15 @@ const GymDetail = () => {
             },
         }
     );
-    
-
-
 
     if (!getGym.isLoading)
         return (
             <div css={container}>
                 <Header search={false} />
                 <main css={main}>
-                    <img src={gymMainImgUrl} onClick={handleOpenModal} css={gymImg}/>
-                    {isModalOpen === true ? 
-                                            <GymImgs getImgs={getImgs} 
-                                                    isOpen={isModalOpen} 
-                                                    onRequestClose={handleCloseModal} />
-                                           : ""};
-                    
-
+                    <div>
+                        <img css={gymImg} src={getGym.data.data.gymImgUrl} />
+                    </div>
                     <div css={detailName}>
                         <h1 css={gymName}>{getGym.data.data.gymName}</h1>
                         <h1 css={gymAddress}>{getGym.data.data.gymAddress}</h1>

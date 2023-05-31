@@ -4,8 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import GymList from "../../components/Gym/GymList/GymList";
 import Header from "../../components/Main/Header/Header";
 import Footer from "../../components/Main/Footer/Footer";
-import { useQuery } from "react-query";
-import axios from "axios";
 
 const container = css`
     display: flex;
@@ -86,8 +84,6 @@ const Main = () => {
         observer.observe(lastGymRef.current);
     }, []);
 
-
-    console.log(gyms);
     return (
         <div css={container}>
             <Header

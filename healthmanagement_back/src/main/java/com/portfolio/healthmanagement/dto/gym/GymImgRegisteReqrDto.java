@@ -9,7 +9,6 @@ import lombok.Data;
 @Builder
 public class GymImgRegisteReqrDto {
 	private int gymId;
-	private int postsId;
 	private String originName;
 	private String tempName;
 	private String imgSize;
@@ -17,7 +16,6 @@ public class GymImgRegisteReqrDto {
 	public GymImgsDetail toEntity() {
 		return GymImgsDetail.builder()
 					.gymId(gymId)
-					.postsId(postsId)
 					.originName(originName)
 					.tempName(tempName)
 					.imgSize(imgSize)

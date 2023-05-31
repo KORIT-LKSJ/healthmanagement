@@ -55,7 +55,7 @@ const Header = ({ gyms, setGyms, refresh, setRefresh, search }) => {
     };
 
     const mainClickHandle = () => {
-        window.location.href = "/";
+        navigate("/");
     };
     return (
         <>

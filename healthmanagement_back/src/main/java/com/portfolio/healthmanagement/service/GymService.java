@@ -21,7 +21,6 @@ import com.portfolio.healthmanagement.dto.gym.MyGymListRespDto;
 import com.portfolio.healthmanagement.dto.gym.RegisterGymImgsReqDto;
 import com.portfolio.healthmanagement.dto.gym.GetGymAddressAndGymNameRespDto;
 import com.portfolio.healthmanagement.dto.gym.GetGymRespDto;
-import com.portfolio.healthmanagement.dto.gym.GymImgRespDto;
 import com.portfolio.healthmanagement.dto.gym.RegisterGymReqDto;
 import com.portfolio.healthmanagement.dto.gym.LikeListRespDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymReqDto;
@@ -159,16 +158,14 @@ public class GymService {
 	public int registerGymImgs(RegisterGymImgsReqDto gymImgsReqDto) {
 		GymImgs gymImgs = gymImgsReqDto.toEntity();
 		
-		return gymRepository.registerGymImgsDetail(uploadFile(gymImgs.getGymId(),gymImgs.getPostsId(),gymImgsReqDto.getImgFiles()));
-	}
-	
-	public List<GymImgsDetail> uploadFile(int gymId, int postsId, List<MultipartFile> files){
-		if(files == null) {
-			return null;
-		}
-		List<GymImgsDetail> imgFiles = new ArrayList<>();
+		List<MultipartFile> files = gymImgsReqDto.getImgFiles();
+			if(files == null) {
+				return 0;
+			}
+			
+		List<GymImgsDetail> postsFiles = new ArrayList<>();
 		
-		files.forEach(file-> {
+		files.forEach(file -> {
 			String originFileName = file.getOriginalFilename();
 			String extension = originFileName.substring(originFileName.lastIndexOf("."));
 			String tempFileName = UUID.randomUUID().toString().replaceAll("-", "") + extension;
@@ -179,34 +176,22 @@ public class GymService {
 			if(!f.exists()) {
 				f.mkdir();
 			}
-			
 			try {
 				Files.write(uploadPath, file.getBytes());
 			} catch (IOException e) {
 				e.printStackTrace();
-			} 
+			}
 			
-			imgFiles.add(GymImgsDetail.builder()
-					.postsId(postsId)
-					.originName(originFileName)
-					.tempName(tempFileName)
-					.gymId(gymId)
+			postsFiles.add(GymImgsDetail.builder()
+					.gymId(gymImgsReqDto.getGymId())
+					.originName(file.getOriginalFilename())
 					.tempName(tempFileName)
 					.imgSize(Long.toString(file.getSize()))
 					.build());
-
-		});
-		return imgFiles;
-	}
-	
-	public List<GymImgRespDto> getImg(int gymId) {
-		List<GymImgRespDto> list = new ArrayList<>();
-		
-		gymRepository.getImgs(gymId).forEach(gymImg -> {
-			list.add(gymImg.toDto());
 		});
 		
-		return list;
+		
+			return gymRepository.registerGymImgs(postsFiles);
 	}
 
 }

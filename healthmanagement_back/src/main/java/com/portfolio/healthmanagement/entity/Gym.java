@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import com.portfolio.healthmanagement.dto.gym.GetGymAddressAndGymNameRespDto;
 import com.portfolio.healthmanagement.dto.gym.GetGymRespDto;
-import com.portfolio.healthmanagement.dto.gym.GymImgRespDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymRespDto;
 
 import lombok.AllArgsConstructor;
@@ -27,10 +26,6 @@ public class Gym {
 	private int likeCount;
 	private LocalDate registDate;
 	private LocalDate removeDate;
-	
-	private GymImgsDetail gymImgsDetail;
-	
-	
 	
 	
 	public SearchGymRespDto toDto() {
@@ -59,7 +54,8 @@ public class Gym {
 				.registDate(registDate)
 				.removeDate(removeDate)
 				.build();
-	
+		
+		
 	}
 	
 	public GetGymAddressAndGymNameRespDto toGymAddressAndNameDto() {
@@ -68,6 +64,4 @@ public class Gym {
 				.GymName(gymName)
 				.build();
 	}
-
-
 }
