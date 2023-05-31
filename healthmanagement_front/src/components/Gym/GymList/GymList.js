@@ -101,7 +101,7 @@ const GymList = ({ gym }) => {
         navigate("/gym/" + gym.gymId);
     };
 
-    const getImgs = useQuery(["getImgs"], async () => {
+    const getImgs = useQuery(["getImgs", gym.gymId], async () => {
         const option = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
