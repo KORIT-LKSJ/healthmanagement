@@ -75,7 +75,7 @@ const modifyInfo = css`
     color: #58595b;
     padding: 1%;
     width: 100%;
-    height: 37%;
+    height: 45%;
     gap: 10px;
 `;
 
@@ -96,89 +96,6 @@ const modifyInput = css`
     width: 100%;
     background-color: white;
     padding: 8px;
-`;
-const modifycontainer = css`
-    display: flex;
-    flex-direction: column;
-    padding: 2% 3%;
-    width: 100%;
-    height: 50%;
-    gap: 20px;
-`;
-
-const usernameTextBox = css`
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 8px;
-    border: 1px solid #dbdbdb;
-    width: 100%;
-    height: 10%;
-    font-size: 18px;
-    font-weight: 600;
-`;
-
-const namebox = css``;
-
-const getname = css``;
-
-const informationinput = css`
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #dbdbdb;
-    border-radius: 10px;
-    width: 300px;
-    padding: 10px;
-    justify-content: center;
-    background-color: whitesmoke;
-`;
-
-const inputContainer = css`
-    display: flex;
-    padding-top: 30px;
-    align-items: flex-start;
-    flex-direction: column;
-`;
-
-const phoneTextBox = css`
-    display: flex;
-    border: 1px solid #dbdbdb;
-    border-radius: 10px;
-    align-items: center;
-    height: 100px;
-    width: 100%;
-    font-size: 18px;
-    font-weight: 600;
-`;
-
-const emailTextBox = css`
-    display: flex;
-    border: 1px solid #dbdbdb;
-    border-radius: 10px;
-    align-items: center;
-    height: 100px;
-    width: 100%;
-    font-size: 18px;
-    font-weight: 600;
-`;
-
-const birthdateTextBox = css`
-    display: flex;
-    border: 1px solid #dbdbdb;
-    border-radius: 10px;
-    align-items: center;
-    height: 100px;
-    width: 100%;
-    font-size: 18px;
-    font-weight: 600;
-`;
-
-const getbirthdate = css`
-    display: flex;
-    align-items: center;
-    width: 200px;
-    margin-left: 20px;
-    margin-right: 20px;
 `;
 
 const errorMsg = css`
@@ -205,43 +122,53 @@ const ModifyPage = () => {
 
     //초깃값
 
-    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
 
     // 오류메세지 저장
 
-    const [emailMessage, setEmailMessage] = useState("");
+    const [nameMessage, setNameMessage] = useState("");
     const [phoneMessage, setPhoneMessage] = useState("");
 
     //유효성 검사
 
-    const [isEmail, setIsEmail] = useState(true);
+    const [isName, setIsName] = useState(true);
     const [isPhone, setIsPhone] = useState(true);
 
     const principal = useQuery(["Principal"], async () => {
-        const response = await axios.get("http://localhost:8080/account/principal", {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-        });
+        const response = await axios.get(
+            "http://localhost:8080/account/principal",
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem(
+                        "accessToken"
+                    )}`,
+                },
+            }
+        );
         return response;
     });
 
     const userInfo = useQuery(
         ["UserInfo"],
         async () => {
-            const response = await axios.get(`http://localhost:8080/account/user/${principal.data.data.userId}`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                },
-            });
+            const response = await axios.get(
+                `http://localhost:8080/account/user/${principal.data.data.userId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                            "accessToken"
+                        )}`,
+                    },
+                }
+            );
             return response;
         },
         {
             enabled: !!principal.data,
             onSuccess: (response) => {
                 setPhone(response.data.phone);
-                setEmail(response.data.email);
+                setName(response.data.name);
             },
         }
     );
@@ -250,15 +177,17 @@ const ModifyPage = () => {
         async () => {
             const option = {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                    Authorization: `Bearer ${localStorage.getItem(
+                        "accessToken"
+                    )}`,
                 },
             };
             return await axios.put(
-                `http://localhost:8080/account/modify`,
+                `http://localhost:8080/account/modify/user`,
                 {
                     username: principal.data.data.username,
                     phone,
-                    email,
+                    name,
                 },
                 option
             );
@@ -266,6 +195,7 @@ const ModifyPage = () => {
         {
             onSuccess: () => {
                 alert("회원정보 변경완료");
+                navigate("/");
             },
         }
     );
@@ -278,50 +208,43 @@ const ModifyPage = () => {
         navigate("/mypage");
     };
 
-    // 회원이 로그인시 회원이름을 가지고 오는 로직구현완료
-    //const principalData = data.data;
-    // const roles = principalData.authorities.split(",");
-
-    const roles = principal.data.data.authorities.split(",");
-
-    const onchangeHandle = (e) => {
-        const { name, value } = e.target;
-        setChangeUser({ ...changeuser, [name]: value });
-    };
-
     // 휴대전화 수정
     const onchangePhone = (e) => {
         const currentPhone = e.target.value;
         setPhone(currentPhone);
         const phoneRegExp = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
         if (!phoneRegExp.test(currentPhone)) {
-            setPhoneMessage("올바른 형식이 아닙니다");
+            setPhoneMessage(
+                "전화번호를 형식에 맞춰 작성해주세요. (ex: 010-1234-5678)"
+            );
             setIsPhone(false);
         } else {
-            setPhoneMessage("사용가능한 번호입니다");
+            setPhoneMessage("사용가능합니다.");
             setIsPhone(true);
         }
         setChangeUser({ ...changeuser, phone: currentPhone });
     };
 
     // 이메일 정보수정
-    const onchangeEmail = (e) => {
-        const currentEmail = e.target.value;
-        setEmail(currentEmail);
-        const emailRegExp = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
+    const onchangeName = (e) => {
+        const currentName = e.target.value;
+        setName(currentName);
+        const nameRegExp = /^[가-힣]{2,7}$/;
 
-        if (!emailRegExp.test(currentEmail)) {
-            setEmailMessage("이메일의 형식이 올바르지 않습니다");
-            setIsEmail(false);
+        if (!nameRegExp.test(currentName)) {
+            setNameMessage("이름은 2~7자 사이의 한글이어야 합니다.");
+            setIsName(false);
         } else {
-            setEmailMessage("사용가능한 이메일 입니다");
-            setIsEmail(true);
+            setNameMessage("사용가능합니다.");
+            setIsName(true);
         }
-        setChangeUser({ ...changeuser, email: currentEmail });
+        setChangeUser({ ...changeuser, name: currentName });
     };
 
     const onsuccessClickHandle = () => {
-        saveinfo.mutate();
+        if (isName && isPhone) {
+            saveinfo.mutate();
+        }
     };
 
     // 회원정보 수정시 저장구현완료
@@ -343,7 +266,32 @@ const ModifyPage = () => {
                 <div css={modifyInfo}>
                     <div css={modifyDetail}>
                         <lable css={modifyLabel}>아이디</lable>
-                        <input css={modifyInput} value={principal.data.data.username} disabled />
+                        <input
+                            css={modifyInput}
+                            value={userInfo.data.data.username}
+                            disabled
+                        />
+                        <div css={errorMsg}>변경할 수 없습니다.</div>
+                    </div>
+                    <div css={modifyDetail}>
+                        <lable css={modifyLabel}>이름</lable>
+                        <input
+                            css={modifyInput}
+                            type="text"
+                            placeholder="이름을 입력해 주세요"
+                            onChange={onchangeName}
+                            name="name"
+                            value={name}
+                        ></input>
+                        <div css={errorMsgEmail(isName)}>{nameMessage}</div>
+                    </div>
+                    <div css={modifyDetail}>
+                        <lable css={modifyLabel}>이메일</lable>
+                        <input
+                            css={modifyInput}
+                            value={userInfo.data.data.email}
+                            disabled
+                        />
                         <div css={errorMsg}>변경할 수 없습니다.</div>
                     </div>
                     <div css={modifyDetail}>
@@ -359,20 +307,12 @@ const ModifyPage = () => {
                         <div css={errorMsgPhone(isPhone)}>{phoneMessage}</div>
                     </div>
                     <div css={modifyDetail}>
-                        <lable css={modifyLabel}>이메일</lable>
+                        <lable css={modifyLabel}>생년월일</lable>
                         <input
                             css={modifyInput}
-                            type="text"
-                            placeholder="이메일을 기입해주세요"
-                            onChange={onchangeEmail}
-                            name="email"
-                            value={email}
-                        ></input>
-                        <div css={errorMsgEmail(isEmail)}>{emailMessage}</div>
-                    </div>
-                    <div css={modifyDetail}>
-                        <lable css={modifyLabel}>생년월일</lable>
-                        <input css={modifyInput} value={principal.data.data.birthdate} disabled />
+                            value={userInfo.data.data.birthdate}
+                            disabled
+                        />
                         <div css={errorMsg}>변경할 수 없습니다.</div>
                     </div>
                 </div>

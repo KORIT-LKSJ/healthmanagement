@@ -35,15 +35,14 @@ public class AccountController {
 		return ResponseEntity.ok().body(accountService.getPrincipal());
 	}
 	
-	@PutMapping("/password")
+	@PutMapping("/modify/password")
 	public ResponseEntity<?> modifyPassword(@RequestBody ModifyPasswordReqDto modifyPasswordReqDto) {
 		System.out.println(modifyPasswordReqDto);
-		return ResponseEntity.ok(null);
+		return ResponseEntity.ok(accountService.modifyPassword(modifyPasswordReqDto));
 	}
 	
-	@PutMapping("/modify")
+	@PutMapping("/modify/user")
 	public ResponseEntity<?> modifyuserInfo(@RequestBody ModifyUserInfoReqDto modifyUserInfoReqDto){
-		System.out.println(modifyUserInfoReqDto);
 		return ResponseEntity.ok(accountService.modifyUser(modifyUserInfoReqDto));
 	}
 }
