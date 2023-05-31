@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.portfolio.healthmanagement.aop.annotation.ValidAspect;
+import com.portfolio.healthmanagement.dto.auth.FindPasswordReqDto;
 import com.portfolio.healthmanagement.dto.auth.FindUsernameReqDto;
 import com.portfolio.healthmanagement.dto.auth.LoginReqDto;
 import com.portfolio.healthmanagement.dto.auth.OAuth2ProviderMergeReqDto;
@@ -75,16 +76,14 @@ public class AuthenticationController {
 		};
 		return ResponseEntity.ok(authenticationService.oauth2ProviderMerge(oAuth2ProviderMergeReqDto));
 	}
-	// 이메일이라는 파라미터를 가져와서 해당정보를 사용해 아이디를 찾는 로직 구현중 
+	
 	@GetMapping("/find/username")
 	public ResponseEntity<?> findUsername(FindUsernameReqDto findUsernameReqDto){
 		return ResponseEntity.ok(authenticationService.findUsernameByEmailAndName(findUsernameReqDto));
 	}
-	// 이메일이라는 파라미터를 가져와서 해당정보를 사용해 패스워드를 찾는 로직 구현중
 	@GetMapping("/find/userpassword")
-	public ResponseEntity<?> findUserPassword(@RequestParam("email") String email){
-		String userpassword = authenticationService.findUserPasswordByEmail(email);
-		return ResponseEntity.ok(null);
+	public ResponseEntity<?> findUserPassword(FindPasswordReqDto findPasswordReqDto){
+		return ResponseEntity.ok(authenticationService.findPasswordByEmailAndNameAndId(findPasswordReqDto));
 	}
 		
 

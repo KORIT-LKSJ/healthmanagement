@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.portfolio.healthmanagement.dto.auth.FindPasswordReqDto;
 import com.portfolio.healthmanagement.dto.auth.FindUsernameReqDto;
 import com.portfolio.healthmanagement.dto.auth.LoginReqDto;
 import com.portfolio.healthmanagement.dto.auth.OAuth2ProviderMergeReqDto;
@@ -133,7 +134,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		return userRepositiory.updateProvider(userEntity);
 	}
 
-	// 이메일로 아이디를 찾을 수 있는 로직 구현중
 	@Override
 	public String findUsernameByEmailAndName(FindUsernameReqDto findUsernameReqDto) {
 		String username = userRepositiory.findUserByEmailAndName(findUsernameReqDto.toEntity());
@@ -144,14 +144,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	}
 	}
 
-	// 이메일로 패스워드를 찾을 수 있는 로직 구현중
 	@Override
-	public String findUserPasswordByEmail(String email) {
-		User user = userRepositiory.findUserPasswordByEmail(email);
-		if (user != null) {
-			return user.getPassword();
+	public String findPasswordByEmailAndNameAndId(FindPasswordReqDto findPasswordReqDto) {
+		String password = userRepositiory.findPasswordByEmailAndNameAndId(findPasswordReqDto.toEntity());
+		if (password == null) {
+			throw new CustomException("비밀번호가 틀립니다");
 		} else {
-			return null;
+			return password;
 		}
 	}
 

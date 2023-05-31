@@ -168,9 +168,9 @@ const FindId = () => {
   // 이름 유효성검사
   const onFindUsername = (e) => {
     const nameValue = e.target.value;
-    const nameRegExp = /^[A-Za-z0-9_]+$/;
+    const nameRegExp = /^[가-힣]{2,7}$/;
     if (!nameRegExp.test(nameValue)) {
-      setNameMessage("이름 형식이 올바르지 않습니다");
+      setNameMessage("이름은 한글이름만 작성가능합니다");
       setIsName(false);
     } else {
       setNameMessage("");

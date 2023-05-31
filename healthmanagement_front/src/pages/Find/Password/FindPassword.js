@@ -111,7 +111,6 @@ const errorMsg = css`
 const FindPassword = () => {
   const navigate = useNavigate();
   const [findPassword, setFindPassword] = useState({});
-  const [searchParams, setSearchParams] = useSearchParams();
   const [findPasswordSubmit, setfindPasswordSubmit] = useState(false);
 
   // 오류메세지 저장
@@ -125,64 +124,34 @@ const FindPassword = () => {
   const [isId, setIsId] = useState(true);
 
   const findPasswordHandle = () => {
-    navigate("/auth/login");
+    setfindPasswordSubmit(true);
   };
-  // 아이디를 받아오는 함수
-  const onUserId = (e) => {
-    const useridValue = e.target.value;
-    setFindPassword({ ...findPassword, userid: useridValue });
-  };
-  const getUserId = useQuery(["getUserId"], async () => {
-    const option = {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    };
-    const response = await axios.get(
-      `http://localhost:8080/find/password/${findPassword.userid}`,
-      option
-    );
-    return response;
-  });
-
-  // 이름을 받아오는 함수
-  const onUsername = (e) => {
-    const usernameValue = e.target.value;
-    setFindPassword({ ...findPassword, username: usernameValue });
-  };
-  const getUsername = useQuery(
-    ["getUsername", findPassword.username],
+  const findpassword = useQuery(
+    ["findPassword", findPassword.password],
     async () => {
       const option = {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
+        params: {
+          id: findPassword.id,
+          name: findPassword.name,
+          email: findPassword.email,
+        },
       };
       const response = await axios.get(
-        `http://localhost:8080/find/password/${findPassword.username}`,
+        `http://localhost:8080/auth/find/password`,
         option
       );
       return response;
+    },
+    {
+      enabled: findPasswordSubmit,
+      onSuccess: () => {
+        setfindPasswordSubmit(false);
+      },
     }
   );
-
-  // 이메일을 받아오는 함수
-  const onUseremail = (e) => {
-    const emailValue = e.target.value;
-    setFindPassword({ ...findPassword, email: emailValue });
-  };
-  const getEmail = useQuery(["getEmail", findPassword.email], async () => {
-    const option = {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    };
-    const response = await axios.get(
-      `https://localhost:8080/find/password/${findPassword.email}`,
-      option
-    );
-    return response;
-  });
 
   //아이디 유효성 검사
   const onFindUserId = (e) => {
@@ -201,9 +170,9 @@ const FindPassword = () => {
   //이름 유효성 검사
   const onFindUsername = (e) => {
     const usernameValue = e.target.value;
-    const usernameRegExp = /^[A-Za-z0-9_]+$/;
+    const usernameRegExp = /^[가-힣]{2,7}$/;
     if (!usernameRegExp.test(usernameValue)) {
-      setNameMessage("이름 형식이 올바르지 않습니다");
+      setNameMessage("이름은 한글이름만 작성가능합니다");
       setIsName(false);
     } else {
       setNameMessage("");
@@ -265,7 +234,9 @@ const FindPassword = () => {
       </main>
       <footer css={footer}>
         <div css={find}>
-          <button css={findButton}>찾기</button>
+          <button css={findButton} onClick={findPasswordHandle}>
+            찾기
+          </button>
         </div>
       </footer>
     </div>
