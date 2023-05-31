@@ -46,7 +46,7 @@ const mentCss = css`
     font-size: 20px;
     font-weight: 600;
     font-style: italic;
-    color: gray;
+    color: #2b3a52;
     margin-left: 5%;
     margin-bottom: 2%;
 `;
@@ -86,7 +86,13 @@ const Main = () => {
 
     return (
         <div css={container}>
-            <Header refresh={refresh} setRefresh={setRefresh} gyms={gyms} setGyms={setGyms} search={true} />
+            <Header
+                refresh={refresh}
+                setRefresh={setRefresh}
+                gyms={gyms}
+                setGyms={setGyms}
+                search={true}
+            />
             <main css={main}>
                 <div css={mainImgContainer}>
                     <img
@@ -96,7 +102,11 @@ const Main = () => {
                 </div>
                 <div css={mentCss}> 여긴 어때요?</div>
                 <div css={gymListContainer}>
-                    {gyms.length > 0 ? gyms.map((gym) => <GymList key={gym.gymId} gym={gym}></GymList>) : ""}
+                    {gyms.length > 0
+                        ? gyms.map((gym) => (
+                              <GymList key={gym.gymId} gym={gym}></GymList>
+                          ))
+                        : ""}
                     <div css={gymListBottom} ref={lastGymRef}></div>
                 </div>
             </main>

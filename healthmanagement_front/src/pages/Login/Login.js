@@ -62,7 +62,6 @@ const loginInput = css`
     width: 100%;
     background-color: white;
     border: 1px solid #dbdbdb;
-    border-radius: 10px;
     padding: 8px;
 `;
 
@@ -100,6 +99,7 @@ const moreLogin = css`
 const loginImg = css`
     width: 40%;
     cursor: pointer;
+    object-fit: contain;
 `;
 
 const signUpContainer = css`
@@ -138,7 +138,6 @@ const login = css`
 const loginButton = css`
     padding: 10px 0;
     border: 1px solid #dbdbdb;
-    border-radius: 10px;
     width: 100%;
     font-size: 15px;
     font-weight: 600;

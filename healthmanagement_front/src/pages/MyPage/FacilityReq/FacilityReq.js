@@ -10,18 +10,12 @@ import Post from "./Post";
 import Header from "../../../components/Main/Header/Header";
 import Footer from "../../../components/Main/Footer/Footer";
 import { useMutation, useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const container = css`
     display: flex;
     flex-direction: column;
     align-items: center;
-`;
-
-const errorMsg = css`
-    margin-left: 5px;
-    font-size: 12px;
-    color: red;
 `;
 
 const main = css`
@@ -116,6 +110,12 @@ const input = css`
     color: #58595b;
 `;
 
+const errorMsg = css`
+    margin-left: 5px;
+    font-size: 12px;
+    color: red;
+`;
+
 const addressInput = css`
     display: flex;
     justify-content: space-between;
@@ -143,9 +143,7 @@ const gymRegiste = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 2% 2%;
     width: 100%;
-    height: 100%;
 `;
 
 const registeButton = css`
@@ -162,12 +160,13 @@ const postList = css`
     display: flex;
     flex-direction: column;
     padding-bottom: 10px;
-`
+`;
+
 const FacilityReq = () => {
     const today = new Date();
     const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
     const currentDate = `${year}-${month}-${day}`;
     const navigate = useNavigate();
 
@@ -188,6 +187,11 @@ const FacilityReq = () => {
         businessNumber: "",
         gymPrice: "",
     });
+
+    const [popup, setPopup] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [imgFiles, setImgFiles] = useState([]);
+    const fileId = useRef(1);
 
     const successRegister = () => {
         setErrorMessage({
@@ -210,64 +214,48 @@ const FacilityReq = () => {
         });
     };
 
-    const [popup, setPopup] = useState(false);
-    const [imgFiles, setImgFiles ] = useState([]);
-    const fileId = useRef(1);
-
-    
-    const postRegisterSubmit = useMutation(async () => {
-        const formData = new FormData();
-        formData.append("userId", principal.data.data.userId);
-
-        imgFiles.forEach(imgFile => {
-            formData.append("imgFiles", imgFile.file);
-        })
-
-        formData.forEach((value, key) => {
-            console.log("key" + key + ",value" + value);
-        })
-
-        const option ={
-            headers:{
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                "Context-Type": "multipart/form-data"
-            }
-        }
-        const response = await axios.post("http://localhost:8080/post/register", formData, option);
-
-        return response;
-    });
-    
-
     const registerHandleSubmit = useMutation(async () => {
-        const option = {
+        const gymInfoOption = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                 "Content-Type": "application/json",
             },
         };
-        try{
-            await axios.post("http://localhost:8080/faclilty", JSON.stringify({ ...registerGym, ...enroll_company }), option);
-            successRegister();
-        } catch(error){
+        try {
+            const response = await axios.post(
+                "http://localhost:8080/faclilty",
+                JSON.stringify({ ...registerGym, ...enroll_company }),
+                gymInfoOption
+            );
+
+            if (response.status === 200) {
+                const formData = new FormData();
+                formData.append("gymId", parseInt(response.data));
+
+                imgFiles.forEach((imgFile) => {
+                    formData.append("imgFiles", imgFile.file);
+                });
+
+                const gymImgOption = {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                            "accessToken"
+                        )}`,
+                        "Context-Type": "multipart/form-data",
+                    },
+                };
+                await axios.post(
+                    "http://localhost:8080/gym/img/register",
+                    formData,
+                    gymImgOption
+                );
+                successRegister();
+            }
+        } catch (error) {
             errorRegister(error);
             console.log(error);
         }
     });
-
-    const principal = useQuery(["principal"], async () => {
-        const option = {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        }
-        const response = await axios.get("http://localhost:8080/account/principal", option);
-        return response;
-    });
-
-    if(principal.isLoading) {
-        return <>...Loading</>;
-    }
 
     const handleClick = () => {
         window.location.href = "/";
@@ -283,6 +271,10 @@ const FacilityReq = () => {
         setEnroll_company({ ...enroll_company, [name]: value });
     };
 
+    const isOpenClickHandle = () => {
+        setIsOpen(!isOpen);
+    };
+
     const handleComplete = () => {
         setPopup(!popup);
     };
@@ -290,11 +282,11 @@ const FacilityReq = () => {
     const addFileHandle = (e) => {
         const newImgFiles = [];
 
-        for(const file of e.target.files) {
+        for (const file of e.target.files) {
             const fileData = {
                 id: fileId.current,
-                file
-            }
+                file,
+            };
 
             fileId.current += 1;
             newImgFiles.push(fileData);
@@ -302,12 +294,15 @@ const FacilityReq = () => {
 
         setImgFiles([...imgFiles, ...newImgFiles]);
         e.target.value = null;
-    }
+    };
 
     const removeFileHandle = (e) => {
-        setImgFiles([...imgFiles.filter(imgFile => imgFile.id != parseInt(e.target.value))]);
-    }
-
+        setImgFiles([
+            ...imgFiles.filter(
+                (imgFile) => imgFile.id !== parseInt(e.target.value)
+            ),
+        ]);
+    };
 
     return (
         <div css={container}>
@@ -322,14 +317,17 @@ const FacilityReq = () => {
                 <div css={mainContent}>
                     <div css={sign}>
                         <h3>파트너가 되고 싶은 사장님이신가요?!</h3>
-                        <h3>매출부터 운영까지, 모두의짐이 함께 고민합니다. 지금 모두의짐의 파트너센터가 되어보세요</h3>
+                        <h3>
+                            매출부터 운영까지, 모두의짐이 함께 고민합니다. 지금
+                            모두의짐의 파트너센터가 되어보세요
+                        </h3>
                     </div>
                     <div css={inputBox}>
                         <label css={inputTitle}>운동시설 이름</label>
                         <input
                             css={input}
                             type="name"
-                            placeholder="운동시설 이름"
+                            placeholder="헬스장 이름을 입력해주세요."
                             onChange={handleChange}
                             name="gymName"
                         />
@@ -347,29 +345,38 @@ const FacilityReq = () => {
                                 value={enroll_company.gymAddress}
                                 disabled
                             />
-                            <button css={addressButton} onClick={handleComplete}>
+                            <button
+                                css={addressButton}
+                                onClick={handleComplete}
+                            >
                                 주소 찾기
                             </button>
                         </div>
-                        {popup && <Post company={enroll_company} setcompany={setEnroll_company}></Post>}
+                        {popup && (
+                            <Post
+                                company={enroll_company}
+                                setcompany={setEnroll_company}
+                            ></Post>
+                        )}
+                        <div css={errorMsg}></div>
                     </div>
                     <div css={inputBox}>
                         <label css={inputTitle}>전화번호</label>
                         <input
                             css={input}
                             type="text"
-                            placeholder="-까지 입력해주세요"
+                            placeholder="전화번호를 입력해주세요. (ex: 010-1234-5678)"
                             onChange={handleChange}
                             name="gymTel"
                         />
                         <div css={errorMsg}>{errorMessage.gymTel}</div>
                     </div>
                     <div css={inputBox}>
-                        <label css={inputTitle}>사업자등록번호 </label>
+                        <label css={inputTitle}>사업자등록번호</label>
                         <input
                             css={input}
                             type="text"
-                            placeholder="-를 제외하고 입력해주세요"
+                            placeholder="사업자등록번호를 입력해주세요. (ex: 123-45-67890)"
                             onChange={handleChange}
                             name="businessNumber"
                         />
@@ -377,7 +384,13 @@ const FacilityReq = () => {
                     </div>
                     <div css={inputBox}>
                         <label css={inputTitle}>가격</label>
-                        <input css={input} type="text" placeholder="가격입력" onChange={handleChange} name="gymPrice" />
+                        <input
+                            css={input}
+                            type="text"
+                            placeholder="이용 가격을 입력해주세요."
+                            onChange={handleChange}
+                            name="gymPrice"
+                        />
                         <div css={errorMsg}>{errorMessage.gymPrice}</div>
                     </div>
                     <div css={inputBox}>
@@ -391,25 +404,37 @@ const FacilityReq = () => {
                         />
                     </div>
                     <div css={inputBox}>
-                        <label css={inputTitle}>이미지</label>
+                        <label css={inputTitle}>이미지 </label>
                         <div css={imgInput}>
-                            <input type="file" multiple={true} onChange={addFileHandle} accept={".jpg,.png"} />
+                            <input
+                                type="file"
+                                multiple={true}
+                                onChange={addFileHandle}
+                                onClick={isOpenClickHandle}
+                                accept={".jpg,.png"}
+                            />
                             <ul css={postList}>
-                                {imgFiles.map(imgFile => 
-                                            <li key={imgFile.id}>{imgFile.file.name} <button value={imgFile.id} onClick={removeFileHandle}>삭제</button></li>)}
+                                {imgFiles.map((imgFile) => (
+                                    <li key={imgFile.id}>
+                                        {imgFile.file.name}{" "}
+                                        <button
+                                            value={imgFile.id}
+                                            onClick={removeFileHandle}
+                                        >
+                                            삭제
+                                        </button>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     </div>
-
                     <div css={gymRegiste}>
-                        <button css={registeButton} 
-                                // onClick={{registerHandleSubmit.mutate(); postRegisterSubmit.mutate();}} 코드로 실행시 
-                                // registerHandleSubmit.mutate(); 부분에서 오류가 나도 postRegisterSubmit.mutate();가 실행되어
-                                // 헬스장 등록은 안되는데 사진만 등록되는 현상이 생겨 비동기로 처리함.
-                                onClick={async () => { const registerResult = await registerHandleSubmit.mutateAsync(); 
-                                                        if (registerResult) { 
-                                                            postRegisterSubmit.mutate(); 
-                                                        } }}> 등록하기 </button>
+                        <button
+                            css={registeButton}
+                            onClick={() => registerHandleSubmit.mutate()}
+                        >
+                            등록하기
+                        </button>
                     </div>
                 </div>
             </main>

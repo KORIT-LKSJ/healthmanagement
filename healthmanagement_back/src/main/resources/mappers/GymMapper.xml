@@ -2,6 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.portfolio.healthmanagement.repository.GymRepository">
 	
+	<resultMap type="com.portfolio.healthmanagement.entity.User" id="userMap">
+		<id property="userId" column="user_id"/>
+		<result property="username" column="username"/>
+		<result property="password" column="password"/>
+		<result property="name" column="name"/>
+		<result property="phone" column="phone"/>
+		<result property="email" column="email"/>
+		<result property="birthdate" column="birthdate"/>
+		<result property="provider" column="provider"/>
+		<collection property="gymOwners" javaType="list" resultMap="gymOwnerMap" />
+	</resultMap>
+	
+	<resultMap type="com.portfolio.healthmanagement.entity.GymOwner" id="gymOwnerMap">
+		<id property="gymOwnerId" column="gym_owner_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="gymId" column="gym_id"/>
+		<association property="gym" resultMap="GymMap"></association>
+	</resultMap>
+	
 	<resultMap type="com.portfolio.healthmanagement.entity.Gym" id="gymMap">
 		<id property="gymId" column="gym_id"/>
 		<result property="gymName" column="gym_name"/>
@@ -14,38 +33,19 @@
 		<result property="removeDate" column="remove_Date"/>
 	</resultMap>
 	
-	<resultMap type="com.portfolio.healthmanagement.entity.User" id="userMap">
-		<id property="userId" column="user_id"/>
-		<result property="username" column="username"/>
-		<result property="password" column="password"/>
-		<result property="name" column="name"/>
-		<result property="phone" column="phone"/>
-		<result property="email" column="email"/>
-		<result property="birthdate" column="birthdate"/>
-	</resultMap>
-	
-
-	<resultMap type="com.portfolio.healthmanagement.entity.GymOwner" id="GymOwnerMap">
-		<id property="gymOwnerId" column="gym_owner_id"/>
-		<result property="gymId" column="gym_id"/>
-		<result property="userId" column="user_id"/>
-		<association property="user" resultMap="UserMap"></association>
-		<association property="gym" resultMap="GymMap"></association>
-	</resultMap>
-	
 	<select id="searchGyms" parameterType="hashmap" resultMap="gymMap">
 		select
 			gt.gym_id,
-		    gt.gym_name,
-		    gt.gym_address,
-		    gt.gym_tel,
-		    gt.businessnumber,
-		    gt.gym_price,
-		    
-		    lc.like_count,
-		    
-		    got.gym_owner_id
-		    
+			gt.gym_name,
+			gt.gym_address,
+			gt.gym_tel,
+			gt.businessnumber,
+			gt.gym_price,
+		
+			lc.like_count,
+			
+			got.gym_owner_id
+		
 		from
 			gym_tb gt
 		    left outer join gym_owner_tb got on(got.gym_id = gt.gym_id)
@@ -131,7 +131,7 @@
 			values(0, #{gymId}, now())
 		</insert>
 		
-		<select id="findByBusinessnNumber" parameterType="String" resultMap="gymMap">
+		<select id="findByBusinessNumber" parameterType="String" resultMap="gymMap">
 			select
 				gt.gym_id,
 				gt.gym_name,
@@ -145,12 +145,17 @@
 				gt.businessnumber = #{businessNumber}
 		</select>
 		
-		<insert id="saveGym" parameterType="com.portfolio.healthmanagement.entity.Gym">
+		<insert id="saveGym" parameterType="com.portfolio.healthmanagement.entity.Gym" useGeneratedKeys="true" keyProperty="gymId">
 			insert into gym_tb
 			values (0,#{gymName},#{gymAddress},#{gymTel},#{businessNumber},#{gymPrice},#{likeCount},#{registDate},#{removeDate})		
 		</insert>
 		
-		<select id="likeGyms" parameterType="integer"  resultType="com.portfolio.healthmanagement.entity.LikeList">
+		<insert id="saveGymOwner" parameterType="com.portfolio.healthmanagement.entity.GymOwner">
+			insert into gym_owner_tb
+			values(0,#{userId},#{gymId})
+		</insert>
+		
+		<select id="likeGyms" parameterType="Integer"  resultType="com.portfolio.healthmanagement.entity.LikeList">
 			select
 			    gt.gym_id as gymId,
 			    gt.gym_name as gymName,
@@ -194,6 +199,14 @@
 			ut.user_id = #{userId}
 				
 	</select>
+	
+	<insert id="registerGymImgs" parameterType="Integer">
+		insert into gym_img_tb
+		values 
+		<foreach collection="list" item="postsImg" separator=",">
+			(0, #{postsImg.gymId}, #{postsImg.originName}, #{postsImg.tempName},#{postsImg.imgSize})		
+		</foreach>
+	</insert>
 </mapper>
 
 	

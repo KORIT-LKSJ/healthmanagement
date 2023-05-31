@@ -1,5 +1,7 @@
 package com.portfolio.healthmanagement.entity;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,10 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class PostsImg {
-	private int gymImgId;
+public class GymImgs {
+	private int gymImgsId;
 	private int gymId;
-	private String originName;
-	private String tempName;
-	private String imgSize;
+	
+	private List<GymImgsDetail> imgfiles;
 }

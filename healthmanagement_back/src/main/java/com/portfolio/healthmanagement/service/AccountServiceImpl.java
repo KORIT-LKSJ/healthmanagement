@@ -1,9 +1,15 @@
 package com.portfolio.healthmanagement.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.portfolio.healthmanagement.dto.account.ModifyPasswordReqDto;
+import com.portfolio.healthmanagement.dto.account.ModifyUserInfoReqDto;
 import com.portfolio.healthmanagement.dto.response.PrincipalRespDto;
 import com.portfolio.healthmanagement.entity.User;
 import com.portfolio.healthmanagement.repository.AccountRepository;
@@ -33,6 +39,28 @@ public class AccountServiceImpl implements AccountService {
 	public User getUserInfo(int userId) {
 		return accountRepository.getUserInfo(userId);
 	}
+
+	@Override
+	public int modifyUser(ModifyUserInfoReqDto modifyUserInfoReqDto) {
+		User userEntity = userRepository.findUserByUsername(modifyUserInfoReqDto.getUsername());
+		userEntity.setName(modifyUserInfoReqDto.getName());
+		userEntity.setPhone(modifyUserInfoReqDto.getPhone());
+		return accountRepository.modifyUser(userEntity);
+	}
+
+	@Override
+	public int modifyPassword(ModifyPasswordReqDto modifyPasswordReqDto) {
+		Map<String, Object> map = new HashMap<>();
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String password = passwordEncoder.encode(modifyPasswordReqDto.getPassword());
+		map.put("userId", modifyPasswordReqDto.getUserId());
+		map.put("password", password);
+		return accountRepository.modifyPassword(map);
+	}
+
+
+
+	
 }
 
 	

@@ -95,28 +95,20 @@ const KaKaoMap = () => {
         async () => {
             const option = {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem(
-                        "accessToken"
-                    )}`,
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                 },
                 params: {
                     myAddress: myCenter,
                 },
             };
             try {
-                const response = await axios.get(
-                    "http://localhost:8080/search/gym/address",
-                    option
-                );
+                const response = await axios.get("http://localhost:8080/search/gym/address", option);
                 setNearLatLngNames([]);
                 response.data.gymData.forEach((gym) => {
                     geocoder.addressSearch(gym.gymAddress, (result, status) => {
                         // 정상적으로 검색이 완료됐으면
                         if (status === kakao.maps.services.Status.OK) {
-                            const { Ma, La } = new kakao.maps.LatLng(
-                                result[0].y,
-                                result[0].x
-                            );
+                            const { Ma, La } = new kakao.maps.LatLng(result[0].y, result[0].x);
                             // 결과값으로 받은 위치를 상태에 저장합니다
                             setNearLatLngNames((prevState) => [
                                 ...prevState,
@@ -178,10 +170,7 @@ const KaKaoMap = () => {
         // 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
         searchAddrFromCoords(state.center, (result, status) => {
             if (status === kakao.maps.services.Status.OK) {
-                const address =
-                    result[0].address_name.split(" ")[1] +
-                    " " +
-                    result[0].address_name.split(" ")[2];
+                const address = result[0].address_name.split(" ")[1] + " " + result[0].address_name.split(" ")[2];
                 setMyCenter(address);
             }
         });
@@ -195,12 +184,7 @@ const KaKaoMap = () => {
         <div css={container}>
             <Header search={false} />
             <main css={main}>
-                <Map
-                    css={mapStyle}
-                    center={state.center}
-                    level={3}
-                    maxLevel={5}
-                >
+                <Map css={mapStyle} center={state.center} level={3} maxLevel={5}>
                     <CustomOverlayMap position={state.center}>
                         <div css={myLocationCircle}>
                             <svg
@@ -220,18 +204,8 @@ const KaKaoMap = () => {
                                     />
                                 </circle>
                                 <g>
-                                    <circle
-                                        cx="15"
-                                        cy="15"
-                                        r="4.75"
-                                        fill="white"
-                                    />
-                                    <circle
-                                        cx="15"
-                                        cy="15"
-                                        r="4"
-                                        fill="#F83838"
-                                    />
+                                    <circle cx="15" cy="15" r="4.75" fill="white" />
+                                    <circle cx="15" cy="15" r="4" fill="#F83838" />
                                 </g>
                             </svg>
                         </div>
@@ -252,9 +226,7 @@ const KaKaoMap = () => {
                             <CustomOverlayMap position={nearLatLngName}>
                                 <div css={OverLay}>
                                     <div css={mapMarkerOverLay}>
-                                        {state.errMsg
-                                            ? state.errMsg
-                                            : nearLatLngName.gymName}
+                                        {state.errMsg ? state.errMsg : nearLatLngName.gymName}
                                     </div>
                                 </div>
                             </CustomOverlayMap>

@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 
 @Builder
 @Data
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -31,6 +30,7 @@ public class User {
 	private String provider;
 	
 	private List<Authority> authorities;
+	private List<GymOwner> gymOwners;
 	
 	
 	public PrincipalUserDetails toPrincipal() {

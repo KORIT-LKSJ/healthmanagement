@@ -69,7 +69,6 @@ const input = css`
   width: 100%;
   background-color: white;
   border: 1px solid #dbdbdb;
-  border-radius: 10px;
   padding: 12px;
 `;
 

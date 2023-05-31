@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.portfolio.healthmanagement.aop.annotation.ValidAspect;
+import com.portfolio.healthmanagement.dto.gym.RegisterGymImgsReqDto;
 import com.portfolio.healthmanagement.dto.gym.RegisterGymReqDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymReqDto;
 import com.portfolio.healthmanagement.service.GymService;
@@ -81,5 +81,11 @@ public class GymController {
 	public ResponseEntity<?> myGyms(@PathVariable int userId ){
 		System.out.println(userId);
 		return ResponseEntity.ok().body(gymService.myGyms(userId));
+	}
+	
+	@PostMapping("/gym/img/register")
+	public ResponseEntity<?> registerGymImg(RegisterGymImgsReqDto gymImgsReqDto){
+		System.out.println(gymImgsReqDto);
+		return ResponseEntity.ok(gymService.registerGymImgs(gymImgsReqDto));
 	}
 }
