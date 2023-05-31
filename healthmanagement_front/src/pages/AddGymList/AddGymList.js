@@ -20,7 +20,7 @@ const mainContainer = css`
     height: 90%;
     font-size: 12px;
     background-color: white;
-    overflow: auto;
+    overflow-y: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
     ::-webkit-scrollbar {

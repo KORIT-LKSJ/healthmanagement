@@ -20,7 +20,7 @@ const main = css`
     width: 40%;
     height: 90%;
     background-color: white;
-    overflow: auto;
+    overflow-y: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
     ::-webkit-scrollbar {

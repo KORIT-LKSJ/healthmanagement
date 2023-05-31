@@ -70,15 +70,15 @@ const likeIcon = css`
 const GymDetail = () => {
     const { gymId } = useParams();
     const queryClient = useQueryClient();
-    const [ gymMainImgUrl, setGymMainImgUrl ] = useState();
+    const [gymMainImgUrl, setGymMainImgUrl] = useState();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleOpenModal = () => {
-      setIsModalOpen(true);
+        setIsModalOpen(true);
     };
-  
+
     const handleCloseModal = () => {
-      setIsModalOpen(false);
+        setIsModalOpen(false);
     };
 
     const getGym = useQuery(["getGym"], async () => {
@@ -101,7 +101,7 @@ const GymDetail = () => {
         setGymMainImgUrl("http://localhost:8080/image/post/" + response.data[0].tempName);
         return response;
     });
-    
+
     const getLikeCount = useQuery(["getLikeCount"], async () => {
         const option = {
             headers: {
@@ -112,7 +112,6 @@ const GymDetail = () => {
         const response = await axios.get(`http://localhost:8080/gym/${gymId}/like`, option);
         return response;
     });
-
 
     const getLikeStatus = useQuery(["getLikeStatus"], async () => {
         const option = {
@@ -170,23 +169,19 @@ const GymDetail = () => {
             },
         }
     );
-    
-
-
 
     if (!getGym.isLoading)
         return (
             <div css={container}>
                 <Header search={false} />
                 <main css={main}>
-                    <img src={gymMainImgUrl} onClick={handleOpenModal} css={gymImg}/>
-                    {isModalOpen === true ? 
-                                            <GymImgs getImgs={getImgs} 
-                                                    isOpen={isModalOpen} 
-                                                    onRequestClose={handleCloseModal} />
-                                           : ""};
-                    
-
+                    <img src={gymMainImgUrl} onClick={handleOpenModal} css={gymImg} />
+                    {isModalOpen === true ? (
+                        <GymImgs getImgs={getImgs} isOpen={isModalOpen} onRequestClose={handleCloseModal} />
+                    ) : (
+                        ""
+                    )}
+                    ;
                     <div css={detailName}>
                         <h1 css={gymName}>{getGym.data.data.gymName}</h1>
                         <h1 css={gymAddress}>{getGym.data.data.gymAddress}</h1>
