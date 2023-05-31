@@ -11,4 +11,5 @@ public interface AccountService {
 	public User getUserInfo(int userId);
 	public int modifyUser(ModifyUserInfoReqDto modifyUserInfoReqDto);
 	public int modifyPassword(ModifyPasswordReqDto modifyPasswordReqDto);
+	public int deleteUser(int userId);
 }

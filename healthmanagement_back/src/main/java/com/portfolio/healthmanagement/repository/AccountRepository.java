@@ -12,4 +12,5 @@ public interface AccountRepository {
 	public User getUserInfo(int userId);
 	public int modifyUser(User user);
 	public int modifyPassword(Map<String, Object> map);
+	public int deleteUser(int userId);
 }
