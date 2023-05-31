@@ -177,7 +177,11 @@ const modalCloseButton = css`
 const FindPassword = () => {
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [findpassword, setFindPassword] = useState({});
+  const [informationToFindPassword, setInformationToFindPassword] = useState({
+    username: "",
+    email: "",
+    name: "",
+  });
   const [findPasswordSubmit, setfindPasswordSubmit] = useState(false);
   const [modalData, setModalData] = useState({
     title: "",
@@ -198,16 +202,14 @@ const FindPassword = () => {
     setfindPasswordSubmit(true);
   };
   const findPassword = useQuery(
-    ["findPassword", findpassword.password],
+    ["findPassword"],
     async () => {
       const option = {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
         params: {
-          id: findpassword.id,
-          name: findpassword.name,
-          email: findpassword.email,
+          ...informationToFindPassword,
         },
       };
       try {
@@ -221,6 +223,7 @@ const FindPassword = () => {
         });
         return response;
       } catch (error) {
+        console.log(error);
         setModalData({
           title: error.response.data.message,
           message: "정보를 다시 확인해주세요.",
@@ -239,17 +242,11 @@ const FindPassword = () => {
 
   //아이디가 있는지 찾는것
   const onFindUserId = async (e) => {
-    const userIdValue = e.target.value;
-    await findpassword(userIdValue);
-
-    if (findpassword.userId !== userIdValue) {
-      setUserIdMessage("존재하지 않는 아이디입니다");
-      setIsUserId(false);
-    } else {
-      setUserIdMessage("유효한 아이디입니다");
-      setIsUserId(true);
-    }
-    setFindPassword({ ...findpassword, userId: userIdValue });
+    const usernameValue = e.target.value;
+    setInformationToFindPassword({
+      ...informationToFindPassword,
+      username: usernameValue,
+    });
   };
 
   //이름 유효성 검사
@@ -263,7 +260,10 @@ const FindPassword = () => {
       setNameMessage("올바른 입력입니다");
       setIsName(true);
     }
-    setFindPassword({ ...findpassword, username: usernameValue });
+    setInformationToFindPassword({
+      ...informationToFindPassword,
+      name: usernameValue,
+    });
   };
 
   //이메일 유효성 검사
@@ -278,7 +278,10 @@ const FindPassword = () => {
       setEmailMessage("올바른 입력입니다");
       setIsEmail(true);
     }
-    setFindPassword({ ...findpassword, email: emailValue });
+    setInformationToFindPassword({
+      ...informationToFindPassword,
+      email: emailValue,
+    });
   };
 
   return (

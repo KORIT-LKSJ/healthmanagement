@@ -103,7 +103,7 @@
 			email = #{email}
 		and name = #{name}
 	</select>
-	<select id="findUserPasswordByEmail" resultMap="userMap">
+	<select id="findPasswordByEmailAndNameAndUsername" resultType="String" parameterType="com.portfolio.healthmanagement.entity.User">
 		select
 			password
 		from

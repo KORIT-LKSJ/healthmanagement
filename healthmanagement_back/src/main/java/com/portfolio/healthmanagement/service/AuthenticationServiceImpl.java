@@ -146,7 +146,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	@Override
 	public String findPasswordByEmailAndNameAndId(FindPasswordReqDto findPasswordReqDto) {
-		String password = userRepositiory.findPasswordByEmailAndNameAndId(findPasswordReqDto.toEntity());
+		String password = userRepositiory.findPasswordByEmailAndNameAndUsername(findPasswordReqDto.toEntity());
 		if (password == null) {
 			throw new CustomException("비밀번호가 틀립니다");
 		} else {

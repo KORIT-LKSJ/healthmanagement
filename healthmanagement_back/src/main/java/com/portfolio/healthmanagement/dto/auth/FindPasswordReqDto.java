@@ -8,9 +8,9 @@ import lombok.Data;
 public class FindPasswordReqDto {
 	private String email;
 	private String name;
-	private int userId;
+	private String username;
 
 	public User toEntity() {
-		return User.builder().email(email).name(name).build();
+		return User.builder().username(username).email(email).name(name).build();
 	}
 }
