@@ -233,7 +233,7 @@ const MyPage = () => {
                         <div css={buttonArea} onClick={bookMarkClickHandle}>
                             <div css={title}>
                                 <FaRegStar css={Icon} />
-                                <div css={Name}>좋아요</div>
+                                <div css={Name}>관심목록</div>
                             </div>
                             <AiOutlineDoubleRight css={nowButton} />
                         </div>
