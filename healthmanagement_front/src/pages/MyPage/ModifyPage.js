@@ -183,7 +183,7 @@ const ModifyPage = () => {
                 },
             };
             return await axios.put(
-                `http://localhost:8080/account/modify`,
+                `http://localhost:8080/account/modify/user`,
                 {
                     username: principal.data.data.username,
                     phone,
@@ -206,17 +206,6 @@ const ModifyPage = () => {
 
     const onclickExitHandle = () => {
         navigate("/mypage");
-    };
-
-    // 회원이 로그인시 회원이름을 가지고 오는 로직구현완료
-    //const principalData = data.data;
-    // const roles = principalData.authorities.split(",");
-
-    const roles = principal.data.data.authorities.split(",");
-
-    const onchangeHandle = (e) => {
-        const { name, value } = e.target;
-        setChangeUser({ ...changeuser, [name]: value });
     };
 
     // 휴대전화 수정
