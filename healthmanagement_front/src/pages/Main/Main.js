@@ -48,7 +48,7 @@ const mentCss = css`
     font-size: 20px;
     font-weight: 600;
     font-style: italic;
-    color: gray;
+    color: #2b3a52;
     margin-left: 5%;
     margin-bottom: 2%;
 `;

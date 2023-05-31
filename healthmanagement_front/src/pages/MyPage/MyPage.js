@@ -47,13 +47,13 @@ const titleText = css`
 const mypagecontainer = css`
     display: flex;
     flex-direction: column;
-    padding: 0 3%;
     width: 100%;
 `;
 
 const userInfo = css`
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid #dbdbdb;
     width: 100%;
     height: 15%;
     background-color: white;
@@ -61,8 +61,9 @@ const userInfo = css`
 
 const user = css`
     display: flex;
-    padding-bottom: 3%;
     align-items: center;
+    padding: 0 3% 3%;
+    width: 100%;
     gap: 10px;
 `;
 
@@ -111,16 +112,14 @@ const email = css`
 const sideContainer = css`
     display: flex;
     flex-direction: column;
-    padding-top: 20px;
-    gap: 10px;
 `;
 
-const accountSetting = css`
+const buttonArea = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    outline: none;
-    border-bottom: 1px solid black;
+    padding: 3% 3%;
+    border-bottom: 1px solid #dbdbdb;
     width: 100%;
     height: 50px;
     background-color: white;
@@ -130,8 +129,9 @@ const accountSetting = css`
     }
 `;
 
-const accountTitle = css`
+const title = css`
     display: flex;
+    align-items: center;
     gap: 5px;
 `;
 
@@ -151,53 +151,23 @@ const Name = css`
     font-weight: 600;
 `;
 
-const bookMark = css`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid black;
-    width: 100%;
-    height: 100px;
-    background-color: white;
-    cursor: pointer;
-    &:hover {
-        opacity: 0.5;
-    }
-`;
-
-const bookTitle = css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-`;
-
-const passwordul = css`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid black;
-    width: 100%;
-    height: 100px;
-    background-color: white;
-    cursor: pointer;
-    &:hover {
-        opacity: 0.5;
-    }
-`;
-
-const passwordulTitle = css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-`;
-
 const nowButton = css`
     display: flex;
-    width: 100px;
-    justify-content: space-between;
     font-size: 30px;
+`;
+const memberWd = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  width: 100%;
+  height: 100px;
+  font-weight: 600;
+  background-color: white;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
 `;
 
 const MyPage = () => {
@@ -232,12 +202,35 @@ const MyPage = () => {
     const passwordulHandle = () => {
         navigate("/mypage/passwordupdate");
     };
-
+  // 회원탈퇴
+  const userDeletehandle = (e) => {
+    e.preventDefault();
+    if (window.confirm("확인을 누르면 회원정보가 삭제됩니다")) {
+      const userId = principalData.userId;
+      axios
+        .delete(
+          `${process.env.REACT_APP_PROXY_URL}/users/${principalData.userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        )
+        .then(() => {
+          localStorage.clear();
+          alert("그동안 이용해 주셔서 감사합니다");
+          navigate("/");
+        })
+        .catch((error) => alert(error.response.message));
+    } else {
+      return;
+    }
+  };
     const principalData = principal.data.data;
 
     return (
         <div css={container}>
-            <Header />
+            <Header search={false} />
             <main css={main}>
                 <h1 css={titleText}>MyPage</h1>
                 <div css={mypagecontainer}>
@@ -260,24 +253,24 @@ const MyPage = () => {
                         </div>
                     </div>
                     <div css={sideContainer}>
-                        <div css={accountSetting} onClick={modifyClickHandle}>
-                            <div css={accountTitle}>
+                        <div css={buttonArea} onClick={modifyClickHandle}>
+                            <div css={title}>
                                 <BiUserCircle css={Icon} />
-                                <div css={Name}>Modify</div>
+                                <div css={Name}>정보 수정</div>
                             </div>
                             <AiOutlineDoubleRight css={nowButton} />
                         </div>
-                        <div css={passwordul} onClick={passwordulHandle}>
-                            <div css={passwordulTitle}>
+                        <div css={buttonArea} onClick={passwordulHandle}>
+                            <div css={title}>
                                 <TbPassword css={Icon} />
-                                <div css={Name}>PasswordFrom</div>
+                                <div css={Name}>비밀번호 변경</div>
                             </div>
                             <AiOutlineDoubleRight css={nowButton} />
                         </div>
-                        <div css={bookMark} onClick={bookMarkClickHandle}>
-                            <div css={bookTitle}>
+                        <div css={buttonArea} onClick={bookMarkClickHandle}>
+                            <div css={title}>
                                 <FaRegStar css={Icon} />
-                                <div css={Name}>BookMark</div>
+                                <div css={Name}>관심목록</div>
                             </div>
                             <AiOutlineDoubleRight css={nowButton} />
                         </div>

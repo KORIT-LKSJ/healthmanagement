@@ -99,6 +99,7 @@ const moreLogin = css`
 const loginImg = css`
     width: 40%;
     cursor: pointer;
+    object-fit: contain;
 `;
 
 const signUpContainer = css`
@@ -210,6 +211,7 @@ const Login = () => {
         const { name, value } = e.target;
         setLoginUser({ ...loginUser, [name]: value });
     };
+  
 
     const naverAuthLoginClickHandle = () => {
         window.location.href =

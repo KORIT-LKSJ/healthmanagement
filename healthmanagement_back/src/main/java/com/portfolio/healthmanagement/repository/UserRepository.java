@@ -8,7 +8,9 @@ import com.portfolio.healthmanagement.entity.User;
 @Mapper
 public interface UserRepository {
 	public User findUserByUsername(String username);// userId 중복 확인
-	public User findUserByEmail(String email);
+	public User findUserByEmail(String email); 
+	public String findUserByEmailAndName(User user); 
+	public String findPasswordByEmailAndNameAndId(User user); 
 	public int saveUser(User user);
 	public int saveAuthority(Authority authority);
 	public int updateProvider(User user);

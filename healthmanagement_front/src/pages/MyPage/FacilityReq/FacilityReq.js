@@ -188,6 +188,11 @@ const FacilityReq = () => {
         gymPrice: "",
     });
 
+    const [popup, setPopup] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [imgFiles, setImgFiles] = useState([]);
+    const fileId = useRef(1);
+
     const successRegister = () => {
         setErrorMessage({
             gymName: "",
@@ -208,11 +213,6 @@ const FacilityReq = () => {
             ...error.response.data.errorData,
         });
     };
-
-    const [popup, setPopup] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
-    const [imgFiles, setImgFiles] = useState([]);
-    const fileId = useRef(1);
 
     const registerHandleSubmit = useMutation(async () => {
         const gymInfoOption = {
@@ -264,7 +264,6 @@ const FacilityReq = () => {
             errorRegister(error);
             console.log(error);
         }
-    
     });
 
     const handleClick = () => {

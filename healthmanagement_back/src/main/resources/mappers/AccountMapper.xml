@@ -28,5 +28,22 @@
 		where
 			user_id = #{userId}
 	</select>
+	
+	<update id="modifyUser" parameterType="com.portfolio.healthmanagement.entity.User">
+		update user_tb
+		set
+			phone = #{phone},
+			name = #{name}
+		where
+			user_id = #{userId}
+	</update>
+	
+	<update id="modifyPassword" parameterType="hashmap">
+		update user_tb
+		set
+			password = #{password}
+		where
+			user_id = #{userId}
+	</update>
 
 </mapper>

@@ -67,6 +67,10 @@ const Footer = () => {
         navigate("/map");
     };
 
+    const onClickShop = () => {
+        navigate("/shop");
+    };
+
     return (
         <footer css={footer}>
             <div css={pageButton}>
@@ -82,7 +86,7 @@ const Footer = () => {
                     <HiMap css={pageLocationIcon} />
                     <div css={pageLocationName}>내 주변 헬스장</div>
                 </div>
-                <div css={pageLocation}>
+                <div css={pageLocation} onClick={onClickShop}>
                     <BiShoppingBag css={pageLocationIcon} />
                     <div css={pageLocationName}>쇼핑하기</div>
                 </div>
