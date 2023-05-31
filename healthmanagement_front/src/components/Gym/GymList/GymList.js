@@ -108,14 +108,14 @@ const GymList = ({ gym }) => {
             },
         };
         const response = await axios.get(`http://localhost:8080/gym/${gym.gymId}/img`, option);
+        console.log(response)
+        
         setGymMainImgUrl("http://localhost:8080/image/post/" + response.data[0].tempName);
         
         return response;
     });
 
-    if (getImgs.isLoading){
-        <div>...로딩중</div>
-    }
+    if (!getImgs.isLoading)
     return (
         <>
             <div css={cardContainer} onClick={clickHandle}>
