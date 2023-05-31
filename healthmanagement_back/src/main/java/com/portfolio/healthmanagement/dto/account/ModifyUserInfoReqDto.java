@@ -5,7 +5,6 @@ import lombok.Data;
 @Data
 public class ModifyUserInfoReqDto {
 	private String username;
+	private String name;
 	private String phone;
-	private String email;
-	
 }

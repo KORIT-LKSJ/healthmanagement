@@ -38,7 +38,7 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public int modifyUser(ModifyUserInfoReqDto modifyUserInfoReqDto) {
 		User userEntity = userRepository.findUserByUsername(modifyUserInfoReqDto.getUsername());
-		userEntity.setEmail(modifyUserInfoReqDto.getEmail());
+		userEntity.setName(modifyUserInfoReqDto.getName());
 		userEntity.setPhone(modifyUserInfoReqDto.getPhone());
 		return accountRepository.modifyUser(userEntity);
 	}
