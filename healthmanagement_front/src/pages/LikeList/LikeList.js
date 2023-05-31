@@ -139,7 +139,7 @@ const LikeList = () => {
     const { userId } = useParams();
     console.log(userId);
     const navigate = useNavigate();
-
+    
     const likeGyms = useQuery(["likeGyms"], async () => {
         const option = {
             headers: {
@@ -151,7 +151,7 @@ const LikeList = () => {
             option
         );
     });
-
+    console.log(likeGyms)
     if (likeGyms.isLoading) {
         return <div>로딩중...</div>;
     }

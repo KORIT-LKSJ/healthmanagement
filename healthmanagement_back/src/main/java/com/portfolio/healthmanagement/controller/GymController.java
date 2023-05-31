@@ -85,7 +85,12 @@ public class GymController {
 	
 	@PostMapping("/gym/img/register")
 	public ResponseEntity<?> registerGymImg(RegisterGymImgsReqDto gymImgsReqDto){
-		System.out.println(gymImgsReqDto);
+		System.out.println(gymImgsReqDto.getGymId());
 		return ResponseEntity.ok(gymService.registerGymImgs(gymImgsReqDto));
+	}
+	
+	@GetMapping("/gym/{gymId}/img")
+	public ResponseEntity<?> getImg(@PathVariable int gymId){
+		return ResponseEntity.ok().body(gymService.getImg(gymId));
 	}
 }

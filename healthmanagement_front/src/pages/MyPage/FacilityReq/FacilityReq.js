@@ -227,15 +227,14 @@ const FacilityReq = () => {
                 JSON.stringify({ ...registerGym, ...enroll_company }),
                 gymInfoOption
             );
-            return response;
-
-            const gymId = response
+            console.log(response);
+            
+            const gymId = response.data;
 
             if(gymId!== null) {
             
-
             const formData = new FormData();
-            formData.append("gymId", response.data.gymId);
+            formData.append("gymId", gymId);
 
             imgFiles.forEach((imgFile) => {
                 formData.append("imgFiles", imgFile.file);
