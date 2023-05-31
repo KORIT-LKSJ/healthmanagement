@@ -159,8 +159,8 @@ const PasswordUpdate = () => {
     const [passwordMessage, setPasswordMessage] = useState("");
     const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
     // 유효성 검사
-    const [isPassword, setIsPassword] = useState(true);
-    const [isPasswordconfirm, setIsPasswordConfirm] = useState(true);
+    const [isPassword, setIsPassword] = useState(false);
+    const [isPasswordconfirm, setIsPasswordConfirm] = useState(false);
 
     const principal = useQuery(["Principal"], async () => {
         const accessToken = localStorage.getItem("accessToken");

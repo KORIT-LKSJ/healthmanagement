@@ -242,7 +242,9 @@ const ModifyPage = () => {
     };
 
     const onsuccessClickHandle = () => {
-        saveinfo.mutate();
+        if (isName && isPhone) {
+            saveinfo.mutate();
+        }
     };
 
     // 회원정보 수정시 저장구현완료
