@@ -187,12 +187,12 @@ const FindPassword = () => {
   // 오류메세지 저장
   const [emailMessage, setEmailMessage] = useState("");
   const [nameMessage, setNameMessage] = useState("");
-  const [useridMessage, setUserIdMessage] = useState("");
+  const [userIdMessage, setUserIdMessage] = useState("");
 
   // 유효성 검사
   const [isEmail, setIsEmail] = useState(true);
   const [isName, setIsName] = useState(true);
-  const [isuserId, setIsUserId] = useState(true);
+  const [isUserId, setIsUserId] = useState(true);
 
   const findPasswordHandle = () => {
     setfindPasswordSubmit(true);
