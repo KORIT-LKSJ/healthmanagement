@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import React, { useState } from "react";
+import { useQuery } from "react-query";
+import { useNavigate, useParams } from "react-router-dom";
 const cardContainer = css`
     display: flex;
     flex-direction: column;
@@ -93,11 +95,27 @@ const like = css`
 
 const GymList = ({ gym }) => {
     const navigate = useNavigate();
+    const [ gymMainImgUrl, setGymMainImgUrl ] = useState();
 
     const clickHandle = () => {
         navigate("/gym/" + gym.gymId);
     };
 
+    const getImgs = useQuery(["getImgs"], async () => {
+        const option = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+        };
+        const response = await axios.get(`http://localhost:8080/gym/${gym.gymId}/img`, option);
+        setGymMainImgUrl("http://localhost:8080/image/post/" + response.data[0].tempName);
+        
+        return response;
+    });
+
+    if (getImgs.isLoading){
+        <div>...로딩중</div>
+    }
     return (
         <>
             <div css={cardContainer} onClick={clickHandle}>
@@ -106,7 +124,7 @@ const GymList = ({ gym }) => {
                 </header>
                 <main css={main}>
                     <div css={imgBox}>
-                        <img css={img} src={gym.gymImgUrl} />
+                        <img css={img} src={gymMainImgUrl} />
                     </div>
                 </main>
                 <footer css={footer}>
