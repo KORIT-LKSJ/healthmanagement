@@ -4,8 +4,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import Modal from "react-modal";
-import { response } from "express";
 
 const container = css`
   display: flex;
