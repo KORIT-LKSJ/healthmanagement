@@ -145,13 +145,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	}
 
 	@Override
-	public String findPasswordByEmailAndNameAndId(FindPasswordReqDto findPasswordReqDto) {
-		String password = userRepositiory.findPasswordByEmailAndNameAndUsername(findPasswordReqDto.toEntity());
-		if (password == null) {
-			throw new CustomException("비밀번호가 틀립니다");
-		} else {
-			return password;
+	public boolean findPasswordByEmailAndNameAndId(FindPasswordReqDto findPasswordReqDto) {
+		boolean flag = userRepositiory.findPasswordByEmailAndNameAndUsername(findPasswordReqDto.toEntity()) != 0;
+		
+		if (!flag) {
+			throw new CustomException("정보를 다시 확인해주세요");
 		}
+		
+		return flag;
 	}
 
 }

@@ -36,7 +36,7 @@ public class AccountController {
 		return ResponseEntity.ok().body(accountService.getPrincipal());
 	}
 	
-	@PutMapping("/modify/password")
+	@PutMapping("/auth/modify/password")
 	public ResponseEntity<?> modifyPassword(@RequestBody ModifyPasswordReqDto modifyPasswordReqDto) {
 		System.out.println(modifyPasswordReqDto);
 		return ResponseEntity.ok(accountService.modifyPassword(modifyPasswordReqDto));

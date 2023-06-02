@@ -110,7 +110,7 @@ const errorMsgPasswordConfirm = (isPasswordconfirm) => css`
   color: ${isPasswordconfirm ? "green" : "red"};
 `;
 
-const PasswordUpdate = () => {
+const ForgotPassword = () => {
   const navigate = useNavigate();
   // 초깃값
   const [password, setPassword] = useState("");
@@ -222,7 +222,6 @@ const PasswordUpdate = () => {
       savePassword.mutate();
     }
   };
-
   return (
     <div css={container}>
       <Header search={false} />
@@ -272,4 +271,4 @@ const PasswordUpdate = () => {
   );
 };
 
-export default PasswordUpdate;
+export default ForgotPassword;

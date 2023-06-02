@@ -10,7 +10,7 @@ public interface UserRepository {
 	public User findUserByUsername(String username);// userId 중복 확인
 	public User findUserByEmail(String email); 
 	public String findUserByEmailAndName(User user); 
-	public String findPasswordByEmailAndNameAndUsername(User user); 
+	public int findPasswordByEmailAndNameAndUsername(User user); 
 	public int saveUser(User user);
 	public int saveAuthority(Authority authority);
 	public int updateProvider(User user);

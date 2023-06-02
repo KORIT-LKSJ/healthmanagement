@@ -201,6 +201,7 @@ const FindPassword = () => {
   const findPasswordHandle = () => {
     setfindPasswordSubmit(true);
   };
+
   const findPassword = useQuery(
     ["findPassword"],
     async () => {
@@ -218,9 +219,12 @@ const FindPassword = () => {
           option
         );
         setModalData({
-          title: "비밀번호를 찾았습니다.",
+          title: "확인되었습니다 비밀번호 변경 페이지로 이동합니다.",
           message: response.data,
         });
+
+        console.log(response);
+
         return response;
       } catch (error) {
         console.log(error);
@@ -332,8 +336,11 @@ const FindPassword = () => {
           <div css={modalContainer}>
             <h2 css={modalTitle}>{modalData.title}</h2>
             <p css={modalMessage}>{modalData.message}</p>
-            <button css={modalCloseButton} onClick={() => setModalData(false)}>
-              닫기
+            <button
+              css={modalCloseButton}
+              onClick={() => setModalIsOpen(false)}
+            >
+              <button>확인</button>
             </button>
           </div>
         </div>
