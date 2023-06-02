@@ -103,16 +103,25 @@
 			email = #{email}
 		and name = #{name}
 	</select>
-	<select id="findUserPasswordByEmail" resultMap="userMap">
+	
+	<select id="findPasswordByEmailAndNameAndUsername" resultType="Integer" parameterType="com.portfolio.healthmanagement.entity.User">
 		select
-			password
+			count(*)
 		from
 			user_tb
 		where
 			email = #{email}
 		and name = #{name}
-		and user_id = #{userId}
+		and username = #{username}
 	
 	</select>
+	
+	<update id="forgotPassword" parameterType="hashmap">
+		update user_tb
+		set
+			password = #{password}
+		where 
+			user_name = #{username}
+	</update>
 
 </mapper>

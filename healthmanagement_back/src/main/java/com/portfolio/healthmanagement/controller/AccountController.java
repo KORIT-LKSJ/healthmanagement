@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.portfolio.healthmanagement.dto.account.ModifyPasswordReqDto;
 import com.portfolio.healthmanagement.dto.account.ModifyUserInfoReqDto;
+import com.portfolio.healthmanagement.dto.auth.ForgotReqDto;
 import com.portfolio.healthmanagement.service.AccountService;
 
 import lombok.RequiredArgsConstructor;
@@ -36,7 +37,7 @@ public class AccountController {
 		return ResponseEntity.ok().body(accountService.getPrincipal());
 	}
 	
-	@PutMapping("/modify/password")
+	@PutMapping("/auth/modify/password")
 	public ResponseEntity<?> modifyPassword(@RequestBody ModifyPasswordReqDto modifyPasswordReqDto) {
 		System.out.println(modifyPasswordReqDto);
 		return ResponseEntity.ok(accountService.modifyPassword(modifyPasswordReqDto));
@@ -46,6 +47,7 @@ public class AccountController {
 	public ResponseEntity<?> modifyuserInfo(@RequestBody ModifyUserInfoReqDto modifyUserInfoReqDto){
 		return ResponseEntity.ok(accountService.modifyUser(modifyUserInfoReqDto));
 	}
+	
 	
 	@DeleteMapping("/remove/user/{userId}")
 	public ResponseEntity<?> deleteUser(@PathVariable int userId){

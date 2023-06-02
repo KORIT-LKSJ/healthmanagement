@@ -21,125 +21,103 @@ import OAuth2Login from "./pages/Login/OAuth2Login";
 import AddGymList from "./pages/AddGymList/AddGymList";
 import OAuth2Merge from "./pages/OAuth2Merge/OAuth2Merge";
 import Shop from "./pages/Shop/Shop";
+import ForgotPassword from "./pages/Find/Password/ForgotPassword";
 
 function App() {
-    return (
-        <>
-            <Global styles={Reset} />
-            <Routes>
-                <Route
-                    path="/auth/login"
-                    element={
-                        <AuthRoute path="/auth/login" element={<Login />} />
-                    }
-                ></Route>
-                <Route
-                    path="/auth/oauth2/login"
-                    element={
-                        <AuthRoute
-                            path={"/auth/oauth2/login"}
-                            element={<OAuth2Login />}
-                        />
-                    }
-                />
-                <Route
-                    path="/auth/register"
-                    element={
-                        <AuthRoute
-                            path="/auth/register"
-                            element={<Register />}
-                        />
-                    }
-                ></Route>
-                <Route
-                    path="/auth/oauth2/register"
-                    element={
-                        <AuthRoute
-                            path={"/auth/oauth2/register"}
-                            element={<OAuth2Register />}
-                        />
-                    }
-                />
-                <Route
-                    path="/auth/oauth2/merge"
-                    element={
-                        <AuthRoute
-                            path={"/auth/oauth2/merge"}
-                            element={<OAuth2Merge />}
-                        />
-                    }
-                />
-                <Route
-                    path="/auth/find/id"
-                    element={
-                        <AuthRoute path="/auth/find/id" element={<FindId />} />
-                    }
-                ></Route>
-                <Route
-                    path="/auth/find/password"
-                    element={
-                        <AuthRoute
-                            path="/auth/find/password"
-                            element={<FindPassword />}
-                        />
-                    }
-                ></Route>
-                <Route
-                    path="/"
-                    element={<AuthRoute path="/" element={<Main />} />}
-                />
-                <Route
-                    path="/mypage"
-                    element={<AuthRoute path="/mypage" element={<MyPage />} />}
-                />
-                <Route
-                    path="/mypage/modifypage"
-                    element={
-                        <AuthRoute
-                            path="/mypage/modifypage"
-                            element={<ModifyPage />}
-                        />
-                    }
-                ></Route>
-                <Route
-                    path="/mypage/passwordupdate"
-                    element={
-                        <AuthRoute
-                            path="/mypage/passwordupdate"
-                            element={<PasswordUpdate />}
-                        />
-                    }
-                ></Route>
-                <Route
-                    path="/gym/:gymId"
-                    element={<AuthRoute path="/gym" element={<GymDetail />} />}
-                />
-                <Route
-                    path="/facility"
-                    element={
-                        <AuthRoute path="/facility" element={<FacilityReq />} />
-                    }
-                />
-                <Route
-                    path="/myCalory"
-                    element={
-                        <AuthRoute path="/myCalory" element={<MyCalory />} />
-                    }
-                />
-
-                <Route path="/gym/:userId/like/list" element={<LikeList />} />
-
-                <Route path="/addgymlist/:userId"  element={<AddGymList />}
-                ></Route>
-
-                <Route
-                    path="/map"
-                    element={<AuthRoute path="/map" element={<KaKaoMap />} />}
-                />
-                <Route path="/shop" element={<Shop />}></Route>
-            </Routes>
-        </>
-    );
+  return (
+    <>
+      <Global styles={Reset} />
+      <Routes>
+        <Route
+          path="/auth/login"
+          element={<AuthRoute path="/auth/login" element={<Login />} />}
+        ></Route>
+        <Route
+          path="/auth/oauth2/login"
+          element={
+            <AuthRoute path={"/auth/oauth2/login"} element={<OAuth2Login />} />
+          }
+        />
+        <Route
+          path="/auth/register"
+          element={<AuthRoute path="/auth/register" element={<Register />} />}
+        ></Route>
+        <Route
+          path="/auth/oauth2/register"
+          element={
+            <AuthRoute
+              path={"/auth/oauth2/register"}
+              element={<OAuth2Register />}
+            />
+          }
+        />
+        <Route
+          path="/auth/oauth2/merge"
+          element={
+            <AuthRoute path={"/auth/oauth2/merge"} element={<OAuth2Merge />} />
+          }
+        />
+        <Route
+          path="/auth/find/id"
+          element={<AuthRoute path="/auth/find/id" element={<FindId />} />}
+        ></Route>
+        <Route
+          path="/auth/find/password"
+          element={
+            <AuthRoute path="/auth/find/password" element={<FindPassword />} />
+          }
+        ></Route>
+        <Route
+          path="/auth/find/password/forgotpassword"
+          element={
+            <AuthRoute
+              path="/auth/find/password/frogotpassword"
+              element={<ForgotPassword />}
+            />
+          }
+        ></Route>
+        <Route path="/" element={<AuthRoute path="/" element={<Main />} />} />
+        <Route
+          path="/mypage"
+          element={<AuthRoute path="/mypage" element={<MyPage />} />}
+        />
+        <Route
+          path="/mypage/modifypage"
+          element={
+            <AuthRoute path="/mypage/modifypage" element={<ModifyPage />} />
+          }
+        ></Route>
+        <Route
+          path="/mypage/passwordupdate"
+          element={
+            <AuthRoute
+              path="/mypage/passwordupdate"
+              element={<PasswordUpdate />}
+            />
+          }
+        />
+        <Route
+          path="/gym/:gymId"
+          element={<AuthRoute path="/gym" element={<GymDetail />} />}
+        />
+        <Route
+          path="/facility"
+          element={<AuthRoute path="/facility" element={<FacilityReq />} />}
+        />
+        <Route
+          path="/myCalory"
+          element={<AuthRoute path="/myCalory" element={<MyCalory />} />}
+        />
+        <Route path="/gym/:userId/like/list" element={<LikeList />} />
+        <Route path="/addgymlist/:userId" element={<AddGymList />}></Route>
+        <Route
+          path="/map"
+          element={<AuthRoute path="/map" element={<KaKaoMap />} />}
+        />
+        <Route path="/shop" element={<Shop />}></Route>
+      </Routes>
+    </>
+  );
 }
 
 export default App;

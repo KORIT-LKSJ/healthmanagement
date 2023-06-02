@@ -1,6 +1,7 @@
 package com.portfolio.healthmanagement.service;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +22,7 @@ import org.springframework.util.StringUtils;
 
 import com.portfolio.healthmanagement.dto.auth.FindPasswordReqDto;
 import com.portfolio.healthmanagement.dto.auth.FindUsernameReqDto;
+import com.portfolio.healthmanagement.dto.auth.ForgotReqDto;
 import com.portfolio.healthmanagement.dto.auth.LoginReqDto;
 import com.portfolio.healthmanagement.dto.auth.OAuth2ProviderMergeReqDto;
 import com.portfolio.healthmanagement.dto.auth.OAuth2RegisterReqDto;
@@ -140,18 +142,29 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		if (username == null) {
 			throw new CustomException("가입된 정보가 없습니다.");
 		} else {
-		return username;
-	}
+			return username;
+		}
 	}
 
 	@Override
-	public String findPasswordByEmailAndNameAndId(FindPasswordReqDto findPasswordReqDto) {
-		String password = userRepositiory.findPasswordByEmailAndNameAndId(findPasswordReqDto.toEntity());
-		if (password == null) {
-			throw new CustomException("비밀번호가 틀립니다");
-		} else {
-			return password;
+	public boolean findPasswordByEmailAndNameAndId(FindPasswordReqDto findPasswordReqDto) {
+		boolean flag = userRepositiory.findPasswordByEmailAndNameAndUsername(findPasswordReqDto.toEntity()) != 0;
+		if (!flag) {
+			throw new CustomException("정보를 다시 확인해주세요");
 		}
+
+		return flag;
 	}
+
+	@Override
+	public int forgotPassword(ForgotReqDto forgotReqDto) {
+		Map<String, Object> map = new HashMap<>();
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String password = passwordEncoder.encode(forgotReqDto.getPassword());
+		map.put("password", password);
+		return userRepositiory.forgotPassword(map);
+		
+	}
+	
 
 }

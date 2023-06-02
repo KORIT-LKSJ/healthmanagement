@@ -176,8 +176,13 @@ const modalCloseButton = css`
 
 const FindPassword = () => {
   const navigate = useNavigate();
+  const [findPasswordFlag, setFindPasswordFlag] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [findpassword, setFindPassword] = useState({});
+  const [informationToFindPassword, setInformationToFindPassword] = useState({
+    username: "",
+    email: "",
+    name: "",
+  });
   const [findPasswordSubmit, setfindPasswordSubmit] = useState(false);
   const [modalData, setModalData] = useState({
     title: "",
@@ -197,17 +202,16 @@ const FindPassword = () => {
   const findPasswordHandle = () => {
     setfindPasswordSubmit(true);
   };
+
   const findPassword = useQuery(
-    ["findPassword", findpassword.password],
+    ["findPassword"],
     async () => {
       const option = {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
         params: {
-          id: findpassword.id,
-          name: findpassword.name,
-          email: findpassword.email,
+          ...informationToFindPassword,
         },
       };
       try {
@@ -216,11 +220,14 @@ const FindPassword = () => {
           option
         );
         setModalData({
-          title: "비밀번호를 찾았습니다.",
-          message: response.data,
+          title: "비밀번호 찾기",
+          message: "확인되었습니다 비밀번호 변경 페이지로 이동합니다.",
         });
+        setFindPasswordFlag(true);
+
         return response;
       } catch (error) {
+        console.log(error);
         setModalData({
           title: error.response.data.message,
           message: "정보를 다시 확인해주세요.",
@@ -239,17 +246,11 @@ const FindPassword = () => {
 
   //아이디가 있는지 찾는것
   const onFindUserId = async (e) => {
-    const userIdValue = e.target.value;
-    await findpassword(userIdValue);
-
-    if (findpassword.userId !== userIdValue) {
-      setUserIdMessage("존재하지 않는 아이디입니다");
-      setIsUserId(false);
-    } else {
-      setUserIdMessage("유효한 아이디입니다");
-      setIsUserId(true);
-    }
-    setFindPassword({ ...findpassword, userId: userIdValue });
+    const usernameValue = e.target.value;
+    setInformationToFindPassword({
+      ...informationToFindPassword,
+      username: usernameValue,
+    });
   };
 
   //이름 유효성 검사
@@ -263,7 +264,10 @@ const FindPassword = () => {
       setNameMessage("올바른 입력입니다");
       setIsName(true);
     }
-    setFindPassword({ ...findpassword, username: usernameValue });
+    setInformationToFindPassword({
+      ...informationToFindPassword,
+      name: usernameValue,
+    });
   };
 
   //이메일 유효성 검사
@@ -278,7 +282,10 @@ const FindPassword = () => {
       setEmailMessage("올바른 입력입니다");
       setIsEmail(true);
     }
-    setFindPassword({ ...findpassword, email: emailValue });
+    setInformationToFindPassword({
+      ...informationToFindPassword,
+      email: emailValue,
+    });
   };
 
   return (
@@ -329,8 +336,18 @@ const FindPassword = () => {
           <div css={modalContainer}>
             <h2 css={modalTitle}>{modalData.title}</h2>
             <p css={modalMessage}>{modalData.message}</p>
-            <button css={modalCloseButton} onClick={() => setModalData(false)}>
-              닫기
+            <button
+              css={modalCloseButton}
+              onClick={() => {
+                setModalIsOpen(false);
+                if (findPasswordFlag) {
+                  navigate(
+                    `/auth/find/password/forgotpassword?username=${informationToFindPassword.username}`
+                  );
+                }
+              }}
+            >
+              확인
             </button>
           </div>
         </div>

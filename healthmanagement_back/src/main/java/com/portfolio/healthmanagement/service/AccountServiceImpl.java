@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.portfolio.healthmanagement.dto.account.ModifyPasswordReqDto;
 import com.portfolio.healthmanagement.dto.account.ModifyUserInfoReqDto;
+import com.portfolio.healthmanagement.dto.auth.ForgotReqDto;
 import com.portfolio.healthmanagement.dto.response.PrincipalRespDto;
 import com.portfolio.healthmanagement.entity.User;
 import com.portfolio.healthmanagement.repository.AccountRepository;
@@ -24,17 +25,17 @@ public class AccountServiceImpl implements AccountService {
 
 	private final AccountRepository accountRepository;
 	private final UserRepository userRepository;
-	
+
 	@Override
 	public PrincipalRespDto getPrincipal() {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalUserDetails principalUser = (PrincipalUserDetails) authentication.getPrincipal();
-		
+
 		User userEntity = userRepository.findUserByUsername(principalUser.getUsername());
 		return userEntity.toPrincipalRespDto();
 	}
-	
+
 	@Override
 	public User getUserInfo(int userId) {
 		return accountRepository.getUserInfo(userId);
@@ -62,8 +63,6 @@ public class AccountServiceImpl implements AccountService {
 	public int deleteUser(int userId) {
 		return accountRepository.deleteUser(userId);
 	}
-
-
-
 	
+
 }
