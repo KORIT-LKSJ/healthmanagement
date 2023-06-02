@@ -6,6 +6,7 @@ import { QueryClient, useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../../components/Main/Header/Header";
 import Footer from "../../components/Main/Footer/Footer";
+import GymMainImg from "../../components/GymImgs/GymMainImg";
 
 const container = css`
     display: flex;
@@ -139,7 +140,8 @@ const LikeList = () => {
     const { userId } = useParams();
     console.log(userId);
     const navigate = useNavigate();
-    
+
+
     const likeGyms = useQuery(["likeGyms"], async () => {
         const option = {
             headers: {
@@ -177,12 +179,7 @@ const LikeList = () => {
                                         </h1>
                                     </header>
                                     <main css={cardMain}>
-                                        <div css={imgBox}>
-                                            <img
-                                                css={img}
-                                                src={likeGym.gymImgUrl}
-                                            />
-                                        </div>
+                                    <GymMainImg gymId={likeGym.gymId}/>
                                     </main>
                                     <footer css={footer}>
                                         <h2 css={infoDetail}>

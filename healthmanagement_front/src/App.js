@@ -126,11 +126,12 @@ function App() {
                         <AuthRoute path="/myCalory" element={<MyCalory />} />
                     }
                 />
+
                 <Route path="/gym/:userId/like/list" element={<LikeList />} />
-                <Route
-                    path="/addgymlist/:userId"
-                    element={<AddGymList />}
+
+                <Route path="/addgymlist/:userId"  element={<AddGymList />}
                 ></Route>
+
                 <Route
                     path="/map"
                     element={<AuthRoute path="/map" element={<KaKaoMap />} />}

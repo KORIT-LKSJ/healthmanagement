@@ -374,7 +374,7 @@ const FacilityReq = () => {
                         <input
                             css={input}
                             type="text"
-                            placeholder="전화번호를 입력해주세요. (ex: 010-1234-5678)"
+                            placeholder="전화번호를 입력해주세요. (ex: 010-1234-5678 or 0505-1234-5678)"
                             onChange={handleChange}
                             name="gymTel"
                         />
@@ -413,7 +413,7 @@ const FacilityReq = () => {
                         />
                     </div>
                     <div css={inputBox}>
-                        <label css={inputTitle}>이미지 </label>
+                        <label css={inputTitle}>이미지(※대표사진을 가장 상단에 배치해주세요) </label>
                         <div css={imgInput}>
                             <input
                                 type="file"

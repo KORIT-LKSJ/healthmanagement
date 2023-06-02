@@ -18,8 +18,8 @@ public class RegisterGymReqDto {
 	
 	private String gymAddress;
 	
-	@Pattern(regexp =  "^\\d{3}-\\d{3,4}-\\d{4}$", 
-			message = "휴대폰 번호를 양식에 맞게 입력해주세요. (ex: 010-1234-5678)")
+	@Pattern(regexp =  "^\\d{3,4}-\\d{3,4}-\\d{4}$", 
+			message = "전화번호를 양식에 맞게 입력해주세요. (ex: 010-1234-5678 or 0505-1234-5678)")
 	private String gymTel;
 	
 	@Pattern(regexp = "^[0-9]{3}-[0-9]{2}-[0-9]{5}$", 
