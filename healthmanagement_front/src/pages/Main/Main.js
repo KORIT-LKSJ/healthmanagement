@@ -42,6 +42,8 @@ const mainImg = css`
 `;
 
 const mentCss = css`
+    padding-left: 5%;
+    padding-bottom: 2%;
     width: 100%;
     max-height: 20px;
     font-family: "Courier New", Courier, monospace;
@@ -49,8 +51,6 @@ const mentCss = css`
     font-weight: 600;
     font-style: italic;
     color: #2b3a52;
-    margin-left: 5%;
-    margin-bottom: 2%;
 `;
 
 const gymListContainer = css`
