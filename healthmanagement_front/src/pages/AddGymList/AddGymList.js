@@ -7,6 +7,8 @@ import Footer from "../../components/Main/Footer/Footer";
 import Header from "../../components/Main/Header/Header";
 import { Navigate, useNavigate } from "react-router-dom";
 import  GymMainImg from "../../components/GymImgs/GymMainImg";
+import { TiTrash } from 'react-icons/ti';
+import {  BiPen  } from 'react-icons/bi';
 
 const container = css`
     display: flex;
@@ -40,13 +42,6 @@ const cardContainer = css`
     box-shadow: 0px 0px 5px #dbdbdb;
     width: 75%;
     height: 100%;
-    cursor: pointer;
-    &:hover {
-        box-shadow: 0px 0px 10px #dbdbdb;
-    }
-    &:active {
-        background-color: #fafafa;
-    }
 `;
 
 const gymListDetail = css`
@@ -78,7 +73,27 @@ const cardMain = css`
     margin-bottom: 4%;
     width: 100%;
     height: 55%;
+    cursor: pointer;
+    &:hover {
+        box-shadow: 0px 0px 10px #dbdbdb;
+    }
+    &:active {
+        background-color: #fafafa;
+    }
 `;
+
+const removeModifyButton = css`
+    background-color: white;
+    font-size: 15px;
+    border: 1px solid #dbdbdb;
+    cursor: pointer;
+    &:hover {
+        box-shadow: 0px 0px 10px #dbdbdb;
+    }
+    &:active {
+        background-color: #fafafa;
+    }
+`
 
 const footer = css`
     display: flex;
@@ -156,6 +171,10 @@ const AddGymList = () => {
         }
     );
     
+    const removeModifyOnClickHandle = () => {
+        alert("업체에 문의하세요.");
+    }
+
     if (!addGyms.isLoading && !principal.isLoading)
     return ( 
     <div css={container}>
@@ -166,18 +185,16 @@ const AddGymList = () => {
                 {addGyms.data.data.map((addGym) => {
                     return (
                         <>
-                            <div
-                                css={cardContainer}
-                                onClick={() => {
-                                    navigate("/gym/" + addGym.gymId);
-                                }}
-                            >
+                            <div css={cardContainer}>
                                 <header css={header}>
                                     <h1 css={titleText}>
                                         {addGym.gymName}
+                                        <button css={removeModifyButton} onClick={removeModifyOnClickHandle}><BiPen/></button>
+                                        <button css={removeModifyButton} onClick={removeModifyOnClickHandle}><TiTrash/></button>
                                     </h1>
                                 </header>
-                                <main css={cardMain}>
+                                <main css={cardMain} 
+                                    onClick={() => {navigate("/gym/" + addGym.gymId);}}>
                                     <GymMainImg gymId={addGym.gymId}/>
                                 </main>
                                 
