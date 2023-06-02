@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.portfolio.healthmanagement.dto.auth.FindPasswordReqDto;
 import com.portfolio.healthmanagement.dto.auth.FindUsernameReqDto;
+import com.portfolio.healthmanagement.dto.auth.ForgotReqDto;
 import com.portfolio.healthmanagement.dto.auth.LoginReqDto;
 import com.portfolio.healthmanagement.dto.auth.OAuth2ProviderMergeReqDto;
 import com.portfolio.healthmanagement.dto.auth.OAuth2RegisterReqDto;
@@ -24,5 +25,6 @@ public interface AuthenticationService extends OAuth2UserService<OAuth2UserReque
 	public int oauth2ProviderMerge(OAuth2ProviderMergeReqDto oAuth2ProviderMergeReqDto);
 	public String findUsernameByEmailAndName(FindUsernameReqDto findUsernameReqDto);
 	public boolean findPasswordByEmailAndNameAndId(FindPasswordReqDto findPasswordReqDto);
-}
+	public int forgotPassword(ForgotReqDto forgotReqDto);
 
+}

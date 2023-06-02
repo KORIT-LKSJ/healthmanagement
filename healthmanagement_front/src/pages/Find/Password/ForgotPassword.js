@@ -1,11 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import React, { useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation } from "react-query";
 import axios from "axios";
-import Footer from "../../components/Main/Footer/Footer";
-import Header from "../../components/Main/Header/Header";
 import { MdExitToApp, MdSaveAlt } from "react-icons/md";
 
 const container = css`
@@ -112,76 +110,38 @@ const errorMsgPasswordConfirm = (isPasswordconfirm) => css`
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   // 초깃값
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [username, setusername] = useState("");
   //오류메세지 저장
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
   // 유효성 검사
   const [isPassword, setIsPassword] = useState(false);
-  const [isPasswordconfirm, setIsPasswordConfirm] = useState(false);
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
-  const principal = useQuery(["Principal"], async () => {
-    const accessToken = localStorage.getItem("accessToken");
-    const response = await axios.get(
-      "http://localhost:8080/account/principal",
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    return response;
-  });
-
-  const userInfo = useQuery(
-    ["UserInfo"],
-    async () => {
-      const accessToken = localStorage.getItem("accessToken");
-      const response = await axios.get(
-        `http://localhost:8080/account/user/${principal.data.data.userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      return response;
-    },
-    {
-      enabled: !!principal.data,
-    }
-  );
+  console.log(searchParams.get("username"));
 
   // 비밀번호가 저장되는 것 구현중
   const savePassword = useMutation(
     async () => {
-      const option = {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      };
       return await axios.put(
-        `http://localhost:8080/account/modify/password`,
+        `http://localhost:8080/aith/find/password/forgotpassword`,
         {
-          userId: principal.data.data.userId,
+          username: username,
           password,
-        },
-        option
+        }
       );
     },
     {
       onSuccess: () => {
         alert("비밀번호 변경 완료");
-        navigate("/");
+        navigate("/auth/login");
       },
     }
   );
-
-  if (principal.isLoading || userInfo.isLoading) {
-    return <div>Loading...</div>;
-  }
 
   // 비밀번호와 비밀번호 확인하는 정규식 구현중
 
@@ -212,27 +172,22 @@ const ForgotPassword = () => {
     }
   };
 
-  const onclickExitHandle = () => {
-    navigate("/mypage");
-  };
-
   // 성공시에 mutate를 가지고 옴
-  const onsuccessClickHandle = async () => {
-    if (isPassword && isPasswordconfirm) {
+  const onSuccessClickHandle = async () => {
+    if (isPassword && isPasswordConfirm) {
       savePassword.mutate();
     }
   };
   return (
     <div css={container}>
-      <Header search={false} />
       <main css={main}>
         <div css={title}>
-          <h1 css={titleText}>ModifyPage</h1>
+          <h1 css={titleText}>ForgotPassword</h1>
           <div css={box}>
-            <div css={button} onClick={onsuccessClickHandle}>
+            <div css={button} onClick={onSuccessClickHandle}>
               <MdSaveAlt css={icon} />
             </div>
-            <div css={button} onClick={onclickExitHandle}>
+            <div css={button}>
               <MdExitToApp css={icon} />
             </div>
           </div>
@@ -260,13 +215,12 @@ const ForgotPassword = () => {
               name="passwordConfirm"
               value={passwordConfirm}
             ></input>
-            <div css={errorMsgPasswordConfirm(isPasswordconfirm)}>
+            <div css={errorMsgPasswordConfirm(isPasswordConfirm)}>
               {passwordConfirmMessage}
             </div>
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 };

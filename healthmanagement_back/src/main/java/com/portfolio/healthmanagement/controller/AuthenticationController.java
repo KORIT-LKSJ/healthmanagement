@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.portfolio.healthmanagement.aop.annotation.ValidAspect;
 import com.portfolio.healthmanagement.dto.auth.FindPasswordReqDto;
 import com.portfolio.healthmanagement.dto.auth.FindUsernameReqDto;
+import com.portfolio.healthmanagement.dto.auth.ForgotReqDto;
 import com.portfolio.healthmanagement.dto.auth.LoginReqDto;
 import com.portfolio.healthmanagement.dto.auth.OAuth2ProviderMergeReqDto;
 import com.portfolio.healthmanagement.dto.auth.OAuth2RegisterReqDto;
@@ -84,6 +85,10 @@ public class AuthenticationController {
 	@GetMapping("/find/password")
 	public ResponseEntity<?> findUserPassword(FindPasswordReqDto findPasswordReqDto){
 		return ResponseEntity.ok(authenticationService.findPasswordByEmailAndNameAndId(findPasswordReqDto));
+	}
+	@PutMapping("/auth/find/password/forgotpassword")
+	public ResponseEntity<?> forgotpasswordinfo(@RequestBody ForgotReqDto forgotReqDto){
+		return ResponseEntity.ok(authenticationService.forgotPassword(forgotReqDto));
 	}
 	
 		

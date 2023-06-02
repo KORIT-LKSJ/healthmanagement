@@ -176,6 +176,7 @@ const modalCloseButton = css`
 
 const FindPassword = () => {
   const navigate = useNavigate();
+  const [findPasswordFlag, setFindPasswordFlag] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [informationToFindPassword, setInformationToFindPassword] = useState({
     username: "",
@@ -219,11 +220,10 @@ const FindPassword = () => {
           option
         );
         setModalData({
-          title: "확인되었습니다 비밀번호 변경 페이지로 이동합니다.",
-          message: response.data,
+          title: "비밀번호 찾기",
+          message: "확인되었습니다 비밀번호 변경 페이지로 이동합니다.",
         });
-
-        console.log(response);
+        setFindPasswordFlag(true);
 
         return response;
       } catch (error) {
@@ -338,9 +338,16 @@ const FindPassword = () => {
             <p css={modalMessage}>{modalData.message}</p>
             <button
               css={modalCloseButton}
-              onClick={() => setModalIsOpen(false)}
+              onClick={() => {
+                setModalIsOpen(false);
+                if (findPasswordFlag) {
+                  navigate(
+                    `/auth/find/password/forgotpassword?username=${informationToFindPassword.username}`
+                  );
+                }
+              }}
             >
-              <button>확인</button>
+              확인
             </button>
           </div>
         </div>

@@ -115,5 +115,13 @@
 		and username = #{username}
 	
 	</select>
+	
+	<update id="forgotPassword" parameterType="hashmap">
+		update user_tb
+		set
+			password = #{password}
+		where 
+			user_name = #{username}
+	</update>
 
 </mapper>

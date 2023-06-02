@@ -46,6 +46,8 @@
 			user_id = #{userId}
 	</update>
 	
+	
+	
 	<delete id="deleteUser" parameterType="Integer">
 		delete 
 		from 

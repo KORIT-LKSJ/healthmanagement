@@ -21,6 +21,7 @@ import OAuth2Login from "./pages/Login/OAuth2Login";
 import AddGymList from "./pages/AddGymList/AddGymList";
 import OAuth2Merge from "./pages/OAuth2Merge/OAuth2Merge";
 import Shop from "./pages/Shop/Shop";
+import ForgotPassword from "./pages/Find/Password/ForgotPassword";
 
 function App() {
   return (
@@ -66,6 +67,15 @@ function App() {
             <AuthRoute path="/auth/find/password" element={<FindPassword />} />
           }
         ></Route>
+        <Route
+          path="/auth/find/password/forgotpassword"
+          element={
+            <AuthRoute
+              path="/auth/find/password/frogotpassword"
+              element={<ForgotPassword />}
+            />
+          }
+        ></Route>
         <Route path="/" element={<AuthRoute path="/" element={<Main />} />} />
         <Route
           path="/mypage"
@@ -84,7 +94,8 @@ function App() {
               path="/mypage/passwordupdate"
               element={<PasswordUpdate />}
             />
-          }/>
+          }
+        />
         <Route
           path="/gym/:gymId"
           element={<AuthRoute path="/gym" element={<GymDetail />} />}
