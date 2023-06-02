@@ -1,10 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import Footer from "../../components/Main/Footer/Footer";
 import Header from "../../components/Main/Header/Header";
+import { Navigate, useNavigate } from "react-router-dom";
+import  GymMainImg from "../../components/GymImgs/GymMainImg";
 
 const container = css`
     display: flex;
@@ -12,13 +14,13 @@ const container = css`
     align-items: center;
 `;
 
-const mainContainer = css`
+const main = css`
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 40%;
     height: 90%;
-    font-size: 12px;
     background-color: white;
     overflow: auto;
     -ms-overflow-style: none;
@@ -27,28 +29,99 @@ const mainContainer = css`
         display: none;
     }
 `;
-
-const addlistcontainer = css`
+const cardContainer = css`
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background-color: white;
-    width: 800px;
-    height: 100px;
-    & th,
-    td {
-      width: 150px;
-      height: 30px;
-      text-align: center;
-      vertical-align: middle;
-      border: 1px solid #dbdbdb;
+    margin: 1%;
+    margin-bottom: 6%;
+    margin-top: 4%;
+    border: 1px solid #dbdbdb;
+    box-shadow: 0px 0px 5px #dbdbdb;
+    width: 75%;
+    height: 100%;
+    cursor: pointer;
+    &:hover {
+        box-shadow: 0px 0px 10px #dbdbdb;
     }
-    & th {
-      font-family: "Black Han Sans", sans-serif;
+    &:active {
+        background-color: #fafafa;
     }
 `;
 
+const gymListDetail = css`
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0;
+    width: 100%;
+    height: 400px;
+`;
+
+const header = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 4%;
+    width: 100%;
+    height: 5%;
+`;
+
+const titleText = css`
+    font-weight: 600;
+`;
+
+const cardMain = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 4%;
+    width: 100%;
+    height: 55%;
+`;
+
+const footer = css`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    width: 90%;
+    height: 30%;
+    padding-bottom: 5%;
+`;
+
+const infoDetail = css`
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+`;
+
+const like = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #dbdbdb;
+    padding: 5%;
+    height: 30px;
+    background-color: white;
+    font-weight: 600;
+    box-shadow: 0px 5px 5px #dbdbdb;
+`;
+
+const likeTitle = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #3d3d3d;
+    color: white;
+    width: 100%;
+    height: 10%;
+`;
+
 const AddGymList = () => {
+    const navigate = useNavigate();
+
     const principal = useQuery(["principal"], async () => {
         const option = {
             headers: {
@@ -82,42 +155,53 @@ const AddGymList = () => {
             enabled: !!principal.data,
         }
     );
-
-    if (principal.isLoading) {
-        return <div>로딩중...</div>;
-    }
-
-    console.log(addGyms);
-
-    return (
-        <div css={container}>
-            <Header search={false} />
-            <main css={mainContainer}>
-                <table css={addlistcontainer}>
-                    <tbody>
-                        <tr>
-                            <th> 이름 </th>
-                            <th> 주소</th>
-                            <th> 전화번호 </th>
-                            <th> 가격 </th>
-                        </tr>
-                        {addGyms.isLoading
-                            ? ""
-                            : addGyms.data.data.map((addGym) => {
-                                  return (
-                                      <tr>
-                                          <td>{addGym.gymName}</td>
-                                          <td>{addGym.gymAddress}</td>
-                                          <td>{addGym.gymTel}</td>
-                                          <td>{addGym.gymPrice}</td>
-                                      </tr>
-                                  );
-                              })}
-                    </tbody>
-                </table>
-            </main>
-            <Footer />
+    
+    if (!addGyms.isLoading && !principal.isLoading)
+    return ( 
+    <div css={container}>
+        <Header search={false}></Header>
+        <div css={main}>
+            <div css={gymListDetail}>
+                <div css={likeTitle}>나의 헬스장 목록</div>
+                {addGyms.data.data.map((addGym) => {
+                    return (
+                        <>
+                            <div
+                                css={cardContainer}
+                                onClick={() => {
+                                    navigate("/gym/" + addGym.gymId);
+                                }}
+                            >
+                                <header css={header}>
+                                    <h1 css={titleText}>
+                                        {addGym.gymName}
+                                    </h1>
+                                </header>
+                                <main css={cardMain}>
+                                    <GymMainImg gymId={addGym.gymId}/>
+                                </main>
+                                
+                                <footer css={footer}>
+                                    <h2 css={infoDetail}>
+                                        위치: {addGym.gymAddress}{" "}
+                                    </h2>
+                                    <h2 css={infoDetail}>
+                                        가격: (월) {addGym.gymPrice}&#8361;
+                                    </h2>
+                                    <h2 css={infoDetail}>
+                                        {" "}
+                                        ☎ {addGym.gymTel}
+                                    </h2>
+                                </footer>
+                            </div>
+                            
+                        </>
+                    );
+                })}
+            </div>
         </div>
+        <Footer />
+    </div>
     );
 };
 
