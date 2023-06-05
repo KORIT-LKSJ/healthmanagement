@@ -10,21 +10,29 @@ const container = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
 `;
 
-const main = css`
+const header = css`
+  position: fixed;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: 40%;
-  height: 90%;
+  height: 5%;
   background-color: white;
-  overflow: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  ::-webkit-scrollbar {
-    display: none;
-  }
+`;
+const mainLogo = css`
+  height: 100%;
+`;
+const main = css`
+  position: relative;
+  top: 5%;
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  height: 85%;
+  background-color: white;
 `;
 
 const title = css`
@@ -108,13 +116,24 @@ const errorMsgPasswordConfirm = (isPasswordconfirm) => css`
   color: ${isPasswordconfirm ? "green" : "red"};
 `;
 
+const footer = css`
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 10%;
+  bottom: 0;
+  background-color: white;
+`;
+
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   // 초깃값
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [username, setusername] = useState("");
+  const [username, setUsername] = useState("");
   //오류메세지 저장
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
@@ -128,9 +147,9 @@ const ForgotPassword = () => {
   const savePassword = useMutation(
     async () => {
       return await axios.put(
-        `http://localhost:8080/aith/find/password/forgotpassword`,
+        `http://localhost:8080/auth/find/password/forgotpassword`,
         {
-          username: username,
+          username: searchParams.get("username"),
           password,
         }
       );
@@ -180,6 +199,9 @@ const ForgotPassword = () => {
   };
   return (
     <div css={container}>
+      <header css={header}>
+        <img css={mainLogo} src="/image/gymLogo.png" alt="" />
+      </header>
       <main css={main}>
         <div css={title}>
           <h1 css={titleText}>ForgotPassword</h1>
@@ -221,6 +243,7 @@ const ForgotPassword = () => {
           </div>
         </div>
       </main>
+      <footer css={footer}></footer>
     </div>
   );
 };

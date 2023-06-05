@@ -19,8 +19,6 @@ public interface UserRepository {
 	public int saveUser(User user);
 	public int saveAuthority(Authority authority);
 	public int updateProvider(User user);
-	public int updateProfileImg(User use);
-	public int forgotPassword(Map<String, Object>map);
-	
-
+	public int updateProfileImg(User user);
+	public boolean forgotPassword(String username, String password);
 }

@@ -86,8 +86,8 @@ public class AuthenticationController {
 	public ResponseEntity<?> findUserPassword(FindPasswordReqDto findPasswordReqDto){
 		return ResponseEntity.ok(authenticationService.findPasswordByEmailAndNameAndId(findPasswordReqDto));
 	}
-	
-	@PutMapping("/auth/find/password/forgotpassword")
+
+	@PutMapping("/find/password/forgotpassword")
 	public ResponseEntity<?> forgotpasswordinfo(@RequestBody ForgotReqDto forgotReqDto){
 		return ResponseEntity.ok(authenticationService.forgotPassword(forgotReqDto));
 	}

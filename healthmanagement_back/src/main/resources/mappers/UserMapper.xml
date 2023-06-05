@@ -124,7 +124,7 @@
 		set
 			password = #{password}
 		where 
-			user_name = #{username}
+			username = #{username}
 	</update>
 	
 		<update id="updateProfileImg" parameterType="com.portfolio.healthmanagement.entity.User">
