@@ -157,12 +157,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	}
 
 	@Override
-	public int forgotPassword(ForgotReqDto forgotReqDto) {
-		Map<String, Object> map = new HashMap<>();
+	public boolean forgotPassword(ForgotReqDto forgotReqDto) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String password = passwordEncoder.encode(forgotReqDto.getPassword());
-		map.put("password", password);
-		return userRepositiory.forgotPassword(map);
+		return userRepositiory.forgotPassword(forgotReqDto.getUsername(), password) != false;
 		
 	}
 	

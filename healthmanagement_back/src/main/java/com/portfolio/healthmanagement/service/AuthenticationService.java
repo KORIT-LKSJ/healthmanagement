@@ -25,6 +25,6 @@ public interface AuthenticationService extends OAuth2UserService<OAuth2UserReque
 	public int oauth2ProviderMerge(OAuth2ProviderMergeReqDto oAuth2ProviderMergeReqDto);
 	public String findUsernameByEmailAndName(FindUsernameReqDto findUsernameReqDto);
 	public boolean findPasswordByEmailAndNameAndId(FindPasswordReqDto findPasswordReqDto);
-	public int forgotPassword(ForgotReqDto forgotReqDto);
+	public boolean forgotPassword(ForgotReqDto forgotReqDto);
 
 }

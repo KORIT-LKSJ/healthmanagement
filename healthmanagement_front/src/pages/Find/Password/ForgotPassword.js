@@ -133,7 +133,7 @@ const ForgotPassword = () => {
   // 초깃값
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [username, setusername] = useState("");
+  const [username, setUsername] = useState("");
   //오류메세지 저장
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
@@ -147,9 +147,9 @@ const ForgotPassword = () => {
   const savePassword = useMutation(
     async () => {
       return await axios.put(
-        `http://localhost:8080/aith/find/password/forgotpassword`,
+        `http://localhost:8080/auth/find/password/forgotpassword`,
         {
-          username: username,
+          username: searchParams.get("username"),
           password,
         }
       );

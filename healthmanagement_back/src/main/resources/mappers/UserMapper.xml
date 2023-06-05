@@ -121,7 +121,7 @@
 		set
 			password = #{password}
 		where 
-			user_name = #{username}
+			username = #{username}
 	</update>
 
 </mapper>
