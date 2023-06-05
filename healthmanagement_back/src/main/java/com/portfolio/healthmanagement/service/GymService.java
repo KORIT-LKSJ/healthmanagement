@@ -105,12 +105,12 @@ public class GymService {
 	
 	
 	
-	public Map<String, Object> NearbyGymAddressesAndGymName(String myAddress) {
+	public Map<String, Object> nearbyGymAddressesAndGymName(String myAddress) {
 		List<GetGymAddressAndGymNameRespDto> list = new ArrayList<>();
 		Map<String, Object> map = new HashMap<>();
 		map.put("myAddress", myAddress);
 		
-		gymRepository.NearbyGymAddressesAndGymName(map).forEach(gym -> {
+		gymRepository.nearbyGymAddressesAndGymName(map).forEach(gym -> {
 			list.add(gym.toGymAddressAndNameDto());
 		});
 		

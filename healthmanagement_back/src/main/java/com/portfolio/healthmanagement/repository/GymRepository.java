@@ -29,7 +29,7 @@ public interface GymRepository {
 	public int disLike(Map<String, Object>map);
 	public List<LikeList> likeGyms(int userId);
 	public List<MyGym> myGyms(int userId);
-	public List<Gym> NearbyGymAddressesAndGymName(Map<String, Object> map);
+	public List<Gym> nearbyGymAddressesAndGymName(Map<String, Object> map);
 	
 
 	public int registerGymImgsDetail (List<GymImgsDetail> gymImgsDetails);

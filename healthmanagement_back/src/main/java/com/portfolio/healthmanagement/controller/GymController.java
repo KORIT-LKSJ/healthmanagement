@@ -36,25 +36,22 @@ public class GymController {
 	
 	@GetMapping("/gyms/search")
 	public ResponseEntity<?> searchGyms (SearchGymReqDto searchGymReqDto){
-		System.out.println(gymService.searchGyms(searchGymReqDto));
 		return ResponseEntity.ok().body(gymService.searchGyms(searchGymReqDto));
 	}
 	
-	@GetMapping("/gyms/location")
-	public ResponseEntity<?> NearbyGymAddressesAndGymName(String myAddress) {
-		return ResponseEntity.ok().body(gymService.NearbyGymAddressesAndGymName(myAddress));
+	@GetMapping("/gyms/locations")
+	public ResponseEntity<?> nearbyGymAddressesAndGymName(String myAddress) {
+		return ResponseEntity.ok().body(gymService.nearbyGymAddressesAndGymName(myAddress));
 	}
 	
 	@ValidAspect
 	@PostMapping("/gyms/register")
 	public ResponseEntity<?> createGym(@Valid @RequestBody RegisterGymReqDto registerGymReqDto, BindingResult bindingResult){
-		System.out.println(registerGymReqDto);
 		return ResponseEntity.ok().body(gymService.addGym(registerGymReqDto));
 	}
 	
 	@PostMapping("/gyms/images/register")
 	public ResponseEntity<?> registerGymImg(RegisterGymImgsReqDto gymImgsReqDto){
-		System.out.println(gymImgsReqDto.getGymId());
 		return ResponseEntity.ok(gymService.registerGymImgs(gymImgsReqDto));
 	}
 	
