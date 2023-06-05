@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { BiUserCircle } from "react-icons/bi";
@@ -83,8 +83,6 @@ const imgbox = css`
         box-shadow: 1px 1px 25px #dbdbdb;
     }
 `;
-
-
 
 const usernameAndEmail = css`
     display: flex;
@@ -185,11 +183,11 @@ const imageStoredCheckButton = css`
     &:hover {
         box-shadow: 1px 1px 25px #dbdbdb;
     }
-`
+`;
 
 const fileInput = css`
     display: none;
-`
+`;
 
 const MyPage = () => {
     const navigate = useNavigate();
@@ -197,67 +195,67 @@ const MyPage = () => {
 
     const [imgFile, setImgFile] = useState();
     const [profileImgURL, setProfileImgURL] = useState();
-    const [storedButtonIsOpen,setStoredButtonIsOpen] = useState(false);
+    const [storedButtonIsOpen, setStoredButtonIsOpen] = useState(false);
 
     const fileRef = useRef();
-  
-    const principal = useQuery(["principal"], async () => {
-      const option = {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+
+    const principal = useQuery(
+        ["principal"],
+        async () => {
+            const option = {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                },
+            };
+            const response = await axios.get("http://localhost:8080/account/principal", option);
+            console.log(response);
+            return response;
         },
-      };
-      const response = await axios.get(
-        "http://localhost:8080/account/principal",
-        option
-      );
-      setProfileImgURL("http://localhost:8080/image/profile/" + response.data.profile);
-      console.log(response);
-      return response;
-    });
+        {
+            onSuccess: (response) => {
+                setProfileImgURL("http://localhost:8080/image/profile/" + response.data.profile);
+            },
+        }
+    );
 
     const profileImgSubmit = useMutation(
         async () => {
-          const formData = new FormData();
-          formData.append("profileImgFile", imgFile);
-    
-          const option = {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-              "Content-Type": "multipart/form-data",
-            },
-          };
-          const response = await axios.post(
-            "http://localhost:8080/account/user/mypage/profile",
-            formData,
-            option
-          );
-          return response;
+            const formData = new FormData();
+            formData.append("profileImgFile", imgFile);
+
+            const option = {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                    "Content-Type": "multipart/form-data",
+                },
+            };
+            const response = await axios.post("http://localhost:8080/account/user/mypage/profile", formData, option);
+            return response;
         },
         {
-          onSuccess: () => {
-            principal.refetch();
-          },
+            onSuccess: () => {
+                principal.refetch();
+            },
         }
-      );
-    
-      const profileImgChangeHandle = () => {
+    );
+
+    const profileImgChangeHandle = () => {
         fileRef.current.click();
-      };
-    
-      const profileImgFileChangeHandle = (e) => {
+    };
+
+    const profileImgFileChangeHandle = (e) => {
         setImgFile(e.target.files[0]);
-    
+
         const fileReader = new FileReader();
-    
+
         fileReader.onload = (event) => {
-          setProfileImgURL(event.target.result);
+            setProfileImgURL(event.target.result);
         };
-    
+
         fileReader.readAsDataURL(e.target.files[0]);
         e.target.value = null;
-      };
-    
+    };
+
     // 회원탈퇴
     const userDeletehandle = useMutation(
         async (userId) => {
@@ -285,7 +283,7 @@ const MyPage = () => {
     );
 
     const modifyClickHandle = () => {
-        navigate("/"+principal.data.data.userId+"/mypage/modify");
+        navigate("/" + principal.data.data.userId + "/mypage/modify");
     };
 
     const bookMarkClickHandle = () => {
@@ -293,7 +291,7 @@ const MyPage = () => {
     };
 
     const passwordulHandle = () => {
-        navigate("/"+principal.data.data.userId+"/mypage/passwordupdate");
+        navigate("/" + principal.data.data.userId + "/mypage/passwordupdate");
     };
 
     const deleteClickHandle = () => {
@@ -306,11 +304,14 @@ const MyPage = () => {
 
     const storedButtonOpenHandle = () => {
         setStoredButtonIsOpen(true);
-    }
+    };
 
     const storedButtonCloseHandle = () => {
         setStoredButtonIsOpen(false);
-    }
+    };
+
+    console.log(profileImgURL);
+
     if (!principal.isLoading)
         return (
             <div css={container}>
@@ -321,19 +322,34 @@ const MyPage = () => {
                         <div css={userInfo}>
                             <div css={user}>
                                 <div css={imgbox} onClick={profileImgChangeHandle}>
-                                    <img src={profileImgURL} 
-                                        css={img} 
+                                    <img src={profileImgURL} css={img} />
+                                    <input
+                                        type="file"
+                                        css={fileInput}
+                                        ref={fileRef}
+                                        onChange={profileImgFileChangeHandle}
+                                        onClick={storedButtonOpenHandle}
                                     />
-                                    <input type="file" css={fileInput} ref={fileRef} onChange={profileImgFileChangeHandle} onClick = {storedButtonOpenHandle}/>
                                 </div>
-                                {storedButtonIsOpen === true ? <button css={imageStoredCheckButton} onClick={() => {profileImgSubmit.mutate(); storedButtonCloseHandle();}}><BiCheck/></button>
-                                                             : "" }
-                                    <div css={usernameAndEmail}>
-                                        <div css={username}>{principal.data.data.username}</div>
-                                        <div css={email}>{principal.data.data.email}</div>
-                                    </div>
+                                {storedButtonIsOpen === true ? (
+                                    <button
+                                        css={imageStoredCheckButton}
+                                        onClick={() => {
+                                            profileImgSubmit.mutate();
+                                            storedButtonCloseHandle();
+                                        }}
+                                    >
+                                        <BiCheck />
+                                    </button>
+                                ) : (
+                                    ""
+                                )}
+                                <div css={usernameAndEmail}>
+                                    <div css={username}>{principal.data.data.username}</div>
+                                    <div css={email}>{principal.data.data.email}</div>
                                 </div>
                             </div>
+                        </div>
                         <div css={sideContainer}>
                             <div css={buttonArea} onClick={modifyClickHandle}>
                                 <div css={title}>
