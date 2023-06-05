@@ -205,7 +205,7 @@ const ModifyPage = () => {
     }
 
     const onclickExitHandle = () => {
-        navigate("/mypage");
+        navigate("/" + principal.data.data.userId + "/mypage");
     };
 
     // 휴대전화 수정

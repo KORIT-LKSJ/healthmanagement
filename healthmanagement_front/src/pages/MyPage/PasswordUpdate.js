@@ -213,7 +213,7 @@ const PasswordUpdate = () => {
   };
 
   const onclickExitHandle = () => {
-    navigate("/mypage");
+    navigate("/" + principal.data.data.userId + "/mypage");
   };
 
   // 성공시에 mutate를 가지고 옴

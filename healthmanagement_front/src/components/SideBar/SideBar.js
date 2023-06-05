@@ -156,14 +156,10 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen }) => {
     const isOwner = principal.data.data.authorities === "ROLE_OWNER"; // 역할에 따라 오너인지 여부를 판단
     const userId = principal.data.data.userId;
     const user = principal.data.data;
-
     return (
         <div css={sideBar(isSideBarOpen)}>
             <header css={header}>
-                <div css={userIcon}>
-                    {principal.data.data.name.substr(0, 1)}
-                </div>{" "}
-                {/* 사용자의 이름또는 이메일의 첫글자 하나만 들고오겠다 */}
+                <img src={"http://localhost:8080/image/profile/" + principal.data.data.profile} css={userIcon}/>
                 <div css={userInfo}>
                     <h1 css={userName}>{user.name}</h1>
                     <p css={userEmail}>{user.email}</p>
