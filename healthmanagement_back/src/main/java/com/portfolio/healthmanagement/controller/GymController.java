@@ -29,68 +29,49 @@ public class GymController {
 	
 	private final GymService gymService;
 	
-	@GetMapping("/gym/{gymId}")
+	@GetMapping("/gyms/{gymId}")
 	public ResponseEntity<?> getGym(@PathVariable int gymId){
 		return ResponseEntity.ok().body(gymService.getGym(gymId));
 	}
 	
-	@GetMapping("/gyms")
+	@GetMapping("/gyms/search")
 	public ResponseEntity<?> searchGyms (SearchGymReqDto searchGymReqDto){
 		System.out.println(gymService.searchGyms(searchGymReqDto));
 		return ResponseEntity.ok().body(gymService.searchGyms(searchGymReqDto));
 	}
 	
-	@GetMapping("/search/gym/address")
+	@GetMapping("/gyms/location")
 	public ResponseEntity<?> NearbyGymAddressesAndGymName(String myAddress) {
 		return ResponseEntity.ok().body(gymService.NearbyGymAddressesAndGymName(myAddress));
 	}
 	
-	@GetMapping("/gym/{gymId}/like")
-	public ResponseEntity<?> getLikeCount(@PathVariable int gymId){
-		return ResponseEntity.ok().body(gymService.getLikeCount(gymId));
-	}
-	
-	@GetMapping("/gym/{gymId}/like/status")
-	public ResponseEntity<?> getLikeStatus(@PathVariable int gymId, @RequestParam int userId){
-		return ResponseEntity.ok().body(gymService.getLikeStatus(gymId, userId));
-	}
-	
-	@PostMapping("/gym/{gymId}/like")
-	public ResponseEntity<?> setLike(@PathVariable int gymId, @RequestBody Map<String, Integer> requestMap){
-		return ResponseEntity.ok().body(gymService.setLike(gymId, requestMap.get("userId")));
-	}
-	
-	@DeleteMapping("/gym/{gymId}/like")
-	public ResponseEntity<?> disLike(@PathVariable int gymId, int userId){
-		return ResponseEntity.ok().body(gymService.disLike(gymId, userId));
-	}
-	
-	@GetMapping("/gym/{userId}/like/list")
-	public ResponseEntity<?> likeGyms(@PathVariable int userId){
-		return ResponseEntity.ok().body(gymService.likeGyms(userId));
-	}
-	
 	@ValidAspect
-	@PostMapping("/faclilty")
+	@PostMapping("/gyms/register")
 	public ResponseEntity<?> createGym(@Valid @RequestBody RegisterGymReqDto registerGymReqDto, BindingResult bindingResult){
 		System.out.println(registerGymReqDto);
 		return ResponseEntity.ok().body(gymService.addGym(registerGymReqDto));
 	}
 	
-	@GetMapping("/addgymlist/{userId}")
-	public ResponseEntity<?> myGyms(@PathVariable int userId ){
-		System.out.println(userId);
-		return ResponseEntity.ok().body(gymService.myGyms(userId));
-	}
-	
-	@PostMapping("/gym/img/register")
+	@PostMapping("/gyms/images/register")
 	public ResponseEntity<?> registerGymImg(RegisterGymImgsReqDto gymImgsReqDto){
 		System.out.println(gymImgsReqDto.getGymId());
 		return ResponseEntity.ok(gymService.registerGymImgs(gymImgsReqDto));
 	}
 	
-	@GetMapping("/gym/{gymId}/img")
+	@GetMapping("/gyms/{gymId}/images")
 	public ResponseEntity<?> getImg(@PathVariable int gymId){
 		return ResponseEntity.ok().body(gymService.getImg(gymId));
 	}
+	
+	@GetMapping("/gyms/{gymId}/likes")
+	public ResponseEntity<?> getLikeCount(@PathVariable int gymId){
+		return ResponseEntity.ok().body(gymService.getLikeCount(gymId));
+	}
+
+	@GetMapping("/gyms/{gymId}/favorites")
+	public ResponseEntity<?> getLikeStatus(@PathVariable int gymId, @RequestParam int userId){
+		return ResponseEntity.ok().body(gymService.getLikeStatus(gymId, userId));
+	}
+	
 }
+

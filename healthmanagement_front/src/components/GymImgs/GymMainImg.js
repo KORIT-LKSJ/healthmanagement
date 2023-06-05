@@ -30,11 +30,11 @@ const GymMainImg = (gymId) => {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
         };
-        const response = await axios.get(`http://localhost:8080/gym/${gymId.gymId}/img`, option);
+        const response = await axios.get(`http://localhost:8080/gyms/${gymId.gymId}/images`, option);
         console.log(response)
         
         setGymMainImgUrl("http://localhost:8080/image/post/" + response.data[0].tempName);
-
+        console.log(response.data[0].tempName)
         return response;
     });
 

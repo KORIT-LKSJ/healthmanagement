@@ -28,6 +28,7 @@ public class User {
 	private String email;
 	private Date birthdate;
 	private String provider;
+	private String profile;
 	
 	private List<Authority> authorities;
 	private List<GymOwner> gymOwners;
@@ -40,6 +41,7 @@ public class User {
 				.password(password)
 				.email(email)
 				.authorities(authorities)
+				.profile(profile)
 				.build();
 	}
 	
@@ -58,6 +60,7 @@ public class User {
 				.name(name)
 				.authorities(builder.toString())
 				.birthdate(birthdate)
+				.profile(profile)
 				.build();
 	}
 

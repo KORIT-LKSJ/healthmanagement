@@ -64,7 +64,7 @@ const Footer = () => {
     };
 
     const onClickMap = () => {
-        navigate("/map");
+        navigate("/location/gyms");
     };
 
     const onClickShop = () => {

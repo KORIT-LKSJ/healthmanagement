@@ -18,4 +18,5 @@ public class PrincipalRespDto {
 	private String email;
 	private String authorities; 
 	private Date birthdate;
+	private String profile;
 }

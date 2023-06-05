@@ -112,20 +112,6 @@
 			and user_id = #{userId}
 		</select>
 		
-		<insert id="setLike">
-			insert into gym_like_tb
-			values (0, #{gymId}, #{userId})
-		</insert>
-	
-		<delete id="disLike">
-			delete
-			from
-				gym_like_tb
-			where
-				gym_id = #{gymId}
-			and user_id = #{userId}
-		</delete>
-		
 		
 		<select id="findByBusinessNumber" parameterType="String" resultMap="gymMap">
 			select
@@ -151,22 +137,7 @@
 			values(0,#{userId},#{gymId})
 		</insert>
 		
-		<select id="likeGyms" parameterType="Integer"  resultType="com.portfolio.healthmanagement.entity.LikeList">
-			select
-			    gt.gym_id as gymId,
-			    gt.gym_name as gymName,
-			    gt.gym_address as gymAddress,
-			    gt.gym_tel as gymTel,
-			    gt.gym_price as gymPrice,
-			    
-			    ut.user_id as userId
-			from
-				gym_like_tb glt 
-			    left outer join gym_tb gt on (gt.gym_id = glt.gym_id)
-			    left outer join user_tb ut on (ut.user_id = glt.user_id)
-			where
-				ut.user_id = #{userId}
-    </select>
+		
 
 		<select id="NearbyGymAddressesAndGymName" parameterType="hashMap" resultMap="gymMap">
 			select
@@ -177,24 +148,6 @@
 			where
 				gym_address like concat("%",#{myAddress},"%")
 		</select>
-		
-	<select id="myGyms" parameterType="Integer" resultType="com.portfolio.healthmanagement.entity.MyGym">
-		select
-	   		gt.gym_id as gymId,
-			gt.gym_name as gymName,
-			gt.gym_address as gymAddress,
-			gt.gym_tel as gymTel,
-			gt.gym_price as gymPrice,
-    
-    		ut.user_id as userId
-		from
-   			gym_owner_tb got 
-	    	left outer join gym_tb gt on(got.gym_id = gt.gym_id)
-	    	left outer join user_tb ut on(ut.user_id = got.user_id) 
-	    where
-			ut.user_id = #{userId}
-				
-	</select>
 	
 	<insert id="registerGymImgsDetail" parameterType="Integer">
 		insert into gym_img_tb
@@ -217,7 +170,55 @@
 			where
 				git.gym_id = #{gymId}
     	</select>
+    	
+    	<insert id="setLike">
+			insert into gym_like_tb
+			values (0, #{gymId}, #{userId})
+		</insert>
+	
+		<delete id="disLike">
+				delete
+				from
+					gym_like_tb
+				where
+					gym_id = #{gymId}
+				and user_id = #{userId}
+		</delete>
+		
+		<select id="likeGyms" parameterType="Integer"  resultType="com.portfolio.healthmanagement.entity.LikeList">
+				select
+				    gt.gym_id as gymId,
+				    gt.gym_name as gymName,
+				    gt.gym_address as gymAddress,
+				    gt.gym_tel as gymTel,
+				    gt.gym_price as gymPrice,
+				    
+				    ut.user_id as userId
+				from
+					gym_like_tb glt 
+				    left outer join gym_tb gt on (gt.gym_id = glt.gym_id)
+				    left outer join user_tb ut on (ut.user_id = glt.user_id)
+				where
+					ut.user_id = #{userId}
+	    </select>
     
+	    <select id="myGyms" parameterType="Integer" resultType="com.portfolio.healthmanagement.entity.MyGym">
+			select
+		   		gt.gym_id as gymId,
+				gt.gym_name as gymName,
+				gt.gym_address as gymAddress,
+				gt.gym_tel as gymTel,
+				gt.gym_price as gymPrice,
+	    
+	    		ut.user_id as userId
+			from
+	   			gym_owner_tb got 
+		    	left outer join gym_tb gt on(got.gym_id = gt.gym_id)
+		    	left outer join user_tb ut on(ut.user_id = got.user_id) 
+		    where
+				ut.user_id = #{userId}
+					
+		</select>
     	
 </mapper>
 

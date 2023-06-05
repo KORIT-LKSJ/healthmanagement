@@ -1,10 +1,13 @@
 package com.portfolio.healthmanagement.repository;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.portfolio.healthmanagement.entity.Authority;
+import com.portfolio.healthmanagement.entity.LikeList;
+import com.portfolio.healthmanagement.entity.MyGym;
 import com.portfolio.healthmanagement.entity.User;
 
 @Mapper
@@ -16,5 +19,8 @@ public interface UserRepository {
 	public int saveUser(User user);
 	public int saveAuthority(Authority authority);
 	public int updateProvider(User user);
+	public int updateProfileImg(User use);
 	public int forgotPassword(Map<String, Object>map);
+	
+
 }

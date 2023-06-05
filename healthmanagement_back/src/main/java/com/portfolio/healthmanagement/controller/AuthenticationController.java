@@ -37,7 +37,7 @@ public class AuthenticationController {
 	private final AuthenticationService authenticationService;
 
 	@ValidAspect
-	@PostMapping("/signup")
+	@PostMapping("/register")
 	public ResponseEntity<?> signup(@Valid @RequestBody registerReqDto registerReqDto, BindingResult bindingResult) {
 		authenticationService.checkDuplicatedUsername(registerReqDto.getUsername());
 		authenticationService.register(registerReqDto);
@@ -86,6 +86,7 @@ public class AuthenticationController {
 	public ResponseEntity<?> findUserPassword(FindPasswordReqDto findPasswordReqDto){
 		return ResponseEntity.ok(authenticationService.findPasswordByEmailAndNameAndId(findPasswordReqDto));
 	}
+	
 	@PutMapping("/auth/find/password/forgotpassword")
 	public ResponseEntity<?> forgotpasswordinfo(@RequestBody ForgotReqDto forgotReqDto){
 		return ResponseEntity.ok(authenticationService.forgotPassword(forgotReqDto));

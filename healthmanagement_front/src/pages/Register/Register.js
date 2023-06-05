@@ -171,7 +171,7 @@ const Register = () => {
             },
         };
         try {
-            await axios.post("http://localhost:8080/auth/signup", JSON.stringify({ ...registerUser }), option);
+            await axios.post("http://localhost:8080/auth/register", JSON.stringify({ ...registerUser }), option);
             successRegister();
         } catch (error) {
             errorRegister(error);

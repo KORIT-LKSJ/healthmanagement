@@ -23,6 +23,7 @@ public class PrincipalUserDetails implements UserDetails{
 	private String username;
 	private String password;
 	private String email;
+	private String profile;
 	private List<Authority> authorities;
 	
 	@Override

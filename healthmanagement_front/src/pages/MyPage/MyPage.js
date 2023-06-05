@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { BiUserCircle } from "react-icons/bi";
@@ -9,6 +9,7 @@ import { TbPassword } from "react-icons/tb";
 import { AiOutlineDoubleRight } from "react-icons/ai";
 import { IoPersonRemoveOutline } from "react-icons/io5";
 import axios from "axios";
+import { BiCheck } from "react-icons/bi";
 import Footer from "../../components/Main/Footer/Footer";
 import Header from "../../components/Main/Header/Header";
 import { useRecoilState } from "recoil";
@@ -83,12 +84,7 @@ const imgbox = css`
     }
 `;
 
-const img = css`
-    overflow: hidden;
-    &:hover {
-        opacity: 0.8;
-    }
-`;
+
 
 const usernameAndEmail = css`
     display: flex;
@@ -174,19 +170,94 @@ const memberWd = css`
     }
 `;
 
+const img = css`
+    width: 100%;
+    overflow: hidden;
+    &:hover {
+        opacity: 0.8;
+    }
+`;
+
+const imageStoredCheckButton = css`
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    cursor: pointer;
+    &:hover {
+        box-shadow: 1px 1px 25px #dbdbdb;
+    }
+`
+
+const fileInput = css`
+    display: none;
+`
+
 const MyPage = () => {
     const navigate = useNavigate();
     const [authState, setAuthState] = useRecoilState(authenticationState);
 
+    const [imgFile, setImgFile] = useState();
+    const [profileImgURL, setProfileImgURL] = useState();
+    const [storedButtonIsOpen,setStoredButtonIsOpen] = useState(false);
+
+    const fileRef = useRef();
+  
     const principal = useQuery(["principal"], async () => {
-        const response = await axios.get("http://localhost:8080/account/principal", {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-        });
-        return response;
+      const option = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      };
+      const response = await axios.get(
+        "http://localhost:8080/account/principal",
+        option
+      );
+      setProfileImgURL("http://localhost:8080/image/profile/" + response.data.profile);
+      console.log(response);
+      return response;
     });
 
+    const profileImgSubmit = useMutation(
+        async () => {
+          const formData = new FormData();
+          formData.append("profileImgFile", imgFile);
+    
+          const option = {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              "Content-Type": "multipart/form-data",
+            },
+          };
+          const response = await axios.post(
+            "http://localhost:8080/account/user/mypage/profile",
+            formData,
+            option
+          );
+          return response;
+        },
+        {
+          onSuccess: () => {
+            principal.refetch();
+          },
+        }
+      );
+    
+      const profileImgChangeHandle = () => {
+        fileRef.current.click();
+      };
+    
+      const profileImgFileChangeHandle = (e) => {
+        setImgFile(e.target.files[0]);
+    
+        const fileReader = new FileReader();
+    
+        fileReader.onload = (event) => {
+          setProfileImgURL(event.target.result);
+        };
+    
+        fileReader.readAsDataURL(e.target.files[0]);
+        e.target.value = null;
+      };
+    
     // 회원탈퇴
     const userDeletehandle = useMutation(
         async (userId) => {
@@ -195,13 +266,11 @@ const MyPage = () => {
                     Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                 },
             };
-            const response = await axios.delete(`http://localhost:8080/account/remove/user/${userId}`, option);
-            console.log(response);
+            const response = await axios.delete(`http://localhost:8080/account/users/${userId}`, option);
             return response;
         },
         {
             onSuccess: (response) => {
-                console.log(response);
                 if (response.status === 200) {
                     alert("회원탈퇴 완료");
                     localStorage.clear();
@@ -216,7 +285,7 @@ const MyPage = () => {
     );
 
     const modifyClickHandle = () => {
-        navigate("/mypage/modifypage");
+        navigate("/"+principal.data.data.userId+"/mypage/modify");
     };
 
     const bookMarkClickHandle = () => {
@@ -224,7 +293,7 @@ const MyPage = () => {
     };
 
     const passwordulHandle = () => {
-        navigate("/mypage/passwordupdate");
+        navigate("/"+principal.data.data.userId+"/mypage/passwordupdate");
     };
 
     const deleteClickHandle = () => {
@@ -235,6 +304,13 @@ const MyPage = () => {
         }
     };
 
+    const storedButtonOpenHandle = () => {
+        setStoredButtonIsOpen(true);
+    }
+
+    const storedButtonCloseHandle = () => {
+        setStoredButtonIsOpen(false);
+    }
     if (!principal.isLoading)
         return (
             <div css={container}>
@@ -244,20 +320,20 @@ const MyPage = () => {
                     <div css={mypagecontainer}>
                         <div css={userInfo}>
                             <div css={user}>
-                                <div css={imgbox}>
-                                    <label htmlFor="profile-image"></label>
-                                    <img
-                                        css={img}
-                                        src="https://schoolshop-lab.jp/wp-content/uploads/2018/11/240ec862387d03003cb4c41cd93cb0be.png"
-                                        alt=""
+                                <div css={imgbox} onClick={profileImgChangeHandle}>
+                                    <img src={profileImgURL} 
+                                        css={img} 
                                     />
+                                    <input type="file" css={fileInput} ref={fileRef} onChange={profileImgFileChangeHandle} onClick = {storedButtonOpenHandle}/>
                                 </div>
-                                <div css={usernameAndEmail}>
-                                    <div css={username}>{principal.data.data.username}</div>
-                                    <div css={email}>{principal.data.data.email}</div>
+                                {storedButtonIsOpen === true ? <button css={imageStoredCheckButton} onClick={() => {profileImgSubmit.mutate(); storedButtonCloseHandle();}}><BiCheck/></button>
+                                                             : "" }
+                                    <div css={usernameAndEmail}>
+                                        <div css={username}>{principal.data.data.username}</div>
+                                        <div css={email}>{principal.data.data.email}</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         <div css={sideContainer}>
                             <div css={buttonArea} onClick={modifyClickHandle}>
                                 <div css={title}>

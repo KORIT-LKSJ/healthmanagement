@@ -169,7 +169,6 @@ const FacilityReq = () => {
     const day = String(today.getDate()).padStart(2, "0");
     const currentDate = `${year}-${month}-${day}`;
     const navigate = useNavigate();
-
     const [registerGym, setRegistserGym] = useState({
         gymName: "",
         gymTel: "",
@@ -223,7 +222,7 @@ const FacilityReq = () => {
         };
         try {
             const response = await axios.post(
-                "http://localhost:8080/faclilty",
+                "http://localhost:8080/gyms/register",
                 JSON.stringify({ ...registerGym, ...enroll_company }),
                 gymInfoOption
             );
@@ -254,7 +253,7 @@ const FacilityReq = () => {
                 },
             };
             await axios.post(
-                "http://localhost:8080/gym/img/register",
+                "http://localhost:8080/gyms/images/register",
                 formData,
                 gymImgOption
             );

@@ -11,6 +11,7 @@
 		<result property="email" column="email"/>
 		<result property="birthdate" column="birthdate" />
 		<result property="provider" column="provider"/>
+		<result property="profile" column="profile"/>
 		<collection property="authorities" javaType="list" resultMap="authorityMap" />
 	</resultMap>
 	
@@ -36,6 +37,7 @@
 			ut.phone,
 			ut.birthdate,
 			ut.provider,
+			ut.profile,
 			
 			at.authority_id,
 			at.user_id,
@@ -61,6 +63,7 @@
 			ut.phone,
 			ut.birthdate,
 			ut.provider,
+			ut.profile,
 			
 			at.authority_id,
 			at.user_id,
@@ -79,7 +82,7 @@
 	<insert id="saveUser" parameterType="com.portfolio.healthmanagement.entity.User" useGeneratedKeys="true"
 	keyProperty="userId">
 		insert into user_tb
-		values(0,#{username},#{password},#{name},#{phone},#{email},#{birthdate},#{provider})
+		values(0,#{username},#{password},#{name},#{phone},#{email},#{birthdate},#{provider},#{profile})
 	</insert>
 	
 	<insert id="saveAuthority" parameterType="com.portfolio.healthmanagement.entity.Authority">
@@ -123,5 +126,13 @@
 		where 
 			user_name = #{username}
 	</update>
-
+	
+		<update id="updateProfileImg" parameterType="com.portfolio.healthmanagement.entity.User">
+		update user_tb
+		set
+			profile= #{profile}
+		where
+			user_id = #{userId}
+	</update>
+	
 </mapper>

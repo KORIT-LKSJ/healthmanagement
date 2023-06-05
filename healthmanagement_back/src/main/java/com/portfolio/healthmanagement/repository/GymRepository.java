@@ -24,20 +24,17 @@ public interface GymRepository {
 
 	public int getLikeCount(int bookId);
 	public int getLikeStatus(Map<String, Object> map);
-
+	
 	public int setLike(Map<String,Object> map);
 	public int disLike(Map<String, Object>map);
-	
-	
 	public List<LikeList> likeGyms(int userId);
-	
 	public List<MyGym> myGyms(int userId);
-
 	public List<Gym> NearbyGymAddressesAndGymName(Map<String, Object> map);
 	
 
 	public int registerGymImgsDetail (List<GymImgsDetail> gymImgsDetails);
 	
 	public List<GymImgsDetail> getImgs(int gymId);
+	
 
 }
