@@ -147,7 +147,7 @@ const ForgotPassword = () => {
   const savePassword = useMutation(
     async () => {
       return await axios.put(
-        `http://localhost:8080/auth/find/password/forgotpassword`,
+        `http://localhost:8080/auth/forgot/password/change`,
         {
           username: searchParams.get("username"),
           password,

@@ -158,11 +158,11 @@ const Login = () => {
     });
 
     const findIdClickHandle = () => {
-        navigate("/auth/find/id");
+        navigate("/auth/forgot/username");
     };
 
     const findPasswordClickHandle = () => {
-        navigate("/auth/find/password");
+        navigate("/auth/forgot/password");
     };
 
     const signUpClickHandle = () => {

@@ -216,7 +216,7 @@ const FindPassword = () => {
       };
       try {
         const response = await axios.get(
-          `http://localhost:8080/auth/find/password`,
+          `http://localhost:8080/auth/forgot/password`,
           option
         );
         setModalData({
@@ -342,7 +342,7 @@ const FindPassword = () => {
                 setModalIsOpen(false);
                 if (findPasswordFlag) {
                   navigate(
-                    `/auth/find/password/forgotpassword?username=${informationToFindPassword.username}`
+                    `/auth/forgot/password/change?username=${informationToFindPassword.username}`
                   );
                 }
               }}

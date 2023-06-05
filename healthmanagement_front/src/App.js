@@ -58,20 +58,20 @@ function App() {
           }
         />
         <Route
-          path="/auth/find/username"
-          element={<AuthRoute path="/auth/find/username" element={<FindId />} />}
-        ></Route>
-        <Route
-          path="/auth/find/password"
-          element={
-            <AuthRoute path="/auth/find/password" element={<FindPassword />} />
-          }
+          path="/auth/forgot/username"
+          element={<AuthRoute path="/auth/forgot/username" element={<FindId />} />}
         ></Route>
         <Route
           path="/auth/forgot/password"
           element={
+            <AuthRoute path="/auth/forgot/password" element={<FindPassword />} />
+          }
+        ></Route>
+        <Route
+          path="/auth/forgot/password/change"
+          element={
             <AuthRoute
-              path="/auth/forgot/password"
+              path="/auth/forgot/password/change"
               element={<ForgotPassword />}
             />
           }

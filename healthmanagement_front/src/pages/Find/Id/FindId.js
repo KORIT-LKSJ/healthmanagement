@@ -207,7 +207,7 @@ const FindId = () => {
       };
       try {
         const response = await axios.get(
-          `http://localhost:8080/auth/find/username`,
+          `http://localhost:8080/auth/forgot/username`,
           option
         );
         setModalData({

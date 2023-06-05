@@ -78,16 +78,17 @@ public class AuthenticationController {
 		return ResponseEntity.ok(authenticationService.oauth2ProviderMerge(oAuth2ProviderMergeReqDto));
 	}
 	
-	@GetMapping("/find/username")
+	@GetMapping("/forgot/username")
 	public ResponseEntity<?> findUsername(FindUsernameReqDto findUsernameReqDto){
 		return ResponseEntity.ok(authenticationService.findUsernameByEmailAndName(findUsernameReqDto));
 	}
-	@GetMapping("/find/password")
+	
+	@GetMapping("/forgot/password")
 	public ResponseEntity<?> findUserPassword(FindPasswordReqDto findPasswordReqDto){
 		return ResponseEntity.ok(authenticationService.findPasswordByEmailAndNameAndId(findPasswordReqDto));
 	}
 
-	@PutMapping("/find/password/forgotpassword")
+	@PutMapping("/forgot/password/change")
 	public ResponseEntity<?> forgotpasswordinfo(@RequestBody ForgotReqDto forgotReqDto){
 		return ResponseEntity.ok(authenticationService.forgotPassword(forgotReqDto));
 	}
