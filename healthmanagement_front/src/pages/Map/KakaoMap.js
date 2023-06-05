@@ -117,7 +117,7 @@ const KaKaoMap = () => {
                         }
                     });
                 });
-
+                console.log(response);
                 return response;
             } catch (error) {
                 return error;

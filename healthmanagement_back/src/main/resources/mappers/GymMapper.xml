@@ -139,7 +139,7 @@
 		
 		
 
-		<select id="NearbyGymAddressesAndGymName" parameterType="hashMap" resultMap="gymMap">
+		<select id="nearbyGymAddressesAndGymName" parameterType="hashMap" resultMap="gymMap">
 			select
 				gym_address,
 				gym_name

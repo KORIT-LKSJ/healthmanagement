@@ -52,7 +52,6 @@ public class AccountController {
 	
 	@PutMapping("/users/password/update")
 	public ResponseEntity<?> modifyPassword(@RequestBody ModifyPasswordReqDto modifyPasswordReqDto) {
-		System.out.println(modifyPasswordReqDto);
 		return ResponseEntity.ok(accountService.modifyPassword(modifyPasswordReqDto));
 	}
 
@@ -78,7 +77,6 @@ public class AccountController {
 	
 	@GetMapping("/users/{userId}/gyms")
 	public ResponseEntity<?> myGyms(@PathVariable int userId ){
-		System.out.println(userId);
 		return ResponseEntity.ok().body(accountService.myGyms(userId));
 	}
 	
