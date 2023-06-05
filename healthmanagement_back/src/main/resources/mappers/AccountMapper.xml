@@ -11,6 +11,7 @@
 		<result property="email" column="email"/>
 		<result property="birthdate" column="birthdate" />
 		<result property="provider" column="provider"/>
+		<result property="profile" column="profile"/>
 	</resultMap>
 	
 	
@@ -22,7 +23,8 @@
 			name,
 			phone,
 			email,
-			birthdate
+			birthdate,
+			profile
 		from
 			user_tb
 		where
@@ -45,7 +47,6 @@
 		where
 			user_id = #{userId}
 	</update>
-	
 	
 	
 	<delete id="deleteUser" parameterType="Integer">

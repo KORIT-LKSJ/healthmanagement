@@ -47,7 +47,7 @@ const SearchBar = ({ isSearchBarOpen, gyms, setGyms, refresh, setRefresh }) => {
                 },
                 paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" }),
             };
-            const response = await axios.get("http://localhost:8080/gyms", option);
+            const response = await axios.get("http://localhost:8080/gyms/search", option);
             return response;
         },
         {

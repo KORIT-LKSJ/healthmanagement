@@ -162,7 +162,7 @@ const AddGymList = () => {
             };
 
             return await axios.get(
-                `http://localhost:8080/addgymlist/${principal.data.data.userId}`,
+                `http://localhost:8080/account/users/${principal.data.data.userId}/gyms`,
                 option
             );
         },

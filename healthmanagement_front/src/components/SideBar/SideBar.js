@@ -102,24 +102,24 @@ const footer = css`
 const SideBar = ({ isSideBarOpen, setIsSideBarOpen }) => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-
+    
     const sideBarCloseHandle = () => {
         setIsSideBarOpen(false);
     };
 
     const mypageClickHandle = () => {
-        navigate("/mypage");
+        navigate("/"+userId+"/mypage");
     };
 
     const likeListClickHandle = () => {
         navigate("/gym/" + userId + "/like/list");
     };
     const myBusinessAddHandle = () => {
-        navigate("/facility");
+        navigate("/"+userId+"/upload/mygym");
     };
 
     const myAddFitnessHandle = () => {
-        navigate("/addgymlist/" + userId);
+        navigate("/"+userId+"/mygyms");
     };
 
     const logoutClickHandle = () => {

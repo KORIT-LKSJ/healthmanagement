@@ -103,41 +103,7 @@ public class GymService {
 		return gymRepository.getLikeStatus(map);
 	}
 	
-	public int setLike(int gymId, int userId) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("gymId", gymId);
-		map.put("userId", userId);
-		
-		return gymRepository.setLike(map);
-	}
 	
-	public int disLike(int gymId, int userId) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("gymId", gymId);
-		map.put("userId", userId);
-		
-		return gymRepository.disLike(map);
-	}
-	
-	public List<LikeListRespDto> likeGyms(int userId) {
-		List<LikeListRespDto> list = new ArrayList<>();
-		gymRepository.likeGyms(userId).forEach(likeData -> {
-			list.add(likeData.toDto());
-		});
-		
-		return list;
-	}
-	
-	public List<MyGymListRespDto> myGyms(int userId){
-		
-		List<MyGymListRespDto> list = new ArrayList<>();
-		
-		gymRepository.myGyms(userId).forEach(addData -> {
-			list.add(addData.toDto());
-		});
-
-		return list;
-	}
 	
 	public Map<String, Object> NearbyGymAddressesAndGymName(String myAddress) {
 		List<GetGymAddressAndGymNameRespDto> list = new ArrayList<>();

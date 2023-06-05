@@ -140,7 +140,7 @@ const PasswordUpdate = () => {
     async () => {
       const accessToken = localStorage.getItem("accessToken");
       const response = await axios.get(
-        `http://localhost:8080/account/user/${principal.data.data.userId}`,
+        `http://localhost:8080/account/users/${principal.data.data.userId}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -163,7 +163,7 @@ const PasswordUpdate = () => {
         },
       };
       return await axios.put(
-        `http://localhost:8080/account/modify/password`,
+        `http://localhost:8080/account/users/password/update`,
         {
           userId: principal.data.data.userId,
           password,

@@ -153,7 +153,7 @@ const ModifyPage = () => {
         ["UserInfo"],
         async () => {
             const response = await axios.get(
-                `http://localhost:8080/account/user/${principal.data.data.userId}`,
+                `http://localhost:8080/account/users/${principal.data.data.userId}`,
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem(
@@ -183,7 +183,7 @@ const ModifyPage = () => {
                 },
             };
             return await axios.put(
-                `http://localhost:8080/account/modify/user`,
+                `http://localhost:8080/account/users/${principal.data.data.userId}`,
                 {
                     username: principal.data.data.username,
                     phone,

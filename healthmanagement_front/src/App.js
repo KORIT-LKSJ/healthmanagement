@@ -58,8 +58,8 @@ function App() {
           }
         />
         <Route
-          path="/auth/find/id"
-          element={<AuthRoute path="/auth/find/id" element={<FindId />} />}
+          path="/auth/find/username"
+          element={<AuthRoute path="/auth/find/username" element={<FindId />} />}
         ></Route>
         <Route
           path="/auth/find/password"
@@ -68,30 +68,32 @@ function App() {
           }
         ></Route>
         <Route
-          path="/auth/find/password/forgotpassword"
+          path="/auth/forgot/password"
           element={
             <AuthRoute
-              path="/auth/find/password/frogotpassword"
+              path="/auth/forgot/password"
               element={<ForgotPassword />}
             />
           }
         ></Route>
         <Route path="/" element={<AuthRoute path="/" element={<Main />} />} />
         <Route
-          path="/mypage"
-          element={<AuthRoute path="/mypage" element={<MyPage />} />}
+          path="/:userId/mypage"
+          element={<AuthRoute path="/:userId/mypage" element={<MyPage />} />}
         />
+
         <Route
-          path="/mypage/modifypage"
+          path="/:userId/mypage/modify"
           element={
-            <AuthRoute path="/mypage/modifypage" element={<ModifyPage />} />
+            <AuthRoute path="/:userId/mypage/modify" element={<ModifyPage />} />
           }
         ></Route>
+
         <Route
-          path="/mypage/passwordupdate"
+          path="/:user/mypage/passwordupdate"
           element={
             <AuthRoute
-              path="/mypage/passwordupdate"
+              path="/:user/mypage/passwordupdate"
               element={<PasswordUpdate />}
             />
           }
@@ -101,18 +103,20 @@ function App() {
           element={<AuthRoute path="/gym" element={<GymDetail />} />}
         />
         <Route
-          path="/facility"
-          element={<AuthRoute path="/facility" element={<FacilityReq />} />}
+          path="/:userId/upload/mygym"
+          element={<AuthRoute path="/:userId/upload/mygym" element={<FacilityReq />} />}
         />
+        <Route path="/:userId/mygyms" element={<AddGymList />}></Route>
+
         <Route
           path="/myCalory"
           element={<AuthRoute path="/myCalory" element={<MyCalory />} />}
         />
         <Route path="/gym/:userId/like/list" element={<LikeList />} />
-        <Route path="/addgymlist/:userId" element={<AddGymList />}></Route>
+        
         <Route
-          path="/map"
-          element={<AuthRoute path="/map" element={<KaKaoMap />} />}
+          path="/location/gyms"
+          element={<AuthRoute path="/location/gyms" element={<KaKaoMap />} />}
         />
         <Route path="/shop" element={<Shop />}></Route>
       </Routes>

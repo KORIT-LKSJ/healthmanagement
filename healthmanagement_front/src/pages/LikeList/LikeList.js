@@ -149,7 +149,7 @@ const LikeList = () => {
             },
         };
         return await axios.get(
-            `http://localhost:8080/gym/${userId}/like/list`,
+            `http://localhost:8080/account/users/${userId}/favorites`,
             option
         );
     });

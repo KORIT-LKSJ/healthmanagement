@@ -87,7 +87,7 @@ const GymDetail = () => {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
         };
-        const response = await axios.get(`http://localhost:8080/gym/${gymId}`, option);
+        const response = await axios.get(`http://localhost:8080/gyms/${gymId}`, option);
         return response;
     });
 
@@ -97,7 +97,7 @@ const GymDetail = () => {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
         };
-        const response = await axios.get(`http://localhost:8080/gym/${gymId}/img`, option);
+        const response = await axios.get(`http://localhost:8080/gyms/${gymId}/images`, option);
         setGymMainImgUrl("http://localhost:8080/image/post/" + response.data[0].tempName);
         return response;
     });
@@ -109,7 +109,7 @@ const GymDetail = () => {
             },
         };
 
-        const response = await axios.get(`http://localhost:8080/gym/${gymId}/like`, option);
+        const response = await axios.get(`http://localhost:8080/gyms/${gymId}/likes`, option);
         return response;
     });
 
@@ -122,7 +122,7 @@ const GymDetail = () => {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
         };
-        const response = await axios.get(`http://localhost:8080/gym/${gymId}/like/status`, option);
+        const response = await axios.get(`http://localhost:8080/gyms/${gymId}/favorites`, option);
         return response;
     });
 
@@ -135,7 +135,7 @@ const GymDetail = () => {
                 },
             };
             return await axios.post(
-                `http://localhost:8080/gym/${gymId}/like`,
+                `http://localhost:8080/account/users/favorites/${gymId}`,
                 JSON.stringify({
                     userId: queryClient.getQueryData("principal").data.userId,
                 }),
@@ -160,7 +160,7 @@ const GymDetail = () => {
                     Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                 },
             };
-            return await axios.delete(`http://localhost:8080/gym/${gymId}/like`, option);
+            return await axios.delete(`http://localhost:8080/account/users/favorites/${gymId}`, option);
         },
         {
             onSuccess: () => {

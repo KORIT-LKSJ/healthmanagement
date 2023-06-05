@@ -102,7 +102,7 @@ const KaKaoMap = () => {
                 },
             };
             try {
-                const response = await axios.get("http://localhost:8080/search/gym/address", option);
+                const response = await axios.get("http://localhost:8080/gyms/locations", option);
                 setNearLatLngNames([]);
                 response.data.gymData.forEach((gym) => {
                     geocoder.addressSearch(gym.gymAddress, (result, status) => {
