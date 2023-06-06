@@ -44,6 +44,7 @@ const main = css`
 const detailName = css`
     display: flex;
     flex-direction: column;
+    padding-top: 10px;
     height: 60px;
 `;
 const gymName = css`
@@ -181,7 +182,6 @@ const GymDetail = () => {
                     ) : (
                         ""
                     )}
-                    ;
                     <div css={detailName}>
                         <h1 css={gymName}>{getGym.data.data.gymName}</h1>
                         <h1 css={gymAddress}>{getGym.data.data.gymAddress}</h1>
