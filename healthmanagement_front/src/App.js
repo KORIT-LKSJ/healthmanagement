@@ -32,6 +32,7 @@ function App() {
           path="/auth/login"
           element={<AuthRoute path="/auth/login" element={<Login />} />}
         ></Route>
+
         <Route
           path="/auth/oauth2/login"
           element={
@@ -68,10 +69,10 @@ function App() {
           }
         ></Route>
         <Route
-          path="/auth/forgot/password/change"
+          path="/auth/forgot/password/change/:email/:token"
           element={
             <AuthRoute
-              path="/auth/forgot/password/change"
+              path="/auth/forgot/password/change/:email/:token"
               element={<ForgotPassword />}
             />
           }
