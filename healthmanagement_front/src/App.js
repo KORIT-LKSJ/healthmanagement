@@ -120,6 +120,7 @@ function App() {
           element={<AuthRoute path="/location/gyms" element={<KaKaoMap />} />}
         />
         <Route path="/shop" element={<Shop />}></Route>
+
       </Routes>
     </>
   );
