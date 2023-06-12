@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import React, { useState } from "react";
 import { useMutation } from "react-query";
 import axios from "axios";
@@ -129,8 +129,7 @@ const footer = css`
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  // 초깃값
+  const {email} = useParams();
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [username, setUsername] = useState("");
@@ -141,15 +140,15 @@ const ForgotPassword = () => {
   const [isPassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
-  console.log(searchParams.get("username"));
+  console.log(email);
 
   // 비밀번호가 저장되는 것 구현중
   const savePassword = useMutation(
     async () => {
       return await axios.put(
-        `http://localhost:8080/auth/forgot/password/change`,
+        `http://localhost:8080/auth/forgot/password/change`, 
         {
-          username: searchParams.get("username"),
+          email: email,
           password,
         }
       );

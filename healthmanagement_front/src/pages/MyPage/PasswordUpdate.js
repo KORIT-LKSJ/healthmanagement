@@ -174,7 +174,7 @@ const PasswordUpdate = () => {
     {
       onSuccess: () => {
         alert("비밀번호 변경 완료");
-        navigate("/");
+        navigate("/" + principal.data.data.userId + "/mypage");
       },
     }
   );

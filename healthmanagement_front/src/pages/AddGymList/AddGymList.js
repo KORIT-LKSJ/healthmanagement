@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import Footer from "../../components/Main/Footer/Footer";
 import Header from "../../components/Main/Header/Header";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -136,6 +136,7 @@ const likeTitle = css`
 
 const AddGymList = () => {
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
     const principal = useQuery(["principal"], async () => {
         const option = {
@@ -197,7 +198,6 @@ const AddGymList = () => {
                                     onClick={() => {navigate("/gym/" + addGym.gymId);}}>
                                     <GymMainImg gymId={addGym.gymId}/>
                                 </main>
-                                
                                 <footer css={footer}>
                                     <h2 css={infoDetail}>
                                         위치: {addGym.gymAddress}{" "}

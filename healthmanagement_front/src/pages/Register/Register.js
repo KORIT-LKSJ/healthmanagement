@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import axios from "axios";
 import React, { useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 const container = css`
@@ -120,6 +120,8 @@ const registerButton = css`
 
 const Register = () => {
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
+
     const [registerUser, setRegisterUser] = useState({
         username: "",
         password: "",
@@ -160,7 +162,7 @@ const Register = () => {
             email: "",
             phone: "",
             birthdate: "",
-            ...error.response.data.errorData,
+            ...error.response.data.errorData
         });
     };
 
@@ -178,13 +180,14 @@ const Register = () => {
         }
     });
 
+
     const onchangeHandle = (e) => {
         const { name, value } = e.target;
         setRegisterUser({ ...registerUser, [name]: value });
     };
 
     const userTypeClickHandle = (e) => {
-        setRegisterUser({ ...registerUser, [e.target.name]: e.target.value });
+        setRegisterUser({ ...registerUser, [e.target.name]: e.target.value});
     };
 
     if (!registerSubmit.isLoading)

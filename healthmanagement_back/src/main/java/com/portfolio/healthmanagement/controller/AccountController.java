@@ -80,4 +80,5 @@ public class AccountController {
 		return ResponseEntity.ok().body(accountService.myGyms(userId));
 	}
 	
+	
 }

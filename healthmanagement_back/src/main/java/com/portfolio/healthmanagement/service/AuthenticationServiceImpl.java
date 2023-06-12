@@ -160,7 +160,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	public boolean forgotPassword(ForgotReqDto forgotReqDto) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String password = passwordEncoder.encode(forgotReqDto.getPassword());
-		return userRepositiory.forgotPassword(forgotReqDto.getUsername(), password) != false;
+		return userRepositiory.forgotPassword(forgotReqDto.getEmail(), password) != false;
 		
 	}
 	
