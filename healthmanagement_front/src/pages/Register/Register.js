@@ -194,7 +194,7 @@ const Register = () => {
     }));
   };
 
-  //   if (!registerSubmit.isLoading)
+  // if (!registerSubmit.isLoading)
   return (
     <div css={container}>
       <header css={header}>
