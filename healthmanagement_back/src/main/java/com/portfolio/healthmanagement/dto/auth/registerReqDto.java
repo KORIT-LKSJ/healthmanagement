@@ -1,6 +1,7 @@
 package com.portfolio.healthmanagement.dto.auth;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -8,6 +9,7 @@ import javax.validation.constraints.Pattern;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.portfolio.healthmanagement.entity.User;
 
 import lombok.Data;
@@ -47,6 +49,7 @@ public class registerReqDto {
 
 	public User toEntity() {
 		Date date = Date.valueOf(birthdate);
+		Date registeDate = Date.valueOf(LocalDate.now());
 		return User.builder()
 				.username(username)
 				.password(new BCryptPasswordEncoder().encode(password))
@@ -54,6 +57,7 @@ public class registerReqDto {
 				.name(name)
 				.phone(phone)
 				.birthdate(date)
+				.registeDate(registeDate)
 				.build();
 	}
 }

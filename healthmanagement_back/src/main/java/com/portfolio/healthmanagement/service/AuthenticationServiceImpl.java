@@ -80,6 +80,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User userEntity = userRepositiory.findUserByUsername(username);
 		
+		
 		if (userEntity == null) {
 			return null;
 		}

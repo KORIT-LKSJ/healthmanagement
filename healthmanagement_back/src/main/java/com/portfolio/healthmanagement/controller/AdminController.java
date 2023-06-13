@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,5 +28,25 @@ public class AdminController {
 	public ResponseEntity<?> Login(@Valid @RequestBody LoginReqDto loginReqDto, BindingResult bindingResult) {
 		System.out.println(loginReqDto);
 		return ResponseEntity.ok(adminService.login(loginReqDto));
+	}
+	
+	@GetMapping("/users/count")
+	public ResponseEntity<?> userCount() {
+		return ResponseEntity.ok().body(adminService.userCount());
+	}
+	
+	@GetMapping("/gyms/count")
+	public ResponseEntity<?> gymCount() {
+		return ResponseEntity.ok().body(adminService.gymCount());
+	}
+	
+	@GetMapping("/users/page")
+	public ResponseEntity<?> userPage() {
+		return ResponseEntity.ok().body(adminService.userPage());
+	}
+	
+	@GetMapping("/users")
+	public ResponseEntity<?> getUsers(int page) {
+		return ResponseEntity.ok().body(adminService.getUsers(page));
 	}
 }

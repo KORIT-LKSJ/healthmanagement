@@ -24,6 +24,8 @@ import Shop from "./pages/Shop/Shop";
 import ForgotPassword from "./pages/Find/Password/ForgotPassword";
 import AdminLogin from "./pages/Admin/Login/AdminLogin";
 import Dashboard from "./pages/Admin/Dashboard/Dashboard";
+import GymManagement from "./pages/Admin/GymManagement/GymManagement";
+import UserManagement from "./pages/Admin/UserManagement/UserManagement";
 
 function App() {
     return (
@@ -82,6 +84,8 @@ function App() {
                 <Route path="/shop" element={<Shop />} />
                 <Route path="/admin/login" element={<AdminLogin />} />
                 <Route path="/admin/dashboard" element={<Dashboard />} />
+                <Route path="/admin/gyms" element={<GymManagement />} />
+                <Route path="/admin/users" element={<UserManagement />} />
             </Routes>
         </>
     );

@@ -12,6 +12,7 @@
 		<result property="birthdate" column="birthdate" />
 		<result property="provider" column="provider"/>
 		<result property="profile" column="profile"/>
+		<result property="registeDate" column="registe_date" />
 		<collection property="authorities" javaType="list" resultMap="authorityMap" />
 	</resultMap>
 	
@@ -38,6 +39,7 @@
 			ut.birthdate,
 			ut.provider,
 			ut.profile,
+			ut.registe_date,
 			
 			at.authority_id,
 			at.user_id,
@@ -64,6 +66,7 @@
 			ut.birthdate,
 			ut.provider,
 			ut.profile,
+			ut.registe_date,
 			
 			at.authority_id,
 			at.user_id,
@@ -82,7 +85,7 @@
 	<insert id="saveUser" parameterType="com.portfolio.healthmanagement.entity.User" useGeneratedKeys="true"
 	keyProperty="userId">
 		insert into user_tb
-		values(0,#{username},#{password},#{name},#{phone},#{email},#{birthdate},#{provider},#{profile})
+		values(0,#{username},#{password},#{name},#{phone},#{email},#{birthdate},#{provider},#{profile},#{registeDate})
 	</insert>
 	
 	<insert id="saveAuthority" parameterType="com.portfolio.healthmanagement.entity.Authority">

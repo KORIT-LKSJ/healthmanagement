@@ -102,24 +102,24 @@ const footer = css`
 const SideBar = ({ isSideBarOpen, setIsSideBarOpen }) => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    
+
     const sideBarCloseHandle = () => {
         setIsSideBarOpen(false);
     };
 
     const mypageClickHandle = () => {
-        navigate("/"+userId+"/mypage");
+        navigate("/" + userId + "/mypage");
     };
 
     const likeListClickHandle = () => {
         navigate("/gym/" + userId + "/like/list");
     };
     const myBusinessAddHandle = () => {
-        navigate("/"+userId+"/upload/mygym");
+        navigate("/" + userId + "/upload/mygym");
     };
 
     const myAddFitnessHandle = () => {
-        navigate("/"+userId+"/mygyms");
+        navigate("/" + userId + "/mygyms");
     };
 
     const logoutClickHandle = () => {
@@ -136,16 +136,11 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen }) => {
 
     // principal 변수를 초기화하고 가져온 데이터를 사용하여 로딩상태를 처리 및  사용자 정보에 접근
     const principal = useQuery(["principal"], async () => {
-        const response = await axios.get(
-            "http://localhost:8080/account/principal",
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem(
-                        "accessToken"
-                    )}`,
-                },
-            }
-        );
+        const response = await axios.get("http://localhost:8080/account/principal", {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+        });
         return response;
     });
 
@@ -159,7 +154,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen }) => {
     return (
         <div css={sideBar(isSideBarOpen)}>
             <header css={header}>
-                <img src={"http://localhost:8080/image/profile/" + principal.data.data.profile} css={userIcon}/>
+                <img src={"http://localhost:8080/image/profile/" + principal.data.data.profile} css={userIcon} />
                 <div css={userInfo}>
                     <h1 css={userName}>{user.name}</h1>
                     <p css={userEmail}>{user.email}</p>
@@ -176,19 +171,13 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen }) => {
 
                 {/* 일반 유저와 오너 여부에 따라 아이콘이 다르게 구현  */}
                 {isOwner && (
-                    <ListButton
-                        title="우리 업체 등록"
-                        onClick={myBusinessAddHandle}
-                    >
+                    <ListButton title="우리 업체 등록" onClick={myBusinessAddHandle}>
                         {" "}
                         <FaRegistered />
                     </ListButton>
                 )}
                 {isOwner && (
-                    <ListButton
-                        title="내가 등록한 헬스장"
-                        onClick={myAddFitnessHandle}
-                    >
+                    <ListButton title="내가 등록한 헬스장" onClick={myAddFitnessHandle}>
                         {" "}
                         <MdOutlineFitnessCenter />
                     </ListButton>

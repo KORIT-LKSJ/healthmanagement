@@ -29,6 +29,7 @@ public class User {
 	private Date birthdate;
 	private String provider;
 	private String profile;
+	private Date registeDate;
 	
 	private List<Authority> authorities;
 	private List<GymOwner> gymOwners;

@@ -6,9 +6,9 @@ import { useQuery } from "react-query";
 import Footer from "../../components/Main/Footer/Footer";
 import Header from "../../components/Main/Header/Header";
 import { Navigate, useNavigate } from "react-router-dom";
-import  GymMainImg from "../../components/GymImgs/GymMainImg";
-import { TiTrash } from 'react-icons/ti';
-import {  BiPen  } from 'react-icons/bi';
+import GymMainImg from "../../components/GymImgs/GymMainImg";
+import { TiTrash } from "react-icons/ti";
+import { BiPen } from "react-icons/bi";
 
 const container = css`
     display: flex;
@@ -93,7 +93,7 @@ const removeModifyButton = css`
     &:active {
         background-color: #fafafa;
     }
-`
+`;
 
 const footer = css`
     display: flex;
@@ -143,10 +143,7 @@ const AddGymList = () => {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
         };
-        const response = await axios.get(
-            "http://localhost:8080/account/principal",
-            option
-        );
+        const response = await axios.get("http://localhost:8080/account/principal", option);
         return response;
     });
 
@@ -155,71 +152,66 @@ const AddGymList = () => {
         async () => {
             const option = {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem(
-                        "accessToken"
-                    )}`,
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                 },
             };
 
-            return await axios.get(
-                `http://localhost:8080/account/users/${principal.data.data.userId}/gyms`,
-                option
-            );
+            return await axios.get(`http://localhost:8080/account/users/${principal.data.data.userId}/gyms`, option);
         },
         {
             enabled: !!principal.data,
         }
     );
-    
+
     const removeModifyOnClickHandle = () => {
         alert("업체에 문의하세요.");
-    }
+    };
 
     if (!addGyms.isLoading && !principal.isLoading)
-    return ( 
-    <div css={container}>
-        <Header search={false}></Header>
-        <div css={main}>
-            <div css={gymListDetail}>
-                <div css={likeTitle}>나의 헬스장 목록</div>
-                {addGyms.data.data.map((addGym) => {
-                    return (
-                        <>
-                            <div css={cardContainer}>
-                                <header css={header}>
-                                    <h1 css={titleText}>
-                                        {addGym.gymName}
-                                        <button css={removeModifyButton} onClick={removeModifyOnClickHandle}><BiPen/></button>
-                                        <button css={removeModifyButton} onClick={removeModifyOnClickHandle}><TiTrash/></button>
-                                    </h1>
-                                </header>
-                                <main css={cardMain} 
-                                    onClick={() => {navigate("/gym/" + addGym.gymId);}}>
-                                    <GymMainImg gymId={addGym.gymId}/>
-                                </main>
-                                
-                                <footer css={footer}>
-                                    <h2 css={infoDetail}>
-                                        위치: {addGym.gymAddress}{" "}
-                                    </h2>
-                                    <h2 css={infoDetail}>
-                                        가격: (월) {addGym.gymPrice}&#8361;
-                                    </h2>
-                                    <h2 css={infoDetail}>
-                                        {" "}
-                                        ☎ {addGym.gymTel}
-                                    </h2>
-                                </footer>
-                            </div>
-                            
-                        </>
-                    );
-                })}
+        return (
+            <div css={container}>
+                <Header search={false}></Header>
+                <div css={main}>
+                    <div css={gymListDetail}>
+                        <div css={likeTitle}>나의 헬스장 목록</div>
+                        {addGyms.data.data.map((addGym) => {
+                            return (
+                                <>
+                                    <div css={cardContainer}>
+                                        <header css={header}>
+                                            <h1 css={titleText}>
+                                                {addGym.gymName}
+                                                <button css={removeModifyButton} onClick={removeModifyOnClickHandle}>
+                                                    <BiPen />
+                                                </button>
+                                                <button css={removeModifyButton} onClick={removeModifyOnClickHandle}>
+                                                    <TiTrash />
+                                                </button>
+                                            </h1>
+                                        </header>
+                                        <main
+                                            css={cardMain}
+                                            onClick={() => {
+                                                navigate("/gym/" + addGym.gymId);
+                                            }}
+                                        >
+                                            <GymMainImg gymId={addGym.gymId} />
+                                        </main>
+
+                                        <footer css={footer}>
+                                            <h2 css={infoDetail}>위치: {addGym.gymAddress} </h2>
+                                            <h2 css={infoDetail}>가격: (월) {addGym.gymPrice}&#8361;</h2>
+                                            <h2 css={infoDetail}> ☎ {addGym.gymTel}</h2>
+                                        </footer>
+                                    </div>
+                                </>
+                            );
+                        })}
+                    </div>
+                </div>
+                <Footer />
             </div>
-        </div>
-        <Footer />
-    </div>
-    );
+        );
 };
 
 export default AddGymList;

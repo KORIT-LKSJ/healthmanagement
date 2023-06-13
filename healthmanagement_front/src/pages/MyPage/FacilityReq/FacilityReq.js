@@ -227,38 +227,30 @@ const FacilityReq = () => {
                 gymInfoOption
             );
             console.log(response);
-            
+
             const gymId = response.data;
 
-            if(gymId!== null) {
-            
-            const formData = new FormData();
-            formData.append("gymId", gymId);
+            if (gymId !== null) {
+                const formData = new FormData();
+                formData.append("gymId", gymId);
 
-            imgFiles.forEach((imgFile) => {
-                formData.append("imgFiles", imgFile.file);
-            });
+                imgFiles.forEach((imgFile) => {
+                    formData.append("imgFiles", imgFile.file);
+                });
 
-            formData.forEach((value, key) => {
-                console.log("key" + key + ",value" + value);
-            });
+                formData.forEach((value, key) => {
+                    console.log("key" + key + ",value" + value);
+                });
 
-            
-            const gymImgOption = {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem(
-                        "accessToken"
-                    )}`,
-                    "Context-Type": "multipart/form-data",
-                },
-            };
-            await axios.post(
-                "http://localhost:8080/gyms/images/register",
-                formData,
-                gymImgOption
-            );
-            successRegister();
-        }
+                const gymImgOption = {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                        "Context-Type": "multipart/form-data",
+                    },
+                };
+                await axios.post("http://localhost:8080/gyms/images/register", formData, gymImgOption);
+                successRegister();
+            }
         } catch (error) {
             errorRegister(error);
             console.log(error);
@@ -305,11 +297,7 @@ const FacilityReq = () => {
     };
 
     const removeFileHandle = (e) => {
-        setImgFiles([
-            ...imgFiles.filter(
-                (imgFile) => imgFile.id !== parseInt(e.target.value)
-            ),
-        ]);
+        setImgFiles([...imgFiles.filter((imgFile) => imgFile.id !== parseInt(e.target.value))]);
     };
 
     return (
@@ -325,10 +313,7 @@ const FacilityReq = () => {
                 <div css={mainContent}>
                     <div css={sign}>
                         <h3>파트너가 되고 싶은 사장님이신가요?!</h3>
-                        <h3>
-                            매출부터 운영까지, 모두의짐이 함께 고민합니다. 지금
-                            모두의짐의 파트너센터가 되어보세요
-                        </h3>
+                        <h3>매출부터 운영까지, 모두의짐이 함께 고민합니다. 지금 모두의짐의 파트너센터가 되어보세요</h3>
                     </div>
                     <div css={inputBox}>
                         <label css={inputTitle}>운동시설 이름</label>
@@ -353,19 +338,11 @@ const FacilityReq = () => {
                                 value={enroll_company.gymAddress}
                                 disabled
                             />
-                            <button
-                                css={addressButton}
-                                onClick={handleComplete}
-                            >
+                            <button css={addressButton} onClick={handleComplete}>
                                 주소 찾기
                             </button>
                         </div>
-                        {popup && (
-                            <Post
-                                company={enroll_company}
-                                setcompany={setEnroll_company}
-                            ></Post>
-                        )}
+                        {popup && <Post company={enroll_company} setcompany={setEnroll_company}></Post>}
                         <div css={errorMsg}></div>
                     </div>
                     <div css={inputBox}>
@@ -403,13 +380,7 @@ const FacilityReq = () => {
                     </div>
                     <div css={inputBox}>
                         <label css={inputTitle}>등록일</label>
-                        <input
-                            css={input}
-                            type="text"
-                            defaultValue={currentDate}
-                            name="registDate"
-                            disabled={true}
-                        />
+                        <input css={input} type="text" defaultValue={currentDate} name="registDate" disabled={true} />
                     </div>
                     <div css={inputBox}>
                         <label css={inputTitle}>이미지(※대표사진을 가장 상단에 배치해주세요) </label>
@@ -425,10 +396,7 @@ const FacilityReq = () => {
                                 {imgFiles.map((imgFile) => (
                                     <li key={imgFile.id}>
                                         {imgFile.file.name}{" "}
-                                        <button
-                                            value={imgFile.id}
-                                            onClick={removeFileHandle}
-                                        >
+                                        <button value={imgFile.id} onClick={removeFileHandle}>
                                             삭제
                                         </button>
                                     </li>
@@ -437,10 +405,7 @@ const FacilityReq = () => {
                         </div>
                     </div>
                     <div css={gymRegiste}>
-                        <button
-                            css={registeButton}
-                            onClick={() => registerHandleSubmit.mutate()}
-                        >
+                        <button css={registeButton} onClick={() => registerHandleSubmit.mutate()}>
                             등록하기
                         </button>
                     </div>

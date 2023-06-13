@@ -141,19 +141,15 @@ const LikeList = () => {
     console.log(userId);
     const navigate = useNavigate();
 
-
     const likeGyms = useQuery(["likeGyms"], async () => {
         const option = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
         };
-        return await axios.get(
-            `http://localhost:8080/account/users/${userId}/favorites`,
-            option
-        );
+        return await axios.get(`http://localhost:8080/account/users/${userId}/favorites`, option);
     });
-    console.log(likeGyms)
+    console.log(likeGyms);
     if (likeGyms.isLoading) {
         return <div>로딩중...</div>;
     }
@@ -174,24 +170,15 @@ const LikeList = () => {
                                     }}
                                 >
                                     <header css={header}>
-                                        <h1 css={titleText}>
-                                            {likeGym.gymName}
-                                        </h1>
+                                        <h1 css={titleText}>{likeGym.gymName}</h1>
                                     </header>
                                     <main css={cardMain}>
-                                    <GymMainImg gymId={likeGym.gymId}/>
+                                        <GymMainImg gymId={likeGym.gymId} />
                                     </main>
                                     <footer css={footer}>
-                                        <h2 css={infoDetail}>
-                                            위치: {likeGym.gymAddress}{" "}
-                                        </h2>
-                                        <h2 css={infoDetail}>
-                                            가격: (월) {likeGym.gymPrice}&#8361;
-                                        </h2>
-                                        <h2 css={infoDetail}>
-                                            {" "}
-                                            ☎ {likeGym.gymTel}
-                                        </h2>
+                                        <h2 css={infoDetail}>위치: {likeGym.gymAddress} </h2>
+                                        <h2 css={infoDetail}>가격: (월) {likeGym.gymPrice}&#8361;</h2>
+                                        <h2 css={infoDetail}> ☎ {likeGym.gymTel}</h2>
                                     </footer>
                                 </div>
                             </>
