@@ -60,12 +60,10 @@ function App() {
                 />
                 <Route path="/" element={<AuthRoute path="/" element={<Main />} />} />
                 <Route path="/:userId/mypage" element={<AuthRoute path="/:userId/mypage" element={<MyPage />} />} />
-
                 <Route
                     path="/:userId/mypage/modify"
                     element={<AuthRoute path="/:userId/mypage/modify" element={<ModifyPage />} />}
                 />
-
                 <Route
                     path="/:user/mypage/passwordupdate"
                     element={<AuthRoute path="/:user/mypage/passwordupdate" element={<PasswordUpdate />} />}
@@ -76,10 +74,8 @@ function App() {
                     element={<AuthRoute path="/:userId/upload/mygym" element={<FacilityReq />} />}
                 />
                 <Route path="/:userId/mygyms" element={<AddGymList />}></Route>
-
                 <Route path="/myCalory" element={<AuthRoute path="/myCalory" element={<MyCalory />} />} />
                 <Route path="/gym/:userId/like/list" element={<LikeList />} />
-
                 <Route path="/location/gyms" element={<AuthRoute path="/location/gyms" element={<KaKaoMap />} />} />
                 <Route path="/shop" element={<Shop />} />
                 <Route path="/admin/login" element={<AdminLogin />} />

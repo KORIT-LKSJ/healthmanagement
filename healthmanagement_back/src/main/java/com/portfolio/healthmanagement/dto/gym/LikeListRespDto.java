@@ -11,5 +11,6 @@ public class LikeListRespDto {
 	private String gymName;
 	private String gymAddress;
 	private String gymPrice;
+	private String gymTel;
 	private boolean likeStatus;
 }

@@ -20,5 +20,5 @@ public interface UserRepository {
 	public int saveAuthority(Authority authority);
 	public int updateProvider(User user);
 	public int updateProfileImg(User user);
-	public boolean forgotPassword(String username, String password);
+	public boolean forgotPassword(String email, String password);
 }
