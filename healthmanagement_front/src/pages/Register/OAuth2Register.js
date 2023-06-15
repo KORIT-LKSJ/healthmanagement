@@ -132,7 +132,7 @@ const OAuth2Register = () => {
         name: name,
         email: email,
         phone: "",
-        birthdate: "",
+        birthDate: "",
         provider: provider,
         userType: "",
     });
@@ -140,7 +140,7 @@ const OAuth2Register = () => {
     const [errorMessage, setErrorMessage] = useState({
         username: "",
         password: "",
-        birthdate: "",
+        birthDate: "",
         phone: "",
     });
 
@@ -148,7 +148,7 @@ const OAuth2Register = () => {
         setErrorMessage({
             username: "",
             password: "",
-            birthdate: "",
+            birthDate: "",
             phone: "",
         });
         alert("회원가입 성공!");
@@ -159,7 +159,7 @@ const OAuth2Register = () => {
         setErrorMessage({
             username: "",
             password: "",
-            birthdate: "",
+            birthDate: "",
             phone: "",
             ...error.response.data.errorData,
         });
@@ -234,10 +234,10 @@ const OAuth2Register = () => {
                                 css={registerInput}
                                 type="text"
                                 placeholder="생년월일을 입력해 주세요."
-                                name="birthdate"
+                                name="birthDate"
                                 onChange={onchangeHandle}
                             />
-                            <div css={errorMsg}>{errorMessage.birthdate}</div>
+                            <div css={errorMsg}>{errorMessage.birthDate}</div>
                         </div>
                         <div css={registerDetail}>
                             <label css={registerLabel}>전화번호</label>

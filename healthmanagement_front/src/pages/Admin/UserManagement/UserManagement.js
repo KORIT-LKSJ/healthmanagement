@@ -288,7 +288,7 @@ const UserManagement = () => {
                                                     <td css={thAndTd}>{user.name}</td>
                                                     <td css={thAndTd}>{user.phone}</td>
                                                     <td css={thAndTd}>{user.email}</td>
-                                                    <td css={thAndTd}>{user.birthdate}</td>
+                                                    <td css={thAndTd}>{user.birthDate}</td>
                                                     <td css={thAndTd}>{user.registeDate}</td>
                                                     <td css={thAndTd}>{user.authority}</td>
                                                 </tr>

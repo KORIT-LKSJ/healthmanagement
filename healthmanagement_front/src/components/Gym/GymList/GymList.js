@@ -10,7 +10,6 @@ const cardContainer = css`
     flex-direction: column;
     align-items: center;
     margin: 2% 2.5%;
-    /* margin-bottom: 6%; */
     border: 1px solid #dbdbdb;
     box-shadow: 0px 0px 5px #dbdbdb;
     width: 45%;

@@ -13,7 +13,7 @@ public class UserInfoRespDto {
 	private String name;
 	private String phone;
 	private String email;
-	private Date birthdate;
+	private Date birthDate;
 	private Date registeDate;
 	private String authority;
 }

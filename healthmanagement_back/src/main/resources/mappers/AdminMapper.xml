@@ -6,7 +6,7 @@
 		<result property="gymName" column="gym_name"/>
 		<result property="gymAddress" column="gym_address"/>
 		<result property="gymTel" column="gym_tel"/>
-		<result property="businessNumber" column="businessnumber"/>
+		<result property="businessNumber" column="business_number"/>
 		<result property="gymPrice" column="gym_price"/>
 		<result property="likeCount" column="like_count"/>
 		<result property="registeDate" column="registe_date"/>
@@ -28,7 +28,7 @@
 		<result property="name" column="name"/>
 		<result property="phone" column="phone"/>
 		<result property="email" column="email"/>
-		<result property="birthdate" column="birthdate" />
+		<result property="birthDate" column="birth_date" />
 		<result property="provider" column="provider"/>
 		<result property="profile" column="profile"/>
 		<result property="registeDate" column="registe_date" />
@@ -80,7 +80,7 @@
 			ut.email,
 			ut.name,
 			ut.phone,
-			ut.birthdate,
+			ut.birth_date,
 			ut.provider,
 			ut.profile,
 			ut.registe_date,
@@ -110,7 +110,7 @@
 			gt.gym_name,
 			gt.gym_address,
 			gt.gym_tel,
-			gt.businessnumber,
+			gt.business_number,
 			gt.registe_date,
 		
 			ut.username

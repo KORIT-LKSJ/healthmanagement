@@ -64,12 +64,7 @@ const Header = ({ gyms, setGyms, refresh, setRefresh, search }) => {
                     <div css={headerIcon} onClick={sideBarClickHandle}>
                         <BiUser />
                     </div>
-                    <img
-                        css={mainLogo}
-                        src="/image/gymLogo.png"
-                        alt=""
-                        onClick={mainClickHandle}
-                    />
+                    <img css={mainLogo} src="/images/logo.png" alt="" onClick={mainClickHandle} />
                     {search ? (
                         <div css={headerIcon} onClick={searchBarClickHandle}>
                             <BiSearch />
@@ -78,10 +73,7 @@ const Header = ({ gyms, setGyms, refresh, setRefresh, search }) => {
                         <div style={{ width: 22 }}></div>
                     )}
                 </div>
-                <SideBar
-                    isSideBarOpen={isSideBarOpen}
-                    setIsSideBarOpen={setIsSideBarOpen}
-                />
+                <SideBar isSideBarOpen={isSideBarOpen} setIsSideBarOpen={setIsSideBarOpen} />
                 {search ? (
                     <SearchBar
                         isSearchBarOpen={isSearchBarOpen}

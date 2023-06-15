@@ -16,8 +16,7 @@ const postmodal = css`
 
 const Post = (props) => {
     const complete = (data) => {
-        let fullAddress =
-            data.jibunAddress == "" ? data.autoJibunAddress : data.jibunAddress;
+        let fullAddress = data.jibunAddress == "" ? data.autoJibunAddress : data.jibunAddress;
 
         props.setcompany({
             ...props.company,
@@ -27,11 +26,7 @@ const Post = (props) => {
 
     return (
         <div css={postmodal}>
-            <DaumPostcode
-                className="postmodal"
-                autoClose
-                onComplete={complete}
-            />
+            <DaumPostcode className="postmodal" autoClose onComplete={complete} />
         </div>
     );
 };

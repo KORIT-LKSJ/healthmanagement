@@ -24,8 +24,8 @@ const header = css`
 `;
 
 const mainLogo = css`
-  height: 100%;
-  cursor: pointer;
+    height: 100%;
+    cursor: pointer;
 `;
 
 const main = css`
@@ -106,59 +106,56 @@ const findButton = css`
 
 const FindPassword = () => {
     const navigate = useNavigate();
-    const [ email, setEmail ] = useState();
+    const [email, setEmail] = useState();
 
     const sendMail = useMutation(async () => {
-        const response = await axios.post("http://localhost:8080/mail/send", {email});
-        if(!response.data == "4" || "2" || "3"){
-          alert("메일을 발송하였습니다.")
+        const response = await axios.post("http://localhost:8080/mail/send", { email });
+        if (!response.data == "4" || "2" || "3") {
+            alert("메일을 발송하였습니다.");
         } else {
-          alert("메일 발송을 실패하였습니다.")
+            alert("메일 발송을 실패하였습니다.");
         }
         const token = response.data;
-      return response;
-  })
+        return response;
+    });
 
     const sendMailClickhandle = () => {
         sendMail.mutate();
-    }
+    };
 
     const emailInputHandle = (e) => {
         setEmail(e.target.value);
-    }
+    };
 
     return (
         <div css={container}>
-          <header css={header}>
-            <img css={mainLogo} src="/image/gymLogo.png" alt="" onClick={() => navigate("/auth/login")}/>
-          </header>
-          <main css={main}>
-            <div css={titleContainer}>
-              <h1 css={title}>비밀번호 찾기</h1>
-              <h2 css={subtitle}>
-                비밀번호는 이메일 인증을 통해 찾으실 수 있습니다.
-              </h2>
-            </div>
-            <div css={inputContainer}>
-              <input
-                css={input}
-                type="email"
-                onChange={emailInputHandle}
-                placeholder="이메일을 입력해 주세요."
-                name ="email"
-              /> 
-            </div>
-          </main>
-          <footer css={footer}>
-            <div css={find}>
-              <button css={findButton}  onClick={sendMailClickhandle}>
-                전송
-              </button>
-            </div>
-          </footer>
+            <header css={header}>
+                <img css={mainLogo} src="/image/gymLogo.png" alt="" onClick={() => navigate("/auth/login")} />
+            </header>
+            <main css={main}>
+                <div css={titleContainer}>
+                    <h1 css={title}>비밀번호 찾기</h1>
+                    <h2 css={subtitle}>비밀번호는 이메일 인증을 통해 찾으실 수 있습니다.</h2>
+                </div>
+                <div css={inputContainer}>
+                    <input
+                        css={input}
+                        type="email"
+                        onChange={emailInputHandle}
+                        placeholder="이메일을 입력해 주세요."
+                        name="email"
+                    />
+                </div>
+            </main>
+            <footer css={footer}>
+                <div css={find}>
+                    <button css={findButton} onClick={sendMailClickhandle}>
+                        전송
+                    </button>
+                </div>
+            </footer>
         </div>
-        
-      );
+    );
 };
 
 export default FindPassword;

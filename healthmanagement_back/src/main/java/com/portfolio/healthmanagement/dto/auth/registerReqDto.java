@@ -43,12 +43,12 @@ public class registerReqDto {
 
 	@Pattern(regexp = "^(19[0-9][0-9]|20\\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$",
 			message = "생일을 양식에 맞게 입력해주세요. (ex: 1900-01-01)")
-	private String birthdate;
+	private String birthDate;
 
 	private int userType;
 
 	public User toEntity() {
-		Date date = Date.valueOf(birthdate);
+		Date date = Date.valueOf(birthDate);
 		Date registeDate = Date.valueOf(LocalDate.now());
 		return User.builder()
 				.username(username)
@@ -56,7 +56,7 @@ public class registerReqDto {
 				.email(email)
 				.name(name)
 				.phone(phone)
-				.birthdate(date)
+				.birthDate(date)
 				.registeDate(registeDate)
 				.build();
 	}

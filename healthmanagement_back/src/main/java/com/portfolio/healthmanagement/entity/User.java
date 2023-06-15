@@ -27,7 +27,7 @@ public class User {
 	private String name;
 	private String phone;
 	private String email;
-	private Date birthdate;
+	private Date birthDate;
 	private String provider;
 	private String profile;
 	private Date registeDate;
@@ -61,7 +61,7 @@ public class User {
 				.email(email)
 				.name(name)
 				.authorities(builder.toString())
-				.birthdate(birthdate)
+				.birthDate(birthDate)
 				.profile(profile)
 				.build();
 	}
@@ -79,7 +79,7 @@ public class User {
 				.name(name)
 				.phone(phone)
 				.email(email)
-				.birthdate(birthdate)
+				.birthDate(birthDate)
 				.registeDate(registeDate)
 				.authority(builder.toString())
 				.build();

@@ -286,7 +286,7 @@ const ModifyPage = () => {
                     </div>
                     <div css={modifyDetail}>
                         <lable css={modifyLabel}>생년월일</lable>
-                        <input css={modifyInput} value={userInfo.data.data.birthdate} disabled />
+                        <input css={modifyInput} value={userInfo.data.data.birthDate} disabled />
                         <div css={errorMsg}>변경할 수 없습니다.</div>
                     </div>
                 </div>
