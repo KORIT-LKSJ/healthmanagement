@@ -73,15 +73,21 @@ function App() {
                     path="/:userId/upload/mygym"
                     element={<AuthRoute path="/:userId/upload/mygym" element={<FacilityReq />} />}
                 />
-                <Route path="/:userId/mygyms" element={<AddGymList />}></Route>
+                <Route path="/:userId/mygyms" element={<AuthRoute path="/:userId/mygyms" element={<AddGymList />} />} />
                 <Route path="/myCalory" element={<AuthRoute path="/myCalory" element={<MyCalory />} />} />
-                <Route path="/gym/:userId/like/list" element={<LikeList />} />
+                <Route
+                    path="/gym/:userId/like/list"
+                    element={<AuthRoute path="/gym/:userId/like/list" element={<LikeList />} />}
+                />
                 <Route path="/location/gyms" element={<AuthRoute path="/location/gyms" element={<KaKaoMap />} />} />
-                <Route path="/shop" element={<Shop />} />
-                <Route path="/admin/login" element={<AdminLogin />} />
-                <Route path="/admin/dashboard" element={<Dashboard />} />
-                <Route path="/admin/gyms" element={<GymManagement />} />
-                <Route path="/admin/users" element={<UserManagement />} />
+                <Route path="/shop" element={<AuthRoute path="/shop" element={<Shop />} />} />
+                <Route path="/admin/login" element={<AuthRoute path="/admin/login" element={<AdminLogin />} />} />
+                <Route
+                    path="/admin/dashboard"
+                    element={<AuthRoute path="/admin/dashboard" element={<Dashboard />} />}
+                />
+                <Route path="/admin/gyms" element={<AuthRoute path="/admin/gyms" element={<GymManagement />} />} />
+                <Route path="/admin/users" element={<AuthRoute path="/admin/users" element={<UserManagement />} />} />
             </Routes>
         </>
     );

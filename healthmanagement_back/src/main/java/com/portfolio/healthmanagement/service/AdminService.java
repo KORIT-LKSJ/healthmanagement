@@ -17,4 +17,5 @@ public interface AdminService {
 	public List<UserInfoRespDto> getUsers(int page);
 	public int gymPage();
 	public List<GymInfoRespDto> getGyms(int page);
+	public String getAuthority();
 }

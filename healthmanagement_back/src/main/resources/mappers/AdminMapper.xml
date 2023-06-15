@@ -62,7 +62,7 @@
 		from 
 			gym_tb
 		where
-			regist_date = #{date}
+			registe_date = #{date}
 	</select>
 	
 	<select id="userPage" resultType="Integer">

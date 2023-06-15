@@ -23,8 +23,6 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		registry.addMapping("/**")
 				.allowedOrigins("*")
 				.allowedMethods("*");
-//				.allowedHeaders("*");
-//				.allowedOrigins("http://localhost:3000");
 	}
 	
 	@Override

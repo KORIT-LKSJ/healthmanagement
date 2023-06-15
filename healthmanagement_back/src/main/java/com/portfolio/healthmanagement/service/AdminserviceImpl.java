@@ -10,6 +10,7 @@ import java.util.Map;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.portfolio.healthmanagement.dto.admin.GymInfoRespDto;
@@ -20,6 +21,7 @@ import com.portfolio.healthmanagement.entity.User;
 import com.portfolio.healthmanagement.exception.CustomException;
 import com.portfolio.healthmanagement.repository.AdminRepository;
 import com.portfolio.healthmanagement.security.JwtTokenProvider;
+import com.portfolio.healthmanagement.security.PrincipalUserDetails;
 
 import lombok.RequiredArgsConstructor;
 
@@ -125,6 +127,17 @@ public class AdminserviceImpl implements AdminService{
 		}
 		
 		return list;
+	}
+
+	@Override
+	public String getAuthority() {
+		PrincipalUserDetails principalUserDetails  = (PrincipalUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		StringBuilder builder = new StringBuilder();
+		principalUserDetails.getAuthorities().forEach(authority -> {
+			builder.append(authority);
+			
+		});
+		return builder.toString();
 	}
 
 }

@@ -20,7 +20,6 @@ public interface AccountService {
 	public int modifyPassword(ModifyPasswordReqDto modifyPasswordReqDto);
 	public int updateProfileImg(MultipartFile profileImgFile);
 	public int deleteUser(int userId);
-	
 	public int setLike(int gymId, int userId);
 	public int disLike(int gymId, int userId);
 	public List<LikeListRespDto> likeGyms(int userId);

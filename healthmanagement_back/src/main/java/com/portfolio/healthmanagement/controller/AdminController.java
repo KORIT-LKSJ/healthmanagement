@@ -59,4 +59,10 @@ public class AdminController {
 	public ResponseEntity<?> getGyms(int page) {
 		return ResponseEntity.ok().body(adminService.getGyms(page));
 	}
+	
+	@GetMapping("/authority")
+	public ResponseEntity<?> getAuthority() {
+		return ResponseEntity.ok().body(adminService.getAuthority());
+	}
+	
 }

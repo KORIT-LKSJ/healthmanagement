@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import React from "react";
+import { useQuery } from "react-query";
 import Footer from "../../components/Main/Footer/Footer";
 import Header from "../../components/Main/Header/Header";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import GymMainImg from "../../components/GymImgs/GymMainImg";
 import { TiTrash } from "react-icons/ti";
 import { BiPen } from "react-icons/bi";
@@ -136,7 +136,6 @@ const likeTitle = css`
 
 const AddGymList = () => {
     const navigate = useNavigate();
-    const queryClient = useQueryClient();
 
     const principal = useQuery(["principal"], async () => {
         const option = {
