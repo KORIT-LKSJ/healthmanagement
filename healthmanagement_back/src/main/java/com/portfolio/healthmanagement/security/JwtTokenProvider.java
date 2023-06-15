@@ -71,7 +71,7 @@ public class JwtTokenProvider {
 	
 	public String generateOAuth2RegisterToken(Authentication authentication) {
 		
-		Date tokenExpiresDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24));
+		Date tokenExpiresDate = new Date(new Date().getTime() + (1000 * 60 * 10));
 		OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
 		String email = oAuth2User.getAttribute("email");
 		

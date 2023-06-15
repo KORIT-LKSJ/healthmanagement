@@ -136,32 +136,22 @@ const ModifyPage = () => {
     const [isPhone, setIsPhone] = useState(true);
 
     const principal = useQuery(["Principal"], async () => {
-        const response = await axios.get(
-            "http://localhost:8080/account/principal",
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem(
-                        "accessToken"
-                    )}`,
-                },
-            }
-        );
+        const response = await axios.get("http://localhost:8080/account/principal", {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+        });
         return response;
     });
 
     const userInfo = useQuery(
         ["UserInfo"],
         async () => {
-            const response = await axios.get(
-                `http://localhost:8080/account/users/${principal.data.data.userId}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            "accessToken"
-                        )}`,
-                    },
-                }
-            );
+            const response = await axios.get(`http://localhost:8080/account/users/${principal.data.data.userId}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                },
+            });
             return response;
         },
         {
@@ -177,9 +167,7 @@ const ModifyPage = () => {
         async () => {
             const option = {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem(
-                        "accessToken"
-                    )}`,
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                 },
             };
             return await axios.put(
@@ -214,9 +202,7 @@ const ModifyPage = () => {
         setPhone(currentPhone);
         const phoneRegExp = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
         if (!phoneRegExp.test(currentPhone)) {
-            setPhoneMessage(
-                "전화번호를 형식에 맞춰 작성해주세요. (ex: 010-1234-5678)"
-            );
+            setPhoneMessage("전화번호를 형식에 맞춰 작성해주세요. (ex: 010-1234-5678)");
             setIsPhone(false);
         } else {
             setPhoneMessage("사용가능합니다.");
@@ -266,11 +252,7 @@ const ModifyPage = () => {
                 <div css={modifyInfo}>
                     <div css={modifyDetail}>
                         <lable css={modifyLabel}>아이디</lable>
-                        <input
-                            css={modifyInput}
-                            value={userInfo.data.data.username}
-                            disabled
-                        />
+                        <input css={modifyInput} value={userInfo.data.data.username} disabled />
                         <div css={errorMsg}>변경할 수 없습니다.</div>
                     </div>
                     <div css={modifyDetail}>
@@ -287,11 +269,7 @@ const ModifyPage = () => {
                     </div>
                     <div css={modifyDetail}>
                         <lable css={modifyLabel}>이메일</lable>
-                        <input
-                            css={modifyInput}
-                            value={userInfo.data.data.email}
-                            disabled
-                        />
+                        <input css={modifyInput} value={userInfo.data.data.email} disabled />
                         <div css={errorMsg}>변경할 수 없습니다.</div>
                     </div>
                     <div css={modifyDetail}>
@@ -308,11 +286,7 @@ const ModifyPage = () => {
                     </div>
                     <div css={modifyDetail}>
                         <lable css={modifyLabel}>생년월일</lable>
-                        <input
-                            css={modifyInput}
-                            value={userInfo.data.data.birthdate}
-                            disabled
-                        />
+                        <input css={modifyInput} value={userInfo.data.data.birthdate} disabled />
                         <div css={errorMsg}>변경할 수 없습니다.</div>
                     </div>
                 </div>

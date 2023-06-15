@@ -7,20 +7,20 @@ import { useNavigate } from "react-router-dom";
 import ForgotPassword from "./ForgotPassword";
 
 const container = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
 `;
 
 const header = css`
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40%;
-  height: 5%;
-  background-color: white;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: 5%;
+    background-color: white;
 `;
 
 const mainLogo = css`
@@ -29,81 +29,80 @@ const mainLogo = css`
 `;
 
 const main = css`
-  position: relative;
-  top: 5%;
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-  height: 85%;
-  background-color: white;
+    position: relative;
+    top: 5%;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    height: 85%;
+    background-color: white;
 `;
 
 const titleContainer = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 10px;
-  height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+    height: 80px;
 `;
 
 const title = css`
-  font-size: 30px;
-  font-weight: 600;
+    font-size: 30px;
+    font-weight: 600;
 `;
 
 const subtitle = css`
-  font-size: 14px;
-  height: 40px;
+    font-size: 14px;
+    height: 40px;
 `;
 
 const inputContainer = css`
-  display: flex;
-  flex-direction: column;
-  color: #58595b;
-  padding: 1%;
-  height: 20%;
-  min-height: 150px;
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
+    color: #58595b;
+    padding: 1%;
+    height: 20%;
+    min-height: 150px;
+    gap: 10px;
 `;
 
 const input = css`
-  width: 100%;
-  background-color: white;
-  border: 1px solid #dbdbdb;
-  padding: 12px;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    padding: 12px;
 `;
 
 const footer = css`
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40%;
-  height: 10%;
-  bottom: 0;
-  background-color: white;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: 10%;
+    bottom: 0;
+    background-color: white;
 `;
 
 const find = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 2%;
-  width: 100%;
-  height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 2%;
+    width: 100%;
+    height: 100%;
 `;
 
 const findButton = css`
-  padding: 10px 0;
-  border: 1px solid #dbdbdb;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 15px;
-  font-weight: 600;
-  background-color: #eda058;
-  cursor: pointer;
+    padding: 10px 0;
+    border: 1px solid #dbdbdb;
+    border-radius: 10px;
+    width: 100%;
+    font-size: 15px;
+    font-weight: 600;
+    background-color: #eda058;
+    cursor: pointer;
 `;
-
 
 const FindPassword = () => {
     const navigate = useNavigate();
@@ -160,8 +159,6 @@ const FindPassword = () => {
         </div>
         
       );
-
-    
 };
 
 export default FindPassword;

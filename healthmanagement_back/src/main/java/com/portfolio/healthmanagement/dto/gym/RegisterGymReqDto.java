@@ -1,6 +1,6 @@
 package com.portfolio.healthmanagement.dto.gym;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 import javax.validation.constraints.Pattern;
 
@@ -30,8 +30,8 @@ public class RegisterGymReqDto {
 			message = "숫자만 사용 가능합니다.")
 	private String gymPrice;
 	
-	private LocalDate registDate;
-	private LocalDate removeDate;
+	private Date registDate;
+	private Date removeDate;
 	
 	public Gym toEntity() {
 		return Gym.builder()
@@ -40,7 +40,7 @@ public class RegisterGymReqDto {
 				.gymTel(gymTel)
 				.businessNumber(businessNumber)
 				.gymPrice(gymPrice)
-				.registDate(registDate)
+				.registeDate(registDate)
 				.removeDate(removeDate)
 				.build();
 	}

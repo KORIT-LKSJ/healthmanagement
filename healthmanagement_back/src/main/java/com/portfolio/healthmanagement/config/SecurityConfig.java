@@ -40,9 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.httpBasic().disable();
 		http.formLogin().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); 
-		
 		http.authorizeRequests()
-		.antMatchers("/auth/**", "/image/**", "/mail/**") 
+		.antMatchers("/auth/**", "/image/**", "/mail/**","/admin/login")
 		.permitAll()
 		.anyRequest()
 		.authenticated()

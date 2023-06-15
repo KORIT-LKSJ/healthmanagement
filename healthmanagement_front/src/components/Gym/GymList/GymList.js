@@ -109,33 +109,33 @@ const GymList = ({ gym }) => {
             },
         };
         const response = await axios.get(`http://localhost:8080/gyms/${gym.gymId}/images`, option);
-        console.log(response)
-        
+        console.log(response);
+
         setGymMainImgUrl("http://localhost:8080/image/post/" + response.data[0].tempName);
 
         return response;
     });
 
     if (!getImgs.isLoading)
-    return (
-        <>
-            <div css={cardContainer} onClick={clickHandle}>
-                <header css={header}>
-                    <h1 css={titleText}>{gym.gymName}</h1>
-                </header>
-                <main css={main}>
-                    <div css={imgBox}>
-                        <img css={img} src={gymMainImgUrl} />
-                    </div>
-                </main>
-                <footer css={footer}>
-                    <h2 css={infoDetail}>위치: {gym.gymAddress} </h2>
-                    <h2 css={infoDetail}>가격: (월) {gym.gymPrice}&#8361;</h2>
-                    <div css={like}>추천: {gym.likeCount}</div>
-                </footer>
-            </div>
-        </>
-    );
+        return (
+            <>
+                <div css={cardContainer} onClick={clickHandle}>
+                    <header css={header}>
+                        <h1 css={titleText}>{gym.gymName}</h1>
+                    </header>
+                    <main css={main}>
+                        <div css={imgBox}>
+                            <img css={img} src={gymMainImgUrl} />
+                        </div>
+                    </main>
+                    <footer css={footer}>
+                        <h2 css={infoDetail}>위치: {gym.gymAddress} </h2>
+                        <h2 css={infoDetail}>가격: (월) {gym.gymPrice}&#8361;</h2>
+                        <div css={like}>추천: {gym.likeCount}</div>
+                    </footer>
+                </div>
+            </>
+        );
 };
 
 export default GymList;

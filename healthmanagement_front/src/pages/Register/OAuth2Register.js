@@ -172,11 +172,7 @@ const OAuth2Register = () => {
             },
         };
         try {
-            await axios.post(
-                "http://localhost:8080/auth/oauth2/register",
-                registerUser,
-                option
-            );
+            await axios.post("http://localhost:8080/auth/oauth2/register", registerUser, option);
             successRegister();
         } catch (error) {
             errorRegister(error);
@@ -224,22 +220,12 @@ const OAuth2Register = () => {
                         </div>
                         <div css={registerDetail}>
                             <label css={registerLabel}>이름</label>
-                            <input
-                                css={registerInput}
-                                type="text"
-                                value={name}
-                                disabled
-                            />
+                            <input css={registerInput} type="text" value={name} disabled />
                             <div css={errorMsg}></div>
                         </div>
                         <div css={registerDetail}>
                             <label css={registerLabel}>이메일</label>
-                            <input
-                                css={registerInput}
-                                type="email"
-                                value={email}
-                                disabled
-                            />
+                            <input css={registerInput} type="email" value={email} disabled />
                             <div css={errorMsg}></div>
                         </div>
                         <div css={registerDetail}>
@@ -267,10 +253,7 @@ const OAuth2Register = () => {
                         <div css={registerDetail}>
                             <div css={radioList}>
                                 <div css={radio}>
-                                    <div
-                                        css={registerLabel}
-                                        style={{ height: 20 }}
-                                    >
+                                    <div css={registerLabel} style={{ height: 20 }}>
                                         사용자
                                     </div>
                                     <div css={radioUserTypeCheck}>

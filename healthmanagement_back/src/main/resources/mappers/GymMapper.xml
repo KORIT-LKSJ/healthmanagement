@@ -18,7 +18,7 @@
 		<id property="gymOwnerId" column="gym_owner_id"/>
 		<result property="userId" column="user_id"/>
 		<result property="gymId" column="gym_id"/>
-		<association property="gym" resultMap="GymMap"></association>
+		<association property="gym" resultMap="GymMap" />
 	</resultMap>
 	
 	<resultMap type="com.portfolio.healthmanagement.entity.Gym" id="gymMap">
@@ -29,8 +29,8 @@
 		<result property="businessNumber" column="businessnumber"/>
 		<result property="gymPrice" column="gym_price"/>
 		<result property="likeCount" column="like_count"/>
-		<result property="registDate" column="regist_Date"/>
-		<result property="removeDate" column="remove_Date"/>
+		<result property="registeDate" column="registe_date"/>
+		<result property="removeDate" column="remove_date"/>
 	</resultMap>
 	
 	<select id="searchGyms" parameterType="hashmap" resultMap="gymMap">
@@ -84,7 +84,7 @@
 		   		count(*)
 			from
 				gym_tb gt
-		    	 left outer join gym_owner_tb got on(got.gym_id = gt.gym_id)
+		    	left outer join gym_owner_tb got on(got.gym_id = gt.gym_id)
 			    left outer join user_tb ut on(got.user_id = ut.user_id)
 			where
 				1=1
@@ -129,7 +129,7 @@
 		
 		<insert id="saveGym" parameterType="com.portfolio.healthmanagement.entity.Gym" useGeneratedKeys="true" keyProperty="gymId">
 			insert into gym_tb
-			values (0,#{gymName},#{gymAddress},#{gymTel},#{businessNumber},#{gymPrice},#{likeCount},#{registDate},#{removeDate})		
+			values (0,#{gymName},#{gymAddress},#{gymTel},#{businessNumber},#{gymPrice},#{likeCount},#{registeDate},#{removeDate})		
 		</insert>
 		
 		<insert id="saveGymOwner" parameterType="com.portfolio.healthmanagement.entity.GymOwner">
@@ -216,8 +216,7 @@
 		    	left outer join gym_tb gt on(got.gym_id = gt.gym_id)
 		    	left outer join user_tb ut on(ut.user_id = got.user_id) 
 		    where
-				ut.user_id = #{userId}
-					
+				ut.user_id = #{userId}		
 		</select>
     	
 </mapper>

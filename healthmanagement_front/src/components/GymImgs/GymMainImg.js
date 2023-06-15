@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import axios from "axios";
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 
 const img = css`
@@ -24,24 +24,24 @@ const imgBox = css`
 const GymMainImg = (gymId) => {
     const [gymMainImgUrl, setGymMainImgUrl] = useState();
 
-        const getImgs = useQuery(["getImgs", gymId],  async () => {
+    const getImgs = useQuery(["getImgs", gymId], async () => {
         const option = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
         };
         const response = await axios.get(`http://localhost:8080/gyms/${gymId.gymId}/images`, option);
-        console.log(response)
-        
+        console.log(response);
+
         setGymMainImgUrl("http://localhost:8080/image/post/" + response.data[0].tempName);
-        console.log(response.data[0].tempName)
+        console.log(response.data[0].tempName);
         return response;
     });
 
     return (
         <div css={imgBox}>
-            <img css={img} src={gymMainImgUrl}  />
-        </div> 
+            <img css={img} src={gymMainImgUrl} />
+        </div>
     );
 };
 

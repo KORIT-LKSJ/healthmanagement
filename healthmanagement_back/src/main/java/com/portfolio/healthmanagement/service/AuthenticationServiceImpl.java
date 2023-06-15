@@ -79,7 +79,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User userEntity = userRepositiory.findUserByUsername(username);
-
+		
+		
 		if (userEntity == null) {
 			return null;
 		}

@@ -1,23 +1,18 @@
-package com.portfolio.healthmanagement.dto.gym;
-
+package com.portfolio.healthmanagement.dto.admin;
 
 import java.sql.Date;
 
 import lombok.Builder;
 import lombok.Data;
 
-@Builder
 @Data
-public class GetGymRespDto {
-	
+@Builder
+public class GymInfoRespDto {
 	private int gymId;
 	private String gymName;
 	private String gymAddress;
 	private String gymTel;
 	private String businessNumber;
-	private String gymPrice;
-	private int gymOwnerId;
 	private Date registeDate;
-	private Date removeDate;
-	
+	private String username;
 }

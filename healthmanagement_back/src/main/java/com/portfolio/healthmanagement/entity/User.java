@@ -5,6 +5,7 @@ package com.portfolio.healthmanagement.entity;
 import java.sql.Date;
 import java.util.List;
 
+import com.portfolio.healthmanagement.dto.admin.UserInfoRespDto;
 import com.portfolio.healthmanagement.dto.response.PrincipalRespDto;
 import com.portfolio.healthmanagement.security.PrincipalUserDetails;
 
@@ -29,6 +30,7 @@ public class User {
 	private Date birthdate;
 	private String provider;
 	private String profile;
+	private Date registeDate;
 	
 	private List<Authority> authorities;
 	private List<GymOwner> gymOwners;
@@ -61,6 +63,25 @@ public class User {
 				.authorities(builder.toString())
 				.birthdate(birthdate)
 				.profile(profile)
+				.build();
+	}
+	
+	public UserInfoRespDto toUserInfoRespDto() {
+		StringBuilder builder = new StringBuilder();
+		authorities.forEach(authority -> {
+			builder.append(authority.getRole().getRoleName() + ",");
+		});
+		builder.delete(builder.length() - 1, builder.length());
+		
+		return UserInfoRespDto.builder()
+				.userId(userId)
+				.username(username)
+				.name(name)
+				.phone(phone)
+				.email(email)
+				.birthdate(birthdate)
+				.registeDate(registeDate)
+				.authority(builder.toString())
 				.build();
 	}
 

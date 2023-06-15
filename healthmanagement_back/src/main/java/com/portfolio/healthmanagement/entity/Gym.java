@@ -1,16 +1,18 @@
 package com.portfolio.healthmanagement.entity;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
+import com.portfolio.healthmanagement.dto.admin.GymInfoRespDto;
 import com.portfolio.healthmanagement.dto.gym.GetGymAddressAndGymNameRespDto;
 import com.portfolio.healthmanagement.dto.gym.GetGymRespDto;
-import com.portfolio.healthmanagement.dto.gym.GymImgRespDto;
 import com.portfolio.healthmanagement.dto.gym.SearchGymRespDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Builder
 @Data
@@ -25,13 +27,11 @@ public class Gym {
 	private String businessNumber;
 	private String gymPrice;
 	private int likeCount;
-	private LocalDate registDate;
-	private LocalDate removeDate;
+	private Date registeDate;
+	private Date removeDate;
 	
 	private GymImgsDetail gymImgsDetail;
-	
-	
-	
+	private GymOwner gymOwner;
 	
 	public SearchGymRespDto toDto() {
 		return SearchGymRespDto.builder()
@@ -42,7 +42,7 @@ public class Gym {
 				.businessNumber(businessNumber)
 				.gymPrice(gymPrice)
 				.likeCount(likeCount)
-				.registDate(registDate)
+				.registeDate(registeDate)
 				.removeDate(removeDate)
 				.build();
 				
@@ -56,7 +56,7 @@ public class Gym {
 				.gymTel(gymTel)
 				.businessNumber(businessNumber)
 				.gymPrice(gymPrice)
-				.registDate(registDate)
+				.registeDate(registeDate)
 				.removeDate(removeDate)
 				.build();
 	
@@ -66,6 +66,18 @@ public class Gym {
 		return GetGymAddressAndGymNameRespDto.builder()
 				.GymAddress(gymAddress)
 				.GymName(gymName)
+				.build();
+	}
+	
+	public GymInfoRespDto toGymInfoRespDto() {
+		return GymInfoRespDto.builder()
+				.gymId(gymId)
+				.gymName(gymName)
+				.gymAddress(gymAddress)
+				.gymTel(gymTel)
+				.businessNumber(businessNumber)
+				.registeDate(registeDate)
+				.username(gymOwner.getUser().getUsername())
 				.build();
 	}
 
