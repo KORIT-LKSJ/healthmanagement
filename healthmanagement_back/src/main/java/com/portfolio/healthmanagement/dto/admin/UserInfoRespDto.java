@@ -15,4 +15,5 @@ public class UserInfoRespDto {
 	private String email;
 	private Date birthdate;
 	private Date registeDate;
+	private String authority;
 }

@@ -49,4 +49,14 @@ public class AdminController {
 	public ResponseEntity<?> getUsers(int page) {
 		return ResponseEntity.ok().body(adminService.getUsers(page));
 	}
+	
+	@GetMapping("/gyms/page")
+	public ResponseEntity<?> gymPage() {
+		return ResponseEntity.ok().body(adminService.gymPage());
+	}
+	
+	@GetMapping("/gyms")
+	public ResponseEntity<?> getGyms(int page) {
+		return ResponseEntity.ok().body(adminService.getGyms(page));
+	}
 }

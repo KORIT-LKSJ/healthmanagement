@@ -12,9 +12,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import com.portfolio.healthmanagement.dto.admin.UserCountRespDto;
+import com.portfolio.healthmanagement.dto.admin.GymInfoRespDto;
 import com.portfolio.healthmanagement.dto.admin.UserInfoRespDto;
 import com.portfolio.healthmanagement.dto.auth.LoginReqDto;
+import com.portfolio.healthmanagement.entity.Gym;
+import com.portfolio.healthmanagement.entity.User;
 import com.portfolio.healthmanagement.exception.CustomException;
 import com.portfolio.healthmanagement.repository.AdminRepository;
 import com.portfolio.healthmanagement.security.JwtTokenProvider;
@@ -54,10 +56,10 @@ public class AdminserviceImpl implements AdminService{
 		LocalDate today = LocalDate.now();
 		for (int i = 0; i < 7; i++) {
 			Map<String, Object> map = new HashMap<>();
-            LocalDate previousDay = today.minusDays(-i+7);
+            LocalDate previousDay = today.minusDays(-i+6);
             int userCount  = adminRepository.userCount(Date.valueOf(previousDay));
-            map.put("date", previousDay);
-            map.put("value", userCount);
+            map.put("x", previousDay);
+            map.put("y", userCount);
             responseData.add(map);
         }
 		
@@ -70,10 +72,10 @@ public class AdminserviceImpl implements AdminService{
 		LocalDate today = LocalDate.now();
 		for (int i = 0; i < 7; i++) {
 			Map<String, Object> map = new HashMap<>();
-            LocalDate previousDay = today.minusDays(-i+7);
+            LocalDate previousDay = today.minusDays(-i+6);
             int gymCount  = adminRepository.gymCount(Date.valueOf(previousDay));
-            map.put("date", previousDay);
-            map.put("value", gymCount);
+            map.put("x", previousDay);
+            map.put("y", gymCount);
             responseData.add(map);
         }
 		
@@ -94,7 +96,35 @@ public class AdminserviceImpl implements AdminService{
 
 	@Override
 	public List<UserInfoRespDto> getUsers(int page) {
-		return null;
+		List<UserInfoRespDto> list = new ArrayList<>();
+		List<User> users = adminRepository.getUsers();
+		for (int i = 10*(page-1); i < Math.min(10 * page, users.size()); i++) {				
+			list.add(users.get(i).toUserInfoRespDto());
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public int gymPage() {
+		int page = 0;
+		if((adminRepository.gymPage()%10) == 0) {
+			page = adminRepository.gymPage()/10;
+		} else {
+			page = adminRepository.gymPage()/10 + 1;
+		}
+		return page;
+	}
+
+	@Override
+	public List<GymInfoRespDto> getGyms(int page) {
+		List<GymInfoRespDto> list = new ArrayList<>();
+		List<Gym> gyms = adminRepository.getGyms();
+		for (int i = 10*(page-1); i < Math.min(10 * page, gyms.size()); i++) {				
+			list.add(gyms.get(i).toGymInfoRespDto());
+		}
+		
+		return list;
 	}
 
 }

@@ -1,12 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { ResponsiveLine } from "@nivo/line";
 import React from "react";
-import { LabelList, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 
 const tooltip = css`
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-top: 280px;
     background-color: #fff;
     border: 1px solid #ccc;
     padding: 5px;
@@ -14,29 +15,70 @@ const tooltip = css`
     height: 60px;
 `;
 
-const CustomTooltip = ({ active, payload, label }) => {
-    if (active) {
-        return (
-            <div css={tooltip}>
-                <p>{`Date: ${label}`}</p>
-                <p>{`Count: ${payload[0].value}`}</p>
-            </div>
-        );
-    }
-
-    return null;
+const CustomTooltip = ({ point }) => {
+    return (
+        <div css={tooltip}>
+            <p>{`Date: ${point.data.xFormatted}`}</p>
+            <p>{`Count: ${point.data.yFormatted}`}</p>
+        </div>
+    );
 };
 
 const Chart = ({ data, color }) => {
+    const maxPoint = Math.max(...data[0].data.map((point) => point.y));
     return (
-        <LineChart width={1200} height={350} data={data}>
-            <XAxis dataKey="date" tick={{ fill: "#000", textAnchor: "middle" }} padding={{ left: 40, right: 40 }} />
-            <YAxis domain={[0, "dataMax+1"]} />
-            <Tooltip content={<CustomTooltip />} />
-            <Line type="linear" dataKey="value" stroke={color}>
-                <LabelList dataKey="value" position="top" offset={10} />
-            </Line>
-        </LineChart>
+        <ResponsiveLine
+            data={data}
+            margin={{ top: 30, right: 110, bottom: 50, left: 60 }}
+            xScale={{ type: "point" }}
+            yScale={{
+                type: "linear",
+                min: 0,
+                max: maxPoint > 10 ? maxPoint + (10 - (maxPoint % 10)) : maxPoint + 1,
+                stacked: true,
+                reverse: false,
+            }}
+            axisTop={null}
+            axisRight={null}
+            pointSize={5}
+            axisBottom={{
+                orient: "bottom",
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+            }}
+            axisLeft={{
+                orient: "left",
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                tickValues:
+                    maxPoint > 10
+                        ? Array.from({ length: maxPoint / 10 + 2 }, (_, i) => 10 * i)
+                        : Array.from({ length: maxPoint + 2 }, (_, i) => i),
+            }}
+            colors={color}
+            pointColor={{ theme: "background" }}
+            pointBorderWidth={2}
+            pointBorderColor={{ from: "serieColor" }}
+            pointLabelYOffset={-12}
+            useMesh={true}
+            tooltip={CustomTooltip}
+            gridYValues={
+                maxPoint > 10
+                    ? Array.from({ length: maxPoint / 10 + 2 }, (_, i) => 10 * i)
+                    : Array.from({ length: maxPoint + 2 }, (_, i) => i)
+            }
+            theme={{
+                axis: {
+                    ticks: {
+                        text: {
+                            fontSize: 14,
+                        },
+                    },
+                },
+            }}
+        />
     );
 };
 

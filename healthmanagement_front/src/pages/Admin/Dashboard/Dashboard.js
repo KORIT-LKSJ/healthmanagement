@@ -120,6 +120,7 @@ const currentSituationBox = css`
 const boxTitle = css`
     font-size: 20px;
     padding: 10px;
+    height: 20px;
 `;
 
 const chart = css`
@@ -131,8 +132,8 @@ const chart = css`
 `;
 
 const Dashboard = () => {
-    const [userData, setUserData] = useState([]);
-    const [gymData, setGymData] = useState([]);
+    const [userData, setUserData] = useState([{ id: "", data: [] }]);
+    const [gymData, setGymData] = useState([{ id: "", data: [] }]);
 
     const userRegisterNumber = useQuery(["userRegisterNumber"], async () => {
         const option = {
@@ -141,7 +142,12 @@ const Dashboard = () => {
             },
         };
         const response = await axios.get("http://localhost:8080/admin/users/count", option);
-        setUserData(response.data);
+        setUserData((prevState) => [
+            {
+                id: "users",
+                data: [...prevState[0].data, ...response.data],
+            },
+        ]);
     });
 
     const gymRegisterNumber = useQuery(["gymRegisterNumber"], async () => {
@@ -151,7 +157,12 @@ const Dashboard = () => {
             },
         };
         const response = await axios.get("http://localhost:8080/admin/gyms/count", option);
-        setGymData(response.data);
+        setGymData((prevState) => [
+            {
+                id: "gyms",
+                data: [...prevState[0].data, ...response.data],
+            },
+        ]);
     });
 
     if (!userRegisterNumber.isLoading && !gymRegisterNumber.isLoading)

@@ -1,6 +1,6 @@
 package com.portfolio.healthmanagement.dto.gym;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +16,6 @@ public class SearchGymRespDto {
 	private String gymPrice;
 	private int gymOwnerId;
 	private int likeCount;
-	private LocalDate registDate;
-	private LocalDate removeDate;
+	private Date registeDate;
+	private Date removeDate;
 }

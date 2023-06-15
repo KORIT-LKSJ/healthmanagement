@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import { Pagination } from "@mui/material";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 const container = css`
@@ -119,19 +119,84 @@ const currentSituationBox = css`
 const boxTitle = css`
     font-size: 20px;
     padding: 10px;
+    height: 20px;
+`;
+
+const listBox = css`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    margin-left: 60px;
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    max-height: 600px;
+`;
+
+const thead = css`
+    height: 50px;
+    font-size: 20px;
+    font-weight: 600;
+`;
+
+const tr = css`
+    height: 50px;
+    font-size: 16px;
+`;
+
+const thAndTd = css`
+    border: 1px solid black;
+    text-align: center;
+    vertical-align: middle;
+    overflow: hidden;
+`;
+
+const thAndTdNo = css`
+    ${thAndTd}
+    width: 40px;
+`;
+
+const thAndTdUsernameAndPhone = css`
+    ${thAndTd}
+    width: 180px;
+`;
+
+const thAndTdName = css`
+    ${thAndTd}
+    width: 140px;
+`;
+
+const thAndTdEmail = css`
+    ${thAndTd}
+    width: 270px;
+`;
+
+const thAndTdBirthDateAndRegisteDateAndAuthority = css`
+    ${thAndTd}
+    width: 130px;
+`;
+
+const pagination = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
 `;
 
 const UserManagement = () => {
     const [totalPage, setTotalPage] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
     const [isChange, setIsChange] = useState(false);
+    const [users, setUsers] = useState([]);
 
     const pageChangeHandle = (e, value) => {
         setCurrentPage(value);
+        setUsers([]);
         setIsChange(true);
     };
 
-    const getTotalPage = useQuery(["totalPage"], async () => {
+    const getTotalUserPage = useQuery(["getTotalUserPage"], async () => {
         const option = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -139,7 +204,7 @@ const UserManagement = () => {
         };
         try {
             const response = await axios.get("http://localhost:8080/admin/users/page", option);
-            setTotalPage(parseInt(response.data));
+            setTotalPage(response.data);
         } catch (error) {
             console.log(error);
         }
@@ -158,6 +223,7 @@ const UserManagement = () => {
             };
             try {
                 const response = await axios.get("http://localhost:8080/admin/users", option);
+                setUsers((prevState) => [...prevState, ...response.data]);
             } catch (error) {
                 console.log(error);
             }
@@ -170,7 +236,12 @@ const UserManagement = () => {
         }
     );
 
-    if (!getTotalPage.isLoading)
+    useEffect(() => {
+        setUsers([]);
+        getUsers.refetch();
+    }, []);
+
+    if (!getTotalUserPage.isLoading && !getUsers.isLoading)
         return (
             <div css={container}>
                 <header css={header}>
@@ -194,13 +265,58 @@ const UserManagement = () => {
                         <h1 css={contentTitle}>유저 관리</h1>
                         <div css={currentSituationBox}>
                             <h2 css={boxTitle}>등록된 유저</h2>
-                            <Pagination
-                                count={totalPage}
-                                showFirstButton
-                                showLastButton
-                                page={currentPage}
-                                onChange={pageChangeHandle}
-                            />
+                            <div css={listBox}>
+                                <table>
+                                    <thead css={thead}>
+                                        <tr>
+                                            <th css={thAndTdNo}>no</th>
+                                            <th css={thAndTdUsernameAndPhone}>아이디</th>
+                                            <th css={thAndTdName}>이름</th>
+                                            <th css={thAndTdUsernameAndPhone}>전화번호</th>
+                                            <th css={thAndTdEmail}>이메일</th>
+                                            <th css={thAndTdBirthDateAndRegisteDateAndAuthority}>생년월일</th>
+                                            <th css={thAndTdBirthDateAndRegisteDateAndAuthority}>가입날짜</th>
+                                            <th css={thAndTdBirthDateAndRegisteDateAndAuthority}>권한</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {users.map((user, index) => {
+                                            return (
+                                                <tr key={index} css={tr}>
+                                                    <td css={thAndTd}>{user.userId}</td>
+                                                    <td css={thAndTd}>{user.username}</td>
+                                                    <td css={thAndTd}>{user.name}</td>
+                                                    <td css={thAndTd}>{user.phone}</td>
+                                                    <td css={thAndTd}>{user.email}</td>
+                                                    <td css={thAndTd}>{user.birthdate}</td>
+                                                    <td css={thAndTd}>{user.registeDate}</td>
+                                                    <td css={thAndTd}>{user.authority}</td>
+                                                </tr>
+                                            );
+                                        })}
+                                        {users.length < 10 &&
+                                            Array.from({ length: 10 - users.length }, (_, i) => (
+                                                <tr key={`empty-${i}`} css={tr}>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                            ))}
+                                    </tbody>
+                                </table>
+                                <Pagination
+                                    css={pagination}
+                                    count={totalPage}
+                                    showFirstButton
+                                    showLastButton
+                                    page={currentPage}
+                                    onChange={pageChangeHandle}
+                                />
+                            </div>
                         </div>
                     </div>
                 </main>
