@@ -208,7 +208,6 @@ const MyPage = () => {
                 },
             };
             const response = await axios.get("http://localhost:8080/account/principal", option);
-            console.log(response);
             return response;
         },
         {
@@ -310,7 +309,7 @@ const MyPage = () => {
         setStoredButtonIsOpen(false);
     };
 
-    console.log(profileImgURL);
+    console.log(principal.data);
 
     if (!principal.isLoading)
         return (

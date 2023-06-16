@@ -112,33 +112,34 @@ const AdminLogin = () => {
         loginSubmit.mutate();
     };
 
-    return (
-        <div css={container}>
-            <main css={main}>
-                <div css={titleBox}>
-                    <img css={title} src="/images/logo.png" alt="로고" />
-                    <h2 css={subTitle}>Administration</h2>
-                </div>
-                <div css={loginInfo}>
-                    <div css={inputBox}>
-                        <label css={inputLabel} htmlFor="username">
-                            ID
-                        </label>
-                        <input css={input} type="text" name="username" onChange={onchangeHandle} />
+    if (!loginSubmit.isLoading)
+        return (
+            <div css={container}>
+                <main css={main}>
+                    <div css={titleBox}>
+                        <img css={title} src="/images/logo.png" alt="로고" />
+                        <h2 css={subTitle}>Administration</h2>
                     </div>
-                    <div css={inputBox}>
-                        <label css={inputLabel} htmlFor="password">
-                            PW
-                        </label>
-                        <input css={input} type="password" name="password" onChange={onchangeHandle} />
+                    <div css={loginInfo}>
+                        <div css={inputBox}>
+                            <label css={inputLabel} htmlFor="username">
+                                ID
+                            </label>
+                            <input css={input} type="text" name="username" onChange={onchangeHandle} />
+                        </div>
+                        <div css={inputBox}>
+                            <label css={inputLabel} htmlFor="password">
+                                PW
+                            </label>
+                            <input css={input} type="password" name="password" onChange={onchangeHandle} />
+                        </div>
                     </div>
-                </div>
-                <button css={button} onClick={loginClickHandle}>
-                    Login
-                </button>
-            </main>
-        </div>
-    );
+                    <button css={button} onClick={loginClickHandle}>
+                        Login
+                    </button>
+                </main>
+            </div>
+        );
 };
 
 export default AdminLogin;

@@ -4,8 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import GymList from "../../components/Gym/GymList/GymList";
 import Header from "../../components/Main/Header/Header";
 import Footer from "../../components/Main/Footer/Footer";
-import { useQuery } from "react-query";
-import axios from "axios";
 
 const container = css`
     display: flex;
@@ -68,10 +66,8 @@ const gymListBottom = css`
 const Main = () => {
     const [refresh, setRefresh] = useState(false);
     const [gyms, setGyms] = useState([]);
-    const [likeGyms, setLikeGyms] = useState([]);
 
     const lastGymRef = useRef();
-
     useEffect(() => {
         const observerService = (entries, observer) => {
             entries.forEach((entry) => {
@@ -86,7 +82,6 @@ const Main = () => {
         observer.observe(lastGymRef.current);
     }, []);
 
-    console.log(gyms);
     return (
         <div css={container}>
             <Header refresh={refresh} setRefresh={setRefresh} gyms={gyms} setGyms={setGyms} search={true} />

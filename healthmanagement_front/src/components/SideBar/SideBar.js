@@ -130,10 +130,6 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen }) => {
         }
     };
 
-    const facilityRegisterHandle = () => {
-        navigate("/facility");
-    };
-
     // principal 변수를 초기화하고 가져온 데이터를 사용하여 로딩상태를 처리 및  사용자 정보에 접근
     const principal = useQuery(["principal"], async () => {
         const response = await axios.get("http://localhost:8080/account/principal", {
@@ -154,7 +150,11 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen }) => {
     return (
         <div css={sideBar(isSideBarOpen)}>
             <header css={header}>
-                <img src={"http://localhost:8080/image/profile/" + principal.data.data.profile} css={userIcon} />
+                {principal.data.data.profile !== null ? (
+                    <img src={"http://localhost:8080/image/profile/" + principal.data.data.profile} css={userIcon} />
+                ) : (
+                    <div css={userIcon} />
+                )}
                 <div css={userInfo}>
                     <h1 css={userName}>{user.name}</h1>
                     <p css={userEmail}>{user.email}</p>
